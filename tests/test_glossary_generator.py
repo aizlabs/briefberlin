@@ -7,42 +7,34 @@ from langchain_core.utils.function_calling import convert_to_openai_function
 from scripts.glossary_generator import GLOSSARY_RESPONSE_SCHEMA, GlossaryGenerator, GlossaryResponse
 from scripts.models import VocabularyItem
 
-SEMANA_SANTA_A2_CONTENT = (
-    "La Semana Santa en España este año tiene buen clima. La Agencia Estatal de Meteorología "
-    "dice que el tiempo será estable. Las procesiones serán bonitas. En Andalucía y Levante, "
-    "hará entre 20 y 25 grados. En el centro y norte, entre 15 y 20 grados. Algunas zonas del "
-    "norte y Mediterráneo tendrán viento, pero no será un problema.\n\n"
-    "La Semana Santa es importante en España. No es solo religión, también es arte y tradición. "
-    "En Sevilla, la ‘Madrugá’ es muy especial. Muchas personas van a ver las procesiones en "
-    "silencio. En Zamora, las celebraciones son más simples, pero también bonitas.\n\n"
-    "En noticias internacionales, España ha cerrado su espacio aéreo a aviones de Estados Unidos. "
-    "La ministra de Defensa, Margarita Robles, dice que España no quiere más problemas en el "
-    "conflicto con Irán. España ha comunicado esto a Estados Unidos.\n\n"
-    "En deportes, la selección española de fútbol se prepara para el Mundial. El entrenador es "
-    "Luis de la Fuente. El equipo juega bien, pero perdió contra Escocia. A pesar de esto, "
-    "España es favorita. Tiene jugadores buenos como Oyarzabal y Zubimendi."
+FRUEHLING_A2_CONTENT = (
+    "Der Frühling in Deutschland beginnt dieses Jahr mit mildem Wetter. Der Deutsche Wetterdienst "
+    "sagt, dass die Temperaturen stabil bleiben. Viele Stadtfeste können draußen stattfinden. "
+    "In Berlin und Brandenburg werden 18 bis 22 Grad erwartet. In einigen Regionen gibt es Wind, "
+    "aber das wird wahrscheinlich kein großes Problem.\n\n"
+    "Stadtfeste sind für viele Menschen wichtig. Es geht nicht nur um Freizeit, sondern auch um "
+    "Kultur und Nachbarschaft. In Berlin ist das Frühlingsfest im Park sehr beliebt. Viele "
+    "Menschen gehen dorthin und hören Musik.\n\n"
+    "Auch die Energiepolitik ist ein Thema. Deutschland will mehr Windstrom nutzen. Das "
+    "Bundeswirtschaftsministerium sagt, dass schnellere Genehmigungen helfen. Die Regierung "
+    "möchte den Netzausbau beschleunigen.\n\n"
+    "Im Verkehr plant Berlin neue Angebote. Eine Mobilitätskarte soll Bus, Bahn und Leihräder "
+    "einfacher verbinden. Viele Nutzerinnen und Nutzer finden die Idee gut."
 )
 
-MIGRACION_B1_CONTENT = (
-    "España está en un momento importante en varios aspectos, como la migración, el trabajo y el "
-    "deporte. El gobierno español ha decidido regularizar a muchos inmigrantes, lo que preocupa a "
-    "la Comisión Europea. Magnus Brunner, encargado de Migración, dice que vivir en España no "
-    "significa poder mudarse a otros países de la Unión Europea. Esto podría causar problemas si "
-    "los inmigrantes quieren ir a otros lugares del bloque.\n\n"
-    "En el trabajo, los autónomos son muy importantes para la economía española. Un informe "
-    "reciente muestra que representan el 14,58% del empleo total en España, más que la media "
-    "europea. Sin embargo, este sector tiene retos, como atraer a jóvenes, ya que muchos "
-    "autónomos tienen más de 45 años. También se destaca el aumento de mujeres y extranjeros que "
-    "trabajan por cuenta propia desde 2021.\n\n"
-    "Por otro lado, el sistema de trenes en España recibe críticas porque no es compatible con "
-    "los sistemas europeos. Empresas como Ouigo e Iryo están preocupadas por la competitividad "
-    "debido a los diferentes anchos de vía. Esto afecta tanto a los pasajeros como al transporte "
-    "de mercancías. Las empresas piden un plan claro para adaptarse a los estándares europeos.\n\n"
-    "En deportes, el equipo de fútbol de España, dirigido por Luis de la Fuente, se prepara para "
-    "el Mundial. Aunque ha tenido algunas derrotas recientes, como contra Escocia y Colombia, "
-    "sigue siendo uno de los favoritos. Esto se debe a jugadores importantes como Unai Simón, "
-    "Pedri y Oyarzabal. España quiere seguir teniendo éxito en el escenario internacional, "
-    "enfrentando los desafíos y cambios en el equipo."
+VERWALTUNG_B1_CONTENT = (
+    "Deutschland steht bei Verwaltung, Arbeit und Verkehr vor wichtigen Entscheidungen. Die "
+    "Bundesregierung möchte digitale Anträge vereinfachen, damit Bürgerinnen und Bürger weniger "
+    "Zeit in Ämtern verbringen. Die Europäische Kommission beobachtet solche Reformen, weil viele "
+    "Dienste grenzüberschreitend funktionieren sollen.\n\n"
+    "Auf dem Arbeitsmarkt sind Selbstständige ein wichtiger Teil der Wirtschaft. Ein neuer Bericht "
+    "zeigt, dass viele Menschen flexible Arbeitsmodelle nutzen. Der Bereich hat aber Probleme, "
+    "weil Versicherungen, Steuern und Altersvorsorge kompliziert bleiben.\n\n"
+    "Auch beim Bahnverkehr gibt es Kritik. Neue Züge und alte Schienennetze passen nicht immer "
+    "gut zusammen. Das betrifft Fahrgäste und den Güterverkehr. Unternehmen fordern deshalb "
+    "einen klaren Plan für Investitionen und bessere europäische Standards.\n\n"
+    "In Berlin testet die Verwaltung zusätzlich eine Mobilitätskarte. Sie soll Bus, Bahn und "
+    "Leihräder verbinden. Fachleute sehen darin eine Chance, den Alltag einfacher zu machen."
 )
 
 
@@ -57,31 +49,31 @@ def glossary_generator(monkeypatch, base_config, mock_logger):
 
 def test_validate_rejects_named_entities_transparent_terms_and_fragments(glossary_generator):
     content = (
-        "Irán lanzó bombardeos con drones. Donald Trump habló con Estados Unidos sobre Israel. "
-        "La política migratoria cambió. También hubo decisiones unilaterales."
+        "Berlin testete Drohnen nach einem Sturm. Angela Merkel sprach mit Deutschland über Energie. "
+        "Die Migrationspolitik änderte sich. Auch einseitige Entscheidungen wurden kritisiert."
     )
     candidates = [
-        VocabularyItem(term="Irán", english="Iran", explanation="país en el Medio Oriente"),
+        VocabularyItem(term="Berlin", english="Berlin", explanation="capital city in Germany"),
         VocabularyItem(
-            term="Estados Unidos",
-            english="United States",
-            explanation="país en América del Norte",
+            term="Deutschland",
+            english="Germany",
+            explanation="country in Europe",
         ),
         VocabularyItem(
-            term="Donald Trump",
-            english="Donald Trump",
-            explanation="expresidente de Estados Unidos",
+            term="Angela Merkel",
+            english="Angela Merkel",
+            explanation="former chancellor of Germany",
         ),
-        VocabularyItem(term="drones", english="drones", explanation="aviones no tripulados"),
+        VocabularyItem(term="drones", english="drones", explanation="unmanned aircraft"),
         VocabularyItem(
-            term="migratoria",
+            term="migrantisch",
             english="migratory",
-            explanation="relacionada con el movimiento de personas entre países",
+            explanation="related to movement between countries",
         ),
         VocabularyItem(
-            term="unilaterales",
+            term="einseitig",
             english="unilateral",
-            explanation="hechas por un solo lado",
+            explanation="done by one side",
         ),
     ]
 
@@ -89,12 +81,12 @@ def test_validate_rejects_named_entities_transparent_terms_and_fragments(glossar
 
     assert accepted == []
     assert set(dropped) == {
-        "Irán",
-        "Estados Unidos",
-        "Donald Trump",
+        "Berlin",
+        "Deutschland",
+        "Angela Merkel",
         "drones",
-        "migratoria",
-        "unilaterales",
+        "migrantisch",
+        "einseitig",
     }
 
 
@@ -112,12 +104,12 @@ def test_generate_keeps_valid_items_when_structured_output_contains_null_term(
                     {
                         "term": None,
                         "english": "ignored",
-                        "explanation": "entrada inválida",
+                        "explanation": "invalid entry",
                     },
                     {
-                        "term": "bombardeos",
-                        "english": "bombings",
-                        "explanation": "ataques con bombas desde el aire",
+                        "term": "Sturmschäden",
+                        "english": "storm damage",
+                        "explanation": "Schäden durch starken Wind und Regen",
                     },
                 ]
             )
@@ -128,9 +120,9 @@ def test_generate_keeps_valid_items_when_structured_output_contains_null_term(
 
     assert generated == [
         VocabularyItem(
-            term="bombardeos",
-            english="bombings",
-            explanation="ataques con bombas desde el aire",
+            term="Sturmschäden",
+            english="storm damage",
+            explanation="Schäden durch starken Wind und Regen",
         )
     ]
 
@@ -147,15 +139,15 @@ def test_generate_keeps_valid_items_when_raw_response_contains_extra_keys(
             return_value={
                 "vocabulary": [
                     {
-                        "term": "bombardeos",
-                        "english": "bombings",
-                        "explanation": "ataques con bombas desde el aire",
+                        "term": "Sturmschäden",
+                        "english": "storm damage",
+                        "explanation": "Schäden durch starken Wind und Regen",
                         "difficulty": "medium",
                     },
                     {
                         "term": None,
                         "english": "ignored",
-                        "explanation": "entrada inválida",
+                        "explanation": "invalid entry",
                         "unexpected": {"nested": True},
                     },
                 ]
@@ -167,9 +159,9 @@ def test_generate_keeps_valid_items_when_raw_response_contains_extra_keys(
 
     assert generated == [
         VocabularyItem(
-            term="bombardeos",
-            english="bombings",
-            explanation="ataques con bombas desde el aire",
+            term="Sturmschäden",
+            english="storm damage",
+            explanation="Schäden durch starken Wind und Regen",
         )
     ]
 
@@ -209,190 +201,190 @@ def test_glossary_response_schema_converts_with_langchain_strict_mode():
 
 def test_validate_keeps_high_value_terms_and_context_phrases(glossary_generator):
     content = (
-        "Los bombardeos aumentaron en la región. Los ayatolás criticaron la respuesta. "
-        "La Guardia Revolucionaria movilizó más tropas. Los hutíes apoyaron la operación. "
-        "La política migratoria cambió después del acuerdo."
+        "Die Sturmschäden nahmen in der Region zu. Die Deichhelfer kritisierten die Antwort. "
+        "Der Feuerwehrverband mobilisierte mehr Einsatzkräfte. Hilfsgruppen unterstützten die Aktion. "
+        "Die Migrationspolitik änderte sich nach dem Abkommen."
     )
     candidates = [
         VocabularyItem(
-            term="bombardeos",
-            english="bombings",
-            explanation="ataques con bombas desde el aire",
+            term="Sturmschäden",
+            english="storm damage",
+            explanation="Schäden durch starken Wind und Regen",
         ),
         VocabularyItem(
-            term="ayatolás",
-            english="ayatollahs",
-            explanation="líderes religiosos en Irán",
+            term="Deichhelfer",
+            english="levee helpers",
+            explanation="Menschen, die an Schutzwällen helfen",
         ),
         VocabularyItem(
-            term="Guardia Revolucionaria",
-            english="Revolutionary Guard",
-            explanation="fuerza militar de élite en Irán",
+            term="Feuerwehrverband",
+            english="fire service association",
+            explanation="Organisation von Feuerwehren",
         ),
         VocabularyItem(
-            term="hutíes",
-            english="Houthis",
-            explanation="grupo rebelde en Yemen",
+            term="Hilfsgruppen",
+            english="aid groups",
+            explanation="Gruppen, die Unterstützung organisieren",
         ),
         VocabularyItem(
-            term="política migratoria",
+            term="Migrationspolitik",
             english="migration policy",
-            explanation="reglas del gobierno sobre la inmigración",
+            explanation="Regeln des Staates zur Einwanderung",
         ),
     ]
 
     accepted, dropped = glossary_generator.validate(content, candidates)
 
     assert [item.term for item in accepted] == [
-        "bombardeos",
-        "ayatolás",
-        "Guardia Revolucionaria",
-        "hutíes",
-        "política migratoria",
+        "Sturmschäden",
+        "Deichhelfer",
+        "Feuerwehrverband",
+        "Hilfsgruppen",
+        "Migrationspolitik",
     ]
     assert dropped == {}
 
 
 def test_validate_accepts_generated_items_with_one_gloss_field(glossary_generator):
-    content = "Los bombardeos aumentaron y la política migratoria cambió."
+    content = "Die Sturmschäden nahmen zu und die Migrationspolitik änderte sich."
     candidates = [
         VocabularyItem(
-            term="bombardeos",
-            english="bombings",
+            term="Sturmschäden",
+            english="storm damage",
             explanation="",
         ),
         VocabularyItem(
-            term="política migratoria",
+            term="Migrationspolitik",
             english="",
-            explanation="reglas del gobierno sobre la inmigración",
+            explanation="Regeln des Staates zur Einwanderung",
         ),
     ]
 
     accepted, dropped = glossary_generator.validate(content, candidates)
 
-    assert [item.term for item in accepted] == ["bombardeos", "política migratoria"]
+    assert [item.term for item in accepted] == ["Sturmschäden", "Migrationspolitik"]
     assert dropped == {}
 
 
 def test_validate_without_nlp_rejects_people_and_places_but_keeps_organizations(glossary_generator):
     content = (
-        "Países afectados: Francia y París. Pedro Sánchez habló después. "
-        "La República Dominicana pidió ayuda. "
-        "La Guardia Revolucionaria respondió junto con Naciones Unidas y la Cruz Roja."
+        "Betroffene Orte: Deutschland und Berlin. Angela Merkel sprach danach. "
+        "Brandenburg bat um Hilfe. "
+        "Der Feuerwehrverband antwortete zusammen mit Vereinte Nationen und Rotes Kreuz."
     )
     candidates = [
         VocabularyItem(
-            term="Pedro Sánchez",
-            english="pedro sanchez",
-            explanation="presidente del gobierno de España",
+            term="Angela Merkel",
+            english="angela merkel",
+            explanation="former chancellor of Germany",
         ),
         VocabularyItem(
-            term="Francia",
-            english="france",
-            explanation="país europeo",
+            term="Deutschland",
+            english="germany",
+            explanation="country in Europe",
         ),
         VocabularyItem(
-            term="París",
-            english="paris",
-            explanation="capital de Francia",
+            term="Berlin",
+            english="berlin",
+            explanation="capital city of Germany",
         ),
         VocabularyItem(
-            term="República Dominicana",
-            english="dominican republic",
-            explanation="país del Caribe",
+            term="Brandenburg",
+            english="brandenburg",
+            explanation="state around Berlin",
         ),
         VocabularyItem(
-            term="Guardia Revolucionaria",
-            english="revolutionary guard",
-            explanation="fuerza militar de élite en Irán",
+            term="Feuerwehrverband",
+            english="fire service association",
+            explanation="Organisation von Feuerwehren",
         ),
         VocabularyItem(
-            term="Naciones Unidas",
+            term="Vereinte Nationen",
             english="united nations",
-            explanation="organización internacional de países",
+            explanation="international organization of countries",
         ),
         VocabularyItem(
-            term="Cruz Roja",
+            term="Rotes Kreuz",
             english="red cross",
-            explanation="organización humanitaria internacional",
+            explanation="international aid organization",
         ),
     ]
 
     accepted, dropped = glossary_generator.validate(content, candidates)
 
     assert [item.term for item in accepted] == [
-        "Guardia Revolucionaria",
-        "Naciones Unidas",
-        "Cruz Roja",
+        "Feuerwehrverband",
+        "Vereinte Nationen",
+        "Rotes Kreuz",
     ]
-    assert dropped["Pedro Sánchez"] == "named entity or common place/person name"
-    assert dropped["Francia"] == "named entity or common place/person name"
-    assert dropped["París"] == "named entity or common place/person name"
-    assert dropped["República Dominicana"] == "named entity or common place/person name"
+    assert dropped["Angela Merkel"] == "named entity or common place/person name"
+    assert dropped["Deutschland"] == "named entity or common place/person name"
+    assert dropped["Berlin"] == "named entity or common place/person name"
+    assert dropped["Brandenburg"] == "named entity or common place/person name"
 
 
 def test_validate_uses_article_casing_for_dropped_term_keys(glossary_generator):
-    content = "Francia anunció nuevas medidas."
+    content = "Deutschland kündigte neue Maßnahmen an."
     candidates = [
         VocabularyItem(
-            term="francia",
-            english="france",
-            explanation="país europeo",
+            term="deutschland",
+            english="germany",
+            explanation="country in Europe",
         ),
     ]
 
     accepted, dropped = glossary_generator.validate(content, candidates)
 
     assert accepted == []
-    assert "Francia" in dropped
-    assert "francia" not in dropped
-    assert dropped["Francia"] == "named entity or common place/person name"
+    assert "Deutschland" in dropped
+    assert "deutschland" not in dropped
+    assert dropped["Deutschland"] == "named entity or common place/person name"
 
 
 def test_validate_without_nlp_keeps_generic_terms_when_explanation_mentions_a_country(glossary_generator):
-    content = "El presupuesto cambió después del debate."
+    content = "Der Haushaltsplan änderte sich nach der Debatte."
     candidates = [
         VocabularyItem(
-            term="presupuesto",
+            term="Haushaltsplan",
             english="budget",
-            explanation="plan del gobierno para gastar dinero en el país",
+            explanation="Plan des Staates für Ausgaben",
         ),
     ]
 
     accepted, dropped = glossary_generator.validate(content, candidates)
 
-    assert [item.term for item in accepted] == ["presupuesto"]
+    assert [item.term for item in accepted] == ["Haushaltsplan"]
     assert dropped == {}
 
 
 def test_apply_bolding_marks_only_accepted_terms(glossary_generator):
-    content = "La política migratoria cambió después de los bombardeos."
+    content = "Die Migrationspolitik änderte sich nach den Sturmschäden."
     items = [
         VocabularyItem(
-            term="política migratoria",
+            term="Migrationspolitik",
             english="migration policy",
-            explanation="reglas del gobierno sobre la inmigración",
+            explanation="Regeln des Staates zur Einwanderung",
         ),
         VocabularyItem(
-            term="bombardeos",
-            english="bombings",
-            explanation="ataques con bombas desde el aire",
+            term="Sturmschäden",
+            english="storm damage",
+            explanation="Schäden durch starken Wind und Regen",
         ),
     ]
 
     bolded = glossary_generator.apply_bolding(content, items)
 
-    assert "**política migratoria**" in bolded
-    assert "**bombardeos**" in bolded
+    assert "**Migrationspolitik**" in bolded
+    assert "**Sturmschäden**" in bolded
 
 
 def test_validate_normalizes_term_casing_to_match_article_text(glossary_generator):
-    content = "Los bombardeos aumentaron durante la noche."
+    content = "Die Sturmschäden nahmen in der Nacht zu."
     candidates = [
         VocabularyItem(
-            term="Bombardeos",
-            english="bombings",
-            explanation="ataques con bombas desde el aire",
+            term="sturmschäden",
+            english="storm damage",
+            explanation="Schäden durch starken Wind und Regen",
         ),
     ]
 
@@ -400,8 +392,8 @@ def test_validate_normalizes_term_casing_to_match_article_text(glossary_generato
     bolded = glossary_generator.apply_bolding(content, accepted)
 
     assert dropped == {}
-    assert [item.term for item in accepted] == ["bombardeos"]
-    assert "**bombardeos**" in bolded
+    assert [item.term for item in accepted] == ["Sturmschäden"]
+    assert "**Sturmschäden**" in bolded
 
 
 def test_transparent_token_matching_handles_plural_cognates_before_singularizing(glossary_generator):
@@ -414,20 +406,20 @@ def test_transparent_token_matching_handles_ous_cognates_before_singularizing_en
 
 
 def test_isolated_modifier_fallback_allows_predicative_adjectives(glossary_generator):
-    assert glossary_generator._is_isolated_modifier(None, "El sistema es frágil.", "frágil") is False
+    assert glossary_generator._is_isolated_modifier(None, "Das System ist fragil.", "fragil") is False
     assert (
         glossary_generator._is_isolated_modifier(
             None,
-            "Es sostenible la energía del país.",
-            "sostenible",
+            "Die Energie ist nachhaltig.",
+            "nachhaltig",
         )
         is False
     )
     assert (
         glossary_generator._is_isolated_modifier(
             None,
-            "La política migratoria cambió.",
-            "migratoria",
+            "Die migrantische Politik änderte sich.",
+            "migrantische",
         )
         is True
     )
@@ -451,11 +443,11 @@ def test_isolated_modifier_allows_predicative_adjectives_with_nlp(glossary_gener
         side_effect=[[[predicative[0]]], [[attributive[0]]]]
     )
 
-    assert glossary_generator._is_isolated_modifier(object(), "El sistema es frágil.", "frágil") is False
+    assert glossary_generator._is_isolated_modifier(object(), "Das System ist fragil.", "fragil") is False
     assert glossary_generator._is_isolated_modifier(
         object(),
-        "La política migratoria cambió.",
-        "migratoria",
+        "Die migrantische Politik änderte sich.",
+        "migrantische",
     ) is True
 
 
@@ -472,14 +464,14 @@ def test_enrich_article_publishes_without_glossary_when_all_items_are_rejected(
                 VocabularyItem(
                     term="drones",
                     english="drones",
-                    explanation="aviones no tripulados",
+                    explanation="unmanned aircraft",
                 )
             ]
         ),
     )
 
     article = sample_a2_text_article.model_copy(
-        update={"content": "Los drones volaron sobre la ciudad durante la noche."}
+        update={"content": "Drohnen flogen in der Nacht über die Stadt."}
     )
     enriched = glossary_generator.enrich_article(article)
 
@@ -505,14 +497,14 @@ def test_enrich_article_without_retry_does_not_mark_empty_after_retry(
                 VocabularyItem(
                     term="drones",
                     english="drones",
-                    explanation="aviones no tripulados",
+                    explanation="unmanned aircraft",
                 )
             ]
         ),
     )
 
     article = sample_a2_text_article.model_copy(
-        update={"content": "Los drones volaron sobre la ciudad durante la noche."}
+        update={"content": "Drohnen flogen in der Nacht über die Stadt."}
     )
 
     enriched = glossary_generator.enrich_article(article)
@@ -522,15 +514,15 @@ def test_enrich_article_without_retry_does_not_mark_empty_after_retry(
     assert glossary_generator.last_run_stats["glossary_empty_after_retry"] is False
 
 
-def test_enrich_article_retries_when_initial_candidates_all_fail_for_march_31_a2(
+def test_enrich_article_retries_when_initial_candidates_all_fail_for_spring_a2(
     glossary_generator,
     sample_a2_text_article,
     monkeypatch,
 ):
     article = sample_a2_text_article.model_copy(
         update={
-            "title": "Semana Santa Soleada en España",
-            "content": SEMANA_SANTA_A2_CONTENT,
+            "title": "Milder Frühling in Deutschland",
+            "content": FRUEHLING_A2_CONTENT,
         }
     )
     monkeypatch.setattr(
@@ -540,46 +532,46 @@ def test_enrich_article_retries_when_initial_candidates_all_fail_for_march_31_a2
             side_effect=[
                 GlossaryResponse(
                     vocabulary=[
-                        {"term": "España", "english": "Spain", "explanation": "país europeo"},
+                        {"term": "Deutschland", "english": "Germany", "explanation": "country in Europe"},
                         {
-                            "term": "Estados Unidos",
-                            "english": "United States",
-                            "explanation": "país de América del Norte",
+                            "term": "Berlin",
+                            "english": "Berlin",
+                            "explanation": "capital city of Germany",
                         },
-                        {"term": "Irán", "english": "Iran", "explanation": "país de Asia"},
+                        {"term": "Brandenburg", "english": "Brandenburg", "explanation": "state around Berlin"},
                         {
-                            "term": "Margarita Robles",
-                            "english": "Margarita Robles",
-                            "explanation": "ministra española",
+                            "term": "Deutscher Wetterdienst",
+                            "english": "German Weather Service",
+                            "explanation": "federal weather authority",
                         },
                         {
-                            "term": "Luis de la Fuente",
-                            "english": "Luis de la Fuente",
-                            "explanation": "entrenador español",
+                            "term": "Olaf Scholz",
+                            "english": "Olaf Scholz",
+                            "explanation": "German politician",
                         },
                     ]
                 ),
                 GlossaryResponse(
                     vocabulary=[
                         {
-                            "term": "procesiones",
-                            "english": "processions",
-                            "explanation": "desfiles religiosos en la calle",
+                            "term": "Stadtfeste",
+                            "english": "public events",
+                            "explanation": "Veranstaltungen im Freien",
                         },
                         {
-                            "term": "espacio aéreo",
-                            "english": "airspace",
-                            "explanation": "zona del cielo de un país para aviones",
+                            "term": "Genehmigungen",
+                            "english": "permits",
+                            "explanation": "offizielle Erlaubnisse",
                         },
                         {
-                            "term": "selección",
-                            "english": "national team",
-                            "explanation": "equipo que representa a un país",
+                            "term": "Netzausbau",
+                            "english": "grid expansion",
+                            "explanation": "Ausbau von Stromleitungen",
                         },
                         {
-                            "term": "conflicto",
-                            "english": "conflict",
-                            "explanation": "situación de lucha o problema entre grupos",
+                            "term": "Mobilitätskarte",
+                            "english": "mobility card",
+                            "explanation": "Karte für verschiedene Verkehrsmittel",
                         },
                     ]
                 ),
@@ -590,10 +582,10 @@ def test_enrich_article_retries_when_initial_candidates_all_fail_for_march_31_a2
     enriched = glossary_generator.enrich_article(article)
 
     assert [item.term for item in enriched.vocabulary] == [
-        "procesiones",
-        "espacio aéreo",
-        "selección",
-        "conflicto",
+        "Stadtfeste",
+        "Genehmigungen",
+        "Netzausbau",
+        "Mobilitätskarte",
     ]
     assert glossary_generator.last_run_stats["retry_used"] is True
     assert glossary_generator.last_run_stats["glossary_candidates_initial"] == 5
@@ -601,15 +593,15 @@ def test_enrich_article_retries_when_initial_candidates_all_fail_for_march_31_a2
     assert glossary_generator.last_run_stats["glossary_accepted"] == 4
 
 
-def test_enrich_article_retries_when_initial_candidates_all_fail_for_march_31_b1(
+def test_enrich_article_retries_when_initial_candidates_all_fail_for_administration_b1(
     glossary_generator,
     sample_b1_text_article,
     monkeypatch,
 ):
     article = sample_b1_text_article.model_copy(
         update={
-            "title": "España enfrenta desafíos en migración, trabajo y deportes",
-            "content": MIGRACION_B1_CONTENT,
+            "title": "Deutschland digitalisiert Verwaltung und Verkehr",
+            "content": VERWALTUNG_B1_CONTENT,
         }
     )
     monkeypatch.setattr(
@@ -619,42 +611,42 @@ def test_enrich_article_retries_when_initial_candidates_all_fail_for_march_31_b1
             side_effect=[
                 GlossaryResponse(
                     vocabulary=[
-                        {"term": "España", "english": "Spain", "explanation": "país europeo"},
+                        {"term": "Deutschland", "english": "Germany", "explanation": "country in Europe"},
                         {
-                            "term": "Magnus Brunner",
-                            "english": "Magnus Brunner",
-                            "explanation": "político europeo",
+                            "term": "Angela Merkel",
+                            "english": "Angela Merkel",
+                            "explanation": "former chancellor of Germany",
                         },
-                        {"term": "Ouigo", "english": "Ouigo", "explanation": "empresa de trenes"},
-                        {"term": "Iryo", "english": "Iryo", "explanation": "empresa de trenes"},
+                        {"term": "Berlin", "english": "Berlin", "explanation": "capital city of Germany"},
+                        {"term": "Olaf Scholz", "english": "Olaf Scholz", "explanation": "German politician"},
                         {
-                            "term": "Luis de la Fuente",
-                            "english": "Luis de la Fuente",
-                            "explanation": "entrenador español",
+                            "term": "drones",
+                            "english": "drones",
+                            "explanation": "unmanned aircraft",
                         },
                     ]
                 ),
                 GlossaryResponse(
                     vocabulary=[
                         {
-                            "term": "autónomos",
+                            "term": "Selbstständige",
                             "english": "self-employed workers",
-                            "explanation": "personas que trabajan por cuenta propia",
+                            "explanation": "Menschen, die auf eigene Rechnung arbeiten",
                         },
                         {
-                            "term": "anchos de vía",
-                            "english": "track gauges",
-                            "explanation": "distancias entre los rieles del tren",
+                            "term": "Schienennetze",
+                            "english": "rail networks",
+                            "explanation": "Netze aus Bahnstrecken",
                         },
                         {
-                            "term": "mercancías",
-                            "english": "goods",
-                            "explanation": "productos que se transportan para vender",
+                            "term": "Güterverkehr",
+                            "english": "freight transport",
+                            "explanation": "Transport von Waren",
                         },
                         {
-                            "term": "mudarse",
-                            "english": "to move",
-                            "explanation": "cambiar de lugar para vivir",
+                            "term": "Mobilitätskarte",
+                            "english": "mobility card",
+                            "explanation": "Karte für verschiedene Verkehrsmittel",
                         },
                     ]
                 ),
@@ -665,10 +657,10 @@ def test_enrich_article_retries_when_initial_candidates_all_fail_for_march_31_b1
     enriched = glossary_generator.enrich_article(article)
 
     assert [item.term for item in enriched.vocabulary] == [
-        "autónomos",
-        "anchos de vía",
-        "mercancías",
-        "mudarse",
+        "Selbstständige",
+        "Schienennetze",
+        "Güterverkehr",
+        "Mobilitätskarte",
     ]
     assert glossary_generator.last_run_stats["retry_used"] is True
     assert glossary_generator.last_run_stats["glossary_accepted"] == 4
@@ -684,9 +676,9 @@ def test_debug_dump_writes_glossary_artifact(glossary_generator, sample_a2_text_
             return_value=GlossaryResponse(
                 vocabulary=[
                     {
-                        "term": "bombardeos",
-                        "english": "bombings",
-                        "explanation": "ataques con bombas desde el aire",
+                        "term": "Sturmschäden",
+                        "english": "storm damage",
+                        "explanation": "Schäden durch starken Wind und Regen",
                     }
                 ]
             )
@@ -694,7 +686,7 @@ def test_debug_dump_writes_glossary_artifact(glossary_generator, sample_a2_text_
     )
 
     article = sample_a2_text_article.model_copy(
-        update={"content": "Los bombardeos aumentaron durante la noche."}
+        update={"content": "Die Sturmschäden nahmen in der Nacht zu."}
     )
     glossary_generator.enrich_article(article)
 
@@ -707,7 +699,7 @@ def test_debug_dump_writes_glossary_artifact(glossary_generator, sample_a2_text_
     assert payload["retry_used"] is False
     assert payload["counts"]["initial_candidates"] == 1
     assert payload["counts"]["accepted"] == 1
-    assert payload["accepted"][0]["term"] == "bombardeos"
+    assert payload["accepted"][0]["term"] == "Sturmschäden"
     assert payload["dropped"]["initial"] == []
 
 
@@ -724,9 +716,9 @@ def test_debug_dump_failure_does_not_discard_accepted_glossary(
             return_value=GlossaryResponse(
                 vocabulary=[
                     {
-                        "term": "bombardeos",
-                        "english": "bombings",
-                        "explanation": "ataques con bombas desde el aire",
+                        "term": "Sturmschäden",
+                        "english": "storm damage",
+                        "explanation": "Schäden durch starken Wind und Regen",
                     }
                 ]
             )
@@ -739,13 +731,13 @@ def test_debug_dump_failure_does_not_discard_accepted_glossary(
     )
 
     article = sample_a2_text_article.model_copy(
-        update={"content": "Los bombardeos aumentaron durante la noche."}
+        update={"content": "Die Sturmschäden nahmen in der Nacht zu."}
     )
 
     enriched = glossary_generator.enrich_article(article)
 
-    assert [item.term for item in enriched.vocabulary] == ["bombardeos"]
-    assert "**bombardeos**" in enriched.content
+    assert [item.term for item in enriched.vocabulary] == ["Sturmschäden"]
+    assert "**Sturmschäden**" in enriched.content
     assert any(
         "Glossary debug dump failed for '%s': %s. Continuing without artifact."
         in str(call.args[0])

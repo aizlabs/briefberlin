@@ -144,48 +144,66 @@ NAME_CONNECTOR_TOKENS = {
     "y",
 }
 COMMON_PLACE_TERMS = {
-    "alemania",
+    "berlin",
+    "brandenburg",
     "america latina",
-    "barcelona",
     "china",
-    "dinamarca",
-    "espana",
+    "deutschland",
     "estados unidos",
     "europa",
+    "frankreich",
     "iran",
     "israel",
-    "madrid",
-    "mexico",
+    "paris",
     "rusia",
     "teheran",
     "ucrania",
-    "venezuela",
+    "ukraine",
+    "usa",
     "washington",
     "yemen",
 }
 COMMON_PERSON_TERMS = {
     "donald trump",
 }
-SPANISH_STOPWORDS = {
+TERM_STOPWORDS = {
     "a",
     "al",
+    "am",
+    "an",
+    "auf",
+    "aus",
+    "bei",
     "con",
+    "das",
     "de",
+    "dem",
+    "den",
+    "der",
     "del",
+    "des",
+    "die",
     "el",
     "en",
+    "für",
+    "im",
+    "in",
     "la",
     "las",
     "lo",
     "los",
+    "mit",
     "para",
     "por",
+    "und",
     "su",
     "sus",
     "un",
     "una",
     "unos",
     "unas",
+    "von",
+    "zu",
     "y",
 }
 ENGLISH_STOPWORDS = {
@@ -244,6 +262,16 @@ ADJECTIVE_SUFFIXES = (
     "arios",
     "ible",
     "ibles",
+    "ig",
+    "ige",
+    "igen",
+    "iger",
+    "iges",
+    "isch",
+    "ische",
+    "ischen",
+    "ischer",
+    "isches",
     "ica",
     "icas",
     "ico",
@@ -269,6 +297,7 @@ PREDICATIVE_PREVIOUS_TOKENS = {
     "estan",
     "fue",
     "fueron",
+    "ist",
     "mas",
     "menos",
     "muy",
@@ -280,6 +309,7 @@ PREDICATIVE_PREVIOUS_TOKENS = {
     "sigue",
     "siguen",
     "son",
+    "sind",
     "tan",
 }
 NON_NOUN_FOLLOWER_TOKENS = {
@@ -682,7 +712,7 @@ class GlossaryGenerator:
         tokens = self._tokenize(normalized)
         if not tokens or max(len(token) for token in tokens) < 4:
             return False
-        if all(token in SPANISH_STOPWORDS or token in NAME_CONNECTOR_TOKENS for token in tokens):
+        if all(token in TERM_STOPWORDS or token in NAME_CONNECTOR_TOKENS for token in tokens):
             return False
         if normalized.isupper():
             return False
@@ -757,10 +787,10 @@ class GlossaryGenerator:
         return False
 
     def _is_transparent_term(self, term: str, english: str) -> bool:
-        spanish_tokens = [
+        term_tokens = [
             token
             for token in self._tokenize(term)
-            if token not in SPANISH_STOPWORDS and len(token) >= 4
+            if token not in TERM_STOPWORDS and len(token) >= 4
         ]
         english_tokens = [
             token
@@ -768,15 +798,15 @@ class GlossaryGenerator:
             if token not in ENGLISH_STOPWORDS and len(token) >= 4
         ]
 
-        if not spanish_tokens or not english_tokens:
+        if not term_tokens or not english_tokens:
             return False
 
         matches = 0
-        for spanish_token in spanish_tokens:
-            if any(self._tokens_look_transparent(spanish_token, english_token) for english_token in english_tokens):
+        for term_token in term_tokens:
+            if any(self._tokens_look_transparent(term_token, english_token) for english_token in english_tokens):
                 matches += 1
 
-        return matches >= len(spanish_tokens)
+        return matches >= len(term_tokens)
 
     def _is_isolated_modifier(self, doc, content: str, term: str) -> bool:
         stripped_term = term.strip()
@@ -832,23 +862,23 @@ class GlossaryGenerator:
         without_accents = "".join(ch for ch in normalized if not unicodedata.combining(ch))
         return without_accents.casefold()
 
-    def _tokens_look_transparent(self, spanish_token: str, english_token: str) -> bool:
-        if spanish_token == english_token:
+    def _tokens_look_transparent(self, term_token: str, english_token: str) -> bool:
+        if term_token == english_token:
             return True
 
-        transformed = self._apply_cognate_suffix_map(spanish_token)
+        transformed = self._apply_cognate_suffix_map(term_token)
         if transformed == english_token:
             return True
 
-        singular_spanish = self._singularize(spanish_token)
+        singular_term = self._singularize(term_token)
         singular_english = self._singularize(english_token)
-        if singular_spanish == singular_english:
+        if singular_term == singular_english:
             return True
 
         if transformed == singular_english:
             return True
 
-        transformed_singular = self._apply_cognate_suffix_map(singular_spanish)
+        transformed_singular = self._apply_cognate_suffix_map(singular_term)
         if transformed_singular == singular_english:
             return True
 
@@ -914,8 +944,6 @@ class GlossaryGenerator:
             if organization_clue:
                 return False
             if term_place_designator:
-                return True
-            if self._appears_title_cased_mid_sentence(content, term):
                 return True
 
         return False

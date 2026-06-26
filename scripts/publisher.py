@@ -302,15 +302,15 @@ reading_time: {article.reading_time}
         rendered_lines = []
 
         for item in items:
-            normalized_spanish = normalize_vocabulary_term(item.term)
-            if not normalized_spanish:
+            normalized_term = normalize_vocabulary_term(item.term)
+            if not normalized_term:
                 continue
-            if normalized_spanish != item.term:
+            if normalized_term != item.term:
                 self.logger.warning(
                     "Normalized vocabulary term during publish for article '%s': '%s' -> '%s'",
                     article_title,
                     item.term,
-                    normalized_spanish,
+                    normalized_term,
                 )
 
             definition_parts = [part for part in (item.english, item.explanation) if part]
@@ -319,10 +319,10 @@ reading_time: {article.reading_time}
                 self.logger.warning(
                     "Skipping vocabulary term without definition during publish for article '%s': '%s'",
                     article_title,
-                    normalized_spanish,
+                    normalized_term,
                 )
                 continue
-            rendered_lines.append(f"- **{normalized_spanish}** - {definition}")
+            rendered_lines.append(f"- **{normalized_term}** - {definition}")
 
         if not rendered_lines:
             return ""

@@ -36,7 +36,7 @@ def normalize_vocabulary_term(term: str) -> str:
     Normalize a glossary term to plain text.
 
     Terms are trimmed and repeatedly stripped of wrapping markdown bold markers,
-    so values like "**término**" and "****término****" are stored as "término".
+    so values like "**Begriff**" and "****Begriff****" are stored as "Begriff".
     Internal punctuation and accents are preserved.
     """
     normalized = term.strip()

@@ -37,7 +37,7 @@ def test_audio_pipeline_writes_manifest_and_script_when_enabled(
 
     assert prepared_article.audio is not None
     assert prepared_article.audio.storage_key == (
-        "articles/2024/01/20240102-120000-espana-tiene-menos-contaminacion-a2/article.mp3"
+        "articles/2024/01/20240102-120000-deutschland-baut-mehr-windenergie-aus-a2/article.mp3"
     )
     assert prepared_article.audio.url is None
     assert prepared_article.audio.local_audio_path is not None
@@ -48,7 +48,7 @@ def test_audio_pipeline_writes_manifest_and_script_when_enabled(
         / "scripts"
         / "2024"
         / "01"
-        / "20240102-120000-espana-tiene-menos-contaminacion-a2.txt"
+        / "20240102-120000-deutschland-baut-mehr-windenergie-aus-a2.txt"
     )
     manifest_path = (
         tmp_path
@@ -56,7 +56,7 @@ def test_audio_pipeline_writes_manifest_and_script_when_enabled(
         / "manifests"
         / "2024"
         / "01"
-        / "20240102-120000-espana-tiene-menos-contaminacion-a2.json"
+        / "20240102-120000-deutschland-baut-mehr-windenergie-aus-a2.json"
     )
     audio_path = (
         tmp_path
@@ -64,7 +64,7 @@ def test_audio_pipeline_writes_manifest_and_script_when_enabled(
         / "generated"
         / "2024"
         / "01"
-        / "20240102-120000-espana-tiene-menos-contaminacion-a2"
+        / "20240102-120000-deutschland-baut-mehr-windenergie-aus-a2"
         / "article.mp3"
     )
     assert script_path.exists()
@@ -112,10 +112,10 @@ def test_audio_pipeline_uploads_and_sets_public_url_when_upload_enabled(
     assert prepared_article.audio is not None
     assert (
         prepared_article.audio.url
-        == "https://media.briefberlin.com/articles/2024/01/20240102-120000-espana-tiene-menos-contaminacion-a2/article.mp3"
+        == "https://media.briefberlin.com/articles/2024/01/20240102-120000-deutschland-baut-mehr-windenergie-aus-a2/article.mp3"
     )
     assert prepared_article.audio.storage_key == (
-        "articles/2024/01/20240102-120000-espana-tiene-menos-contaminacion-a2/article.mp3"
+        "articles/2024/01/20240102-120000-deutschland-baut-mehr-windenergie-aus-a2/article.mp3"
     )
     mock_s3_client.upload_file.assert_called_once()
     info_messages = [call.args[0] for call in mock_logger.info.call_args_list]
@@ -218,8 +218,8 @@ def test_build_speech_script_includes_english_only_glossary_items(sample_a2_arti
         update={
             "vocabulary": [
                 {
-                    "term": "bombardeos",
-                    "english": "bombings",
+                    "term": "Sturmschäden",
+                    "english": "storm damage",
                     "explanation": "",
                 }
             ]
@@ -229,4 +229,4 @@ def test_build_speech_script_includes_english_only_glossary_items(sample_a2_arti
     script = build_speech_script(article_with_english_only_glossary, include_vocabulary=True)
 
     assert script.includes_vocabulary is True
-    assert "Vokabeln. bombardeos heißt auf Englisch bombings." in script.narration
+    assert "Vokabeln. Sturmschäden heißt auf Englisch storm damage." in script.narration

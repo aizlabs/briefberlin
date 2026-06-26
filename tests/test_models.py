@@ -42,42 +42,42 @@ def test_llm_config_enforces_temperature_upper_bound(field_name, value):
 
 def test_adapted_article_coerces_legacy_vocabulary_dict():
     article = AdaptedArticle(
-        title="Título",
-        content="Texto suficiente para pasar la validación. " * 4,
-        summary="Resumen suficientemente largo.",
+        title="Titel",
+        content="Dieser Text ist lang genug für die Validierung. " * 4,
+        summary="Ausreichend lange Zusammenfassung.",
         reading_time=2,
         level="A2",
         vocabulary={
-            "cambio climático": "climate change - cambios en el clima del planeta",
+            "Klimawandel": "climate change - langfristige Veränderung des Klimas",
         },
     )
 
     assert article.vocabulary == [
         VocabularyItem(
-            term="cambio climático",
+            term="Klimawandel",
             english="climate change",
-            explanation="cambios en el clima del planeta",
+            explanation="langfristige Veränderung des Klimas",
         )
     ]
 
 
 def test_adapted_article_coerces_legacy_term_gloss_items():
     article = AdaptedArticle(
-        title="Título",
-        content="Texto suficiente para pasar la validación. " * 4,
-        summary="Resumen suficientemente largo.",
+        title="Titel",
+        content="Dieser Text ist lang genug für die Validierung. " * 4,
+        summary="Ausreichend lange Zusammenfassung.",
         reading_time=2,
         level="B1",
         vocabulary=[
-            {"term": "bombardeos", "gloss": "bombings - ataques con bombas desde el aire"},
+            {"term": "Sturmschäden", "gloss": "storm damage - Schäden durch starken Wind und Regen"},
         ],
     )
 
     assert article.vocabulary == [
         VocabularyItem(
-            term="bombardeos",
-            english="bombings",
-            explanation="ataques con bombas desde el aire",
+            term="Sturmschäden",
+            english="storm damage",
+            explanation="Schäden durch starken Wind und Regen",
         )
     ]
 
@@ -86,9 +86,9 @@ def test_coerce_vocabulary_items_prefers_structured_fields_over_null_gloss():
     items = coerce_vocabulary_items(
         [
             {
-                "term": "bombardeos",
-                "english": "bombings",
-                "explanation": "ataques con bombas desde el aire",
+                "term": "Sturmschäden",
+                "english": "storm damage",
+                "explanation": "Schäden durch starken Wind und Regen",
                 "gloss": None,
             }
         ]
@@ -96,8 +96,8 @@ def test_coerce_vocabulary_items_prefers_structured_fields_over_null_gloss():
 
     assert items == [
         VocabularyItem(
-            term="bombardeos",
-            english="bombings",
-            explanation="ataques con bombas desde el aire",
+            term="Sturmschäden",
+            english="storm damage",
+            explanation="Schäden durch starken Wind und Regen",
         )
     ]

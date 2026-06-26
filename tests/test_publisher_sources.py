@@ -162,7 +162,7 @@ def test_publisher_normalizes_malformed_vocabulary_terms(
     article = sample_a2_article.model_copy(
         update={
             'vocabulary': {
-                '****medio ambiente****': 'environment - la naturaleza que nos rodea',
+                '****Windenergie****': 'wind energy - Strom aus der Kraft des Windes',
             }
         }
     )
@@ -171,8 +171,8 @@ def test_publisher_normalizes_malformed_vocabulary_terms(
 
     markdown = publisher._generate_markdown(article, datetime(2024, 1, 1, 12, 0, 0))
 
-    assert "- **medio ambiente** - environment - la naturaleza que nos rodea" in markdown
-    assert "****medio ambiente****" not in markdown
+    assert "- **Windenergie** - wind energy - Strom aus der Kraft des Windes" in markdown
+    assert "****Windenergie****" not in markdown
 
 
 def test_publisher_skips_vocabulary_items_without_any_definition(
@@ -186,7 +186,7 @@ def test_publisher_skips_vocabulary_items_without_any_definition(
         update={
             'vocabulary': [
                 {
-                    'term': 'bombardeos',
+                    'term': 'Sturmschäden',
                     'english': '',
                     'explanation': '',
                 }
@@ -198,7 +198,7 @@ def test_publisher_skips_vocabulary_items_without_any_definition(
 
     markdown = publisher._generate_markdown(article, datetime(2024, 1, 1, 12, 0, 0))
 
-    assert "- **bombardeos** -" not in markdown
+    assert "- **Sturmschäden** -" not in markdown
     assert "## Vokabeln" not in markdown
 
 

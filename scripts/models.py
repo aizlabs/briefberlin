@@ -157,7 +157,7 @@ def coerce_vocabulary_items(value: Any) -> List["VocabularyItem"]:
         if not isinstance(raw_item, dict):
             continue
 
-        term = raw_item.get("term") or raw_item.get("spanish")
+        term = raw_item.get("term")
         if not term:
             continue
 

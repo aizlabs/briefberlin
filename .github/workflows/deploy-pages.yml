@@ -1,5 +1,10 @@
 name: Deploy Jekyll Site to GitHub Pages
 
+env:
+  # Keep Telegram article publishing disabled for the first deploy.
+  # Flip to "true" after the channel, copy, and failure-alert flow are ready.
+  TELEGRAM_PUBLISH_ENABLED: "false"
+
 on:
   push:
     branches: [main]
@@ -69,7 +74,10 @@ jobs:
       - name: Check Telegram publish configuration
         id: publish_config
         run: |
-          if [ -n "$TELEGRAM_PUBLISH_BOT_TOKEN" ] && [ -n "$TELEGRAM_PUBLISH_CHAT_ID" ]; then
+          if [ "$TELEGRAM_PUBLISH_ENABLED" != "true" ]; then
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "Telegram article publishing is disabled by TELEGRAM_PUBLISH_ENABLED=$TELEGRAM_PUBLISH_ENABLED"
+          elif [ -n "$TELEGRAM_PUBLISH_BOT_TOKEN" ] && [ -n "$TELEGRAM_PUBLISH_CHAT_ID" ]; then
             echo "enabled=true" >> "$GITHUB_OUTPUT"
           else
             echo "enabled=false" >> "$GITHUB_OUTPUT"

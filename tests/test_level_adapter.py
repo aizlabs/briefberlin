@@ -98,8 +98,8 @@ class TestLevelAdapterA2:
     ):
         mock_call_llm.return_value = FakeAdaptationResponse(
             title="Test",
-            content=("La **tasa** sube en el país. " * 8).strip(),
-            summary="Resumen simple suficiente",
+            content=("Die **Gebühr** steigt im Land. " * 8).strip(),
+            summary="Kurze Zusammenfassung reicht",
             reading_time=2,
         )
 

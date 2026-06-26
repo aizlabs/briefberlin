@@ -15,16 +15,16 @@ class TestNormalizeVocabularyTerm:
     """Normalization for glossary terms."""
 
     def test_strips_wrapping_bold_markers(self):
-        assert normalize_vocabulary_term("**término**") == "término"
+        assert normalize_vocabulary_term("**Begriff**") == "Begriff"
 
     def test_strips_multiple_wrapping_bold_marker_layers(self):
-        assert normalize_vocabulary_term("****término****") == "término"
+        assert normalize_vocabulary_term("****Begriff****") == "Begriff"
 
     def test_trims_surrounding_whitespace(self):
-        assert normalize_vocabulary_term("  **término**  ") == "término"
+        assert normalize_vocabulary_term("  **Begriff**  ") == "Begriff"
 
     def test_preserves_internal_punctuation_and_accents(self):
-        assert normalize_vocabulary_term("**índice (IPC)**") == "índice (IPC)"
+        assert normalize_vocabulary_term("**Gebühr (ÖPNV)**") == "Gebühr (ÖPNV)"
 
 
 class TestNormalizeExistingVocabularyBolding:
@@ -195,20 +195,20 @@ class TestVocabularyPresenceFiltering:
         assert vocabulary_term_present("la inflación sube", "tasa") is False
 
     def test_inflected_variant_does_not_count_as_present(self):
-        assert vocabulary_term_present("España reconoció al Estado", "reconocer") is False
+        assert vocabulary_term_present("Deutschland erkannte den Staat an", "erkennen") is False
 
     def test_filter_keeps_only_terms_present_in_content(self):
         vocabulary = {
-            "energía eólica": "wind energy",
+            "Windenergie": "wind energy",
             "SEPE": "employment office",
         }
 
         filtered, dropped = filter_vocabulary_to_content(
-            "España usa **energía eólica**.",
+            "Deutschland nutzt **Windenergie**.",
             vocabulary,
         )
 
-        assert filtered == {"energía eólica": "wind energy"}
+        assert filtered == {"Windenergie": "wind energy"}
         assert dropped == ["SEPE"]
 
     def test_filter_keeps_terms_when_article_only_differs_by_case(self):

@@ -51,7 +51,7 @@ class TestPrepareSourceContext:
 
         result = prepare_source_context(sources)
 
-        assert '<source_1 (El País)>' in result
+        assert '<source_1 (Tagesschau)>' in result
         assert '</source_1>' in result
         assert sample_sources[0].text in result
 
@@ -60,11 +60,11 @@ class TestPrepareSourceContext:
         result = prepare_source_context(sample_sources)
 
         # Should have all 3 sources with XML tags
-        assert '<source_1 (El País)>' in result
+        assert '<source_1 (Tagesschau)>' in result
         assert '</source_1>' in result
-        assert '<source_2 (BBC Mundo)>' in result
+        assert '<source_2 (RBB24)>' in result
         assert '</source_2>' in result
-        assert '<source_3 (El Mundo)>' in result
+        assert '<source_3 (Zeit Online)>' in result
         assert '</source_3>' in result
 
         # Should contain all texts
@@ -102,7 +102,7 @@ class TestGetSynthesisPrompt:
         assert sample_topic.title in prompt
 
         # Should contain sources in XML format
-        assert '<source_1 (El País)>' in prompt
+        assert '<source_1 (Tagesschau)>' in prompt
         assert '</source_1>' in prompt
 
         # Should have task description
@@ -258,17 +258,17 @@ class TestGetGlossaryGenerationPrompt:
         prompt = get_glossary_retry_prompt(
             sample_a2_text_article,
             rejected_terms={
-                "España": "named entity or common place/person name",
+                "Deutschland": "named entity or common place/person name",
                 "drones": "transparent term for English-speaking learners",
             },
-            shortlist=["procesiones", "espacio aéreo", "selección"],
+            shortlist=["Windräder", "Netzausbau", "Genehmigungen"],
         )
 
         assert "Do NOT return any rejected term again" in prompt
-        assert "España" in prompt
+        assert "Deutschland" in prompt
         assert "drones" in prompt
-        assert "procesiones" in prompt
-        assert "espacio aéreo" in prompt
+        assert "Windräder" in prompt
+        assert "Netzausbau" in prompt
         assert '"term"' in prompt
         assert '"english"' in prompt
         assert '"explanation"' in prompt

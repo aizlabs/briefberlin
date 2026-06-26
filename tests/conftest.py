@@ -96,11 +96,11 @@ def mock_logger():
 def sample_topic() -> Topic:
     """Sample topic object"""
     return Topic(
-        title='España reduce emisiones de CO2',
-        sources=['El País', 'BBC Mundo', 'El Mundo'],
+        title='Deutschland baut mehr Windenergie aus',
+        sources=['Tagesschau', 'RBB24', 'Zeit Online'],
         mentions=5,
         score=25.0,
-        urls=['https://elpais.com/test', 'https://bbc.com/test', 'https://elmundo.es/test']
+        urls=['https://tagesschau.de/test', 'https://rbb24.de/test', 'https://zeit.de/test']
     )
 
 
@@ -109,28 +109,28 @@ def sample_sources() -> List[SourceArticle]:
     """Sample source articles"""
     return [
         SourceArticle(
-            source='El País',
-            text='España ha reducido sus emisiones de CO2 en un 15% este año. '
-                 'El gobierno atribuye esta reducción al aumento del uso de energías renovables. '
-                 'Los expertos consideran que es un paso importante en la lucha contra el cambio climático.',
+            source='Tagesschau',
+            text='Deutschland hat im ersten Halbjahr mehr Strom aus Windenergie erzeugt. '
+                 'Die Bundesregierung sieht darin einen wichtigen Schritt für die Energiewende. '
+                 'Fachleute sagen, dass schnellere Genehmigungen den Ausbau unterstützen.',
             word_count=150,
-            url='https://elpais.com/test'
+            url='https://tagesschau.de/test'
         ),
         SourceArticle(
-            source='BBC Mundo',
-            text='Las nuevas medidas implementadas por el gobierno español están dando resultados. '
-                 'La reducción de emisiones alcanza el 15% comparado con el año anterior. '
-                 'Los paneles solares y la energía eólica han sido clave en este logro.',
+            source='RBB24',
+            text='In Brandenburg entstehen neue Windräder, die auch Berlin mit sauberem Strom versorgen sollen. '
+                 'Mehrere Gemeinden prüfen neue Flächen und sprechen mit Bürgerinnen und Bürgern. '
+                 'Der Netzausbau bleibt eine wichtige Aufgabe.',
             word_count=140,
-            url='https://bbc.com/test'
+            url='https://rbb24.de/test'
         ),
         SourceArticle(
-            source='El Mundo',
-            text='Expertos ambientales celebran los datos de España. '
-                 'El país ha logrado reducir significativamente sus emisiones contaminantes. '
-                 'La inversión en tecnologías limpias ha sido fundamental.',
+            source='Zeit Online',
+            text='Energieexperten bewerten die neuen Zahlen positiv. '
+                 'Deutschland kann mit mehr Windstrom unabhängiger von fossilen Brennstoffen werden. '
+                 'Für Verbraucher bleiben stabile Preise ein zentrales Ziel.',
             word_count=120,
-            url='https://elmundo.es/test'
+            url='https://zeit.de/test'
         )
     ]
 
@@ -150,18 +150,18 @@ def sample_source_metadata(sample_sources: List[SourceArticle]) -> List[SourceMe
 def sample_base_article(sample_topic: Topic, sample_source_metadata: List[SourceMetadata]) -> BaseArticle:
     """Sample base article - matches real ArticleSynthesizer output."""
     return BaseArticle(
-        title='España logra reducir sus emisiones de CO2 en un 15% este año',
-        content='España ha conseguido reducir sus emisiones de dióxido de carbono en un 15% '
-                'durante el presente año, según datos publicados por el Ministerio de Transición Ecológica. '
-                'Este descenso se atribuye principalmente al incremento en el uso de energías renovables, '
-                'especialmente la energía solar y eólica.\n\n'
-                'El gobierno español ha invertido significativamente en infraestructuras de energías limpias '
-                'durante los últimos años. Los paneles solares y los parques eólicos han proliferado '
-                'por todo el territorio nacional, contribuyendo a una matriz energética más sostenible.\n\n'
-                'Los expertos en medio ambiente consideran que estos resultados son un paso importante '
-                'en la lucha contra el cambio climático. Sin embargo, advierten que aún queda mucho '
-                'trabajo por hacer para alcanzar los objetivos establecidos en el Acuerdo de París.',
-        summary='España reduce sus emisiones de CO2 un 15% gracias al aumento de energías renovables.',
+        title='Deutschland baut mehr Windenergie aus',
+        content='Deutschland hat im ersten Halbjahr deutlich mehr Strom aus Windenergie erzeugt. '
+                'Nach Angaben der zuständigen Behörden helfen schnellere Genehmigungen und neue Flächen '
+                'beim Ausbau. Besonders in Brandenburg entstehen zusätzliche Anlagen, die auch Berlin '
+                'mit sauberem Strom versorgen sollen.\n\n'
+                'Die Bundesregierung investiert in Netze, Speicher und Planungsverfahren. Gemeinden '
+                'sprechen mit Bürgerinnen und Bürgern über neue Standorte. Fachleute sagen, dass der '
+                'Ausbau wichtig ist, damit Deutschland unabhängiger von fossilen Brennstoffen wird.\n\n'
+                'Energieexperten sehen in den aktuellen Zahlen einen Fortschritt für die Energiewende. '
+                'Gleichzeitig warnen sie, dass Stromnetze schneller modernisiert werden müssen. Nur dann '
+                'können Haushalte und Unternehmen zuverlässig von mehr erneuerbarer Energie profitieren.',
+        summary='Deutschland erzeugt mehr Windstrom und will den Ausbau der Netze beschleunigen.',
         reading_time=3,
         # Metadata added by ArticleSynthesizer (these fields are CRITICAL for downstream components)
         topic=sample_topic,
@@ -185,31 +185,31 @@ def sample_base_article_minimal() -> BaseArticle:
 def sample_a2_article(sample_base_article: BaseArticle) -> AdaptedArticle:
     """Sample A2-adapted article"""
     return AdaptedArticle(
-        title='España tiene menos contaminación',
-        content='España reduce sus emisiones de CO2. El gobierno dice que la contaminación baja un 15%. '
-                'Esto es bueno para el **medio ambiente**.\n\n'
-                'El país usa más **energías renovables**. Los **paneles solares** y el viento producen electricidad. '
-                'Estas energías son limpias.\n\n'
-                'Los expertos están contentos. Dicen que España va por buen camino. '
-                'Pero necesita hacer más para ayudar al planeta.',
+        title='Deutschland baut mehr Windenergie aus',
+        content='Deutschland baut mehr **Windenergie** aus. Neue Windräder produzieren Strom. '
+                'Das hilft bei der **Energiewende**.\n\n'
+                'Besonders in Brandenburg gibt es neue **Windräder**. Sie können auch Berlin mit Strom versorgen. '
+                'Der Strom ist sauber.\n\n'
+                'Fachleute sind zufrieden. Sie sagen, Deutschland ist auf einem guten Weg. '
+                'Aber die Stromnetze müssen schneller besser werden.',
         vocabulary=[
             VocabularyItem(
-                term='medio ambiente',
+                term='Windenergie',
                 english='environment',
-                explanation='el aire, agua y naturaleza que nos rodea',
+                explanation='Strom aus der Kraft des Windes',
             ),
             VocabularyItem(
-                term='energías renovables',
-                english='renewable energy',
-                explanation='energía del sol, viento y agua',
+                term='Energiewende',
+                english='energy transition',
+                explanation='Wechsel zu sauberer Energie',
             ),
             VocabularyItem(
-                term='paneles solares',
-                english='solar panels',
-                explanation='aparatos que capturan la energía del sol',
+                term='Windräder',
+                english='wind turbines',
+                explanation='große Anlagen, die mit Wind Strom machen',
             ),
         ],
-        summary='España contamina menos gracias a las energías limpias.',
+        summary='Deutschland baut mehr Windräder und produziert mehr sauberen Strom.',
         reading_time=2,
         level='A2',
         base_article=sample_base_article,
@@ -222,59 +222,53 @@ def sample_a2_article(sample_base_article: BaseArticle) -> AdaptedArticle:
 def sample_b1_article(sample_base_article: BaseArticle) -> AdaptedArticle:
     """Sample B1-adapted article"""
     return AdaptedArticle(
-        title='España reduce sus emisiones de CO2 gracias a energías limpias',
-        content='España ha logrado reducir sus **emisiones de dióxido de carbono** en un 15% este año. '
-                'El **Ministerio de Transición Ecológica** publicó estos datos positivos. '
-                'El aumento de **energías renovables** explica esta mejora.\n\n'
-                'El gobierno invirtió mucho dinero en infraestructuras de energías limpias. '
-                'Los **paneles solares** y **parques eólicos** se multiplicaron en todo el país. '
-                'Esto creó una matriz energética más **sostenible**.\n\n'
-                'Los expertos ambientales celebran estos resultados. Consideran que es un avance importante '
-                'contra el **cambio climático**. Sin embargo, advierten que España debe hacer más '
-                'para cumplir los objetivos del **Acuerdo de París**.',
+        title='Deutschland baut Windenergie für die Energiewende aus',
+        content='Deutschland hat in diesem Jahr mehr **Windstrom** erzeugt. '
+                'Das **Bundeswirtschaftsministerium** sieht darin einen wichtigen Erfolg. '
+                'Neue Flächen und schnellere **Genehmigungen** erklären diese Entwicklung.\n\n'
+                'Der Staat investiert Geld in Stromnetze und Speicher. '
+                'Viele **Windparks** entstehen in Brandenburg und anderen Bundesländern. '
+                'Dadurch wird die Energieversorgung **nachhaltiger**.\n\n'
+                'Fachleute begrüßen den Ausbau. Sie halten ihn für wichtig gegen den **Klimawandel**. '
+                'Sie warnen aber, dass Deutschland mehr Tempo beim **Netzausbau** braucht.',
         vocabulary=[
             VocabularyItem(
-                term='emisiones de dióxido de carbono',
-                english='carbon dioxide emissions',
-                explanation='gases contaminantes del aire',
+                term='Windstrom',
+                english='wind power',
+                explanation='Strom, der mit Wind erzeugt wird',
             ),
             VocabularyItem(
-                term='Ministerio de Transición Ecológica',
-                english='Ministry of Ecological Transition',
-                explanation='departamento del gobierno español',
+                term='Bundeswirtschaftsministerium',
+                english='Federal Ministry for Economic Affairs',
+                explanation='Ministerium der Bundesregierung für Wirtschaft und Energie',
             ),
             VocabularyItem(
-                term='energías renovables',
-                english='renewable energy',
-                explanation='energía del sol, viento y agua que no se agota',
+                term='Genehmigungen',
+                english='permits',
+                explanation='offizielle Erlaubnisse für ein Projekt',
             ),
             VocabularyItem(
-                term='paneles solares',
-                english='solar panels',
-                explanation='dispositivos que convierten luz solar en electricidad',
-            ),
-            VocabularyItem(
-                term='parques eólicos',
+                term='Windparks',
                 english='wind farms',
-                explanation='lugares con muchas turbinas de viento',
+                explanation='Gebiete mit mehreren Windrädern',
             ),
             VocabularyItem(
-                term='sostenible',
-                english='sustainable',
-                explanation='que se puede mantener sin dañar el medio ambiente',
+                term='nachhaltiger',
+                english='more sustainable',
+                explanation='besser für Umwelt und Zukunft',
             ),
             VocabularyItem(
-                term='cambio climático',
+                term='Klimawandel',
                 english='climate change',
-                explanation='alteración del clima global por actividad humana',
+                explanation='langfristige Veränderung des Klimas',
             ),
             VocabularyItem(
-                term='Acuerdo de París',
-                english='Paris Agreement',
-                explanation='tratado internacional sobre cambio climático',
+                term='Netzausbau',
+                english='grid expansion',
+                explanation='Ausbau der Leitungen für Strom',
             ),
         ],
-        summary='España reduce emisiones de CO2 en 15% mediante energías renovables.',
+        summary='Deutschland erzeugt mehr Windstrom und muss die Stromnetze weiter ausbauen.',
         reading_time=3,
         level='B1',
         base_article=sample_base_article,
@@ -287,12 +281,12 @@ def sample_b1_article(sample_base_article: BaseArticle) -> AdaptedArticle:
 def sample_a2_text_article(sample_base_article: BaseArticle) -> AdaptedArticle:
     """Sample A2 article after text adaptation but before glossary generation."""
     return AdaptedArticle(
-        title='España tiene menos contaminación',
-        content='España reduce sus emisiones de CO2. El gobierno dice que la contaminación baja un 15%.\n\n'
-                'El país usa más energía limpia. Los paneles solares y el viento producen electricidad.\n\n'
-                'Los expertos están contentos. Dicen que España va por buen camino.',
+        title='Deutschland baut mehr Windenergie aus',
+        content='Deutschland baut mehr Windenergie aus. Neue Windräder produzieren Strom.\n\n'
+                'Besonders in Brandenburg entstehen neue Anlagen. Sie können auch Berlin helfen.\n\n'
+                'Fachleute sind zufrieden. Sie sagen, die Energiewende kommt voran.',
         vocabulary=[],
-        summary='España contamina menos gracias a las energías limpias.',
+        summary='Deutschland baut mehr Windräder und produziert mehr sauberen Strom.',
         reading_time=2,
         level='A2',
         base_article=sample_base_article,
@@ -305,13 +299,13 @@ def sample_a2_text_article(sample_base_article: BaseArticle) -> AdaptedArticle:
 def sample_b1_text_article(sample_base_article: BaseArticle) -> AdaptedArticle:
     """Sample B1 article after text adaptation but before glossary generation."""
     return AdaptedArticle(
-        title='España reduce sus emisiones de CO2 gracias a energías limpias',
-        content='España ha logrado reducir sus emisiones de dióxido de carbono en un 15% este año.\n\n'
-                'El Ministerio de Transición Ecológica publicó estos datos positivos y explicó que el '
-                'aumento de energías renovables ayudó mucho.\n\n'
-                'Los expertos consideran que es un avance importante contra el cambio climático.',
+        title='Deutschland baut Windenergie für die Energiewende aus',
+        content='Deutschland hat in diesem Jahr mehr Windstrom erzeugt.\n\n'
+                'Das Bundeswirtschaftsministerium bewertet die neuen Zahlen positiv und erklärt, dass '
+                'schnellere Genehmigungen beim Ausbau helfen.\n\n'
+                'Fachleute halten den Fortschritt für wichtig gegen den Klimawandel.',
         vocabulary=[],
-        summary='España reduce emisiones de CO2 en 15% mediante energías renovables.',
+        summary='Deutschland erzeugt mehr Windstrom und muss die Stromnetze weiter ausbauen.',
         reading_time=3,
         level='B1',
         base_article=sample_base_article,
