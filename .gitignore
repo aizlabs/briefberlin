@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# Environment variables
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+
+
+# Private manual source inputs
+private-input/
+input/private/
+*.source.txt
+
+# Runtime diagnostics that may contain operational details
+logs/
+output/logs/
+output/metrics/
+output/base_articles/
+output/audio/
+
+# Logs
+logs/
+*.log
+
+# Output (Jekyll needs to be tracked for GitHub Pages)
+output/_site/
+output/.jekyll-cache/
+output/Gemfile.lock
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/

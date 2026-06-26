@@ -1,0 +1,122 @@
+# BriefBerlin - Base Configuration
+
+environment: base
+
+# Sources for topic discovery and content fetching
+sources:
+  max_headlines_per_source: 20
+  fetch_timeout: 10
+  max_words_per_source: 300   # Truncate articles to this word count
+  min_words_per_source: 100   # Minimum words for valid article
+  max_sources_per_topic: 5    # Maximum sources to fetch per topic
+
+# Topic discovery settings
+discovery:
+  min_sources: 3          # Minimum sources for topic validation
+  max_topics: 15          # Total topics to discover
+  output_limit: 10        # Topics to return to pipeline
+
+# Topic ranking algorithm
+ranking:
+  source_weight: 3        # Multiplier for source count
+  mention_weight: 2       # Multiplier for mention count
+  mention_cap: 10         # Cap mentions at this value for scoring
+  cultural_bonus: 5       # Bonus for learner-friendly topics
+  avoid_penalty: -10      # Penalty for inappropriate topics
+
+# Entity extraction settings
+entity_extraction:
+  min_entity_length: 2    # Minimum characters for entity
+  entity_types:           # SpaCy entity types to extract
+    - PER                 # Person
+    - LOC                 # Location
+    - ORG                 # Organization
+    - MISC                # Miscellaneous
+
+# Article generation settings
+generation:
+  articles_per_run: 4
+  levels:
+    - A2
+    - B1
+  target_word_count:
+    A2: 200
+    B1: 300
+
+  # Two-step synthesis settings
+  two_step_synthesis:
+    enabled: true                    # Toggle for two-step vs single-step generation
+    save_base_article: false         # Save intermediate base articles for debugging
+    base_article_path: ./output/base_articles/  # Where to save base articles
+    regeneration_strategy: adaptation_only  # 'adaptation_only' or 'full_pipeline'
+
+# Quality gate settings
+quality_gate:
+  min_score: 7.5
+  max_attempts: 3
+
+glossary:
+  retry_on_empty: true
+  debug_dump: false
+
+# Audio preparation (website first; Telegram and podcast later)
+audio:
+  enabled: false
+  provider: openai
+  voice: alloy
+  format: mp3
+  output_path: ./output/audio
+  include_vocabulary: false
+  upload_enabled: false
+  public_base_url: ""
+  s3:
+    bucket: ""
+    region: ""
+    prefix: articles
+  website:
+    enabled: true
+
+# LLM configuration
+llm:
+  provider: openai  # or 'anthropic'
+  models:
+    generation: gpt-4o        # For synthesis (Step 1)
+    adaptation: gpt-4o        # For level adaptation (Step 2) - can use cheaper model
+    quality_check: gpt-4o-mini
+  temperature: 0.3
+  quality_temperature: 0.1
+  max_tokens: 4096
+
+# Output settings
+output:
+  format: jekyll
+  path: ./output/_posts
+
+# Logging (overridden per environment)
+logging:
+  level: INFO
+  format: json
+  file: output/logs/app.log
+
+# Metrics
+metrics:
+  enabled: true
+  output: output/metrics/
+
+# Alerts (in CI, enabled and email_config.smtp can be overridden by ALERTS_ENABLED, ALERT_SMTP_*, EMAIL_USERNAME, EMAIL_PASSWORD)
+# Telegram alerts are configured in YAML via alerts.telegram.*
+alerts:
+  enabled: false                  # Global toggle for alert delivery
+  email: your@email.com           # Recipient for alert emails (can be overridden via ALERT_EMAIL)
+  cooldown_hours: 6               # Cooldown window to avoid duplicate alerts
+  email_config:
+    from: bot@briefberlin.local   # Sender address used for email alerts
+    smtp:
+      host: smtp.gmail.com        # SMTP host required for outbound mail
+      port: 587                   # SMTP port
+      username: ""                # SMTP username (required when server enforces auth)
+      password: ""                # SMTP password (required when server enforces auth)
+  telegram:
+    enabled: false                # Send the same pipeline alerts to Telegram
+    bot_token: ""                 # Telegram bot token from BotFather
+    chat_id: ""                   # Telegram chat or channel ID to receive alerts

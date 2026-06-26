@@ -1,0 +1,5 @@
+# BriefBerlin source configuration
+#
+# The German workflow is manual-input first. Do not add private/manual source
+# articles here; use ignored local input paths instead.
+sources: []

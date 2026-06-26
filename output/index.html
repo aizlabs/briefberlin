@@ -1,0 +1,134 @@
+---
+layout: home
+title: "BriefBerlin"
+excerpt: "Simplified German articles for A2 and B1 learners."
+---
+
+<div class="intro-section">
+  <p class="lead">
+    Lies kurze deutsche Artikel in deinem Niveau. Neue Texte erscheinen, wenn sie manuell geprüft und veröffentlicht werden.
+  </p>
+
+  <div class="level-info">
+    <div class="level-box" data-level="A2" role="button" tabindex="0">
+      <span class="level-badge level-a2">A2</span>
+      <h3>A2</h3>
+      <p>Kurze Artikel mit einfachen Sätzen, häufigen Wörtern und klarer Struktur.</p>
+    </div>
+    <div class="level-box" data-level="B1" role="button" tabindex="0">
+      <span class="level-badge level-b1">B1</span>
+      <h3>B1</h3>
+      <p>Längere Artikel mit mehr Kontext, gemischten Zeiten und erweitertem Wortschatz.</p>
+    </div>
+  </div>
+</div>
+
+<div class="filter-section">
+  <h2>Artikel</h2>
+  <div class="filter-buttons">
+    <button class="filter-btn active" data-level="all">Alle</button>
+    <button class="filter-btn" data-level="A2">A2</button>
+    <button class="filter-btn" data-level="B1">B1</button>
+  </div>
+  <p class="level-explainer" aria-live="polite"></p>
+</div>
+
+<div class="articles-grid">
+  {% for post in paginator.posts %}
+    <article class="article-card" data-level="{{ post.level }}">
+      <div class="article-header">
+        <span class="level-badge level-{{ post.level | downcase }}">{{ post.level }}</span>
+        <span class="article-date">{{ post.date | date: "%b %-d, %Y" }}</span>
+      </div>
+
+      <h2 class="article-title">
+        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+      </h2>
+
+      <div class="article-excerpt">
+        {{ post.summary | default: post.content | strip_html | truncatewords: 30 }}
+      </div>
+
+      <div class="article-meta">
+        {% if post.reading_time %}
+          <span><i class="far fa-clock"></i> {{ post.reading_time }} min</span>
+        {% endif %}
+        {% if post.topics %}
+          <span class="topics">
+            {% for topic in post.topics limit:2 %}
+              <span class="topic-tag">{{ topic }}</span>
+            {% endfor %}
+          </span>
+        {% endif %}
+      </div>
+
+      <a href="{{ post.url | relative_url }}" class="read-more">Artikel lesen →</a>
+    </article>
+  {% endfor %}
+</div>
+
+{% if paginator.total_pages > 1 %}
+<nav class="pagination">
+  {% if paginator.previous_page %}
+    <a href="{{ paginator.previous_page_path | relative_url }}" class="pagination-btn">← Zurück</a>
+  {% endif %}
+
+  <span class="pagination-info">Seite {{ paginator.page }} von {{ paginator.total_pages }}</span>
+
+  {% if paginator.next_page %}
+    <a href="{{ paginator.next_page_path | relative_url }}" class="pagination-btn">Weiter →</a>
+  {% endif %}
+</nav>
+{% endif %}
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const articles = document.querySelectorAll('.article-card');
+  const levelBoxes = document.querySelectorAll('.level-box');
+  const levelExplainer = document.querySelector('.level-explainer');
+  const filterSection = document.querySelector('.filter-section');
+  const levelDescriptions = {
+    A2: 'A2: kurze Texte mit einfachem Satzbau und häufigen Wörtern.',
+    B1: 'B1: längere Texte mit mehr Kontext, Nebensätzen und erweitertem Wortschatz.'
+  };
+
+  const applyFilter = level => {
+    filterBtns.forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.level === level);
+    });
+
+    articles.forEach(article => {
+      article.style.display = level === 'all' || article.dataset.level === level ? 'flex' : 'none';
+    });
+
+    if (levelDescriptions[level]) {
+      levelExplainer.textContent = levelDescriptions[level];
+      levelExplainer.classList.add('active');
+    } else {
+      levelExplainer.textContent = '';
+      levelExplainer.classList.remove('active');
+    }
+  };
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      applyFilter(this.dataset.level);
+    });
+  });
+
+  levelBoxes.forEach(box => {
+    box.addEventListener('click', function() {
+      const level = this.dataset.level;
+      applyFilter(level);
+      filterSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    box.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        this.click();
+      }
+    });
+  });
+});
+</script>

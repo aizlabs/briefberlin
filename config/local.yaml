@@ -1,0 +1,28 @@
+# Local Development Configuration
+
+environment: local
+
+# Initial content generation - 2 articles per run to build catalog
+generation:
+  articles_per_run: 1     # Single article for testing
+  levels: [A2]            # Only A2 level
+  two_step_synthesis:
+    save_base_article: false  # Base articles may contain private source-derived text
+
+# Lower quality threshold during development
+quality_gate:
+  min_score: 6.0
+
+# Console logging for development
+logging:
+  level: DEBUG
+  format: console  # Colored, human-readable
+  file: logs/local.log
+
+# Disable metrics in local dev
+metrics:
+  enabled: false
+
+# Disable alerts in local dev
+alerts:
+  enabled: false

@@ -1,0 +1,259 @@
+name: Deploy Jekyll Site to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'output/**'
+  workflow_dispatch:
+
+# Grant GITHUB_TOKEN permissions for Pages deployment
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+          bundler-cache: true
+          working-directory: ./output
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Build with Jekyll
+        working-directory: ./output
+        run: bundle exec jekyll build
+        env:
+          JEKYLL_ENV: production
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./output/_site
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  publish_telegram:
+    runs-on: ubuntu-latest
+    needs: deploy
+    continue-on-error: true
+    if: github.event_name == 'push'
+    env:
+      TELEGRAM_PUBLISH_BOT_TOKEN: ${{ secrets.TELEGRAM_PUBLISH_BOT_TOKEN }}
+      TELEGRAM_PUBLISH_CHAT_ID: ${{ secrets.TELEGRAM_PUBLISH_CHAT_ID }}
+    steps:
+      - name: Check Telegram publish configuration
+        id: publish_config
+        run: |
+          if [ -n "$TELEGRAM_PUBLISH_BOT_TOKEN" ] && [ -n "$TELEGRAM_PUBLISH_CHAT_ID" ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "Telegram publish secrets are not configured; skipping article publish"
+          fi
+
+      - name: Resolve publish target
+        id: target
+        if: steps.publish_config.outputs.enabled == 'true'
+        run: |
+          echo "target_sha=${{ github.sha }}" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        if: steps.publish_config.outputs.enabled == 'true'
+        with:
+          fetch-depth: 0
+          ref: ${{ steps.target.outputs.target_sha }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        if: steps.publish_config.outputs.enabled == 'true'
+        with:
+          python-version: '3.11'
+
+      - name: Restore Telegram publish marker
+        id: telegram_cache
+        uses: actions/cache/restore@v4
+        if: steps.publish_config.outputs.enabled == 'true'
+        with:
+          path: .telegram-published/${{ steps.target.outputs.target_sha }}
+          key: telegram-published-${{ steps.target.outputs.target_sha }}
+
+      - name: Detect new article posts
+        id: detect_posts
+        if: steps.publish_config.outputs.enabled == 'true' && steps.telegram_cache.outputs.cache-hit != 'true'
+        run: |
+          TARGET_SHA="${{ steps.target.outputs.target_sha }}"
+
+          BEFORE_SHA="${{ github.event.before }}"
+          if [ "$BEFORE_SHA" = "0000000000000000000000000000000000000000" ]; then
+            BEFORE_SHA="$(git hash-object -t tree /dev/null)"
+          fi
+
+          git diff --name-only --diff-filter=A "$BEFORE_SHA" "$TARGET_SHA" -- output/_posts/ \
+            | grep -E '^output/_posts/.*\.md$' \
+            | sort > telegram_posts.txt || true
+
+          if [ -s telegram_posts.txt ]; then
+            echo "has_posts=true" >> "$GITHUB_OUTPUT"
+            echo "Detected $(wc -l < telegram_posts.txt | tr -d ' ') new article(s) for Telegram"
+          else
+            echo "has_posts=false" >> "$GITHUB_OUTPUT"
+            echo "No new article posts detected for Telegram"
+          fi
+
+      - name: Publish new articles to Telegram
+        id: publish
+        if: steps.publish_config.outputs.enabled == 'true' && steps.telegram_cache.outputs.cache-hit != 'true' && steps.detect_posts.outputs.has_posts == 'true'
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+          mapfile -t posts < telegram_posts.txt
+          python3 scripts/publish_telegram_channel.py "${posts[@]}" 2>&1 | tee telegram_publish.log
+
+      - name: Create Telegram publish marker
+        if: steps.publish_config.outputs.enabled == 'true' && steps.telegram_cache.outputs.cache-hit != 'true' && steps.detect_posts.outputs.has_posts == 'true' && steps.publish.outcome == 'success'
+        run: |
+          mkdir -p .telegram-published/${{ steps.target.outputs.target_sha }}
+          printf '%s\n' "${{ steps.target.outputs.target_sha }}" > .telegram-published/${{ steps.target.outputs.target_sha }}/published.txt
+
+      - name: Save Telegram publish marker
+        id: telegram_cache_save
+        if: steps.publish_config.outputs.enabled == 'true' && steps.telegram_cache.outputs.cache-hit != 'true' && steps.detect_posts.outputs.has_posts == 'true' && steps.publish.outcome == 'success'
+        uses: actions/cache/save@v4
+        with:
+          path: .telegram-published/${{ steps.target.outputs.target_sha }}
+          key: telegram-published-${{ steps.target.outputs.target_sha }}
+
+      - name: Summarize Telegram publish status
+        if: always()
+        run: |
+          echo "### Telegram Publish Status" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+
+          if [ "${{ steps.publish_config.outputs.enabled }}" != "true" ]; then
+            echo "- Status: skipped" >> "$GITHUB_STEP_SUMMARY"
+            echo "- Reason: Telegram publish secrets are not configured" >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+
+          echo "- Target commit: \`${{ steps.target.outputs.target_sha }}\`" >> "$GITHUB_STEP_SUMMARY"
+
+          if [ "${{ steps.telegram_cache.outputs.cache-hit }}" = "true" ]; then
+            echo "- Cache restore: hit" >> "$GITHUB_STEP_SUMMARY"
+            echo "- Publish: skipped because this commit already has a saved marker" >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+
+          echo "- Cache restore: miss" >> "$GITHUB_STEP_SUMMARY"
+
+          if [ "${{ steps.detect_posts.outputs.has_posts }}" != "true" ]; then
+            echo "- Publish: skipped because no new article posts were detected" >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+
+          if [ -f telegram_posts.txt ]; then
+            echo "- New article files: $(wc -l < telegram_posts.txt | tr -d ' ')" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+          PUBLISH_OUTCOME="${{ steps.publish.outcome }}"
+          SAVE_OUTCOME="${{ steps.telegram_cache_save.outcome }}"
+
+          if [ -z "$PUBLISH_OUTCOME" ]; then
+            PUBLISH_OUTCOME="skipped"
+          fi
+          if [ -z "$SAVE_OUTCOME" ]; then
+            SAVE_OUTCOME="skipped"
+          fi
+
+          echo "- Publish step outcome: $PUBLISH_OUTCOME" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Marker save outcome: $SAVE_OUTCOME" >> "$GITHUB_STEP_SUMMARY"
+
+          if [ "$PUBLISH_OUTCOME" = "success" ] && [ "$SAVE_OUTCOME" = "success" ]; then
+            echo "- Cache marker: saved for this commit" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Summarize Telegram publish warning
+        if: always() && steps.publish.outcome == 'failure'
+        run: |
+          echo "### Telegram publish warning" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "GitHub Pages deployment succeeded, but Telegram article publishing failed." >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "**Article files:**" >> "$GITHUB_STEP_SUMMARY"
+          sed 's/^/- /' telegram_posts.txt >> "$GITHUB_STEP_SUMMARY"
+          if [ -f telegram_publish.log ]; then
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo '```text' >> "$GITHUB_STEP_SUMMARY"
+            tail -n 50 telegram_publish.log >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+          fi
+          echo "::warning::Telegram article publishing failed. See the workflow summary for details."
+
+      - name: Notify operators about Telegram publish failure
+        if: always() && steps.publish.outcome == 'failure'
+        continue-on-error: true
+        env:
+          ALERT_TELEGRAM_BOT_TOKEN: ${{ secrets.ALERT_TELEGRAM_BOT_TOKEN }}
+          ALERT_TELEGRAM_CHAT_ID: ${{ secrets.ALERT_TELEGRAM_CHAT_ID }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          TARGET_SHA: ${{ steps.target.outputs.target_sha }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          GITHUB_SERVER_URL: ${{ github.server_url }}
+        run: |
+          if [ -z "$ALERT_TELEGRAM_BOT_TOKEN" ] || [ -z "$ALERT_TELEGRAM_CHAT_ID" ]; then
+            echo "Alert Telegram secrets are not configured; skipping operator notification."
+            exit 0
+          fi
+
+          python3 - <<'PY'
+          import json
+          import os
+          from urllib import request
+
+          message = (
+              "Telegram channel publishing failed after Pages deploy.\n"
+              f"Repository: {os.environ['GITHUB_REPOSITORY']}\n"
+              f"Commit: {os.environ['TARGET_SHA']}\n"
+              f"Run: {os.environ['GITHUB_SERVER_URL']}/{os.environ['GITHUB_REPOSITORY']}/actions/runs/{os.environ['GITHUB_RUN_ID']}"
+          )
+          payload = json.dumps(
+              {
+                  "chat_id": os.environ["ALERT_TELEGRAM_CHAT_ID"],
+                  "text": message,
+                  "disable_web_page_preview": True,
+              }
+          ).encode("utf-8")
+          req = request.Request(
+              url=f"https://api.telegram.org/bot{os.environ['ALERT_TELEGRAM_BOT_TOKEN']}/sendMessage",
+              data=payload,
+              headers={"Content-Type": "application/json"},
+              method="POST",
+          )
+          with request.urlopen(req, timeout=10) as response:
+              response.read()
+          PY

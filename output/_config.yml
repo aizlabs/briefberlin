@@ -1,0 +1,115 @@
+# Site Settings
+title: "BriefBerlin"
+name: "BriefBerlin"
+description: "Simplified German articles for A2 and B1 learners"
+url: ""
+baseurl: ""
+repository: ""
+
+# Theme
+theme: minimal-mistakes-jekyll
+minimal_mistakes_skin: "default"
+
+# Site Author
+author:
+  name: "BriefBerlin"
+  bio: "Simplified German learner articles"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: /articles/:title/
+paginate: 12
+paginate_path: /page:num/
+future: true  # Show future-dated posts (safeguard for timezone issues)
+
+# Collections
+collections:
+  posts:
+    output: true
+    permalink: /articles/:title/
+
+# Defaults
+defaults:
+  # _posts
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      author_profile: false
+      read_time: true
+      comments: false
+      share: true
+      related: true
+      show_date: true
+      sidebar:
+        nav: "levels"
+
+# Reading Files
+include:
+  - .htaccess
+  - _pages
+exclude:
+  - "*.sublime-project"
+  - "*.sublime-workspace"
+  - vendor
+  - .asset-cache
+  - .bundle
+  - .jekyll-assets-cache
+  - .sass-cache
+  - assets/js/plugins
+  - assets/js/_main.js
+  - assets/js/vendor
+  - Capfile
+  - CHANGELOG
+  - config
+  - Gemfile
+  - Gruntfile.js
+  - gulpfile.js
+  - LICENSE
+  - log
+  - node_modules
+  - package.json
+  - Rakefile
+  - README
+  - tmp
+keep_files:
+  - .git
+  - .svn
+encoding: "utf-8"
+markdown_ext: "markdown,mkdown,mkdn,mkd,md"
+
+# Plugins
+plugins:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-gist
+  - jekyll-feed
+  - jekyll-include-cache
+  - jekyll-seo-tag
+
+# SEO
+lang: de
+locale: "de-DE"
+logo: "/assets/images/logo.svg"
+social:
+  type: WebSite
+  links: []
+
+# Analytics (for future use)
+# google_analytics: "UA-XXXXXXXXX-X"
+
+# Google AdSense (placeholder for future activation)
+# google_adsense: "ca-pub-XXXXXXXXXX"
+
+# Archives
+category_archive:
+  type: liquid
+  path: /categories/
+tag_archive:
+  type: liquid
+  path: /tags/
+level_archive:
+  type: liquid
+  path: /levels/

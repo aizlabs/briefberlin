@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Spanish flag colors as background -->
+  <rect width="32" height="32" fill="#AA151B"/>
+  <rect y="8" width="32" height="16" fill="#F1BF00"/>
+
+  <!-- Simple "ES" text -->
+  <text x="16" y="22" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">ES</text>
+</svg>
