@@ -11,7 +11,7 @@ def _base_alerts_dict():
         "email": "your@email.com",
         "cooldown_hours": 6,
         "email_config": {
-            "from": "bot@briefberlin.com",
+            "from": "bot@briefberlin.de",
             "smtp": {
                 "host": "smtp.gmail.com",
                 "port": 587,
@@ -45,7 +45,7 @@ def test_audio_env_overrides(monkeypatch):
     monkeypatch.setenv("AUDIO_VOICE", "newsreader")
     monkeypatch.setenv("AUDIO_FORMAT", "mp3")
     monkeypatch.setenv("AUDIO_UPLOAD_ENABLED", "false")
-    monkeypatch.setenv("AUDIO_PUBLIC_BASE_URL", "https://media.briefberlin.com")
+    monkeypatch.setenv("AUDIO_PUBLIC_BASE_URL", "https://media.briefberlin.de")
     monkeypatch.setenv("AUDIO_S3_BUCKET", "briefberlin-audio-prod")
     monkeypatch.setenv("AUDIO_S3_REGION", "eu-central-1")
     monkeypatch.setenv("AUDIO_S3_PREFIX", "articles")
@@ -57,7 +57,7 @@ def test_audio_env_overrides(monkeypatch):
         assert config["audio"]["voice"] == "newsreader"
         assert config["audio"]["format"] == "mp3"
         assert config["audio"]["upload_enabled"] is False
-        assert config["audio"]["public_base_url"] == "https://media.briefberlin.com"
+        assert config["audio"]["public_base_url"] == "https://media.briefberlin.de"
         assert config["audio"]["s3"]["bucket"] == "briefberlin-audio-prod"
         assert config["audio"]["s3"]["region"] == "eu-central-1"
         assert config["audio"]["s3"]["prefix"] == "articles"

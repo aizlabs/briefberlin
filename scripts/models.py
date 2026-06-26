@@ -368,7 +368,7 @@ class EmailConfig(BaseModel):
     model_config = ConfigDict(populate_by_name=True)
 
     from_email: str = Field(
-        default="bot@briefberlin.com",
+        default="bot@briefberlin.de",
         alias="from",
         description="Sender address used for alerts",
     )

@@ -62,7 +62,7 @@ These should be evaluated only after BriefBerlin has a consistent content archiv
 The public site config should use the production domain, currently planned as:
 
 ```yaml
-url: "https://briefberlin.com"
+url: "https://briefberlin.de"
 ```
 
 If a different domain is chosen, update `output/_config.yml`, media-domain examples, and policy copy before launch.

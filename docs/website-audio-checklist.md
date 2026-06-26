@@ -12,7 +12,7 @@ Audio is optional and currently disabled by default. Enable it only after the pu
 
 ## Suggested Production Shape
 
-- Media domain: `https://media.briefberlin.com`
+- Media domain: `https://media.briefberlin.de`
 - S3 bucket example: `briefberlin-audio-prod`
 - Region: `eu-central-1`
 - Prefix: `articles`
@@ -22,7 +22,7 @@ Audio is optional and currently disabled by default. Enable it only after the pu
 ```bash
 AUDIO_ENABLED=true
 AUDIO_UPLOAD_ENABLED=true
-AUDIO_PUBLIC_BASE_URL=https://media.briefberlin.com
+AUDIO_PUBLIC_BASE_URL=https://media.briefberlin.de
 AUDIO_S3_BUCKET=briefberlin-audio-prod
 AUDIO_S3_REGION=eu-central-1
 AUDIO_S3_PREFIX=articles

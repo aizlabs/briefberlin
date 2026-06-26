@@ -2,7 +2,7 @@
 title: "BriefBerlin"
 name: "BriefBerlin"
 description: "Simplified German articles for A2 and B1 learners"
-url: "https://briefberlin.com"
+url: "https://briefberlin.de"
 baseurl: ""
 repository: "zozulya/briefberlin"
 
@@ -16,7 +16,7 @@ author:
   bio: "Simplified German learner articles"
 
 copyright: "BriefBerlin"
-copyright_url: "https://briefberlin.com"
+copyright_url: "https://briefberlin.de"
 footer:
   since: "2026"
 
