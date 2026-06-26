@@ -1,21 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-  <!-- Spanish flag colors -->
-  <rect width="200" height="200" fill="#AA151B"/>
-  <rect y="50" width="200" height="100" fill="#F1BF00"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="BriefBerlin Berlin bear logo">
+  <rect width="200" height="200" rx="18" fill="#ffffff"/>
+  <rect y="0" width="200" height="34" fill="#e30613"/>
+  <rect y="166" width="200" height="34" fill="#e30613"/>
 
-  <!-- Open book icon -->
-  <g transform="translate(100, 100)">
-    <path d="M -40,-20 L -40,30 L -5,25 L -5,-15 Z" fill="white" opacity="0.9"/>
-    <path d="M 5,-15 L 5,25 L 40,30 L 40,-20 Z" fill="white" opacity="0.9"/>
-    <path d="M -40,-20 Q 0,-25 40,-20" fill="none" stroke="white" stroke-width="2" opacity="0.7"/>
-
-    <!-- Text lines on book -->
-    <line x1="-30" y1="-5" x2="-10" y2="-7" stroke="#AA151B" stroke-width="1.5"/>
-    <line x1="-30" y1="5" x2="-10" y2="3" stroke="#AA151B" stroke-width="1.5"/>
-    <line x1="-30" y1="15" x2="-10" y2="13" stroke="#AA151B" stroke-width="1.5"/>
-
-    <line x1="10" y1="-7" x2="30" y2="-5" stroke="#AA151B" stroke-width="1.5"/>
-    <line x1="10" y1="3" x2="30" y2="5" stroke="#AA151B" stroke-width="1.5"/>
-    <line x1="10" y1="13" x2="30" y2="15" stroke="#AA151B" stroke-width="1.5"/>
+  <g transform="translate(100 106)" fill="#111111">
+    <circle cx="-26" cy="-42" r="15"/>
+    <circle cx="26" cy="-42" r="15"/>
+    <ellipse cx="0" cy="-8" rx="42" ry="50"/>
+    <ellipse cx="-14" cy="-18" rx="6" ry="8" fill="#ffffff"/>
+    <ellipse cx="14" cy="-18" rx="6" ry="8" fill="#ffffff"/>
+    <circle cx="-14" cy="-18" r="3"/>
+    <circle cx="14" cy="-18" r="3"/>
+    <ellipse cx="0" cy="-2" rx="8" ry="5" fill="#ffffff"/>
+    <path d="M -9 9 Q 0 17 9 9" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/>
+    <path d="M -42 3 Q -64 22 -55 58 Q -44 51 -36 31 Z"/>
+    <path d="M 42 3 Q 64 22 55 58 Q 44 51 36 31 Z"/>
+    <path d="M -24 36 L -36 74 L -17 74 L -7 38 Z"/>
+    <path d="M 24 36 L 36 74 L 17 74 L 7 38 Z"/>
   </g>
 </svg>

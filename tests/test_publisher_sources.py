@@ -213,7 +213,7 @@ def test_publisher_includes_audio_frontmatter_when_public_url_exists(
     article = sample_a2_article.model_copy(
         update={
             'audio': AudioAsset(
-                url='https://media.spaili.com/articles/2024/01/test/article.mp3',
+                url='https://media.briefberlin.com/articles/2024/01/test/article.mp3',
                 provider='elevenlabs',
                 voice='newsreader',
                 format='mp3',
@@ -227,7 +227,7 @@ def test_publisher_includes_audio_frontmatter_when_public_url_exists(
     markdown = publisher._generate_markdown(article, datetime(2024, 1, 1, 12, 0, 0))
 
     assert 'audio:' in markdown
-    assert 'url: "https://media.spaili.com/articles/2024/01/test/article.mp3"' in markdown
+    assert 'url: "https://media.briefberlin.com/articles/2024/01/test/article.mp3"' in markdown
     assert 'provider: "elevenlabs"' in markdown
     assert 'voice: "newsreader"' in markdown
 
@@ -244,7 +244,7 @@ def test_publisher_omits_audio_frontmatter_when_website_audio_disabled(
     article = sample_a2_article.model_copy(
         update={
             'audio': AudioAsset(
-                url='https://media.spaili.com/articles/2024/01/test/article.mp3',
+                url='https://media.briefberlin.com/articles/2024/01/test/article.mp3',
                 provider='elevenlabs',
                 voice='newsreader',
                 format='mp3',
@@ -258,4 +258,4 @@ def test_publisher_omits_audio_frontmatter_when_website_audio_disabled(
     markdown = publisher._generate_markdown(article, datetime(2024, 1, 1, 12, 0, 0))
 
     assert 'audio: null' in markdown
-    assert 'https://media.spaili.com/articles/2024/01/test/article.mp3' not in markdown
+    assert 'https://media.briefberlin.com/articles/2024/01/test/article.mp3' not in markdown

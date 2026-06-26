@@ -9,10 +9,9 @@ This script orchestrates the entire content generation pipeline:
 4. Quality Gate
 5. Publishing
 
-Usage:
-    uv run spai-pipeline              # Run full pipeline
-    ENVIRONMENT=local uv run spai-pipeline
-    DRY_RUN=true uv run spai-pipeline  # Generate but don't publish
+This legacy public-source pipeline module is kept for component tests, but it
+is not exposed as a console command. Use `uv run briefberlin-manual ...` for
+the private manual-input workflow.
 """
 
 import os

@@ -3,7 +3,7 @@ version: '3.8'
 services:
   generator:
     build: .
-    container_name: autospanish-generator
+    container_name: briefberlin-generator
     # Run as host user to avoid permission issues with mounted volumes
     # Container user is UID 1000 by default, override if needed:
     # user: "${UID:-1000}:${GID:-1000}"
@@ -18,6 +18,6 @@ services:
       - ENVIRONMENT=${ENVIRONMENT:-local}
       - DRY_RUN=${DRY_RUN:-false}
       - ARTICLES_PER_RUN=${ARTICLES_PER_RUN}
-    # Default command from Dockerfile (test_discovery.py)
+    # Default command from Dockerfile
     # Override in Makefile or command line as needed
     # command: python scripts/main.py

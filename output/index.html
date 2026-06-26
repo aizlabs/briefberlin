@@ -4,27 +4,40 @@ title: "BriefBerlin"
 excerpt: "Simplified German articles for A2 and B1 learners."
 ---
 
-<div class="intro-section">
-  <p class="lead">
-    Lies kurze deutsche Artikel in deinem Niveau. Neue Texte erscheinen, wenn sie manuell geprüft und veröffentlicht werden.
-  </p>
-
-  <div class="level-info">
-    <div class="level-box" data-level="A2" role="button" tabindex="0">
-      <span class="level-badge level-a2">A2</span>
-      <h3>A2</h3>
-      <p>Kurze Artikel mit einfachen Sätzen, häufigen Wörtern und klarer Struktur.</p>
-    </div>
-    <div class="level-box" data-level="B1" role="button" tabindex="0">
-      <span class="level-badge level-b1">B1</span>
-      <h3>B1</h3>
-      <p>Längere Artikel mit mehr Kontext, gemischten Zeiten und erweitertem Wortschatz.</p>
-    </div>
+<section class="home-overview" aria-labelledby="home-overview-title">
+  <div class="home-overview__intro">
+    <h1 id="home-overview-title">Deutsch lernen mit echten Nachrichten</h1>
+    <p>Aktuelle Artikel, passend zu deinem Niveau.</p>
   </div>
-</div>
+
+  <div class="home-overview__learning">
+    <div class="level-info" aria-label="Wähle ein Niveau">
+      <div class="level-box" data-level="A2" role="button" tabindex="0" aria-label="A2-Artikel für Anfänger filtern">
+        <span class="level-badge level-a2">A2</span>
+        <span class="level-box__text">
+          <strong>Anfänger</strong>
+          <span>Kurze Sätze, häufige Wörter und klare Struktur.</span>
+        </span>
+      </div>
+      <div class="level-box" data-level="B1" role="button" tabindex="0" aria-label="B1-Artikel für Mittelstufe filtern">
+        <span class="level-badge level-b1">B1</span>
+        <span class="level-box__text">
+          <strong>Mittelstufe</strong>
+          <span>Mehr Kontext, gemischte Zeiten und längere Texte.</span>
+        </span>
+      </div>
+    </div>
+
+    <a class="welcome-link" href="{{ '/articles/willkommen-bei-briefberlin/' | relative_url }}">
+      <span>Neu bei BriefBerlin?</span>
+      <strong>Willkommen lesen</strong>
+      <i class="fas fa-arrow-right" aria-hidden="true"></i>
+    </a>
+  </div>
+</section>
 
 <div class="filter-section">
-  <h2>Artikel</h2>
+  <h2>Neueste Artikel</h2>
   <div class="filter-buttons">
     <button class="filter-btn active" data-level="all">Alle</button>
     <button class="filter-btn" data-level="A2">A2</button>
@@ -38,7 +51,7 @@ excerpt: "Simplified German articles for A2 and B1 learners."
     <article class="article-card" data-level="{{ post.level }}">
       <div class="article-header">
         <span class="level-badge level-{{ post.level | downcase }}">{{ post.level }}</span>
-        <span class="article-date">{{ post.date | date: "%b %-d, %Y" }}</span>
+        <span class="article-date">{{ post.date | date: "%d.%m.%Y" }}</span>
       </div>
 
       <h2 class="article-title">

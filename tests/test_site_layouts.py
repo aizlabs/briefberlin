@@ -8,9 +8,9 @@ def test_post_layout_does_not_render_audio_voice_label():
     assert "article-audio__player" in layout
     assert "article-audio__waveform" in layout
     assert "article-audio__skip-back" in layout
-    assert "Retroceder 10 segundos" in layout
+    assert "10 Sekunden zurück" in layout
     assert "article-audio__skip-forward" in layout
-    assert "Avanzar 10 segundos" in layout
+    assert "10 Sekunden vor" in layout
     assert 'data-speed="0.5"' in layout
     assert 'data-speed="0.75"' in layout
     assert 'data-speed="1"' in layout

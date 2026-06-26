@@ -1,10 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <!-- Simple Spanish flag favicon -->
-  <rect width="32" height="32" fill="#AA151B"/>
-  <rect y="8" width="32" height="16" fill="#F1BF00"/>
-  <!-- Small book icon -->
-  <g transform="translate(16, 16)">
-    <path d="M -6,-3 L -6,5 L -1,4 L -1,-2 Z" fill="white"/>
-    <path d="M 1,-2 L 1,4 L 6,5 L 6,-3 Z" fill="white"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="BriefBerlin Berlin bear favicon">
+  <rect width="32" height="32" rx="4" fill="#ffffff"/>
+  <rect width="32" height="5" fill="#e30613"/>
+  <rect y="27" width="32" height="5" fill="#e30613"/>
+
+  <g transform="translate(16 17)" fill="#111111">
+    <circle cx="-4.3" cy="-6.5" r="2.5"/>
+    <circle cx="4.3" cy="-6.5" r="2.5"/>
+    <ellipse cx="0" cy="-0.5" rx="6.8" ry="8"/>
+    <circle cx="-2.2" cy="-2" r="0.8" fill="#ffffff"/>
+    <circle cx="2.2" cy="-2" r="0.8" fill="#ffffff"/>
+    <ellipse cx="0" cy="1.1" rx="1.4" ry="0.9" fill="#ffffff"/>
+    <path d="M -6 1.6 Q -9.8 5 -8.4 10.8 Q -6.7 9.6 -5.3 6 Z"/>
+    <path d="M 6 1.6 Q 9.8 5 8.4 10.8 Q 6.7 9.6 5.3 6 Z"/>
   </g>
 </svg>

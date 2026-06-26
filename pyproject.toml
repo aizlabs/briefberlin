@@ -35,10 +35,7 @@ dev = [
 ]
 
 [project.scripts]
-spai-discover = "scripts.test_discovery:main"
-spai-fetch = "scripts.test_fetcher:main"
-spai-generate = "scripts.test_generator:main"
-spai-pipeline = "scripts.main:main"
+briefberlin-manual = "scripts.manual_pipeline:main"
 
 [build-system]
 requires = ["hatchling"]

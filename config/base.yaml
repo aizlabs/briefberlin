@@ -110,7 +110,7 @@ alerts:
   email: your@email.com           # Recipient for alert emails (can be overridden via ALERT_EMAIL)
   cooldown_hours: 6               # Cooldown window to avoid duplicate alerts
   email_config:
-    from: bot@briefberlin.local   # Sender address used for email alerts
+    from: bot@briefberlin.com     # Sender address used for email alerts
     smtp:
       host: smtp.gmail.com        # SMTP host required for outbound mail
       port: 587                   # SMTP port

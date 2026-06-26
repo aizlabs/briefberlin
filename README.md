@@ -17,6 +17,16 @@ This repository prepares public German A2/B1 learner articles from manually prov
 - Run tests: `uv run pytest`
 - Lint: `uv run ruff check`
 
+## Manual Generation
+
+Put private source articles in ignored local files, then run:
+
+```bash
+uv run briefberlin-manual private-input/source-1.source.txt private-input/source-2.source.txt
+```
+
+Use `--level B1` or repeat `--level A2 --level B1` to override configured levels. Use `--dry-run` to validate without writing a post.
+
 ## Output
 
 The Jekyll site lives under `output/`. Generated posts use CEFR levels `A2` and `B1`, German article text, a `Vokabeln` section when vocabulary exists, and no source attribution.

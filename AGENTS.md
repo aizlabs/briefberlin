@@ -1,15 +1,16 @@
 # Repository Guidelines
 
 ## Project Structure & Modules
-- `scripts/`: core pipeline modules (`topic_discovery.py`, `content_fetcher.py`, `content_generator.py`, `quality_gate.py`, `publisher.py`) plus CLI entrypoints used by `uv run spai-*`.
+- `scripts/`: core pipeline modules (`manual_pipeline.py`, `content_generator.py`, `quality_gate.py`, `publisher.py`) plus legacy discovery/fetch modules kept for component tests.
 - `config/`: YAML configs; `base.yaml` is defaults, `local.yaml` is the local override, `sources.yaml` lists RSS/news feeds.
 - `tests/`: unit and integration tests (`test_integration_two_step.py`) covering discovery → generation flow; add new cases here.
 - `output/` & `logs/`: generated posts, metrics, and run logs; safe to delete via `make clean`.
-- `docs/`, `CLAUDE.md`, `DESING.md`: architecture and operational notes; mirror their terms when adding new components or pipeline steps.
+- `docs/`, `DESING.md`, `MODULARITY.md`: architecture and operational notes; mirror their terms when adding new components or pipeline steps.
 
 ## Build, Test, and Development Commands
 - Install: `uv sync` (pulls deps + SpaCy model). Configure secrets via `.env` (copy from `.env.example`).
-- Run modules: `uv run spai-discover`, `uv run spai-fetch`, `uv run spai-generate`, or full `uv run spai-pipeline`.
+- Manual generation: `uv run briefberlin-manual private-input/source-1.source.txt`.
+- Validate without writing: `uv run briefberlin-manual --dry-run private-input/source-1.source.txt`.
 - Docker: `make build` builds the image; `docker compose run generator ...` runs commands inside the container.
 - Tests: `uv run pytest` (or `docker compose run generator python -m pytest`).
 - Lint: `uv run ruff check` before pushing.
@@ -36,6 +37,6 @@
 ## Security & Configuration
 - Secrets live in `.env`; never commit keys. Use `.env.example` to document new variables.
 - Config layering: `config/base.yaml` → `config/local.yaml` → environment variables. Local defaults: `quality_gate.min_score: 7.5`, `quality_gate.max_attempts: 3`, `generation.articles_per_run: 2` (prod uses 4), target words `A2: 200`, `B1: 300`. Alert config (`alerts.enabled`, `alerts.email`, `alerts.email_config.smtp`) can be overridden by `ALERTS_ENABLED`, `ALERT_EMAIL`, `ALERT_SMTP_*`, and `EMAIL_USERNAME`/`EMAIL_PASSWORD` when set.
-- Validate `config/sources.yaml` entries before running; a bad feed URL will halt discovery.
+- Private source files must stay under ignored paths such as `private-input/`, `input/private/`, or `*.source.txt`.
 - Lower thresholds locally (e.g., `min_score: 6.0`) to iterate faster; revert before committing.
-- Generated content can include URLs—strip or normalize domains before publishing changes to formatting.
+- Public generated posts must not include private source URLs, private source text, base article drafts, logs, or metrics.

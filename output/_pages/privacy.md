@@ -5,7 +5,7 @@ excerpt: "How we handle data"
 layout: single
 ---
 
-**Last updated:** {{ site.time | date: "%B %-d, %Y" }}
+**Zuletzt aktualisiert:** {{ site.time | date: "%d.%m.%Y" }}
 
 ## Readers
 

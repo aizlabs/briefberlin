@@ -20,14 +20,14 @@ layout: default
           {% if page.date %}
             <span class="article-date">
               <i class="far fa-calendar-alt" aria-hidden="true"></i>
-              <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time>
+              <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%d.%m.%Y" }}</time>
             </span>
           {% endif %}
 
           {% if page.reading_time %}
             <span class="article-reading-time">
               <i class="far fa-clock" aria-hidden="true"></i>
-              {{ page.reading_time }} min lectura
+              {{ page.reading_time }} Min. Lesezeit
             </span>
           {% endif %}
         </div>
@@ -36,10 +36,10 @@ layout: default
 
     <section class="page__content" itemprop="text">
       {% if page.audio and page.audio.url %}
-        <section class="article-audio" aria-label="Audio del artículo">
+        <section class="article-audio" aria-label="Artikel-Audio">
           <audio controls preload="metadata" class="article-audio__native">
             <source src="{{ page.audio.url }}" type="{{ page.audio.mime_type | default: 'audio/mpeg' }}">
-            Tu navegador no soporta la reproducción de audio.
+            Dein Browser unterstützt die Audiowiedergabe nicht.
           </audio>
           <div class="article-audio__player" aria-hidden="true">
             <div class="article-audio__timeline">
@@ -47,27 +47,27 @@ layout: default
                 <span class="article-audio__elapsed">0:00</span>
                 <span class="article-audio__duration">0:00</span>
               </div>
-              <div class="article-audio__waveform" role="slider" tabindex="0" aria-label="Progreso del audio" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+              <div class="article-audio__waveform" role="slider" tabindex="0" aria-label="Audiofortschritt" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
             </div>
 
-            <div class="article-audio__transport" aria-label="Controles de audio">
-              <button class="article-audio__button article-audio__skip-back" type="button" aria-label="Retroceder 10 segundos">
+            <div class="article-audio__transport" aria-label="Audio-Steuerung">
+              <button class="article-audio__button article-audio__skip-back" type="button" aria-label="10 Sekunden zurück">
                 <i class="fas fa-rotate-left" aria-hidden="true"></i>
                 <span>10</span>
               </button>
-              <button class="article-audio__button article-audio__play" type="button" aria-label="Reproducir">
+              <button class="article-audio__button article-audio__play" type="button" aria-label="Abspielen">
                 <i class="fas fa-play" aria-hidden="true"></i>
               </button>
-              <button class="article-audio__button article-audio__skip-forward" type="button" aria-label="Avanzar 10 segundos">
+              <button class="article-audio__button article-audio__skip-forward" type="button" aria-label="10 Sekunden vor">
                 <i class="fas fa-rotate-right" aria-hidden="true"></i>
                 <span>10</span>
               </button>
             </div>
 
-            <div class="article-audio__speed" aria-label="Velocidad de reproducción">
-              <button type="button" data-speed="0.5" aria-label="Velocidad 0.5x">0.5x</button>
-              <button type="button" data-speed="0.75" aria-label="Velocidad 0.75x">0.75x</button>
-              <button class="is-active" type="button" data-speed="1" aria-label="Velocidad normal">1x</button>
+            <div class="article-audio__speed" aria-label="Wiedergabegeschwindigkeit">
+              <button type="button" data-speed="0.5" aria-label="Geschwindigkeit 0.5x">0.5x</button>
+              <button type="button" data-speed="0.75" aria-label="Geschwindigkeit 0.75x">0.75x</button>
+              <button class="is-active" type="button" data-speed="1" aria-label="Normale Geschwindigkeit">1x</button>
             </div>
           </div>
         </section>
@@ -81,7 +81,7 @@ layout: default
         <h4 class="page__meta-title">{{ site.data.ui-text[site.locale].meta_label }}</h4>
       {% endif %}
       {% include page__taxonomy.html %}
-      <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].date_label | default: "Updated:" }}</strong> <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time></p>
+      <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].date_label | default: "Aktualisiert:" }}</strong> <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%d.%m.%Y" }}</time></p>
     </footer>
 
     {% if page.share %}{% include social-share.html %}{% endif %}

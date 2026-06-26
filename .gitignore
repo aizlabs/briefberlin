@@ -45,6 +45,8 @@ logs/
 # Output (Jekyll needs to be tracked for GitHub Pages)
 output/_site/
 output/.jekyll-cache/
+output/.bundle/
+output/vendor/
 output/Gemfile.lock
 
 # Testing

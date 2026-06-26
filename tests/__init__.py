@@ -1,3 +1,1 @@
-"""
-Test suite for AutoSpanishBlog
-"""
+"""Test suite for BriefBerlin."""

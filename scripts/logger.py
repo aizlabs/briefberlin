@@ -116,7 +116,7 @@ def setup_logger(config, run_id: str) -> logging.Logger:
     Returns:
         Configured logger
     """
-    logger = logging.getLogger('autospanish')
+    logger = logging.getLogger('briefberlin')
 
     # Get logging config (handle both Pydantic model and dict)
     if hasattr(config, 'logging'):
@@ -170,4 +170,4 @@ def setup_logger(config, run_id: str) -> logging.Logger:
 
 def get_component_logger(name: str) -> logging.Logger:
     """Get a logger for a specific component"""
-    return logging.getLogger(f'autospanish.{name}')
+    return logging.getLogger(f'briefberlin.{name}')

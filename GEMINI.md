@@ -1,63 +1,52 @@
 # Project Overview
 
-This project, "AutoSpanishBlog," is an automated pipeline that generates Spanish language learning articles. It discovers newsworthy topics from various sources, fetches the content, generates a new article, checks its quality, and then publishes it to a Jekyll-based blog.
+BriefBerlin is a private-input pipeline for publishing simplified German learner articles. It turns manually provided source material into reviewed A2/B1 German posts for a Jekyll site.
 
-**Main Technologies:**
+Private source material is local-only. It must not be committed, logged, uploaded as workflow artifacts, or published as attribution.
 
-*   **Backend:** Python 3.11, uv, SpaCy, trafilatura, OpenAI GPT-4o
-*   **Frontend:** Jekyll
-*   **Automation:** GitHub Actions
-*   **Containerization:** Docker
+## Main Technologies
 
-**Architecture:**
+- Python 3.11
+- uv
+- SpaCy German model
+- OpenAI/Anthropic-compatible LLM adapters
+- Jekyll and GitHub Pages
+- Docker for optional local container runs
 
-The project follows a pipeline architecture orchestrated by `scripts/main.py`. The pipeline consists of the following stages:
+## Architecture
 
-1.  **Topic Discovery:** Identifies newsworthy topics from over 20 sources.
-2.  **Content Fetching:** Downloads and cleans text from source articles.
-3.  **Content Generation:** Synthesizes a new article from the fetched content.
-4.  **Quality Gate:** Checks the quality of the generated article.
-5.  **Publishing:** Saves the article as a Jekyll blog post.
+The active public workflow is:
 
-# Building and Running
+1. Place source text in an ignored private file such as `private-input/source-1.source.txt`.
+2. Run `uv run briefberlin-manual private-input/source-1.source.txt`.
+3. Review generated markdown under `output/_posts/`.
+4. Commit only approved public output and code/config changes.
+5. GitHub Pages builds and deploys the committed Jekyll site.
 
-**Installation:**
+The legacy public-source discovery pipeline still exists for component coverage, but it is not exposed as a project CLI.
 
-1.  Install dependencies:
-    ```bash
-    uv sync
-    ```
+## Building and Running
 
-2.  Configure API keys:
-    ```bash
-    cp .env.example .env
-    # Edit .env and add your OPENAI_API_KEY
-    ```
+```bash
+uv sync
+cp .env.example .env
+uv run briefberlin-manual private-input/source-1.source.txt
+uv run pytest
+uv run ruff check scripts tests
+```
 
-**Running the Pipeline:**
+For the site:
 
-*   **Full Pipeline:**
-    ```bash
-    uv run spai-pipeline
-    ```
+```bash
+cd output
+bundle install
+bundle exec jekyll build
+```
 
-*   **Individual Components:**
-    ```bash
-    uv run spai-discover
-    uv run spai-fetch
-    uv run spai-generate
-    ```
+## Development Conventions
 
-**Testing:**
-
-*   Run all tests:
-    ```bash
-    pytest
-    ```
-
-# Development Conventions
-
-*   **Linting:** The project uses `ruff` for linting.
-*   **Testing:** Tests are located in the `tests/` directory and are written using `pytest`.
-*   **Configuration:** The project uses YAML files for configuration, located in the `config/` directory.
-*   **Dependencies:** Python dependencies are managed with `uv` and defined in `pyproject.toml`.
+- Keep Python modules and functions in descriptive snake_case.
+- Prefer type hints for new code.
+- Add focused pytest coverage for new helpers or behavior.
+- Keep generated public posts free of original source URLs and private source text.
+- Keep configuration in `config/base.yaml`, `config/local.yaml`, and environment variables.

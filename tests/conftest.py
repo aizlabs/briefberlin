@@ -148,7 +148,7 @@ def sample_source_metadata(sample_sources: List[SourceArticle]) -> List[SourceMe
 
 @pytest.fixture
 def sample_base_article(sample_topic: Topic, sample_source_metadata: List[SourceMetadata]) -> BaseArticle:
-    """Sample base article (native Spanish) - matches real ArticleSynthesizer output"""
+    """Sample base article - matches real ArticleSynthesizer output."""
     return BaseArticle(
         title='España logra reducir sus emisiones de CO2 en un 15% este año',
         content='España ha conseguido reducir sus emisiones de dióxido de carbono en un 15% '
