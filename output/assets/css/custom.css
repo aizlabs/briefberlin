@@ -489,12 +489,22 @@
   display: flex;
   flex-direction: column;
   cursor: pointer;
+  color: inherit;
+  text-decoration: none;
 }
 
-.article-card:hover {
+.article-card:hover,
+.article-card:focus-visible {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   transform: translateY(-5px);
   border-color: #007bff;
+  color: inherit;
+  text-decoration: none;
+}
+
+.article-card:focus-visible {
+  outline: 3px solid rgba(0, 123, 255, 0.35);
+  outline-offset: 3px;
 }
 
 .article-header {
@@ -512,14 +522,11 @@
 .article-title {
   margin: 0 0 0.75em 0;
   font-size: 1.25em;
-}
-
-.article-title a {
   color: #212529;
-  text-decoration: none;
 }
 
-.article-title a:hover {
+.article-card:hover .article-title,
+.article-card:focus-visible .article-title {
   color: #007bff;
 }
 

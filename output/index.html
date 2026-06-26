@@ -48,15 +48,13 @@ excerpt: "Simplified German articles for A2 and B1 learners."
 
 <div class="articles-grid">
   {% for post in paginator.posts %}
-    <article class="article-card" data-level="{{ post.level }}">
+    <a class="article-card" href="{{ post.url | relative_url }}" data-level="{{ post.level }}">
       <div class="article-header">
         <span class="level-badge level-{{ post.level | downcase }}">{{ post.level }}</span>
         <span class="article-date">{{ post.date | date: "%d.%m.%Y" }}</span>
       </div>
 
-      <h2 class="article-title">
-        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-      </h2>
+      <h2 class="article-title">{{ post.title }}</h2>
 
       <div class="article-excerpt">
         {{ post.summary | default: post.content | strip_html | truncatewords: 30 }}
@@ -75,8 +73,8 @@ excerpt: "Simplified German articles for A2 and B1 learners."
         {% endif %}
       </div>
 
-      <a href="{{ post.url | relative_url }}" class="read-more">Artikel lesen →</a>
-    </article>
+      <span class="read-more">Artikel lesen →</span>
+    </a>
   {% endfor %}
 </div>
 
