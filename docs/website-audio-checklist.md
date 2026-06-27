@@ -312,6 +312,18 @@ AUDIO_S3_PREFIX=articles
 Keep `AUDIO_OUTPUT_PATH=./output/audio` for local working files. `output/audio` must remain
 uncommitted.
 
+To generate A2 and B1 learner posts plus local audio artifacts from a private source in one manual
+pipeline run:
+
+```bash
+AUDIO_ENABLED=true uv run briefberlin-manual --level A2 --level B1 private-input/source-1.source.txt
+```
+
+Local audio generation requires `OPENAI_API_KEY`. The command above creates local files under
+`output/audio/`, but generated posts will keep `audio: null` unless upload is enabled and a public
+audio URL can be built. For website-ready audio during the same run, use the `.env` values above,
+including `AUDIO_UPLOAD_ENABLED=true`.
+
 To backfill or regenerate audio for an existing public post, use the same `AudioPipeline` through
 the post-audio command:
 

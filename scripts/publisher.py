@@ -33,7 +33,7 @@ class Publisher:
 
         self.logger.info(f"Publisher initialized (dry_run={dry_run}, output={self.output_dir})")
 
-    def save_article(self, article: AdaptedArticle) -> bool:
+    def save_article(self, article: AdaptedArticle, timestamp: Optional[datetime] = None) -> bool:
         """
         Save article as Jekyll markdown file
 
@@ -44,8 +44,8 @@ class Publisher:
             True if saved successfully
         """
         try:
-            # Generate timestamp once for consistency between filename and frontmatter
-            timestamp = datetime.now()
+            # Generate timestamp once for consistency between filename and frontmatter.
+            timestamp = timestamp or datetime.now()
 
             # Generate filename
             filename = self._generate_filename(article, timestamp)

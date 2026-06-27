@@ -27,6 +27,17 @@ uv run briefberlin-manual private-input/source-1.source.txt private-input/source
 
 Use `--level B1` or repeat `--level A2 --level B1` to override configured levels. Use `--dry-run` to validate without writing a post.
 
+To generate both A2 and B1 posts with local audio artifacts in the same run, enable audio for the
+manual pipeline:
+
+```bash
+AUDIO_ENABLED=true uv run briefberlin-manual --level A2 --level B1 private-input/source-1.source.txt
+```
+
+This requires `OPENAI_API_KEY`. Local audio files are written under `output/audio/` and must remain
+uncommitted. To publish playable website audio in post front matter, also enable upload and configure
+the audio delivery variables documented in `docs/website-audio-checklist.md`.
+
 ## Output
 
 The Jekyll site lives under `output/`. Generated posts use CEFR levels `A2` and `B1`, German article text, a `Vokabeln` section when vocabulary exists, and no source attribution.
