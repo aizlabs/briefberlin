@@ -312,6 +312,25 @@ AUDIO_S3_PREFIX=articles
 Keep `AUDIO_OUTPUT_PATH=./output/audio` for local working files. `output/audio` must remain
 uncommitted.
 
+To backfill or regenerate audio for an existing public post, use the same `AudioPipeline` through
+the post-audio command:
+
+```bash
+uv run briefberlin-audio-post output/_posts/YYYY-MM-DD-HHMMSS-slug-level.md \
+  --upload \
+  --provider openai \
+  --voice alloy \
+  --format mp3 \
+  --public-base-url https://media.briefberlin.de \
+  --s3-bucket briefberlin-audio-prod \
+  --s3-region eu-central-1 \
+  --s3-prefix articles
+```
+
+This command accepts only public posts under `output/_posts`, derives the narration from the
+public learner article body, writes local working files under `output/audio`, uploads to S3 when
+`--upload` is set, and updates only the post's public audio front matter.
+
 ## 9. Verification
 
 Verify bucket settings:

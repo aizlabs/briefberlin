@@ -1,10 +1,16 @@
 ---
-title: "Berliner unterstützen neue Wohnungen am Tempelhofer Feld"
+title: Berliner unterstützen neue Wohnungen am Tempelhofer Feld
 date: 2026-06-27 01:35:20
 level: B1
-topics: ["deutsch"]
+topics:
+- deutsch
 sources: []
-audio: null
+audio:
+  url: https://media.briefberlin.de/articles/2026/06/20260627-013520-berliner-unterstutzen-neue-wohnungen-am-tempelhofer-feld-b1/article.mp3
+  format: mp3
+  mime_type: audio/mpeg
+  provider: openai
+  voice: alloy
 reading_time: 3
 ---
 

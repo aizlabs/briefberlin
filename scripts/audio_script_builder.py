@@ -19,6 +19,11 @@ def _strip_markdown(text: str) -> str:
     return cleaned.strip()
 
 
+def _normalized_spoken_text(text: str) -> str:
+    """Normalize narration text enough to compare summary/body overlap."""
+    return re.sub(r"\s+", " ", _strip_markdown(text)).strip().casefold()
+
+
 def build_speech_script(article: AdaptedArticle, include_vocabulary: bool = False) -> SpeechScript:
     """Convert an adapted article into a narration-friendly plain-text script."""
     raw_vocabulary = article.vocabulary or []
@@ -31,9 +36,14 @@ def build_speech_script(article: AdaptedArticle, include_vocabulary: bool = Fals
         item for item in normalized_vocabulary if item.explanation or item.english
     ]
     vocabulary_included = bool(include_vocabulary and vocabulary_items)
-    sections: List[str] = [f"{article.title}. {article.summary}".strip()]
-
     paragraphs = [paragraph.strip() for paragraph in article.content.split("\n\n") if paragraph.strip()]
+    normalized_summary = _normalized_spoken_text(article.summary)
+    normalized_body = _normalized_spoken_text("\n\n".join(paragraphs))
+    intro = article.title.strip()
+    if normalized_summary and not normalized_body.startswith(normalized_summary):
+        intro = f"{intro}. {article.summary}".strip()
+
+    sections: List[str] = [intro]
     sections.extend(_strip_markdown(paragraph) for paragraph in paragraphs)
 
     if vocabulary_included:

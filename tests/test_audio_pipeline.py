@@ -213,6 +213,25 @@ def test_build_speech_script_marks_vocabulary_false_when_article_has_no_glossary
     assert "Vokabeln." not in script.narration
 
 
+def test_build_speech_script_skips_summary_when_body_starts_with_same_sentence(sample_a2_article):
+    article = sample_a2_article.model_copy(
+        update={
+            "summary": "In Berlin gibt es eine neue Meinung über das Tempelhofer Feld.",
+            "content": (
+                "In Berlin gibt es eine neue Meinung über das Tempelhofer Feld. "
+                "Eine Umfrage zeigt neue Pläne.\n\n"
+                "Die Mitte des Feldes bleibt grün."
+            ),
+        }
+    )
+
+    script = build_speech_script(article)
+
+    repeated_sentence = "In Berlin gibt es eine neue Meinung über das Tempelhofer Feld."
+    assert script.sections[0] == article.title
+    assert script.narration.count(repeated_sentence) == 1
+
+
 def test_build_speech_script_includes_english_only_glossary_items(sample_a2_article):
     article_with_english_only_glossary = sample_a2_article.model_copy(
         update={

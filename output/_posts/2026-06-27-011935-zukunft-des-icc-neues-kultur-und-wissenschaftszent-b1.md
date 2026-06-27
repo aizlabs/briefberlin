@@ -1,10 +1,16 @@
 ---
-title: "Zukunft des ICC: Neues Kultur- und Wissenschaftszentrum"
+title: 'Zukunft des ICC: Neues Kultur- und Wissenschaftszentrum'
 date: 2026-06-27 01:19:35
 level: B1
-topics: ["deutsch"]
+topics:
+- deutsch
 sources: []
-audio: null
+audio:
+  url: https://media.briefberlin.de/articles/2026/06/20260627-011935-zukunft-des-icc-neues-kultur-und-wissenschaftszentrum-b1/article.mp3
+  format: mp3
+  mime_type: audio/mpeg
+  provider: openai
+  voice: alloy
 reading_time: 3
 ---
 

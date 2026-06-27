@@ -1,10 +1,16 @@
 ---
-title: "Rentenkommission schlägt Reformen für bessere Verwaltung vor"
+title: Rentenkommission schlägt Reformen für bessere Verwaltung vor
 date: 2026-06-27 01:17:55
 level: B1
-topics: ["deutsch"]
+topics:
+- deutsch
 sources: []
-audio: null
+audio:
+  url: https://media.briefberlin.de/articles/2026/06/20260627-011755-rentenkommission-schl-gt-reformen-fur-bessere-verwaltung-vor-b1/article.mp3
+  format: mp3
+  mime_type: audio/mpeg
+  provider: openai
+  voice: alloy
 reading_time: 3
 ---
 

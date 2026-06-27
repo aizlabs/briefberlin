@@ -1,10 +1,16 @@
 ---
-title: "Zukunft des ICC: Neues Zentrum in Berlin"
+title: 'Zukunft des ICC: Neues Zentrum in Berlin'
 date: 2026-06-27 01:19:20
 level: A2
-topics: ["deutsch"]
+topics:
+- deutsch
 sources: []
-audio: null
+audio:
+  url: https://media.briefberlin.de/articles/2026/06/20260627-011920-zukunft-des-icc-neues-zentrum-in-berlin-a2/article.mp3
+  format: mp3
+  mime_type: audio/mpeg
+  provider: openai
+  voice: alloy
 reading_time: 2
 ---
 
