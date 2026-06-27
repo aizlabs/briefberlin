@@ -146,7 +146,7 @@ def run_manual_pipeline(args: argparse.Namespace) -> int:
         logger.info("Quality gate passed for %s article: score=%.1f", level, quality_result.score)
         final_article = glossary_generator.enrich_article(final_article)
 
-        if config.audio.enabled:
+        if config.audio.enabled and not dry_run:
             final_article = audio_pipeline.prepare_for_publish(final_article)
 
         if publisher.save_article(final_article):

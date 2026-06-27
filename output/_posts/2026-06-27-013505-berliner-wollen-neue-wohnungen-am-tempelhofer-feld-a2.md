@@ -1,10 +1,16 @@
 ---
-title: "Berliner wollen neue Wohnungen am Tempelhofer Feld"
+title: Berliner wollen neue Wohnungen am Tempelhofer Feld
 date: 2026-06-27 01:35:05
 level: A2
-topics: ["deutsch"]
+topics:
+- deutsch
 sources: []
-audio: null
+audio:
+  url: https://media.briefberlin.de/articles/2026/06/20260627-013505-berliner-wollen-neue-wohnungen-am-tempelhofer-feld-a2/article.mp3
+  format: mp3
+  mime_type: audio/mpeg
+  provider: openai
+  voice: alloy
 reading_time: 2
 ---
 
