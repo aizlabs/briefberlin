@@ -47,3 +47,6 @@ the audio delivery variables documented in `docs/website-audio-checklist.md`.
 ## Output
 
 The Jekyll site lives under `output/`. Generated posts use CEFR levels `A2` and `B1`, German article text, a `Vokabeln` section when vocabulary exists, and no source attribution.
+
+Deployment runs through GitHub Pages. See `.github/GITHUB_PAGES_SETUP.md` for `gh run` commands to
+check recent and ongoing deployment status.

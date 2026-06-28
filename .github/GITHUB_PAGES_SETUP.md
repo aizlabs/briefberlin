@@ -37,6 +37,45 @@ From the command line, after `origin` is configured:
 git push origin main
 ```
 
+Docs-only or code-only pushes do not trigger the Pages workflow. Automatic deploys are filtered to
+commits that change `output/**`; use the manual workflow dispatch if you need to deploy without an
+`output/**` change.
+
+## Check Deployment Status
+
+Use GitHub CLI to list recent and ongoing runs:
+
+```bash
+gh run list --repo aizlabs/briefberlin --branch main --limit 10
+```
+
+To show only the Pages deploy workflow:
+
+```bash
+gh run list --repo aizlabs/briefberlin \
+  --workflow "Deploy Jekyll Site to GitHub Pages" \
+  --branch main \
+  --limit 10
+```
+
+Watch the latest run until it finishes:
+
+```bash
+gh run watch --repo aizlabs/briefberlin
+```
+
+Inspect a specific run from the list output:
+
+```bash
+gh run view RUN_ID --repo aizlabs/briefberlin
+```
+
+For example:
+
+```bash
+gh run view 28320881500 --repo aizlabs/briefberlin
+```
+
 ## Custom Domain
 
 The production domain is `briefberlin.de`.
