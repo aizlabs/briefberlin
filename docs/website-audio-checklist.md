@@ -312,6 +312,16 @@ AUDIO_S3_PREFIX=articles
 Keep `AUDIO_OUTPUT_PATH=./output/audio` for local working files. `output/audio` must remain
 uncommitted.
 
+For the normal one-source publishing workflow, use the wrapper command:
+
+```bash
+uv run briefberlin-publish-source private-input/source-1.source.txt
+```
+
+It generates A2 and B1 learner posts, enables OpenAI MP3 audio upload, and uses the standard
+BriefBerlin media defaults above. It still only reads private source files from approved private
+input paths.
+
 To generate A2 and B1 learner posts plus local audio artifacts from a private source in one manual
 pipeline run:
 

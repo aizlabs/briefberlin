@@ -27,6 +27,12 @@ uv run briefberlin-manual private-input/source-1.source.txt private-input/source
 
 Use `--level B1` or repeat `--level A2 --level B1` to override configured levels. Use `--dry-run` to validate without writing a post.
 
+To generate A2 and B1 posts with uploaded website audio in one step:
+
+```bash
+uv run briefberlin-publish-source private-input/source-1.source.txt
+```
+
 To generate both A2 and B1 posts with local audio artifacts in the same run, enable audio for the
 manual pipeline:
 

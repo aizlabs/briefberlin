@@ -37,6 +37,7 @@ dev = [
 [project.scripts]
 briefberlin-manual = "scripts.manual_pipeline:main"
 briefberlin-audio-post = "scripts.post_audio:main"
+briefberlin-publish-source = "scripts.publish_source:main"
 
 [build-system]
 requires = ["hatchling"]
