@@ -243,12 +243,14 @@ def test_publisher_embeds_translation_hints_and_clickable_article_terms(
     assert '<script type="application/json" class="article-glossary-data">' in markdown
     assert '"term":"Stromnetze"' in markdown
     assert '"defaultGlossary":true' in markdown
-    assert (
+    rendered_article = (
         'Die <button type="button" class="article-term" data-term-id="term-1">'
         'Stromnetze</button> brauchen '
         '<button type="button" class="article-term article-term--default" data-term-id="term-2">'
         'Strom</button>.'
-    ) in markdown
+    )
+    assert rendered_article in markdown
+    assert markdown.index(rendered_article) < markdown.index("article-glossary-data")
     assert "- **Strom** - electricity - Energie aus der Steckdose" in markdown
 
 

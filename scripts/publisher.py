@@ -273,8 +273,15 @@ reading_time: {article.reading_time}
         # Attribution
         attribution = self._format_attribution(article.sources)
 
+        # Keep the first body block textual so Jekyll-derived excerpts remain useful.
+        content_with_hint_data = (
+            f"{content}\n\n{translation_hint_data}"
+            if translation_hint_data
+            else content
+        )
+
         # Combine all parts
-        markdown = frontmatter + translation_hint_data + content + vocabulary + attribution
+        markdown = frontmatter + content_with_hint_data + vocabulary + attribution
 
         return markdown
 
