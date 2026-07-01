@@ -63,12 +63,12 @@ class AppConfig(BaseModel):
 
     @model_validator(mode='after')
     def validate_llm_keys(self) -> 'AppConfig':
-        if self.llm.provider == 'openai' and not self.llm.openai_api_key:
+        if self.llm.provider == 'openai' and not self.llm.openai_api_key and not self.llm.base_url:
             if self.llm.anthropic_api_key:
                 self.llm.provider = 'anthropic'
                 print("⚠️  Switched provider to 'anthropic' (OPENAI_API_KEY not found but ANTHROPIC_API_KEY is set)")
             else:
-                raise ValueError("OPENAI_API_KEY is required for OpenAI provider")
+                raise ValueError("OPENAI_API_KEY or LLM_BASE_URL is required for OpenAI provider")
         elif self.llm.provider == 'anthropic' and not self.llm.anthropic_api_key:
             if self.llm.openai_api_key:
                 self.llm.provider = 'openai'
@@ -157,6 +157,34 @@ def apply_env_overrides(config_dict: Dict) -> Dict:
     if openai_key:
         config_dict.setdefault('llm', {})
         config_dict['llm']['openai_api_key'] = openai_key
+
+    llm_provider = os.getenv('LLM_PROVIDER')
+    if llm_provider:
+        config_dict.setdefault('llm', {})
+        config_dict['llm']['provider'] = llm_provider
+
+    llm_base_url = os.getenv('LLM_BASE_URL')
+    if llm_base_url:
+        config_dict.setdefault('llm', {})
+        config_dict['llm']['base_url'] = llm_base_url
+
+    llm_generation_model = os.getenv('LLM_GENERATION_MODEL')
+    if llm_generation_model:
+        config_dict.setdefault('llm', {})
+        config_dict['llm'].setdefault('models', {})
+        config_dict['llm']['models']['generation'] = llm_generation_model
+
+    llm_adaptation_model = os.getenv('LLM_ADAPTATION_MODEL')
+    if llm_adaptation_model:
+        config_dict.setdefault('llm', {})
+        config_dict['llm'].setdefault('models', {})
+        config_dict['llm']['models']['adaptation'] = llm_adaptation_model
+
+    llm_quality_check_model = os.getenv('LLM_QUALITY_CHECK_MODEL')
+    if llm_quality_check_model:
+        config_dict.setdefault('llm', {})
+        config_dict['llm'].setdefault('models', {})
+        config_dict['llm']['models']['quality_check'] = llm_quality_check_model
 
     # Override articles per run
     articles_per_run = os.getenv('ARTICLES_PER_RUN')

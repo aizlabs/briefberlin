@@ -112,6 +112,10 @@ class VocabularyItem(BaseModel):
     term: str = Field(..., min_length=1, description="German term from the article")
     english: str = Field(default="", description="English translation")
     explanation: str = Field(default="", description="German learner-facing explanation")
+    default_glossary: bool = Field(
+        default=False,
+        description="Whether this item should appear in the default visible glossary",
+    )
 
     @field_validator("term", "english", "explanation", mode="before")
     @classmethod
@@ -167,6 +171,7 @@ def coerce_vocabulary_items(value: Any) -> List["VocabularyItem"]:
 
         english = str(raw_item.get("english") or "").strip()
         explanation = str(raw_item.get("explanation") or "").strip()
+        default_glossary = bool(raw_item.get("default_glossary") or False)
 
         # Prefer explicit structured fields when present. Fall back to legacy `gloss`
         # only when the item does not already carry usable structured values.
@@ -178,6 +183,7 @@ def coerce_vocabulary_items(value: Any) -> List["VocabularyItem"]:
                 term=normalized_term,
                 english=english,
                 explanation=explanation,
+                default_glossary=default_glossary,
             )
         )
 
@@ -232,6 +238,10 @@ class AdaptedArticle(BaseModel):
         default_factory=list,
         description="Structured glossary entries for the approved article",
     )
+    translation_hints: List[VocabularyItem] = Field(
+        default_factory=list,
+        description="Precomputed clickable translation hints for article words and phrases",
+    )
 
     # Level and metadata
     level: str = Field(..., pattern="^(A2|B1)$", description="CEFR level")
@@ -253,6 +263,11 @@ class AdaptedArticle(BaseModel):
                 # Default based on level if available
                 return 2  # Fallback
         return v
+
+    @field_validator("vocabulary", "translation_hints", mode="before")
+    @classmethod
+    def coerce_vocabulary_lists(cls, v):
+        return coerce_vocabulary_items(v)
 
     @field_validator('sources', mode='before')
     @classmethod
@@ -281,11 +296,6 @@ class AdaptedArticle(BaseModel):
             return [to_metadata(item) for item in v]
 
         return v
-
-    @field_validator("vocabulary", mode="before")
-    @classmethod
-    def coerce_vocabulary(cls, v):
-        return coerce_vocabulary_items(v)
 
     model_config = ConfigDict(frozen=False)
 
@@ -346,6 +356,10 @@ class LLMConfig(BaseModel):
     models: LLMModelsConfig
     openai_api_key: Optional[str] = Field(default=None, description="OpenAI API key")
     anthropic_api_key: Optional[str] = Field(default=None, description="Anthropic API key")
+    base_url: Optional[str] = Field(
+        default=None,
+        description="Optional OpenAI-compatible base URL for local or hosted compatible APIs",
+    )
     temperature: float = Field(default=0.3, ge=0, le=1, description="Temperature for generation")
     quality_temperature: float = Field(
         default=0.1, ge=0, le=1, description="Temperature for quality checks"

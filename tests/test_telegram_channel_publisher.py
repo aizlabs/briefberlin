@@ -112,6 +112,38 @@ def test_parse_jekyll_post_extracts_frontmatter_body_and_vocabulary(tmp_path):
     assert post.audio_url is None
 
 
+def test_parse_jekyll_post_strips_interactive_glossary_markup(tmp_path):
+    post_path = write_post(
+        tmp_path,
+        "2026-03-17-040915-windenergie-a2.md",
+        content="""---
+title: "Deutschland baut mehr Windenergie aus"
+date: 2026-03-17 04:09:15
+level: A2
+topics: ["windenergie"]
+reading_time: 2
+---
+
+Deutschland baut mehr <button type="button" class="article-term" data-term-id="term-1">Windenergie</button> aus.
+
+<script type="application/json" class="article-glossary-data">[{"id":"term-1","term":"Windenergie"}]</script>
+
+## Vokabeln
+
+- **Windenergie** - wind energy - Strom aus der Kraft des Windes
+
+---
+*Vereinfachter Artikel zu Lernzwecken.*
+""",
+    )
+
+    post = parse_jekyll_post(post_path)
+
+    assert post.paragraphs == ["Deutschland baut mehr Windenergie aus."]
+    assert "article-glossary-data" not in "\n".join(post.paragraphs)
+    assert "<button" not in "\n".join(post.paragraphs)
+
+
 def test_parse_jekyll_post_extracts_audio_frontmatter(tmp_path):
     post_path = write_post(
         tmp_path,

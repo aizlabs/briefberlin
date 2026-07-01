@@ -16,6 +16,8 @@ from urllib import error, request
 
 import yaml
 
+from scripts.text_utils import strip_article_ui_markup
+
 TELEGRAM_MESSAGE_LIMIT = 4096
 TELEGRAM_AUDIO_CAPTION_LIMIT = 1024
 TELEGRAM_AUDIO_TITLE_LIMIT = 128
@@ -134,7 +136,12 @@ def parse_jekyll_post(path: Path) -> TelegramPost:
     else:
         main_text = article_body
 
-    paragraphs = [paragraph.strip() for paragraph in main_text.split("\n\n") if paragraph.strip()]
+    clean_main_text = strip_article_ui_markup(main_text)
+    paragraphs = [
+        paragraph.strip()
+        for paragraph in clean_main_text.split("\n\n")
+        if paragraph.strip()
+    ]
 
     return TelegramPost(
         path=path,

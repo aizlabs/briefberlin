@@ -73,11 +73,13 @@ class QualityGate:
 
         elif provider == 'openai':
             api_key = self.llm_config.get('openai_api_key')
-            if not api_key:
+            base_url = self.llm_config.get('base_url')
+            if not api_key and not base_url:
                 raise ValueError("Missing OPENAI_API_KEY in config/environment")
 
             self.llm_client = ChatOpenAI(
-                api_key=api_key,
+                api_key=api_key or "local-api-key",
+                base_url=base_url,
                 model=self.llm_config['models']['quality_check'],
                 max_tokens=self.llm_config.get('max_tokens', 4096),
                 temperature=self.quality_temperature,

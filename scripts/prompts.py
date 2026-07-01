@@ -753,30 +753,42 @@ Remember: B1 learners have solid intermediate skills. Maintain authenticity whil
 
 
 def get_glossary_generation_prompt(article: AdaptedArticle) -> str:
-    """Prompt for glossary generation from the final approved article text."""
+    """Prompt for broad clickable translation hints from the final approved article text."""
     validate_level(article.level)
 
-    target_counts = {"A2": "4-8", "B1": "5-9"}
+    target_counts = {"A2": "20-40", "B1": "25-55"}
+    default_counts = {"A2": "4-8", "B1": "5-9"}
     max_words = {"A2": 15, "B1": 20}
     explanation_style = {
         "A2": "Use only very simple German vocabulary.",
         "B1": "Use clear intermediate German vocabulary.",
     }
 
-    return f"""You are generating a glossary for an English-speaking learner reading this German article.
+    return f"""You are generating clickable translation hints for an English-speaking learner reading this German article.
 
 Use ONLY the exact final article text below. The article itself is already approved, so do not rewrite it.
 
 SELECTION RULES:
-- Choose only words or phrases that are genuinely useful for an English-speaking learner.
-- Prefer context-specific, reusable, phrase-level terms from the exact article text.
+- Choose many words or phrases that are useful for an English-speaking learner.
+- Be broad and systematic: scan every sentence for learner-useful terms, not only the main news nouns.
+- Prefer standalone words, separable German compounds, and short reusable expressions.
+- Include a balanced mix of nouns, compound nouns, verbs, adjectives, adverbs, and short fixed expressions.
+- Include useful verbs and adjectives even when they are not important enough for the default visible glossary.
+- Use phrases only when the complete phrase has a meaning a learner would not understand from the individual words.
+- Keep phrase terms short: usually 1 word, sometimes 2 words, never more than 3 words.
+- Do not select long sentence fragments such as adjective + noun + prepositional phrase.
+- Include enough useful terms that a learner can click through much of the article text.
 - Avoid proper names, country names, common place names, and famous people.
 - Avoid obvious cognates and transparent loanwords that an English speaker can easily guess.
+- Do not select German words that look very similar to English and have the same meaning, such as Temperaturen/temperatures or Infrastruktur/infrastructure.
 - Avoid isolated modifiers when the real useful unit is a longer phrase.
-- If the article only contains a few strong glossary candidates, return only those. Do not add filler terms.
+- Mark only the strongest learner terms as default_glossary=true.
+- Mark all other useful click-only terms as default_glossary=false.
+- If the article only contains a few useful candidates, return only those. Do not add filler terms.
 
 LEVEL GUIDANCE:
-- Target {target_counts[article.level]} strong glossary entries when possible.
+- Target {target_counts[article.level]} clickable translation hints when possible.
+- Target {default_counts[article.level]} default glossary entries when possible.
 - {explanation_style[article.level]}
 - Maximum {max_words[article.level]} words per German explanation.
 
@@ -786,7 +798,8 @@ OUTPUT FORMAT (return ONLY valid JSON, no markdown):
     {{
       "term": "exact word or phrase from the article text",
       "english": "natural English translation",
-      "explanation": "short German explanation for the learner"
+      "explanation": "short German explanation for the learner",
+      "default_glossary": true
     }}
   ]
 }}
@@ -807,7 +820,8 @@ def get_glossary_retry_prompt(
     """Prompt for retrying glossary generation after deterministic validation rejects everything."""
     validate_level(article.level)
 
-    target_counts = {"A2": "4-8", "B1": "5-9"}
+    target_counts = {"A2": "20-40", "B1": "25-55"}
+    default_counts = {"A2": "4-8", "B1": "5-9"}
     max_words = {"A2": 15, "B1": 20}
     explanation_style = {
         "A2": "Use only very simple German vocabulary.",
@@ -819,7 +833,7 @@ def get_glossary_retry_prompt(
     ) or "- No rejected terms recorded"
     shortlist_lines = "\n".join(f"- {term}" for term in shortlist) or "- No shortlist available"
 
-    return f"""You are retrying glossary generation for an English-speaking learner reading this German article.
+    return f"""You are retrying clickable translation hint generation for an English-speaking learner reading this German article.
 
 The previous glossary attempt failed deterministic validation. Generate a NEW set of candidates from the exact article text below.
 
@@ -827,8 +841,17 @@ HARD RULES:
 - Do NOT return any rejected term again.
 - Do NOT rewrite the article.
 - Every term must appear literally in the article text.
-- Prefer event terms, institutional phrases, domain nouns, and reusable multiword expressions.
+- Be broad and systematic: scan every sentence for learner-useful terms, not only the main news nouns.
+- Prefer standalone words, separable German compounds, domain nouns, and short reusable expressions.
+- Include a balanced mix of nouns, compound nouns, verbs, adjectives, adverbs, and short fixed expressions.
+- Include useful verbs and adjectives even when they are not important enough for the default visible glossary.
+- Use phrases only when the complete phrase has a meaning a learner would not understand from the individual words.
+- Keep phrase terms short: usually 1 word, sometimes 2 words, never more than 3 words.
+- Do not select long sentence fragments such as adjective + noun + prepositional phrase.
 - Avoid names, countries, famous people, obvious cognates, transparent loanwords, and isolated modifiers.
+- Do not select German words that look very similar to English and have the same meaning, such as Temperaturen/temperatures or Infrastruktur/infrastructure.
+- Mark only the strongest learner terms as default_glossary=true.
+- Mark all other useful click-only terms as default_glossary=false.
 - If only a few strong terms remain, return only those. Do not add filler terms.
 
 PREVIOUSLY REJECTED TERMS:
@@ -838,7 +861,8 @@ SUGGESTED LITERAL SPANS FROM THE ARTICLE:
 {shortlist_lines}
 
 LEVEL GUIDANCE:
-- Target {target_counts[article.level]} strong glossary entries when possible.
+- Target {target_counts[article.level]} clickable translation hints when possible.
+- Target {default_counts[article.level]} default glossary entries when possible.
 - {explanation_style[article.level]}
 - Maximum {max_words[article.level]} words per German explanation.
 
@@ -848,7 +872,8 @@ OUTPUT FORMAT (return ONLY valid JSON, no markdown):
     {{
       "term": "exact word or phrase from the article text, and not one of the rejected terms",
       "english": "natural English translation",
-      "explanation": "short German explanation for the learner"
+      "explanation": "short German explanation for the learner",
+      "default_glossary": true
     }}
   ]
 }}

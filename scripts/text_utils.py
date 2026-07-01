@@ -6,7 +6,14 @@ level adaptation.
 """
 
 import re
+from html import unescape
 from typing import Dict
+
+GLOSSARY_DATA_SCRIPT_RE = re.compile(
+    r"<script\b[^>]*\barticle-glossary-data\b[^>]*>.*?</script>",
+    flags=re.IGNORECASE | re.DOTALL,
+)
+HTML_TAG_RE = re.compile(r"<[^>]+>")
 
 
 def _is_word_char(c: str) -> bool:
@@ -75,6 +82,22 @@ def slugify_text(text: str) -> str:
 
     normalized = re.sub(r"[^a-z0-9]+", "-", normalized)
     return normalized.strip("-")
+
+
+def strip_article_ui_markup(text: str) -> str:
+    """
+    Return article prose without generated interactive-glossary HTML artifacts.
+
+    Generated posts may contain an embedded JSON data script and inline button
+    wrappers for clickable glossary terms. Audio and Telegram publishers parse
+    the Markdown source directly, so they need clean prose instead of UI markup.
+    """
+    without_data = GLOSSARY_DATA_SCRIPT_RE.sub("", text)
+    without_tags = HTML_TAG_RE.sub("", without_data)
+    normalized = unescape(without_tags)
+    normalized = re.sub(r"[ \t]+\n", "\n", normalized)
+    normalized = re.sub(r"\n{3,}", "\n\n", normalized)
+    return normalized.strip()
 
 
 def vocabulary_term_present(content: str, term: str) -> bool:

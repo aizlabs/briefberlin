@@ -19,3 +19,17 @@ def test_post_layout_does_not_render_audio_voice_label():
     assert "Descargar audio" not in layout
     assert "Voz:" not in layout
     assert "page.audio.voice" not in layout
+
+
+def test_head_includes_interactive_glossary_script():
+    head = Path("output/_includes/head/custom.html").read_text(encoding="utf-8")
+
+    assert "/assets/js/glossary-popup.js" in head
+
+
+def test_interactive_glossary_reuses_existing_vocabulary_section():
+    script = Path("output/assets/js/glossary-popup.js").read_text(encoding="utf-8")
+
+    assert 'heading.id === "vokabeln"' in script
+    assert 'text.startsWith("vokabeln ")' in script
+    assert 'sibling.tagName !== "H2"' in script

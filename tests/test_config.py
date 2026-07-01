@@ -1,7 +1,7 @@
 """Tests for config loading and environment overrides."""
 
 
-from scripts.config import apply_env_overrides
+from scripts.config import apply_env_overrides, load_config
 
 
 def _base_alerts_dict():
@@ -88,6 +88,52 @@ def test_glossary_env_overrides(monkeypatch):
     finally:
         monkeypatch.delenv("GLOSSARY_RETRY_ON_EMPTY", raising=False)
         monkeypatch.delenv("GLOSSARY_DEBUG_DUMP", raising=False)
+
+
+def test_llm_env_overrides(monkeypatch):
+    monkeypatch.setenv("LLM_PROVIDER", "openai")
+    monkeypatch.setenv("LLM_BASE_URL", "http://localhost:11434/v1")
+    monkeypatch.setenv("LLM_GENERATION_MODEL", "local-generation")
+    monkeypatch.setenv("LLM_ADAPTATION_MODEL", "local-adaptation")
+    monkeypatch.setenv("LLM_QUALITY_CHECK_MODEL", "local-quality")
+    try:
+        config = {}
+        apply_env_overrides(config)
+        assert config["llm"]["provider"] == "openai"
+        assert config["llm"]["base_url"] == "http://localhost:11434/v1"
+        assert config["llm"]["models"]["generation"] == "local-generation"
+        assert config["llm"]["models"]["adaptation"] == "local-adaptation"
+        assert config["llm"]["models"]["quality_check"] == "local-quality"
+    finally:
+        for key in (
+            "LLM_PROVIDER",
+            "LLM_BASE_URL",
+            "LLM_GENERATION_MODEL",
+            "LLM_ADAPTATION_MODEL",
+            "LLM_QUALITY_CHECK_MODEL",
+        ):
+            monkeypatch.delenv(key, raising=False)
+
+
+def test_load_config_allows_openai_base_url_without_api_key(monkeypatch):
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+    monkeypatch.setenv("LLM_PROVIDER", "openai")
+    monkeypatch.setenv("LLM_BASE_URL", "http://localhost:11434/v1")
+    monkeypatch.setenv("LLM_ADAPTATION_MODEL", "local-model")
+    try:
+        config = load_config("local")
+        assert config.llm.provider == "openai"
+        assert config.llm.base_url == "http://localhost:11434/v1"
+        assert config.llm.models.adaptation == "local-model"
+        assert config.llm.openai_api_key is None
+    finally:
+        for key in (
+            "LLM_PROVIDER",
+            "LLM_BASE_URL",
+            "LLM_ADAPTATION_MODEL",
+        ):
+            monkeypatch.delenv(key, raising=False)
 
 
 def test_alerts_enabled_true(monkeypatch):

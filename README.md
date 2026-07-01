@@ -44,6 +44,28 @@ This requires `OPENAI_API_KEY`. Local audio files are written under `output/audi
 uncommitted. To publish playable website audio in post front matter, also enable upload and configure
 the audio delivery variables documented in `docs/website-audio-checklist.md`.
 
+## Manual Evaluation
+
+Run the live glossary-hint eval when tuning glossary prompts or comparing models:
+
+```bash
+uv run briefberlin-eval-glossary --provider openai --model gpt-5.5 --fixture berlin-heat
+```
+
+For OpenAI-compatible local models, point the eval at the local `/v1` endpoint and pass the exact
+installed model name:
+
+```bash
+uv run briefberlin-eval-glossary \
+  --provider openai \
+  --base-url http://localhost:11434/v1 \
+  --model qwen2.5:14b \
+  --fixture berlin-heat
+```
+
+Use `--json` for machine-readable output or `--list-fixtures` to see available fixtures. The eval
+calls the configured LLM and is intended for local prompt/model tuning, not normal CI.
+
 ## Output
 
 The Jekyll site lives under `output/`. Generated posts use CEFR levels `A2` and `B1`, German article text, a `Vokabeln` section when vocabulary exists, and no source attribution.
