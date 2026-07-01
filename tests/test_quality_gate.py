@@ -123,6 +123,30 @@ def test_init_llm_client_uses_quality_temperature(monkeypatch, base_config, mock
     assert captured_kwargs["model_kwargs"] == {"response_format": {"type": "json_object"}}
 
 
+def test_init_llm_client_passes_openai_base_url_without_api_key(
+    monkeypatch, base_config, mock_logger
+):
+    captured_kwargs = {}
+
+    class DummyOpenAI:
+        def __init__(self, *args, **kwargs):
+            captured_kwargs.update(kwargs)
+
+    base_config.llm.openai_api_key = None
+    base_config.llm.base_url = "http://localhost:11434/v1"
+    base_config.llm.models.quality_check = "local-quality"
+
+    monkeypatch.setattr(QualityGate, "_init_judge_chain", lambda self: None)
+    monkeypatch.setattr("scripts.quality_gate.ChatOpenAI", DummyOpenAI)
+
+    QualityGate(base_config, mock_logger)
+
+    assert captured_kwargs["api_key"] == "local-api-key"
+    assert captured_kwargs["base_url"] == "http://localhost:11434/v1"
+    assert captured_kwargs["model"] == "local-quality"
+    assert captured_kwargs["model_kwargs"] == {"response_format": {"type": "json_object"}}
+
+
 def test_evaluate_returns_model_dump(monkeypatch, quality_gate, sample_a2_article):
     monkeypatch.setattr(prompts, "get_quality_judge_prompt", lambda article, level: "PROMPT")
     quality_gate._call_llm = MagicMock(

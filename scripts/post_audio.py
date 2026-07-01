@@ -15,6 +15,7 @@ import yaml
 from scripts.audio_pipeline import AudioPipeline
 from scripts.config import load_config
 from scripts.models import AdaptedArticle, AudioAsset, VocabularyItem
+from scripts.text_utils import strip_article_ui_markup
 
 POSTS_DIR = Path("output/_posts")
 FRONTMATTER_RE = re.compile(r"\A---\n(.*?)\n---\n(.*)\Z", flags=re.S)
@@ -44,7 +45,7 @@ def extract_article_content(body: str) -> str:
     """Extract public article prose, excluding vocabulary and footer blocks."""
     content = body.split("## Vokabeln", 1)[0]
     content = content.split("\n---\n", 1)[0]
-    return content.strip()
+    return strip_article_ui_markup(content)
 
 
 def extract_vocabulary(body: str) -> list[VocabularyItem]:

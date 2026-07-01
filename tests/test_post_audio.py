@@ -54,6 +54,43 @@ def test_build_article_from_post_uses_public_article_body_and_vocabulary(tmp_pat
     assert "## Vokabeln" in body
 
 
+def test_build_article_from_post_strips_interactive_glossary_markup(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    post_path = _write_public_post(tmp_path, filename="2026-06-27-glossary-a2.md")
+    post_path.write_text(
+        """---
+title: Test Artikel
+date: 2026-06-27 01:35:05
+level: A2
+topics:
+- deutsch
+sources: []
+audio: null
+reading_time: 2
+---
+
+In Berlin gibt es eine <button type="button" class="article-term" data-term-id="term-1">Umfrage</button>. Viele Menschen lesen die Ergebnisse.
+
+<script type="application/json" class="article-glossary-data">[{"id":"term-1","term":"Umfrage"}]</script>
+
+## Vokabeln
+
+- **Umfrage** - survey - Eine Befragung von Menschen.
+
+---
+*Vereinfachter Artikel zu Lernzwecken.*
+""",
+        encoding="utf-8",
+    )
+
+    article, _timestamp, _frontmatter, _body = build_article_from_post(post_path)
+
+    assert article.content == "In Berlin gibt es eine Umfrage. Viele Menschen lesen die Ergebnisse."
+    assert article.summary == "In Berlin gibt es eine Umfrage."
+    assert "article-glossary-data" not in article.content
+    assert "<button" not in article.content
+
+
 def test_build_article_from_post_rejects_paths_outside_public_posts(tmp_path, monkeypatch):
     monkeypatch.chdir(tmp_path)
     private_path = tmp_path / "private-input" / "article.source.txt"
