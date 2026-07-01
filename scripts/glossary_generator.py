@@ -29,6 +29,7 @@ from scripts.text_utils import (
 )
 
 REJECT_ENTITY_LABELS = {"PER", "PERSON", "GPE", "LOC"}
+MAX_CLICKABLE_TERM_WORDS = 3
 ORGANIZATION_OR_GROUP_TOKENS = {
     "agencia",
     "banco",
@@ -246,6 +247,20 @@ COGNATE_SUFFIX_MAP = (
     ("able", "able"),
     ("ibles", "ible"),
     ("ible", "ible"),
+    ("kturen", "ctures"),
+    ("ktur", "cture"),
+    ("turen", "tures"),
+    ("tur", "ture"),
+    ("ionen", "ions"),
+    ("ion", "ion"),
+    ("tionen", "tions"),
+    ("tion", "tion"),
+    ("ik", "ic"),
+    ("isch", "ic"),
+    ("ische", "ic"),
+    ("ischen", "ic"),
+    ("ischer", "ic"),
+    ("isches", "ic"),
     ("osas", "ous"),
     ("osos", "ous"),
     ("osa", "ous"),
@@ -343,6 +358,7 @@ class RawGlossaryItem(BaseModel):
     english: Any = None
     explanation: Any = None
     gloss: Any = None
+    default_glossary: Any = None
 
     model_config = ConfigDict(extra="allow")
 
@@ -353,6 +369,24 @@ class GlossaryResponse(BaseModel):
     vocabulary: List[RawGlossaryItem] = Field(default_factory=list)
 
     model_config = ConfigDict(extra="allow")
+
+
+class StructuredOutputDegradedError(RuntimeError):
+    """Raised when a structured-output LLM call yields no usable glossary payload.
+
+    The model either returned no tool call (``mode="no_payload"``) or a tool call with
+    no vocabulary entries (``mode="empty_vocabulary"``). Both usually mean the model
+    cannot satisfy the strict tool-calling structured-output contract, which is common
+    with some local/OpenAI-compatible models (e.g. Gemma via Ollama). Raising here turns
+    a previously silent empty result into a loud, actionable failure.
+    """
+
+    def __init__(self, mode: str, detail: str = "") -> None:
+        self.mode = mode
+        message = f"structured glossary output degraded (mode={mode})"
+        if detail:
+            message = f"{message}: {detail}"
+        super().__init__(message)
 
 
 GLOSSARY_RESPONSE_SCHEMA = {
@@ -371,8 +405,9 @@ GLOSSARY_RESPONSE_SCHEMA = {
                     "english": {"anyOf": [{"type": "string"}, {"type": "null"}]},
                     "explanation": {"anyOf": [{"type": "string"}, {"type": "null"}]},
                     "gloss": {"anyOf": [{"type": "string"}, {"type": "null"}]},
+                    "default_glossary": {"anyOf": [{"type": "boolean"}, {"type": "null"}]},
                 },
-                "required": ["term", "english", "explanation", "gloss"],
+                "required": ["term", "english", "explanation", "gloss", "default_glossary"],
             },
         },
     },
@@ -448,8 +483,8 @@ class GlossaryGenerator:
                 dropped[display_term] = "transparent term for English-speaking learners"
                 continue
 
-            if self._is_isolated_modifier(doc, content, term):
-                dropped[display_term] = "isolated modifier instead of the full phrase"
+            if self._is_overlong_phrase(term):
+                dropped[display_term] = "phrase is too long; prefer standalone words or short expressions"
                 continue
 
             accepted.append(
@@ -457,6 +492,7 @@ class GlossaryGenerator:
                     term=term,
                     english=english,
                     explanation=explanation,
+                    default_glossary=raw_item.default_glossary,
                 )
             )
             seen_terms.add(normalized_key)
@@ -511,7 +547,15 @@ class GlossaryGenerator:
                         f"Retry glossary generation returned no candidates for '{article.title}'"
                     )
 
-            self.last_run_stats["glossary_accepted"] = len(accepted)
+            visible_glossary = self.select_default_glossary(article.level, accepted)
+            visible_terms = {item.term.casefold() for item in visible_glossary}
+            translation_hints = [
+                item.model_copy(update={"default_glossary": item.term.casefold() in visible_terms})
+                for item in accepted
+            ]
+
+            self.last_run_stats["translation_hints_accepted"] = len(translation_hints)
+            self.last_run_stats["glossary_accepted"] = len(visible_glossary)
             self.last_run_stats["glossary_empty_after_retry"] = retried and not accepted
 
             if self.debug_dump:
@@ -522,7 +566,8 @@ class GlossaryGenerator:
                         initial_dropped=dropped,
                         retry_candidates=retry_candidates,
                         retry_dropped=retry_dropped,
-                        accepted=accepted,
+                        accepted=visible_glossary,
+                        translation_hints=translation_hints,
                         retried=retried,
                     )
                 except Exception as exc:
@@ -539,14 +584,21 @@ class GlossaryGenerator:
                     f"glossary_candidates_retry={len(retry_candidates)}, "
                     f"glossary_accepted={len(accepted)}); publishing text without glossary"
                 )
-                return article.model_copy(update={"vocabulary": []})
+                return article.model_copy(update={"vocabulary": [], "translation_hints": []})
 
-            content = self.apply_bolding(article.content, accepted)
+            content = self.apply_bolding(article.content, visible_glossary)
             self.logger.info(
-                f"Accepted {len(accepted)} glossary entries for '{article.title}': "
-                f"{', '.join(item.term for item in accepted)}"
+                f"Accepted {len(translation_hints)} translation hints and "
+                f"{len(visible_glossary)} visible glossary entries for '{article.title}': "
+                f"{', '.join(item.term for item in visible_glossary)}"
             )
-            return article.model_copy(update={"content": content, "vocabulary": accepted})
+            return article.model_copy(
+                update={
+                    "content": content,
+                    "vocabulary": visible_glossary,
+                    "translation_hints": translation_hints,
+                }
+            )
         except Exception as exc:
             self.last_run_stats["glossary_empty_after_retry"] = bool(
                 self.last_run_stats.get("retry_used")
@@ -556,17 +608,56 @@ class GlossaryGenerator:
                 article.title,
                 exc,
             )
-            return article.model_copy(update={"vocabulary": []})
+            return article.model_copy(update={"vocabulary": [], "translation_hints": []})
+
+    def select_default_glossary(
+        self,
+        level: str,
+        candidates: List[VocabularyItem],
+    ) -> List[VocabularyItem]:
+        """Return the visible glossary subset from the broader translation hints."""
+        if not candidates:
+            return []
+
+        max_items = {"A2": 8, "B1": 9}.get(level, 8)
+        selected = [item for item in candidates if item.default_glossary]
+
+        if not selected:
+            selected = candidates[:max_items]
+
+        return [
+            item.model_copy(update={"default_glossary": True})
+            for item in selected[:max_items]
+        ]
 
     def _generate_candidates_from_prompt(self, prompt: str) -> List[VocabularyItem]:
         response = self._call_llm(prompt)
+        if response is None:
+            raise StructuredOutputDegradedError(
+                mode="no_payload",
+                detail=(
+                    "the model returned no structured tool call; it likely cannot satisfy "
+                    "strict tool-calling structured output (common with some local/Ollama "
+                    "models such as Gemma). Try a tool-capable model such as qwen2.5."
+                ),
+            )
         if isinstance(response, BaseModel):
             payload = response.model_dump(exclude_none=True)
         elif isinstance(response, dict):
             payload = response
         else:
             payload = {}
-        return coerce_vocabulary_items(payload.get("vocabulary") or [])
+        vocabulary = payload.get("vocabulary") or []
+        if not vocabulary:
+            raise StructuredOutputDegradedError(
+                mode="empty_vocabulary",
+                detail=(
+                    "the structured tool call returned no vocabulary entries; the model "
+                    "likely cannot follow the strict structured-output schema. Try a "
+                    "tool-capable model such as qwen2.5."
+                ),
+            )
+        return coerce_vocabulary_items(vocabulary)
 
     def _retry_generate(self, article: AdaptedArticle, dropped: Dict[str, str]) -> List[VocabularyItem]:
         shortlist = self._build_retry_shortlist(article.content)
@@ -613,6 +704,7 @@ class GlossaryGenerator:
             "article_level": article.level if article else None,
             "glossary_candidates_initial": 0,
             "glossary_candidates_retry": 0,
+            "translation_hints_accepted": 0,
             "glossary_accepted": 0,
             "glossary_empty_after_retry": False,
             "retry_used": False,
@@ -626,6 +718,7 @@ class GlossaryGenerator:
         retry_candidates: List[VocabularyItem],
         retry_dropped: Dict[str, str],
         accepted: List[VocabularyItem],
+        translation_hints: List[VocabularyItem],
         retried: bool,
     ) -> None:
         self.metrics_output_dir.mkdir(parents=True, exist_ok=True)
@@ -638,12 +731,14 @@ class GlossaryGenerator:
             "counts": {
                 "initial_candidates": len(initial_candidates),
                 "retry_candidates": len(retry_candidates),
+                "translation_hints": len(translation_hints),
                 "accepted": len(accepted),
                 "initial_dropped": len(initial_dropped),
                 "retry_dropped": len(retry_dropped),
             },
             "initial_candidates": [item.model_dump() for item in initial_candidates],
             "retry_candidates": [item.model_dump() for item in retry_candidates],
+            "translation_hints": [item.model_dump() for item in translation_hints],
             "accepted": [item.model_dump() for item in accepted],
             "dropped": {
                 "initial": [
@@ -834,6 +929,9 @@ class GlossaryGenerator:
             if token.pos_ == "ADJ" and token.dep_ == "amod":
                 return True
         return False
+
+    def _is_overlong_phrase(self, term: str) -> bool:
+        return len(self._tokenize(term)) > MAX_CLICKABLE_TERM_WORDS
 
     def _find_matching_spans(self, doc, term: str):
         pattern = re.compile(rf"(?<!\w){re.escape(term)}(?!\w)", re.IGNORECASE)

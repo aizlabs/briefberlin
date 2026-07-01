@@ -4,7 +4,13 @@ from unittest.mock import MagicMock
 import pytest
 from langchain_core.utils.function_calling import convert_to_openai_function
 
-from scripts.glossary_generator import GLOSSARY_RESPONSE_SCHEMA, GlossaryGenerator, GlossaryResponse
+from scripts.glossary_generator import (
+    GLOSSARY_RESPONSE_SCHEMA,
+    GlossaryGenerator,
+    GlossaryResponse,
+    RawGlossaryItem,
+    StructuredOutputDegradedError,
+)
 from scripts.models import VocabularyItem
 
 FRUEHLING_A2_CONTENT = (
@@ -37,6 +43,46 @@ VERWALTUNG_B1_CONTENT = (
     "Leihräder verbinden. Fachleute sehen darin eine Chance, den Alltag einfacher zu machen."
 )
 
+BERLIN_HEAT_CONTENT = (
+    "Ein heißes Wochenende steht Berlin bevor. Die Temperaturen könnten bis zu 41 Grad erreichen. "
+    "Der Deutsche Wetterdienst sagt, dass der bisherige Rekord von 41,2 Grad aus dem Jahr 2019 "
+    "vielleicht gebrochen wird. Diese Hitze zeigt, dass der Klimawandel real ist und uns direkt "
+    "betrifft.\n\n"
+    "Während die Temperaturen steigen, wird in Deutschland viel über Klimapolitik diskutiert. "
+    "Die Regierung hat kürzlich Steuererleichterungen für Benzin und Diesel eingeführt. Diese "
+    "Maßnahmen sind umstritten, weil sie die Erderwärmung verstärken könnten. Der sogenannte "
+    "Tankrabatt und die niedrigeren Steuern auf Flugtickets kosten den Staat fast zwei Milliarden "
+    "Euro. Kritiker sagen, dass vor allem Vielflieger und Autofahrer mit großen Autos davon "
+    "profitieren.\n\n"
+    "In Berlin fordern viele Menschen mehr Grünflächen und Schatten. Bäume in der Stadt können "
+    "die Temperatur um bis zu 12 Grad senken. Ein Gesetz in Berlin plant, bis 2040 eine Million "
+    "Bäume zu pflanzen. Doch es gibt Probleme mit der Finanzierung, weil das Geld dafür halbiert "
+    "wurde. Städte, die sich gut auf den Klimawandel vorbereiten, könnten Vorteile haben.\n\n"
+    "Um mit der Hitze umzugehen, braucht es nicht nur neue Infrastruktur, sondern auch ein "
+    "Umdenken. Die hohen Temperaturen haben wirtschaftliche Folgen. Ein Tag mit über 30 Grad "
+    "kostet die deutsche Wirtschaft laut Experten 431 Millionen Euro. Deutschland muss den "
+    "Klimawandel ernst nehmen und Maßnahmen ergreifen, um seine Städte widerstandsfähiger zu "
+    "machen."
+)
+
+BERLIN_HEAT_EXPECTED_HINT_TERMS = [
+    "steht Berlin bevor",
+    "erreichen",
+    "bisherige",
+    "betrifft",
+    "eingeführt",
+    "umstritten",
+    "Vielflieger",
+    "Erderwärmung",
+    "Grünflächen",
+    "Schatten",
+    "senken",
+    "pflanzen",
+    "vorbereiten",
+    "Vorteile",
+    "umzugehen",
+]
+
 
 @pytest.fixture
 def glossary_generator(monkeypatch, base_config, mock_logger):
@@ -47,10 +93,11 @@ def glossary_generator(monkeypatch, base_config, mock_logger):
     return generator
 
 
-def test_validate_rejects_named_entities_transparent_terms_and_fragments(glossary_generator):
+def test_validate_rejects_named_entities_and_transparent_terms(glossary_generator):
     content = (
         "Berlin testete Drohnen nach einem Sturm. Angela Merkel sprach mit Deutschland über Energie. "
-        "Die Migrationspolitik änderte sich. Auch einseitige Entscheidungen wurden kritisiert."
+        "Die migrantische Politik änderte sich. Auch einseitige Entscheidungen wurden kritisiert. "
+        "Die Temperaturen steigen und die Infrastruktur ist wichtig."
     )
     candidates = [
         VocabularyItem(term="Berlin", english="Berlin", explanation="capital city in Germany"),
@@ -65,13 +112,19 @@ def test_validate_rejects_named_entities_transparent_terms_and_fragments(glossar
             explanation="former chancellor of Germany",
         ),
         VocabularyItem(term="drones", english="drones", explanation="unmanned aircraft"),
+        VocabularyItem(term="Temperaturen", english="temperatures", explanation="Grad der Wärme"),
         VocabularyItem(
-            term="migrantisch",
+            term="Infrastruktur",
+            english="infrastructure",
+            explanation="wichtige Anlagen und Systeme",
+        ),
+        VocabularyItem(
+            term="migrantische",
             english="migratory",
             explanation="related to movement between countries",
         ),
         VocabularyItem(
-            term="einseitig",
+            term="einseitige",
             english="unilateral",
             explanation="done by one side",
         ),
@@ -79,14 +132,14 @@ def test_validate_rejects_named_entities_transparent_terms_and_fragments(glossar
 
     accepted, dropped = glossary_generator.validate(content, candidates)
 
-    assert accepted == []
+    assert [item.term for item in accepted] == ["migrantische", "einseitige"]
     assert set(dropped) == {
         "Berlin",
         "Deutschland",
         "Angela Merkel",
         "drones",
-        "migrantisch",
-        "einseitig",
+        "Temperaturen",
+        "Infrastruktur",
     }
 
 
@@ -181,11 +234,15 @@ def test_glossary_response_schema_is_closed_for_openai_structured_output():
         "english",
         "explanation",
         "gloss",
+        "default_glossary",
     ]
     for field_name in ("term", "english", "explanation", "gloss"):
         assert item_properties[field_name] == {
             "anyOf": [{"type": "string"}, {"type": "null"}]
         }
+    assert item_properties["default_glossary"] == {
+        "anyOf": [{"type": "boolean"}, {"type": "null"}]
+    }
 
 
 def test_glossary_response_schema_converts_with_langchain_strict_mode():
@@ -243,6 +300,116 @@ def test_validate_keeps_high_value_terms_and_context_phrases(glossary_generator)
         "Migrationspolitik",
     ]
     assert dropped == {}
+
+
+def test_validate_rejects_long_phrase_fragments(glossary_generator):
+    content = (
+        "Die Regierung hat niedrigere Steuern auf Flugtickets eingeführt. "
+        "Viele Menschen sprechen über Steuern und Flugtickets."
+    )
+    candidates = [
+        VocabularyItem(
+            term="niedrigere Steuern auf Flugtickets",
+            english="lower taxes on plane tickets",
+            explanation="lange Wortgruppe aus dem Satz",
+        ),
+        VocabularyItem(
+            term="Steuern",
+            english="taxes",
+            explanation="Geld, das Menschen oder Firmen an den Staat zahlen",
+        ),
+        VocabularyItem(
+            term="Flugtickets",
+            english="plane tickets",
+            explanation="Tickets für eine Reise mit dem Flugzeug",
+        ),
+    ]
+
+    accepted, dropped = glossary_generator.validate(content, candidates)
+
+    assert [item.term for item in accepted] == ["Steuern", "Flugtickets"]
+    assert dropped["niedrigere Steuern auf Flugtickets"] == (
+        "phrase is too long; prefer standalone words or short expressions"
+    )
+
+
+def test_validate_keeps_broad_standalone_hints_for_berlin_heat_article(glossary_generator):
+    candidates = [
+        VocabularyItem(
+            term="steht Berlin bevor",
+            english="is ahead for Berlin",
+            explanation="kommt bald auf Berlin zu",
+        ),
+        VocabularyItem(term="erreichen", english="reach", explanation="bis zu einem Wert kommen"),
+        VocabularyItem(term="bisherige", english="previous", explanation="bis jetzt gültige"),
+        VocabularyItem(term="betrifft", english="affects", explanation="hat Auswirkungen auf"),
+        VocabularyItem(term="eingeführt", english="introduced", explanation="neu begonnen"),
+        VocabularyItem(term="umstritten", english="controversial", explanation="nicht alle finden es gut"),
+        VocabularyItem(
+            term="Vielflieger",
+            english="frequent flyers",
+            explanation="Menschen, die oft fliegen",
+        ),
+        VocabularyItem(
+            term="Erderwärmung",
+            english="global warming",
+            explanation="die Erde wird wärmer",
+        ),
+        VocabularyItem(
+            term="Grünflächen",
+            english="green spaces",
+            explanation="Flächen mit Pflanzen in der Stadt",
+        ),
+        VocabularyItem(term="Schatten", english="shade", explanation="Bereich ohne direkte Sonne"),
+        VocabularyItem(term="senken", english="lower", explanation="weniger machen"),
+        VocabularyItem(term="pflanzen", english="plant", explanation="in die Erde setzen"),
+        VocabularyItem(term="vorbereiten", english="prepare", explanation="für etwas bereit machen"),
+        VocabularyItem(term="Vorteile", english="advantages", explanation="gute Seiten einer Sache"),
+        VocabularyItem(term="umzugehen", english="to deal with", explanation="mit etwas klarkommen"),
+    ]
+
+    accepted, dropped = glossary_generator.validate(BERLIN_HEAT_CONTENT, candidates)
+    accepted_terms = [item.term for item in accepted]
+    missing_terms = [
+        term for term in BERLIN_HEAT_EXPECTED_HINT_TERMS
+        if term not in accepted_terms
+    ]
+    coverage = len(accepted_terms) / len(BERLIN_HEAT_EXPECTED_HINT_TERMS)
+
+    assert coverage >= 0.9
+    assert missing_terms == []
+    assert accepted_terms == BERLIN_HEAT_EXPECTED_HINT_TERMS
+    assert dropped == {}
+
+
+def test_select_default_glossary_uses_llm_marked_subset(glossary_generator):
+    candidates = [
+        VocabularyItem(term="Windenergie", english="wind power", explanation="Strom aus Wind"),
+        VocabularyItem(
+            term="Energiewende",
+            english="energy transition",
+            explanation="Wechsel zu sauberer Energie",
+            default_glossary=True,
+        ),
+        VocabularyItem(term="Stromnetze", english="power grids", explanation="Leitungen für Strom"),
+    ]
+
+    selected = glossary_generator.select_default_glossary("A2", candidates)
+
+    assert [item.term for item in selected] == ["Energiewende"]
+    assert selected[0].default_glossary is True
+
+
+def test_select_default_glossary_falls_back_to_first_candidates(glossary_generator):
+    candidates = [
+        VocabularyItem(term=f"Begriff {index}", english="term", explanation="Erklärung")
+        for index in range(10)
+    ]
+
+    selected = glossary_generator.select_default_glossary("A2", candidates)
+
+    assert [item.term for item in selected] == [f"Begriff {index}" for index in range(8)]
+    assert all(item.default_glossary for item in selected)
 
 
 def test_validate_accepts_generated_items_with_one_gloss_field(glossary_generator):
@@ -469,6 +636,21 @@ def test_enrich_article_publishes_without_glossary_when_all_items_are_rejected(
             ]
         ),
     )
+    monkeypatch.setattr(
+        glossary_generator,
+        "_call_llm",
+        MagicMock(
+            return_value=GlossaryResponse(
+                vocabulary=[
+                    RawGlossaryItem(
+                        term="planes",
+                        english="planes",
+                        explanation="aircraft",
+                    )
+                ]
+            )
+        ),
+    )
 
     article = sample_a2_text_article.model_copy(
         update={"content": "Drohnen flogen in der Nacht über die Stadt."}
@@ -476,6 +658,7 @@ def test_enrich_article_publishes_without_glossary_when_all_items_are_rejected(
     enriched = glossary_generator.enrich_article(article)
 
     assert enriched.vocabulary == []
+    assert enriched.translation_hints == []
     assert enriched.content == article.content
     assert any(
         "glossary_candidates_initial=1" in str(call.args[0])
@@ -510,6 +693,7 @@ def test_enrich_article_without_retry_does_not_mark_empty_after_retry(
     enriched = glossary_generator.enrich_article(article)
 
     assert enriched.vocabulary == []
+    assert enriched.translation_hints == []
     assert glossary_generator.last_run_stats["retry_used"] is False
     assert glossary_generator.last_run_stats["glossary_empty_after_retry"] is False
 
@@ -587,9 +771,16 @@ def test_enrich_article_retries_when_initial_candidates_all_fail_for_spring_a2(
         "Netzausbau",
         "Mobilitätskarte",
     ]
+    assert [item.term for item in enriched.translation_hints] == [
+        "Stadtfeste",
+        "Genehmigungen",
+        "Netzausbau",
+        "Mobilitätskarte",
+    ]
     assert glossary_generator.last_run_stats["retry_used"] is True
     assert glossary_generator.last_run_stats["glossary_candidates_initial"] == 5
     assert glossary_generator.last_run_stats["glossary_candidates_retry"] == 4
+    assert glossary_generator.last_run_stats["translation_hints_accepted"] == 4
     assert glossary_generator.last_run_stats["glossary_accepted"] == 4
 
 
@@ -698,7 +889,9 @@ def test_debug_dump_writes_glossary_artifact(glossary_generator, sample_a2_text_
     assert payload["level"] == article.level
     assert payload["retry_used"] is False
     assert payload["counts"]["initial_candidates"] == 1
+    assert payload["counts"]["translation_hints"] == 1
     assert payload["counts"]["accepted"] == 1
+    assert payload["translation_hints"][0]["term"] == "Sturmschäden"
     assert payload["accepted"][0]["term"] == "Sturmschäden"
     assert payload["dropped"]["initial"] == []
 
@@ -743,3 +936,29 @@ def test_debug_dump_failure_does_not_discard_accepted_glossary(
         in str(call.args[0])
         for call in glossary_generator.logger.warning.call_args_list
     )
+
+
+def test_generate_raises_on_degraded_none_payload(glossary_generator, monkeypatch):
+    monkeypatch.setattr(glossary_generator, "_call_llm", MagicMock(return_value=None))
+    with pytest.raises(StructuredOutputDegradedError) as exc_info:
+        glossary_generator._generate_candidates_from_prompt("prompt")
+    assert exc_info.value.mode == "no_payload"
+    assert "no structured tool call" in str(exc_info.value)
+
+
+def test_generate_raises_on_empty_vocabulary(glossary_generator, monkeypatch):
+    monkeypatch.setattr(glossary_generator, "_call_llm", MagicMock(return_value=GlossaryResponse()))
+    with pytest.raises(StructuredOutputDegradedError) as exc_info:
+        glossary_generator._generate_candidates_from_prompt("prompt")
+    assert exc_info.value.mode == "empty_vocabulary"
+    assert "returned no vocabulary entries" in str(exc_info.value)
+
+
+def test_enrich_article_publishes_without_glossary_on_degraded_output(
+    glossary_generator, sample_a2_text_article, monkeypatch
+):
+    monkeypatch.setattr(glossary_generator, "_call_llm", MagicMock(return_value=None))
+    enriched = glossary_generator.enrich_article(sample_a2_text_article)
+    assert enriched.vocabulary == []
+    assert enriched.translation_hints == []
+    assert enriched.content == sample_a2_text_article.content

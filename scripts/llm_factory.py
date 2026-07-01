@@ -42,12 +42,14 @@ def create_chat_model(llm_config: Dict[str, Any], model_name: str, temperature: 
 
     if provider == "openai":
         api_key = llm_config.get("openai_api_key")
-        if not api_key:
+        base_url = llm_config.get("base_url")
+        if not api_key and not base_url:
             raise ValueError("Missing OPENAI_API_KEY in config/environment")
 
         # Use OpenAI's JSON/structured output features under the hood
         return ChatOpenAI(
-            api_key=api_key,
+            api_key=api_key or "local-api-key",
+            base_url=base_url,
             model=model_name,
             max_tokens=llm_config.get("max_tokens", 4096),
             temperature=temperature,

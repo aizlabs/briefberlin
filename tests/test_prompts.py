@@ -243,18 +243,63 @@ class TestGetB1AdaptationPrompt:
 class TestGetGlossaryGenerationPrompt:
     """Test glossary prompt generation from final article text."""
 
-    def test_glossary_prompt_targets_final_text(self, sample_a2_text_article):
+    def test_glossary_generation_prompt_contract(self, sample_a2_text_article):
         prompt = get_glossary_generation_prompt(sample_a2_text_article)
+
+        required_contract_terms = [
+            "Use ONLY the exact final article text below",
+            "do not rewrite it",
+            "Choose many words or phrases",
+            "scan every sentence",
+            "not only the main news nouns",
+            "Prefer standalone words",
+            "separable German compounds",
+            "short reusable expressions",
+            "nouns, compound nouns, verbs, adjectives, adverbs",
+            "Include useful verbs and adjectives",
+            "not important enough for the default visible glossary",
+            "Use phrases only when the complete phrase has a meaning",
+            "never more than 3 words",
+            "Do not select long sentence fragments",
+            "adjective + noun + prepositional phrase",
+            "click through much of the article text",
+            "Avoid proper names",
+            "Avoid obvious cognates",
+            "look very similar to English",
+            "Temperaturen/temperatures",
+            "Infrastruktur/infrastructure",
+            "Mark only the strongest learner terms as default_glossary=true",
+            "Mark all other useful click-only terms as default_glossary=false",
+            "Do not add filler terms",
+            "return ONLY valid JSON",
+            '"vocabulary"',
+            '"term"',
+            '"english"',
+            '"explanation"',
+            '"default_glossary"',
+        ]
 
         assert sample_a2_text_article.title in prompt
         assert sample_a2_text_article.content in prompt
         assert "English-speaking learner" in prompt
-        assert '"term"' in prompt
-        assert '"english"' in prompt
-        assert '"explanation"' in prompt
-        assert "Do not add filler terms" in prompt
+        assert f"Level: {sample_a2_text_article.level}" in prompt
+        for term in required_contract_terms:
+            assert term in prompt
 
-    def test_glossary_retry_prompt_includes_rejections_and_shortlist(self, sample_a2_text_article):
+    def test_glossary_generation_prompt_level_specific_contract(self, sample_a2_text_article):
+        a2_prompt = get_glossary_generation_prompt(sample_a2_text_article)
+        b1_article = sample_a2_text_article.model_copy(update={"level": "B1"})
+        b1_prompt = get_glossary_generation_prompt(b1_article)
+
+        assert "Target 20-40 clickable translation hints" in a2_prompt
+        assert "Target 4-8 default glossary entries" in a2_prompt
+        assert "Use only very simple German vocabulary" in a2_prompt
+
+        assert "Target 25-55 clickable translation hints" in b1_prompt
+        assert "Target 5-9 default glossary entries" in b1_prompt
+        assert "Use clear intermediate German vocabulary" in b1_prompt
+
+    def test_glossary_retry_prompt_contract(self, sample_a2_text_article):
         prompt = get_glossary_retry_prompt(
             sample_a2_text_article,
             rejected_terms={
@@ -264,14 +309,41 @@ class TestGetGlossaryGenerationPrompt:
             shortlist=["Windräder", "Netzausbau", "Genehmigungen"],
         )
 
-        assert "Do NOT return any rejected term again" in prompt
+        required_contract_terms = [
+            "Generate a NEW set of candidates",
+            "Do NOT return any rejected term again",
+            "Do NOT rewrite the article",
+            "Every term must appear literally in the article text",
+            "scan every sentence",
+            "Prefer standalone words",
+            "nouns, compound nouns, verbs, adjectives, adverbs",
+            "Include useful verbs and adjectives",
+            "Use phrases only when the complete phrase has a meaning",
+            "never more than 3 words",
+            "Do not select long sentence fragments",
+            "look very similar to English",
+            "Temperaturen/temperatures",
+            "Infrastruktur/infrastructure",
+            "Mark only the strongest learner terms as default_glossary=true",
+            "Mark all other useful click-only terms as default_glossary=false",
+            "return ONLY valid JSON",
+            '"vocabulary"',
+            '"term"',
+            '"english"',
+            '"explanation"',
+            '"default_glossary"',
+        ]
+
+        assert sample_a2_text_article.title in prompt
+        assert sample_a2_text_article.content in prompt
+        assert f"Level: {sample_a2_text_article.level}" in prompt
         assert "Deutschland" in prompt
         assert "drones" in prompt
         assert "Windräder" in prompt
         assert "Netzausbau" in prompt
-        assert '"term"' in prompt
-        assert '"english"' in prompt
-        assert '"explanation"' in prompt
+        assert "Genehmigungen" in prompt
+        for term in required_contract_terms:
+            assert term in prompt
 
 
 class TestLevelGenerationRules:

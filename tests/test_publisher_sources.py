@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from scripts.models import AudioAsset, SourceMetadata
+from scripts.models import AudioAsset, SourceMetadata, VocabularyItem
 from scripts.publisher import Publisher
 
 
@@ -200,6 +200,74 @@ def test_publisher_skips_vocabulary_items_without_any_definition(
 
     assert "- **Sturmschäden** -" not in markdown
     assert "## Vokabeln" not in markdown
+
+
+def test_publisher_embeds_translation_hints_and_clickable_article_terms(
+    base_config,
+    mock_logger,
+    sample_a2_article,
+    tmp_path,
+):
+    base_config.output['path'] = str(tmp_path)
+    article = sample_a2_article.model_copy(
+        update={
+            "content": "Die Stromnetze brauchen Strom.",
+            "vocabulary": [
+                VocabularyItem(
+                    term="Strom",
+                    english="electricity",
+                    explanation="Energie aus der Steckdose",
+                    default_glossary=True,
+                )
+            ],
+            "translation_hints": [
+                VocabularyItem(
+                    term="Stromnetze",
+                    english="power grids",
+                    explanation="Leitungen für Strom",
+                ),
+                VocabularyItem(
+                    term="Strom",
+                    english="electricity",
+                    explanation="Energie aus der Steckdose",
+                    default_glossary=True,
+                ),
+            ],
+        }
+    )
+
+    publisher = Publisher(base_config, mock_logger, dry_run=True)
+
+    markdown = publisher._generate_markdown(article, datetime(2024, 1, 1, 12, 0, 0))
+
+    assert '<script type="application/json" class="article-glossary-data">' in markdown
+    assert '"term":"Stromnetze"' in markdown
+    assert '"defaultGlossary":true' in markdown
+    assert (
+        'Die <button type="button" class="article-term" data-term-id="term-1">'
+        'Stromnetze</button> brauchen '
+        '<button type="button" class="article-term article-term--default" data-term-id="term-2">'
+        'Strom</button>.'
+    ) in markdown
+    assert "- **Strom** - electricity - Energie aus der Steckdose" in markdown
+
+
+def test_publisher_falls_back_to_visible_vocabulary_for_clickable_terms(
+    base_config,
+    mock_logger,
+    sample_a2_article,
+    tmp_path,
+):
+    base_config.output['path'] = str(tmp_path)
+    article = sample_a2_article.model_copy(update={"translation_hints": []})
+
+    publisher = Publisher(base_config, mock_logger, dry_run=True)
+
+    markdown = publisher._generate_markdown(article, datetime(2024, 1, 1, 12, 0, 0))
+
+    assert "article-glossary-data" in markdown
+    assert 'data-term-id="term-1"' in markdown
+    assert "- **Windenergie** - environment - Strom aus der Kraft des Windes" in markdown
 
 
 def test_publisher_includes_audio_frontmatter_when_public_url_exists(

@@ -80,8 +80,8 @@ audio:
 llm:
   provider: openai  # or 'anthropic'
   models:
-    generation: gpt-4o        # For synthesis (Step 1)
-    adaptation: gpt-4o        # For level adaptation (Step 2) - can use cheaper model
+    generation: gpt-5.5       # For synthesis (Step 1)
+    adaptation: gpt-5.5       # For level adaptation (Step 2) - can use cheaper model
     quality_check: gpt-4o-mini
   temperature: 0.3
   quality_temperature: 0.1

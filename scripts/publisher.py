@@ -4,15 +4,17 @@ Publisher Component
 Saves approved articles as Jekyll markdown files with YAML frontmatter.
 """
 
+import json
 import logging
 import re
 from datetime import datetime
+from html import escape as html_escape
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 from urllib.parse import urlparse
 
 from scripts.config import AppConfig
-from scripts.models import AdaptedArticle, coerce_vocabulary_items
+from scripts.models import AdaptedArticle, VocabularyItem, coerce_vocabulary_items
 from scripts.text_utils import normalize_vocabulary_term, slugify_text
 from scripts.topic_utils import is_noisy_topic_keyword
 
@@ -259,17 +261,20 @@ reading_time: {article.reading_time}
 
 """
 
+        translation_hints = self._translation_hints_for_publish(article)
+
         # Article content
-        content = article.content
+        content = self._render_content_with_translation_hints(article.content, translation_hints)
 
         # Vocabulary section
         vocabulary = self._format_vocabulary(article.vocabulary, article.title)
+        translation_hint_data = self._format_translation_hints_data(translation_hints)
 
         # Attribution
         attribution = self._format_attribution(article.sources)
 
         # Combine all parts
-        markdown = frontmatter + content + vocabulary + attribution
+        markdown = frontmatter + translation_hint_data + content + vocabulary + attribution
 
         return markdown
 
@@ -329,6 +334,134 @@ reading_time: {article.reading_time}
 
         vocab_lines = ["", "## Vokabeln", "", *rendered_lines]
         return '\n'.join(vocab_lines)
+
+    def _translation_hints_for_publish(self, article: AdaptedArticle) -> List[VocabularyItem]:
+        """Return the broad clickable hint set, falling back to visible vocabulary."""
+        hints = coerce_vocabulary_items(article.translation_hints)
+        visible_terms = {
+            item.term.casefold()
+            for item in coerce_vocabulary_items(article.vocabulary)
+        }
+        if not hints:
+            hints = [
+                item.model_copy(update={"default_glossary": True})
+                for item in coerce_vocabulary_items(article.vocabulary)
+            ]
+
+        deduped: List[VocabularyItem] = []
+        seen = set()
+        for item in hints:
+            normalized_term = normalize_vocabulary_term(item.term)
+            if not normalized_term:
+                continue
+            key = normalized_term.casefold()
+            if key in seen:
+                continue
+            definition = item.english or item.explanation
+            if not definition:
+                continue
+            seen.add(key)
+            deduped.append(
+                item.model_copy(
+                    update={
+                        "term": normalized_term,
+                        "default_glossary": item.default_glossary or key in visible_terms,
+                    }
+                )
+            )
+        return deduped
+
+    def _format_translation_hints_data(self, translation_hints: List[VocabularyItem]) -> str:
+        """Embed precomputed translation hints as static JSON for article JavaScript."""
+        if not translation_hints:
+            return ""
+
+        payload = [
+            {
+                "id": self._translation_hint_id(index),
+                "term": item.term,
+                "english": item.english,
+                "explanation": item.explanation,
+                "defaultGlossary": item.default_glossary,
+            }
+            for index, item in enumerate(translation_hints)
+        ]
+        encoded = json.dumps(payload, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+        return (
+            '<script type="application/json" class="article-glossary-data">'
+            f"{encoded}"
+            "</script>\n\n"
+        )
+
+    def _render_content_with_translation_hints(
+        self,
+        content: str,
+        translation_hints: List[VocabularyItem],
+    ) -> str:
+        """Render the article body with deterministic clickable hint spans."""
+        if not translation_hints:
+            return content
+
+        clean_content = content.replace("**", "")
+        terms = sorted(
+            enumerate(translation_hints),
+            key=lambda item: len(item[1].term),
+            reverse=True,
+        )
+        result: List[str] = []
+        index = 0
+
+        while index < len(clean_content):
+            match = self._find_translation_hint_match(clean_content, index, terms)
+            if match is None:
+                result.append(clean_content[index])
+                index += 1
+                continue
+
+            hint_index, item = match
+            matched_text = clean_content[index:index + len(item.term)]
+            classes = ["article-term"]
+            if item.default_glossary:
+                classes.append("article-term--default")
+            result.append(
+                '<button type="button" '
+                f'class="{" ".join(classes)}" '
+                f'data-term-id="{self._translation_hint_id(hint_index)}">'
+                f"{html_escape(matched_text)}</button>"
+            )
+            index += len(item.term)
+
+        return "".join(result)
+
+    def _find_translation_hint_match(
+        self,
+        content: str,
+        index: int,
+        terms: List[Tuple[int, VocabularyItem]],
+    ) -> Optional[Tuple[int, VocabularyItem]]:
+        for hint_index, item in terms:
+            if self._term_matches_at(content, index, item.term):
+                return hint_index, item
+        return None
+
+    def _term_matches_at(self, content: str, index: int, term: str) -> bool:
+        if not term:
+            return False
+        if not content[index:index + len(term)].casefold() == term.casefold():
+            return False
+
+        end = index + len(term)
+        if index > 0 and self._is_word_char(content[index - 1]):
+            return False
+        if end < len(content) and self._is_word_char(content[end]):
+            return False
+        return True
+
+    def _is_word_char(self, char: str) -> bool:
+        return len(char) == 1 and (char.isalnum() or char == "_")
+
+    def _translation_hint_id(self, index: int) -> str:
+        return f"term-{index + 1}"
 
     def _deduplicate_sources(self, sources) -> List[Any]:
         """Deduplicate sources using normalized keys, preserving order and first occurrence."""
