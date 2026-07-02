@@ -33,3 +33,24 @@ def test_interactive_glossary_reuses_existing_vocabulary_section():
     assert 'heading.id === "vokabeln"' in script
     assert 'text.startsWith("vokabeln ")' in script
     assert 'sibling.tagName !== "H2"' in script
+
+
+def test_interactive_glossary_toggles_vocabulary_terms():
+    script = Path("output/assets/js/glossary-popup.js").read_text(encoding="utf-8")
+
+    assert "selectedTerms" in script
+    assert "function addToGlossary(pageContent, item, selectedTerms)" in script
+    assert "function removeFromGlossary(pageContent, item, selectedTerms)" in script
+    assert "setArticleTermSelected(pageContent, item, true)" in script
+    assert "setArticleTermSelected(pageContent, item, false)" in script
+    assert "Aus Vokabelliste entfernen" in script
+    assert "Zur Vokabelliste hinzufügen" in script
+    assert "addButton.disabled = false" in script
+
+
+def test_selected_glossary_terms_are_bold_not_underlined():
+    styles = Path("output/assets/css/custom.css").read_text(encoding="utf-8")
+
+    assert ".article-term--default" in styles
+    assert "border-bottom-color: transparent" in styles
+    assert "font-weight: 700" in styles
