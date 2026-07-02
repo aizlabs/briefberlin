@@ -96,6 +96,7 @@ def test_llm_env_overrides(monkeypatch):
     monkeypatch.setenv("LLM_GENERATION_MODEL", "local-generation")
     monkeypatch.setenv("LLM_ADAPTATION_MODEL", "local-adaptation")
     monkeypatch.setenv("LLM_QUALITY_CHECK_MODEL", "local-quality")
+    monkeypatch.setenv("LLM_TOPIC_EXTRACTION_MODEL", "local-topic")
     try:
         config = {}
         apply_env_overrides(config)
@@ -104,6 +105,7 @@ def test_llm_env_overrides(monkeypatch):
         assert config["llm"]["models"]["generation"] == "local-generation"
         assert config["llm"]["models"]["adaptation"] == "local-adaptation"
         assert config["llm"]["models"]["quality_check"] == "local-quality"
+        assert config["llm"]["models"]["topic_extraction"] == "local-topic"
     finally:
         for key in (
             "LLM_PROVIDER",
@@ -111,6 +113,7 @@ def test_llm_env_overrides(monkeypatch):
             "LLM_GENERATION_MODEL",
             "LLM_ADAPTATION_MODEL",
             "LLM_QUALITY_CHECK_MODEL",
+            "LLM_TOPIC_EXTRACTION_MODEL",
         ):
             monkeypatch.delenv(key, raising=False)
 

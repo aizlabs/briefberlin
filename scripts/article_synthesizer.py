@@ -9,11 +9,10 @@ and natural German expression.
 import logging
 from typing import List
 
-from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
 
 from scripts.config import AppConfig
-from scripts.llm_factory import create_chat_model, with_structured_output
+from scripts.llm_factory import build_structured_prompt_chain
 from scripts.models import BaseArticle, SourceArticle, Topic
 
 
@@ -72,14 +71,12 @@ class ArticleSynthesizer:
     def _init_chain(self) -> None:
         """Initialize LangChain structured-output chain for synthesis."""
         model_name = self.llm_config['models']['generation']
-        chat_model = create_chat_model(self.llm_config, model_name, self.temperature)
-        structured_llm = with_structured_output(chat_model, SynthesisResponse)
-
-        # Simple wrapper prompt: we already build the full prompt string in prompts.py
-        self.prompt_template = ChatPromptTemplate.from_messages(
-            [("user", "{prompt}")]
+        self.chain = build_structured_prompt_chain(
+            self.llm_config,
+            model_name,
+            self.temperature,
+            SynthesisResponse,
         )
-        self.chain = self.prompt_template | structured_llm
 
     def _call_llm(self, prompt: str) -> SynthesisResponse:
         """Call LLM with prompt for synthesis and return structured response."""

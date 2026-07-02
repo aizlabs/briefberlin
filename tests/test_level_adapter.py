@@ -28,14 +28,14 @@ def _response_payload(article: AdaptedArticle) -> dict:
 
 
 class TestLevelAdapterInit:
-    @patch("scripts.level_adapter.create_chat_model")
+    @patch("scripts.level_adapter.build_structured_prompt_chain")
     def test_init_uses_llm_and_generation_config(
         self,
-        mock_create_chat_model,
+        mock_build_structured_prompt_chain,
         base_config,
         mock_logger,
     ):
-        mock_create_chat_model.return_value = MagicMock()
+        mock_build_structured_prompt_chain.return_value = MagicMock()
 
         adapter = LevelAdapter(base_config, mock_logger)
 
@@ -184,15 +184,15 @@ class TestLevelAdapterGeneric:
 
         assert result.level == "B1"
 
-    @patch("scripts.level_adapter.create_chat_model")
+    @patch("scripts.level_adapter.build_structured_prompt_chain")
     def test_adapt_to_level_unsupported(
         self,
-        mock_create_chat_model,
+        mock_build_structured_prompt_chain,
         base_config,
         mock_logger,
         sample_base_article,
     ):
-        mock_create_chat_model.return_value = MagicMock()
+        mock_build_structured_prompt_chain.return_value = MagicMock()
         adapter = LevelAdapter(base_config, mock_logger)
 
         with pytest.raises(ValueError, match="Unsupported level"):
@@ -246,25 +246,30 @@ class TestLevelAdapterModelSelection:
 
         assert adapter.llm_config["models"]["adaptation"] == "gpt-4o-mini"
 
-    @patch("scripts.level_adapter.create_chat_model")
+    @patch("scripts.level_adapter.build_structured_prompt_chain")
     @patch("scripts.level_adapter.LevelAdapter._call_llm")
     def test_fallback_to_generation_model(
         self,
         mock_call_llm,
-        mock_create_chat_model,
+        mock_build_structured_prompt_chain,
         base_config,
         mock_logger,
         sample_base_article,
         sample_a2_text_article,
     ):
         base_config.llm.models.adaptation = None
-        mock_create_chat_model.return_value = MagicMock()
+        mock_build_structured_prompt_chain.return_value = MagicMock()
         mock_call_llm.return_value = FakeAdaptationResponse(**_response_payload(sample_a2_text_article))
 
         adapter = LevelAdapter(base_config, mock_logger)
         adapter.adapt_to_a2(sample_base_article)
 
         assert adapter.llm_config["models"]["generation"] == base_config.llm.models.generation
+        mock_build_structured_prompt_chain.assert_called_once()
+        assert (
+            mock_build_structured_prompt_chain.call_args.args[1]
+            == base_config.llm.models.generation
+        )
 
 
 class TestLevelAdapterMetadata:

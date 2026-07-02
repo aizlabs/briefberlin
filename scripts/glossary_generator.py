@@ -14,12 +14,11 @@ from pathlib import Path
 from typing import Any, Dict, List
 
 import spacy
-from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, ConfigDict, Field
 
 from scripts import prompts
 from scripts.config import AppConfig
-from scripts.llm_factory import create_chat_model, with_structured_output
+from scripts.llm_factory import build_structured_prompt_chain
 from scripts.models import AdaptedArticle, VocabularyItem, coerce_vocabulary_items
 from scripts.text_utils import (
     ensure_vocabulary_bolded,
@@ -827,11 +826,14 @@ class GlossaryGenerator:
         model_name = self.llm_config["models"].get(
             "adaptation",
             self.llm_config["models"]["generation"],
+        ) or self.llm_config["models"]["generation"]
+        self.chain = build_structured_prompt_chain(
+            self.llm_config,
+            model_name,
+            self.temperature,
+            GLOSSARY_RESPONSE_SCHEMA,
+            strict=True,
         )
-        chat_model = create_chat_model(self.llm_config, model_name, self.temperature)
-        structured_llm = with_structured_output(chat_model, GLOSSARY_RESPONSE_SCHEMA, strict=True)
-        self.prompt_template = ChatPromptTemplate.from_messages([("user", "{prompt}")])
-        self.chain = self.prompt_template | structured_llm
 
     def _init_nlp(self) -> None:
         try:

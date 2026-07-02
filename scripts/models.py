@@ -344,6 +344,10 @@ class LLMModelsConfig(BaseModel):
     generation: str = Field(..., description="Model for synthesis (Step 1)")
     adaptation: str = Field(..., description="Model for adaptation (Step 2)")
     quality_check: str = Field(..., description="Model for quality evaluation")
+    topic_extraction: Optional[str] = Field(
+        default=None,
+        description="Optional model for source topic metadata extraction",
+    )
 
 
 class LLMConfig(BaseModel):

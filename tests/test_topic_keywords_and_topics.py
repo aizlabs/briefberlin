@@ -6,7 +6,7 @@ import spacy
 from scripts.models import Topic
 from scripts.publisher import Publisher
 from scripts.topic_discovery import TopicDiscoverer
-from scripts.topic_utils import is_noisy_topic_keyword
+from scripts.topic_utils import is_noisy_topic_keyword, sanitize_topic_keywords
 
 
 def test_extract_keywords_ignores_html_href(base_config, mock_logger):
@@ -54,6 +54,49 @@ def test_publisher_filters_href_from_topics(base_config, mock_logger, sample_a2_
     assert 'topics: ["madrid"]' in markdown
 
 
+def test_publisher_renders_empty_topics_when_keywords_missing(
+    base_config,
+    mock_logger,
+    sample_a2_article,
+):
+    topic = Topic(
+        title="Manual source article",
+        sources=["Private source 1"],
+        mentions=1,
+        score=10.0,
+        keywords=[],
+        urls=[],
+    )
+    article_with_topic = sample_a2_article.model_copy(update={"topic": topic})
+
+    publisher = Publisher(base_config, mock_logger, dry_run=True)
+    markdown = publisher._generate_markdown(article_with_topic, datetime(2026, 3, 17, 12, 0, 0))
+
+    assert "topics: []" in markdown
+    assert 'topics: ["general"]' not in markdown
+
+
+def test_publisher_renders_extracted_topic_keywords(
+    base_config,
+    mock_logger,
+    sample_a2_article,
+):
+    topic = Topic(
+        title="Windenergie in Deutschland",
+        sources=["Private source 1"],
+        mentions=1,
+        score=10.0,
+        keywords=["energie", "klimapolitik"],
+        urls=[],
+    )
+    article_with_topic = sample_a2_article.model_copy(update={"topic": topic})
+
+    publisher = Publisher(base_config, mock_logger, dry_run=True)
+    markdown = publisher._generate_markdown(article_with_topic, datetime(2026, 3, 17, 12, 0, 0))
+
+    assert 'topics: ["energie", "klimapolitik"]' in markdown
+
+
 def test_shared_noise_filter_flags_href_and_urls():
     """Shared helper should consistently classify HTML/URL artefacts as noisy."""
     noisy_candidates = [
@@ -65,3 +108,17 @@ def test_shared_noise_filter_flags_href_and_urls():
     for kw in noisy_candidates:
         assert is_noisy_topic_keyword(kw)
 
+
+def test_sanitize_topic_keywords_filters_dedupes_and_caps():
+    keywords = [
+        " Energie ",
+        "energie",
+        'href="https://example.com',
+        "Klimapolitik",
+        "Wind",
+    ]
+
+    assert sanitize_topic_keywords(keywords, max_keywords=2, lowercase=True) == [
+        "energie",
+        "klimapolitik",
+    ]

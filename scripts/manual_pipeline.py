@@ -17,6 +17,7 @@ from scripts.logger import setup_logger
 from scripts.models import AdaptedArticle, QualityResult, SourceArticle, Topic
 from scripts.publisher import Publisher
 from scripts.quality_gate import QualityGate
+from scripts.topic_metadata_extractor import TopicMetadataExtractor, TopicMetadataResponse
 
 MIN_SOURCE_WORDS = 20
 
@@ -72,14 +73,14 @@ def load_private_sources(paths: Sequence[Path]) -> list[SourceArticle]:
     return sources
 
 
-def build_manual_topic(title: str, sources: Sequence[SourceArticle]) -> Topic:
+def build_manual_topic(metadata: TopicMetadataResponse, sources: Sequence[SourceArticle]) -> Topic:
     """Create the in-memory topic used by the generation components."""
     return Topic(
-        title=title,
+        title=metadata.title,
         sources=[source.source for source in sources],
         mentions=len(sources),
         score=10.0,
-        keywords=["deutsch"],
+        keywords=metadata.keywords,
         urls=[],
     )
 
@@ -96,7 +97,6 @@ def run_manual_pipeline(args: argparse.Namespace) -> int:
     levels = args.level or config.generation.levels
     source_paths = [Path(path).expanduser() for path in args.sources]
     sources = load_private_sources(source_paths)
-    topic = build_manual_topic(args.topic, sources)
 
     logger.info("=" * 60)
     logger.info("BriefBerlin - Manual Private Input Pipeline")
@@ -108,6 +108,11 @@ def run_manual_pipeline(args: argparse.Namespace) -> int:
     logger.info("Levels: %s", levels)
     logger.info("Private source count: %s", len(sources))
     logger.info("=" * 60)
+
+    topic_metadata_extractor = TopicMetadataExtractor(config, logger)
+    topic_metadata = topic_metadata_extractor.extract(sources)
+    topic = build_manual_topic(topic_metadata, sources)
+    logger.info("Extracted topic metadata: title=%s keywords=%s", topic.title, topic.keywords)
 
     generator = ContentGenerator(config, logger)
     quality_gate = QualityGate(config, logger)
@@ -180,11 +185,6 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         "sources",
         nargs="+",
         help="Private input files under private-input/, input/private/, or named *.source.txt",
-    )
-    parser.add_argument(
-        "--topic",
-        default="Manuell bereitgestellter Artikel",
-        help="Non-private topic title used for generation context",
     )
     parser.add_argument(
         "--level",

@@ -2,6 +2,8 @@ import os
 from argparse import Namespace
 from unittest.mock import patch
 
+import pytest
+
 from scripts.publish_source import apply_audio_defaults, main
 
 
@@ -45,4 +47,9 @@ def test_main_delegates_to_manual_pipeline_with_audio_levels(mock_run_manual_pip
     assert args.sources == ["private-input/source-5.source.txt"]
     assert args.level == ["A2", "B1"]
     assert args.dry_run is False
-    assert args.topic == "Manuell bereitgestellter Artikel"
+    assert not hasattr(args, "topic")
+
+
+def test_main_rejects_removed_topic_option():
+    with pytest.raises(SystemExit):
+        main(["--topic", "Alter Titel", "private-input/source-5.source.txt"])

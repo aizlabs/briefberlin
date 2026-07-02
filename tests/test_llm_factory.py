@@ -1,6 +1,10 @@
 from unittest.mock import MagicMock
 
-from scripts.llm_factory import create_chat_model, with_structured_output
+from scripts.llm_factory import (
+    build_structured_prompt_chain,
+    create_chat_model,
+    with_structured_output,
+)
 
 
 def test_with_structured_output_forwards_keyword_arguments():
@@ -43,3 +47,27 @@ def test_create_chat_model_passes_openai_base_url(monkeypatch):
         max_tokens=2048,
         temperature=0.1,
     )
+
+
+def test_build_structured_prompt_chain_uses_standard_prompt_wrapper(monkeypatch):
+    chat_model = MagicMock()
+    structured = MagicMock()
+    chat_model.with_structured_output.return_value = structured
+    monkeypatch.setattr("scripts.llm_factory.create_chat_model", MagicMock(return_value=chat_model))
+
+    schema = {"type": "object", "additionalProperties": False}
+
+    chain = build_structured_prompt_chain(
+        {
+            "provider": "openai",
+            "openai_api_key": "test-key",
+            "max_tokens": 2048,
+        },
+        "test-model",
+        0.1,
+        schema,
+        strict=True,
+    )
+
+    assert chain is not None
+    chat_model.with_structured_output.assert_called_once_with(schema, strict=True)
