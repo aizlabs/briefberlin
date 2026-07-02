@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import argparse
 import json
 import os
 import re
@@ -16,6 +17,9 @@ from urllib import error, request
 
 import yaml
 
+from scripts.config import load_config
+from scripts.glossary_sections import normalize_glossary_headings, split_at_glossary_heading
+from scripts.language_profiles import DEFAULT_GLOSSARY_HEADING
 from scripts.text_utils import strip_article_ui_markup
 
 TELEGRAM_MESSAGE_LIMIT = 4096
@@ -23,7 +27,6 @@ TELEGRAM_AUDIO_CAPTION_LIMIT = 1024
 TELEGRAM_AUDIO_TITLE_LIMIT = 128
 DEFAULT_TIMEOUT_SECONDS = 10
 DEFAULT_RETRIES = 3
-DEFAULT_GLOSSARY_HEADING = "Vokabeln"
 
 
 class TelegramHTTPResponse(Protocol):
@@ -131,25 +134,11 @@ def _strip_attribution_footer(body: str) -> str:
     return body.rstrip()
 
 
-def _normalize_glossary_headings(glossary_headings: Sequence[str] | None = None) -> list[str]:
-    headings: list[str] = []
-    for heading in glossary_headings or [DEFAULT_GLOSSARY_HEADING]:
-        cleaned = heading.strip()
-        if cleaned and cleaned not in headings:
-            headings.append(cleaned)
-    return headings or [DEFAULT_GLOSSARY_HEADING]
-
-
 def _split_vocabulary_section(
     article_body: str,
     glossary_headings: Sequence[str] | None = None,
 ) -> tuple[str, str]:
-    for heading in _normalize_glossary_headings(glossary_headings):
-        pattern = re.compile(rf"(?m)^##\s+{re.escape(heading)}\s*$")
-        match = pattern.search(article_body)
-        if match:
-            return article_body[: match.start()].rstrip(), article_body[match.end() :]
-    return article_body, ""
+    return split_at_glossary_heading(article_body, glossary_headings, strip_before=True)
 
 
 def parse_jekyll_post(
@@ -544,7 +533,7 @@ def publish_posts(
     """Publish a sequence of posts to Telegram in deterministic filename order."""
 
     published_count = 0
-    glossary_headings = _normalize_glossary_headings(
+    glossary_headings = normalize_glossary_headings(
         [glossary_heading, *(legacy_glossary_headings or [])]
     )
 
@@ -565,11 +554,25 @@ def publish_posts(
     return published_count
 
 
+def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Publish generated Jekyll posts to a Telegram channel.",
+    )
+    parser.add_argument("posts", nargs="+", help="Public Jekyll post Markdown files to publish")
+    parser.add_argument("--environment", default="local", help="Config environment to load")
+    parser.add_argument(
+        "--site-config",
+        default="output/_config.yml",
+        help="Jekyll site config used to build article URLs",
+    )
+    return parser.parse_args(argv)
+
+
 def main(argv: Sequence[str] | None = None) -> int:
-    argv = list(argv or sys.argv[1:])
-    if not argv:
-        print("Usage: publish_telegram_channel.py <post1> [<post2> ...]", file=sys.stderr)
-        return 1
+    try:
+        args = parse_args(argv or sys.argv[1:])
+    except SystemExit as exc:
+        return exc.code if isinstance(exc.code, int) else 1
 
     bot_token = os.getenv("TELEGRAM_PUBLISH_BOT_TOKEN")
     chat_id = os.getenv("TELEGRAM_PUBLISH_CHAT_ID")
@@ -581,13 +584,14 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 1
 
     try:
+        config = load_config(args.environment)
         published_count = publish_posts(
-            [Path(arg) for arg in argv],
-            config_path=Path("output/_config.yml"),
+            [Path(post) for post in args.posts],
+            config_path=Path(args.site_config),
             bot_token=bot_token,
             chat_id=chat_id,
-            glossary_heading=os.getenv("LANGUAGE_GLOSSARY_HEADING", DEFAULT_GLOSSARY_HEADING),
-            legacy_glossary_headings=[DEFAULT_GLOSSARY_HEADING],
+            glossary_heading=config.language.glossary_heading,
+            legacy_glossary_headings=config.language.legacy_glossary_headings,
         )
     except Exception as exc:  # noqa: BLE001
         print(f"Telegram channel publish failed: {exc}", file=sys.stderr)

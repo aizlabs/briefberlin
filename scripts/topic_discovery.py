@@ -21,6 +21,7 @@ import feedparser
 import requests
 import spacy
 
+from scripts.language_profiles import DEFAULT_SPACY_MODEL
 from scripts.models import Topic
 from scripts.topic_utils import sanitize_topic_keywords
 
@@ -51,14 +52,7 @@ class TopicDiscoverer:
         self.cultural_bonus = ranking_config.get('cultural_bonus', 5) if isinstance(ranking_config, dict) else getattr(ranking_config, 'cultural_bonus', 5)
         self.avoid_penalty = ranking_config.get('avoid_penalty', -10) if isinstance(ranking_config, dict) else getattr(ranking_config, 'avoid_penalty', -10)
 
-        # Load configured SpaCy language model
-        language_config = getattr(config, "language", None)
-        if isinstance(config, dict):
-            language_config = config.get("language", {})
-        if isinstance(language_config, dict):
-            spacy_model = language_config.get("spacy_model", "de_core_news_sm")
-        else:
-            spacy_model = getattr(language_config, "spacy_model", "de_core_news_sm")
+        spacy_model = getattr(config.language, "spacy_model", DEFAULT_SPACY_MODEL)
         try:
             self.nlp = spacy.load(spacy_model)
         except OSError:

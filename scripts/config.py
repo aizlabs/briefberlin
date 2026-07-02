@@ -15,6 +15,7 @@ import yaml
 from dotenv import load_dotenv
 from pydantic import BaseModel, Field, model_validator
 
+from scripts.language_profiles import SUPPORTED_GLOSSARY_RULES, SUPPORTED_PROMPT_PACKS
 from scripts.models import (
     AlertsConfig,
     AudioConfig,
@@ -77,6 +78,22 @@ class AppConfig(BaseModel):
                 print("⚠️  Switched provider to 'openai' (ANTHROPIC_API_KEY not found but OPENAI_API_KEY is set)")
             else:
                 raise ValueError("ANTHROPIC_API_KEY is required for Anthropic provider")
+
+        if self.language.prompt_pack not in SUPPORTED_PROMPT_PACKS:
+            supported = ", ".join(sorted(SUPPORTED_PROMPT_PACKS))
+            raise ValueError(
+                f"Unsupported language.prompt_pack '{self.language.prompt_pack}'. "
+                f"Supported prompt packs: {supported}. Add a prompt pack implementation "
+                "before enabling this value."
+            )
+
+        if self.language.glossary_rules not in SUPPORTED_GLOSSARY_RULES:
+            supported = ", ".join(sorted(SUPPORTED_GLOSSARY_RULES))
+            raise ValueError(
+                f"Unsupported language.glossary_rules '{self.language.glossary_rules}'. "
+                f"Supported glossary rules: {supported}. Add glossary rule implementation "
+                "before enabling this value."
+            )
         return self
 
 

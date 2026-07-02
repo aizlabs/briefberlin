@@ -12,7 +12,7 @@ The built-in profile remains German and preserves current BriefBerlin output.
 
 ## Italian Fork Checklist
 
-Set the new profile values first:
+Set the runtime-safe profile values first:
 
 ```yaml
 language:
@@ -24,15 +24,18 @@ language:
   glossary_heading: Vocabolario
   legacy_glossary_headings:
     - Vokabeln
-  prompt_pack: italian
-  glossary_rules: italian
+  prompt_pack: german
+  glossary_rules: german
   site_name: BriefItalia
 ```
+
+Keep `prompt_pack` and `glossary_rules` on supported values until the fork adds real implementations. The app rejects unsupported identifiers instead of silently running German prompts and glossary rules.
 
 Then do the fork-specific work that config alone cannot make correct:
 
 - Add and test an Italian prompt pack for synthesis, A2/B1 adaptation, quality judging, and glossary generation.
 - Replace German-specific glossary rules: stopwords, named-entity filters, cognate/loanword filters, compound handling, and explanation style.
+- Register the new `italian` prompt pack and glossary rules, then set `language.prompt_pack: italian` and `language.glossary_rules: italian`.
 - Install and verify the Italian SpaCy model (`it_core_news_sm`) in local, CI, and Docker environments.
 - Create Italian source fixtures and generated article fixtures.
 - Add Italian unit tests for prompts, glossary validation, publishing, audio parsing, and Telegram formatting.

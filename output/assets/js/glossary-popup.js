@@ -36,8 +36,8 @@
     return configuredLocale || document.documentElement.lang || "de";
   }
 
-  function normalizedHeading(text) {
-    return text.trim().toLocaleLowerCase("de");
+  function normalizedHeading(text, locale) {
+    return text.trim().toLocaleLowerCase(locale);
   }
 
   function getOrCreatePopup() {
@@ -64,11 +64,11 @@
     return popup;
   }
 
-  function findGlossaryList(pageContent) {
-    const configuredHeading = normalizedHeading(glossaryHeadingText(pageContent));
+  function findGlossaryList(pageContent, locale) {
+    const configuredHeading = normalizedHeading(glossaryHeadingText(pageContent), locale);
     const headings = Array.from(pageContent.querySelectorAll("h2"));
     const glossaryHeading = headings.find(function (heading) {
-      const text = normalizedHeading(heading.textContent);
+      const text = normalizedHeading(heading.textContent, locale);
       return (
         text === configuredHeading ||
         text.startsWith(configuredHeading + " ") ||
@@ -111,23 +111,23 @@
     return [item.english, item.explanation].filter(Boolean).join(" - ");
   }
 
-  function glossaryKey(term, pageContent) {
-    return term.toLocaleLowerCase(glossaryLocale(pageContent));
+  function glossaryKey(term, locale) {
+    return term.toLocaleLowerCase(locale);
   }
 
-  function findGlossaryRow(list, item) {
+  function findGlossaryRow(list, item, locale) {
     if (!list) {
       return null;
     }
 
-    const key = glossaryKey(item.term, list.closest(".page__content") || document);
+    const key = glossaryKey(item.term, locale);
     return Array.from(list.querySelectorAll("li")).find(function (row) {
       if (row.dataset.termId === item.id) {
         return true;
       }
 
       const term = row.querySelector("strong");
-      return term && glossaryKey(term.textContent.trim(), list.closest(".page__content") || document) === key;
+      return term && glossaryKey(term.textContent.trim(), locale) === key;
     }) || null;
   }
 
@@ -137,13 +137,13 @@
     });
   }
 
-  function addToGlossary(pageContent, item, selectedTerms) {
-    const key = glossaryKey(item.term, pageContent);
+  function addToGlossary(pageContent, item, selectedTerms, locale) {
+    const key = glossaryKey(item.term, locale);
     if (selectedTerms.has(key)) {
       return false;
     }
 
-    const list = findGlossaryList(pageContent) || createGlossaryList(pageContent);
+    const list = findGlossaryList(pageContent, locale) || createGlossaryList(pageContent);
     const row = document.createElement("li");
     row.dataset.termId = item.id;
 
@@ -158,13 +158,13 @@
     return true;
   }
 
-  function removeFromGlossary(pageContent, item, selectedTerms) {
-    const key = glossaryKey(item.term, pageContent);
+  function removeFromGlossary(pageContent, item, selectedTerms, locale) {
+    const key = glossaryKey(item.term, locale);
     if (!selectedTerms.has(key)) {
       return false;
     }
 
-    const row = findGlossaryRow(findGlossaryList(pageContent), item);
+    const row = findGlossaryRow(findGlossaryList(pageContent, locale), item, locale);
     if (row) {
       row.remove();
     }
@@ -192,23 +192,23 @@
     popup.style.top = top + "px";
   }
 
-  function setPopupContent(popup, item, pageContent, selectedTerms) {
+  function setPopupContent(popup, item, pageContent, selectedTerms, locale) {
     popup.querySelector(".article-glossary-popup__term").textContent = item.term;
     popup.querySelector(".article-glossary-popup__english").textContent = item.english || "";
     popup.querySelector(".article-glossary-popup__explanation").textContent = item.explanation || "";
 
     const addButton = popup.querySelector(".article-glossary-popup__add");
-    const key = glossaryKey(item.term, pageContent);
+    const key = glossaryKey(item.term, locale);
     const selected = selectedTerms.has(key);
     addButton.disabled = false;
     addButton.textContent = selected ? "Aus Vokabelliste entfernen" : "Zur Vokabelliste hinzufügen";
     addButton.onclick = function () {
       if (selectedTerms.has(key)) {
-        removeFromGlossary(pageContent, item, selectedTerms);
+        removeFromGlossary(pageContent, item, selectedTerms, locale);
       } else {
-        addToGlossary(pageContent, item, selectedTerms);
+        addToGlossary(pageContent, item, selectedTerms, locale);
       }
-      setPopupContent(popup, item, pageContent, selectedTerms);
+      setPopupContent(popup, item, pageContent, selectedTerms, locale);
     };
   }
 
@@ -224,13 +224,14 @@
     }
 
     const popup = getOrCreatePopup();
+    const locale = glossaryLocale(pageContent);
     const selectedTerms = new Set(
       Array.from(itemsById.values())
         .filter(function (item) {
           return item.defaultGlossary;
         })
         .map(function (item) {
-          return glossaryKey(item.term, pageContent);
+          return glossaryKey(item.term, locale);
         })
     );
 
@@ -245,7 +246,7 @@
         return;
       }
 
-      setPopupContent(popup, item, pageContent, selectedTerms);
+      setPopupContent(popup, item, pageContent, selectedTerms, locale);
       positionPopup(popup, target);
     });
 

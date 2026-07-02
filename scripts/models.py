@@ -9,6 +9,7 @@ from typing import Any, Dict, List, Optional, Union
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
+from scripts.glossary_sections import normalize_glossary_headings
 from scripts.language_profiles import (
     DEFAULT_GLOSSARY_HEADING,
     DEFAULT_GLOSSARY_RULES,
@@ -496,12 +497,7 @@ class LanguageConfig(BaseModel):
 
     def glossary_headings(self) -> List[str]:
         """Return configured and legacy glossary headings without duplicates."""
-        headings: List[str] = []
-        for heading in [self.glossary_heading, *self.legacy_glossary_headings]:
-            cleaned = heading.strip()
-            if cleaned and cleaned not in headings:
-                headings.append(cleaned)
-        return headings
+        return normalize_glossary_headings([self.glossary_heading, *self.legacy_glossary_headings])
 
 
 # =============================================================================

@@ -1,7 +1,10 @@
 """Tests for config loading and environment overrides."""
 
 
-from scripts.config import apply_env_overrides, load_config
+import pytest
+from pydantic import ValidationError
+
+from scripts.config import AppConfig, apply_env_overrides, load_config
 
 
 def _base_alerts_dict():
@@ -126,6 +129,22 @@ def test_language_env_overrides(monkeypatch):
             "LANGUAGE_SITE_NAME",
         ):
             monkeypatch.delenv(key, raising=False)
+
+
+def test_app_config_rejects_unsupported_prompt_pack(base_config):
+    config_dict = base_config.model_dump()
+    config_dict["language"]["prompt_pack"] = "italian"
+
+    with pytest.raises(ValidationError, match="Unsupported language.prompt_pack"):
+        AppConfig(**config_dict)
+
+
+def test_app_config_rejects_unsupported_glossary_rules(base_config):
+    config_dict = base_config.model_dump()
+    config_dict["language"]["glossary_rules"] = "italian"
+
+    with pytest.raises(ValidationError, match="Unsupported language.glossary_rules"):
+        AppConfig(**config_dict)
 
 
 def test_llm_env_overrides(monkeypatch):

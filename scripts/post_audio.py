@@ -14,6 +14,7 @@ import yaml
 
 from scripts.audio_pipeline import AudioPipeline
 from scripts.config import load_config
+from scripts.glossary_sections import split_at_glossary_heading
 from scripts.models import AdaptedArticle, AudioAsset, VocabularyItem
 from scripts.text_utils import strip_article_ui_markup
 
@@ -21,7 +22,6 @@ POSTS_DIR = Path("output/_posts")
 FRONTMATTER_RE = re.compile(r"\A---\n(.*?)\n---\n(.*)\Z", flags=re.S)
 EMPHASIS_RE = re.compile(r"\*\*(.+?)\*\*")
 VOCABULARY_ITEM_RE = re.compile(r"- \*\*(.+?)\*\* - (.+?)(?: - (.+))?$")
-DEFAULT_GLOSSARY_HEADINGS = ["Vokabeln"]
 
 
 def split_frontmatter(markdown: str) -> tuple[dict, str]:
@@ -42,30 +42,9 @@ def is_public_post_path(path: Path) -> bool:
     return True
 
 
-def _normalize_glossary_headings(glossary_headings: Sequence[str] | None = None) -> list[str]:
-    headings: list[str] = []
-    for heading in glossary_headings or DEFAULT_GLOSSARY_HEADINGS:
-        cleaned = heading.strip()
-        if cleaned and cleaned not in headings:
-            headings.append(cleaned)
-    return headings or DEFAULT_GLOSSARY_HEADINGS
-
-
-def _split_glossary_section(
-    body: str,
-    glossary_headings: Sequence[str] | None = None,
-) -> tuple[str, str]:
-    for heading in _normalize_glossary_headings(glossary_headings):
-        pattern = re.compile(rf"(?m)^##\s+{re.escape(heading)}\s*$")
-        match = pattern.search(body)
-        if match:
-            return body[: match.start()], body[match.end() :]
-    return body, ""
-
-
 def extract_article_content(body: str, glossary_headings: Sequence[str] | None = None) -> str:
     """Extract public article prose, excluding vocabulary and footer blocks."""
-    content, _vocabulary_section = _split_glossary_section(body, glossary_headings)
+    content, _vocabulary_section = split_at_glossary_heading(body, glossary_headings)
     content = content.split("\n---\n", 1)[0]
     return strip_article_ui_markup(content)
 
@@ -75,10 +54,15 @@ def extract_vocabulary(
     glossary_headings: Sequence[str] | None = None,
 ) -> list[VocabularyItem]:
     """Extract structured vocabulary items from the public Markdown vocabulary section."""
-    _main_text, vocabulary_section = _split_glossary_section(body, glossary_headings)
+    _main_text, vocabulary_section = split_at_glossary_heading(body, glossary_headings)
     if not vocabulary_section:
         return []
 
+    return extract_vocabulary_from_section(vocabulary_section)
+
+
+def extract_vocabulary_from_section(vocabulary_section: str) -> list[VocabularyItem]:
+    """Extract structured vocabulary items from a pre-split Markdown vocabulary section."""
     items: list[VocabularyItem] = []
     for line in vocabulary_section.splitlines():
         match = VOCABULARY_ITEM_RE.match(line.strip())
@@ -121,7 +105,8 @@ def build_article_from_post(
 
     raw = path.read_text(encoding="utf-8")
     frontmatter, body = split_frontmatter(raw)
-    content = extract_article_content(body, glossary_headings)
+    content_body, vocabulary_section = split_at_glossary_heading(body, glossary_headings)
+    content = strip_article_ui_markup(content_body.split("\n---\n", 1)[0])
     if not content:
         raise ValueError("Post body does not contain article content")
 
@@ -131,7 +116,7 @@ def build_article_from_post(
         content=content,
         summary=str(frontmatter.get("summary") or first_sentence(content)),
         reading_time=int(frontmatter.get("reading_time") or 1),
-        vocabulary=extract_vocabulary(body, glossary_headings),
+        vocabulary=extract_vocabulary_from_section(vocabulary_section),
         level=str(frontmatter["level"]),
         sources=[],
         audio=AudioAsset(**frontmatter["audio"]) if isinstance(frontmatter.get("audio"), dict) else None,
