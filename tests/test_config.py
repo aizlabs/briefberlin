@@ -90,6 +90,44 @@ def test_glossary_env_overrides(monkeypatch):
         monkeypatch.delenv("GLOSSARY_DEBUG_DUMP", raising=False)
 
 
+def test_language_env_overrides(monkeypatch):
+    """Language-related env vars populate the language config subtree."""
+    monkeypatch.setenv("LANGUAGE_TARGET", "Italian")
+    monkeypatch.setenv("LANGUAGE_CODE", "it")
+    monkeypatch.setenv("LANGUAGE_LOCALE", "it-IT")
+    monkeypatch.setenv("LANGUAGE_LEARNER_NATIVE", "English")
+    monkeypatch.setenv("LANGUAGE_SPACY_MODEL", "it_core_news_sm")
+    monkeypatch.setenv("LANGUAGE_GLOSSARY_HEADING", "Vocabolario")
+    monkeypatch.setenv("LANGUAGE_PROMPT_PACK", "italian")
+    monkeypatch.setenv("LANGUAGE_GLOSSARY_RULES", "italian")
+    monkeypatch.setenv("LANGUAGE_SITE_NAME", "BriefItalia")
+    try:
+        config = {}
+        apply_env_overrides(config)
+        assert config["language"]["target_language"] == "Italian"
+        assert config["language"]["target_language_code"] == "it"
+        assert config["language"]["locale"] == "it-IT"
+        assert config["language"]["learner_native_language"] == "English"
+        assert config["language"]["spacy_model"] == "it_core_news_sm"
+        assert config["language"]["glossary_heading"] == "Vocabolario"
+        assert config["language"]["prompt_pack"] == "italian"
+        assert config["language"]["glossary_rules"] == "italian"
+        assert config["language"]["site_name"] == "BriefItalia"
+    finally:
+        for key in (
+            "LANGUAGE_TARGET",
+            "LANGUAGE_CODE",
+            "LANGUAGE_LOCALE",
+            "LANGUAGE_LEARNER_NATIVE",
+            "LANGUAGE_SPACY_MODEL",
+            "LANGUAGE_GLOSSARY_HEADING",
+            "LANGUAGE_PROMPT_PACK",
+            "LANGUAGE_GLOSSARY_RULES",
+            "LANGUAGE_SITE_NAME",
+        ):
+            monkeypatch.delenv(key, raising=False)
+
+
 def test_llm_env_overrides(monkeypatch):
     monkeypatch.setenv("LLM_PROVIDER", "openai")
     monkeypatch.setenv("LLM_BASE_URL", "http://localhost:11434/v1")

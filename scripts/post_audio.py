@@ -21,6 +21,7 @@ POSTS_DIR = Path("output/_posts")
 FRONTMATTER_RE = re.compile(r"\A---\n(.*?)\n---\n(.*)\Z", flags=re.S)
 EMPHASIS_RE = re.compile(r"\*\*(.+?)\*\*")
 VOCABULARY_ITEM_RE = re.compile(r"- \*\*(.+?)\*\* - (.+?)(?: - (.+))?$")
+DEFAULT_GLOSSARY_HEADINGS = ["Vokabeln"]
 
 
 def split_frontmatter(markdown: str) -> tuple[dict, str]:
@@ -41,19 +42,43 @@ def is_public_post_path(path: Path) -> bool:
     return True
 
 
-def extract_article_content(body: str) -> str:
+def _normalize_glossary_headings(glossary_headings: Sequence[str] | None = None) -> list[str]:
+    headings: list[str] = []
+    for heading in glossary_headings or DEFAULT_GLOSSARY_HEADINGS:
+        cleaned = heading.strip()
+        if cleaned and cleaned not in headings:
+            headings.append(cleaned)
+    return headings or DEFAULT_GLOSSARY_HEADINGS
+
+
+def _split_glossary_section(
+    body: str,
+    glossary_headings: Sequence[str] | None = None,
+) -> tuple[str, str]:
+    for heading in _normalize_glossary_headings(glossary_headings):
+        pattern = re.compile(rf"(?m)^##\s+{re.escape(heading)}\s*$")
+        match = pattern.search(body)
+        if match:
+            return body[: match.start()], body[match.end() :]
+    return body, ""
+
+
+def extract_article_content(body: str, glossary_headings: Sequence[str] | None = None) -> str:
     """Extract public article prose, excluding vocabulary and footer blocks."""
-    content = body.split("## Vokabeln", 1)[0]
+    content, _vocabulary_section = _split_glossary_section(body, glossary_headings)
     content = content.split("\n---\n", 1)[0]
     return strip_article_ui_markup(content)
 
 
-def extract_vocabulary(body: str) -> list[VocabularyItem]:
+def extract_vocabulary(
+    body: str,
+    glossary_headings: Sequence[str] | None = None,
+) -> list[VocabularyItem]:
     """Extract structured vocabulary items from the public Markdown vocabulary section."""
-    if "## Vokabeln" not in body:
+    _main_text, vocabulary_section = _split_glossary_section(body, glossary_headings)
+    if not vocabulary_section:
         return []
 
-    _, vocabulary_section = body.split("## Vokabeln", 1)
     items: list[VocabularyItem] = []
     for line in vocabulary_section.splitlines():
         match = VOCABULARY_ITEM_RE.match(line.strip())
@@ -86,14 +111,17 @@ def coerce_post_datetime(value: object) -> datetime:
     raise ValueError("Post front matter must include a Jekyll datetime")
 
 
-def build_article_from_post(path: Path) -> tuple[AdaptedArticle, datetime, dict, str]:
+def build_article_from_post(
+    path: Path,
+    glossary_headings: Sequence[str] | None = None,
+) -> tuple[AdaptedArticle, datetime, dict, str]:
     """Build an AdaptedArticle from public post Markdown."""
     if not is_public_post_path(path):
         raise ValueError("Audio generation only accepts posts under output/_posts")
 
     raw = path.read_text(encoding="utf-8")
     frontmatter, body = split_frontmatter(raw)
-    content = extract_article_content(body)
+    content = extract_article_content(body, glossary_headings)
     if not content:
         raise ValueError("Post body does not contain article content")
 
@@ -103,7 +131,7 @@ def build_article_from_post(path: Path) -> tuple[AdaptedArticle, datetime, dict,
         content=content,
         summary=str(frontmatter.get("summary") or first_sentence(content)),
         reading_time=int(frontmatter.get("reading_time") or 1),
-        vocabulary=extract_vocabulary(body),
+        vocabulary=extract_vocabulary(body, glossary_headings),
         level=str(frontmatter["level"]),
         sources=[],
         audio=AudioAsset(**frontmatter["audio"]) if isinstance(frontmatter.get("audio"), dict) else None,
@@ -155,9 +183,11 @@ def main(argv: Sequence[str] | None = None) -> int:
     try:
         args = parse_args(argv)
         post_path = Path(args.post).expanduser()
-        article, timestamp, frontmatter, body = build_article_from_post(post_path)
-
         config = load_config(args.environment)
+        article, timestamp, frontmatter, body = build_article_from_post(
+            post_path,
+            glossary_headings=config.language.glossary_headings(),
+        )
         config.audio.enabled = True
         config.audio.upload_enabled = bool(args.upload)
         if args.provider:

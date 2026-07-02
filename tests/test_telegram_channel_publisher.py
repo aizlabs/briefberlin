@@ -112,6 +112,25 @@ def test_parse_jekyll_post_extracts_frontmatter_body_and_vocabulary(tmp_path):
     assert post.audio_url is None
 
 
+def test_parse_jekyll_post_accepts_configured_glossary_heading(tmp_path):
+    post_path = write_post(
+        tmp_path,
+        "2026-03-17-040915-windenergie-a2.md",
+        content=POST_TEMPLATE.replace("## Vokabeln", "## Vocabolario"),
+    )
+
+    post = parse_jekyll_post(post_path, glossary_headings=["Vocabolario", "Vokabeln"])
+
+    assert post.paragraphs == [
+        "Deutschland baut mehr **Windenergie** aus. Das hilft bei der Energiewende.",
+        "Neue **Windräder** produzieren sauberen Strom für viele Haushalte.",
+    ]
+    assert post.vocabulary_lines == [
+        "- **Windenergie** - wind energy - Strom aus der Kraft des Windes",
+        "- **Windräder** - wind turbines - große Anlagen, die mit Wind Strom machen",
+    ]
+
+
 def test_parse_jekyll_post_strips_interactive_glossary_markup(tmp_path):
     post_path = write_post(
         tmp_path,
@@ -191,6 +210,26 @@ def test_format_telegram_message_converts_markdown_and_omits_source_footer():
     assert "**Windenergie**" not in message
     assert "Fuentes" not in message
     assert 'href="https://example.com/articles/040915-windenergie-a2/"' in message
+
+
+def test_format_telegram_message_uses_configured_glossary_heading():
+    post = TelegramPost(
+        path=Path("output/_posts/2026-03-17-040915-windenergie-a2.md"),
+        title="Deutschland baut mehr Windenergie aus",
+        level="A2",
+        reading_time=2,
+        paragraphs=["Deutschland baut mehr **Windenergie** aus."],
+        vocabulary_lines=["- **Windenergie** - wind energy - Strom aus der Kraft des Windes"],
+    )
+
+    message = format_telegram_message(
+        post,
+        "https://example.com/articles/040915-windenergie-a2/",
+        glossary_heading="Vocabolario",
+    )
+
+    assert "<b>Vocabolario</b>" in message
+    assert "<b>Vokabeln</b>" not in message
 
 
 def test_format_telegram_message_trims_at_boundaries_and_preserves_link():

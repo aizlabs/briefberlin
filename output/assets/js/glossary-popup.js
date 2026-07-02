@@ -1,6 +1,13 @@
 (function () {
+  function glossaryDataElement(root) {
+    if (!root || !root.querySelector) {
+      return null;
+    }
+    return root.querySelector(".article-glossary-data");
+  }
+
   function parseGlossaryData(root) {
-    const dataElement = root.querySelector(".article-glossary-data");
+    const dataElement = glossaryDataElement(root);
     if (!dataElement) {
       return new Map();
     }
@@ -13,6 +20,24 @@
     } catch (error) {
       return new Map();
     }
+  }
+
+  function glossaryHeadingText(pageContent) {
+    const article = pageContent.closest ? pageContent.closest("article.page") : null;
+    const dataElement = glossaryDataElement(article);
+    const configuredHeading = dataElement && dataElement.dataset.glossaryHeading;
+    return (configuredHeading || "Vokabeln").trim() || "Vokabeln";
+  }
+
+  function glossaryLocale(pageContent) {
+    const article = pageContent.closest ? pageContent.closest("article.page") : null;
+    const dataElement = glossaryDataElement(article);
+    const configuredLocale = dataElement && dataElement.dataset.glossaryLocale;
+    return configuredLocale || document.documentElement.lang || "de";
+  }
+
+  function normalizedHeading(text) {
+    return text.trim().toLocaleLowerCase("de");
   }
 
   function getOrCreatePopup() {
@@ -40,10 +65,18 @@
   }
 
   function findGlossaryList(pageContent) {
+    const configuredHeading = normalizedHeading(glossaryHeadingText(pageContent));
     const headings = Array.from(pageContent.querySelectorAll("h2"));
     const glossaryHeading = headings.find(function (heading) {
-      const text = heading.textContent.trim().toLowerCase();
-      return heading.id === "vokabeln" || text === "vokabeln" || text.startsWith("vokabeln ");
+      const text = normalizedHeading(heading.textContent);
+      return (
+        text === configuredHeading ||
+        text.startsWith(configuredHeading + " ") ||
+        heading.id === configuredHeading ||
+        heading.id === "vokabeln" ||
+        text === "vokabeln" ||
+        text.startsWith("vokabeln ")
+      );
     });
 
     if (!glossaryHeading) {
@@ -59,7 +92,7 @@
 
   function createGlossaryList(pageContent) {
     const heading = document.createElement("h2");
-    heading.textContent = "Vokabeln";
+    heading.textContent = glossaryHeadingText(pageContent);
     const list = document.createElement("ul");
     const divider = pageContent.querySelector("hr");
 
@@ -78,8 +111,8 @@
     return [item.english, item.explanation].filter(Boolean).join(" - ");
   }
 
-  function glossaryKey(term) {
-    return term.toLocaleLowerCase("de");
+  function glossaryKey(term, pageContent) {
+    return term.toLocaleLowerCase(glossaryLocale(pageContent));
   }
 
   function findGlossaryRow(list, item) {
@@ -87,14 +120,14 @@
       return null;
     }
 
-    const key = glossaryKey(item.term);
+    const key = glossaryKey(item.term, list.closest(".page__content") || document);
     return Array.from(list.querySelectorAll("li")).find(function (row) {
       if (row.dataset.termId === item.id) {
         return true;
       }
 
       const term = row.querySelector("strong");
-      return term && glossaryKey(term.textContent.trim()) === key;
+      return term && glossaryKey(term.textContent.trim(), list.closest(".page__content") || document) === key;
     }) || null;
   }
 
@@ -105,7 +138,7 @@
   }
 
   function addToGlossary(pageContent, item, selectedTerms) {
-    const key = item.term.toLocaleLowerCase("de");
+    const key = glossaryKey(item.term, pageContent);
     if (selectedTerms.has(key)) {
       return false;
     }
@@ -126,7 +159,7 @@
   }
 
   function removeFromGlossary(pageContent, item, selectedTerms) {
-    const key = glossaryKey(item.term);
+    const key = glossaryKey(item.term, pageContent);
     if (!selectedTerms.has(key)) {
       return false;
     }
@@ -165,7 +198,7 @@
     popup.querySelector(".article-glossary-popup__explanation").textContent = item.explanation || "";
 
     const addButton = popup.querySelector(".article-glossary-popup__add");
-    const key = glossaryKey(item.term);
+    const key = glossaryKey(item.term, pageContent);
     const selected = selectedTerms.has(key);
     addButton.disabled = false;
     addButton.textContent = selected ? "Aus Vokabelliste entfernen" : "Zur Vokabelliste hinzufügen";
@@ -197,7 +230,7 @@
           return item.defaultGlossary;
         })
         .map(function (item) {
-          return glossaryKey(item.term);
+          return glossaryKey(item.term, pageContent);
         })
     );
 

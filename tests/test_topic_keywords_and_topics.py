@@ -11,8 +11,10 @@ from scripts.topic_utils import is_noisy_topic_keyword, sanitize_topic_keywords
 
 def test_extract_keywords_ignores_html_href(base_config, mock_logger):
     """_extract_keywords should ignore HTML href fragments from summaries."""
-    with patch("scripts.topic_discovery.spacy.load", return_value=spacy.blank("de")):
+    base_config.language.spacy_model = "it_core_news_sm"
+    with patch("scripts.topic_discovery.spacy.load", return_value=spacy.blank("de")) as spacy_load:
         discoverer = TopicDiscoverer(base_config, mock_logger)
+    spacy_load.assert_called_once_with("it_core_news_sm")
 
     headlines = [
         {

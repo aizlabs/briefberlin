@@ -19,6 +19,7 @@ from scripts.models import (
     AlertsConfig,
     AudioConfig,
     GlossaryConfig,
+    LanguageConfig,
     LLMConfig,
     TwoStepSynthesisConfig,
 )
@@ -53,6 +54,7 @@ class AppConfig(BaseModel):
     llm: LLMConfig
     quality_gate: QualityGateConfig
     glossary: GlossaryConfig = Field(default_factory=GlossaryConfig)
+    language: LanguageConfig = Field(default_factory=LanguageConfig)
     sources: SourceConfig
     audio: AudioConfig = Field(default_factory=AudioConfig)
     output: Dict[str, str] = Field(default_factory=dict)
@@ -196,6 +198,23 @@ def apply_env_overrides(config_dict: Dict) -> Dict:
     if glossary_debug_dump is not None:
         config_dict.setdefault('glossary', {})
         config_dict['glossary']['debug_dump'] = glossary_debug_dump
+
+    language_env_vars = {
+        'LANGUAGE_TARGET': 'target_language',
+        'LANGUAGE_CODE': 'target_language_code',
+        'LANGUAGE_LOCALE': 'locale',
+        'LANGUAGE_LEARNER_NATIVE': 'learner_native_language',
+        'LANGUAGE_SPACY_MODEL': 'spacy_model',
+        'LANGUAGE_GLOSSARY_HEADING': 'glossary_heading',
+        'LANGUAGE_PROMPT_PACK': 'prompt_pack',
+        'LANGUAGE_GLOSSARY_RULES': 'glossary_rules',
+        'LANGUAGE_SITE_NAME': 'site_name',
+    }
+    for env_var, language_key in language_env_vars.items():
+        language_value = os.getenv(env_var)
+        if language_value:
+            config_dict.setdefault('language', {})
+            config_dict['language'][language_key] = language_value
 
     audio_enabled = parse_bool(os.getenv('AUDIO_ENABLED'))
     if audio_enabled is not None:
