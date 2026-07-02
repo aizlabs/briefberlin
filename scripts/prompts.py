@@ -773,6 +773,9 @@ SELECTION RULES:
 - Be broad and systematic: scan every sentence for learner-useful terms, not only the main news nouns.
 - Prefer standalone words, separable German compounds, and short reusable expressions.
 - Include a balanced mix of nouns, compound nouns, verbs, adjectives, adverbs, and short fixed expressions.
+- Prioritize long or opaque German compound nouns when their meaning is not obvious from
+  English or context, for example Jugendhilfeeinrichtung. Select the full compound word
+  as the term, not only one part.
 - Include useful verbs and adjectives even when they are not important enough for the default visible glossary.
 - Use phrases only when the complete phrase has a meaning a learner would not understand from the individual words.
 - Keep phrase terms short: usually 1 word, sometimes 2 words, never more than 3 words.
@@ -844,6 +847,9 @@ HARD RULES:
 - Be broad and systematic: scan every sentence for learner-useful terms, not only the main news nouns.
 - Prefer standalone words, separable German compounds, domain nouns, and short reusable expressions.
 - Include a balanced mix of nouns, compound nouns, verbs, adjectives, adverbs, and short fixed expressions.
+- Prioritize long or opaque German compound nouns when their meaning is not obvious from
+  English or context, for example Jugendhilfeeinrichtung. Select the full compound word
+  as the term, not only one part.
 - Include useful verbs and adjectives even when they are not important enough for the default visible glossary.
 - Use phrases only when the complete phrase has a meaning a learner would not understand from the individual words.
 - Keep phrase terms short: usually 1 word, sometimes 2 words, never more than 3 words.
