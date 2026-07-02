@@ -4,7 +4,7 @@
 import pytest
 from pydantic import ValidationError
 
-from scripts.config import AppConfig, apply_env_overrides, load_config
+from scripts.config import AppConfig, apply_env_overrides, load_config, load_language_config
 
 
 def _base_alerts_dict():
@@ -184,6 +184,18 @@ def test_llm_env_overrides(monkeypatch):
             "LLM_TOPIC_EXTRACTION_MODEL",
         ):
             monkeypatch.delenv(key, raising=False)
+
+
+def test_load_language_config_without_llm_keys(monkeypatch):
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+    monkeypatch.delenv("LLM_BASE_URL", raising=False)
+    monkeypatch.setenv("LANGUAGE_GLOSSARY_HEADING", "Vocabolario")
+    try:
+        language_config = load_language_config("local")
+        assert language_config.glossary_heading == "Vocabolario"
+    finally:
+        monkeypatch.delenv("LANGUAGE_GLOSSARY_HEADING", raising=False)
 
 
 def test_load_config_allows_openai_base_url_without_api_key(monkeypatch):

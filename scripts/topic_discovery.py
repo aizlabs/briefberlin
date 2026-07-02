@@ -52,7 +52,14 @@ class TopicDiscoverer:
         self.cultural_bonus = ranking_config.get('cultural_bonus', 5) if isinstance(ranking_config, dict) else getattr(ranking_config, 'cultural_bonus', 5)
         self.avoid_penalty = ranking_config.get('avoid_penalty', -10) if isinstance(ranking_config, dict) else getattr(ranking_config, 'avoid_penalty', -10)
 
-        spacy_model = getattr(config.language, "spacy_model", DEFAULT_SPACY_MODEL)
+        if hasattr(config, 'language'):
+            language_config = config.language
+        else:
+            language_config = config.get('language', {})
+        if isinstance(language_config, dict):
+            spacy_model = language_config.get('spacy_model', DEFAULT_SPACY_MODEL)
+        else:
+            spacy_model = getattr(language_config, 'spacy_model', DEFAULT_SPACY_MODEL)
         try:
             self.nlp = spacy.load(spacy_model)
         except OSError:

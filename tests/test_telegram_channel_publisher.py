@@ -348,7 +348,10 @@ def test_main_uses_language_config_for_glossary_heading(monkeypatch, base_config
 
     monkeypatch.setenv("TELEGRAM_PUBLISH_BOT_TOKEN", "bot-token")
     monkeypatch.setenv("TELEGRAM_PUBLISH_CHAT_ID", "channel-id")
-    monkeypatch.setattr("scripts.publish_telegram_channel.load_config", lambda environment: base_config)
+    monkeypatch.setattr(
+        "scripts.publish_telegram_channel.load_language_config",
+        lambda environment: base_config.language,
+    )
     monkeypatch.setattr("scripts.publish_telegram_channel.publish_posts", fake_publish_posts)
 
     result = main([

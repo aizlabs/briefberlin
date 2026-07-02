@@ -17,7 +17,7 @@ from urllib import error, request
 
 import yaml
 
-from scripts.config import load_config
+from scripts.config import load_language_config
 from scripts.glossary_sections import normalize_glossary_headings, split_at_glossary_heading
 from scripts.language_profiles import DEFAULT_GLOSSARY_HEADING
 from scripts.text_utils import strip_article_ui_markup
@@ -584,14 +584,14 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 1
 
     try:
-        config = load_config(args.environment)
+        language_config = load_language_config(args.environment)
         published_count = publish_posts(
             [Path(post) for post in args.posts],
             config_path=Path(args.site_config),
             bot_token=bot_token,
             chat_id=chat_id,
-            glossary_heading=config.language.glossary_heading,
-            legacy_glossary_headings=config.language.legacy_glossary_headings,
+            glossary_heading=language_config.glossary_heading,
+            legacy_glossary_headings=language_config.legacy_glossary_headings,
         )
     except Exception as exc:  # noqa: BLE001
         print(f"Telegram channel publish failed: {exc}", file=sys.stderr)

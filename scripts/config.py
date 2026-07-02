@@ -152,6 +152,22 @@ def load_config(environment: str = 'local') -> AppConfig:
     return AppConfig(**final_config_dict)
 
 
+def load_language_config(environment: str = 'local') -> LanguageConfig:
+    """
+    Load language settings without full AppConfig validation.
+
+    Useful for utilities that only need glossary headings or other language
+    labels and should not require LLM API keys at startup.
+    """
+    config_dir = Path(__file__).parent.parent / 'config'
+    base_config_dict = load_yaml(config_dir / 'base.yaml')
+    env_config_dict = load_yaml(config_dir / f'{environment}.yaml')
+    merged_config_dict = deep_merge(base_config_dict, env_config_dict)
+    final_config_dict = apply_env_overrides(merged_config_dict)
+    language_dict = final_config_dict.get('language', {})
+    return LanguageConfig(**language_dict)
+
+
 def apply_env_overrides(config_dict: Dict) -> Dict:
     """Override config dictionary with environment variables before Pydantic validation"""
 
