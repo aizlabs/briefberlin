@@ -27,6 +27,9 @@ language:
   prompt_pack: german
   glossary_rules: german
   site_name: BriefItalia
+
+logging:
+  name: briefitalia
 ```
 
 Keep `prompt_pack` and `glossary_rules` on supported values until the fork adds real implementations. The app rejects unsupported identifiers instead of silently running German prompts and glossary rules.

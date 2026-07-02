@@ -107,6 +107,7 @@ output:
 
 # Logging (overridden per environment)
 logging:
+  name: briefberlin
   level: INFO
   format: json
   file: output/logs/app.log

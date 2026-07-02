@@ -15,6 +15,7 @@ import yaml
 from scripts.audio_pipeline import AudioPipeline
 from scripts.config import load_config
 from scripts.glossary_sections import split_at_glossary_heading
+from scripts.logger import get_component_logger
 from scripts.models import AdaptedArticle, AudioAsset, VocabularyItem
 from scripts.text_utils import strip_article_ui_markup
 
@@ -191,7 +192,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             config.audio.s3.prefix = args.s3_prefix
 
         logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
-        logger = logging.getLogger("briefberlin.post-audio")
+        logger = get_component_logger("post-audio", config)
         prepared = AudioPipeline(config, logger).prepare_for_publish(article, timestamp=timestamp)
 
         if not prepared.audio:

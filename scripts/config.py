@@ -286,6 +286,11 @@ def apply_env_overrides(config_dict: Dict) -> Dict:
         config_dict['audio'].setdefault('s3', {})
         config_dict['audio']['s3']['prefix'] = audio_s3_prefix
 
+    log_name = os.getenv('LOG_NAME')
+    if log_name:
+        config_dict.setdefault('logging', {})
+        config_dict['logging']['name'] = log_name
+
     # Override alert email
     alert_email = os.getenv('ALERT_EMAIL')
     if alert_email:

@@ -93,6 +93,17 @@ def test_glossary_env_overrides(monkeypatch):
         monkeypatch.delenv("GLOSSARY_DEBUG_DUMP", raising=False)
 
 
+def test_logging_env_overrides(monkeypatch):
+    """LOG_NAME populates the logging config subtree."""
+    monkeypatch.setenv("LOG_NAME", "briefitalia")
+    try:
+        config = {}
+        apply_env_overrides(config)
+        assert config["logging"]["name"] == "briefitalia"
+    finally:
+        monkeypatch.delenv("LOG_NAME", raising=False)
+
+
 def test_language_env_overrides(monkeypatch):
     """Language-related env vars populate the language config subtree."""
     monkeypatch.setenv("LANGUAGE_TARGET", "Italian")

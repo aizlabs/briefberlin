@@ -82,6 +82,12 @@ def base_config() -> AppConfig:
         'output': {
             'path': 'output/_posts'
         },
+        'logging': {
+            'name': 'briefberlin',
+            'level': 'INFO',
+            'format': 'json',
+            'file': 'output/logs/app.log',
+        },
         'alerts': {}
     }
     return AppConfig(**config_dict)
