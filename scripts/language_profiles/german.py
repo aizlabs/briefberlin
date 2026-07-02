@@ -1,0 +1,12 @@
+"""Built-in German language profile defaults."""
+
+DEFAULT_TARGET_LANGUAGE = "German"
+DEFAULT_TARGET_LANGUAGE_CODE = "de"
+DEFAULT_LOCALE = "de-DE"
+DEFAULT_LEARNER_NATIVE_LANGUAGE = "English"
+DEFAULT_SPACY_MODEL = "de_core_news_sm"
+DEFAULT_GLOSSARY_HEADING = "Vokabeln"
+DEFAULT_LEGACY_GLOSSARY_HEADINGS = ["Vokabeln"]
+DEFAULT_PROMPT_PACK = "german"
+DEFAULT_GLOSSARY_RULES = "german"
+DEFAULT_SITE_NAME = "BriefBerlin"

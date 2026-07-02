@@ -1,7 +1,10 @@
 """Tests for config loading and environment overrides."""
 
 
-from scripts.config import apply_env_overrides, load_config
+import pytest
+from pydantic import ValidationError
+
+from scripts.config import AppConfig, apply_env_overrides, load_config, load_language_config
 
 
 def _base_alerts_dict():
@@ -90,6 +93,71 @@ def test_glossary_env_overrides(monkeypatch):
         monkeypatch.delenv("GLOSSARY_DEBUG_DUMP", raising=False)
 
 
+def test_logging_env_overrides(monkeypatch):
+    """LOG_NAME populates the logging config subtree."""
+    monkeypatch.setenv("LOG_NAME", "briefitalia")
+    try:
+        config = {}
+        apply_env_overrides(config)
+        assert config["logging"]["name"] == "briefitalia"
+    finally:
+        monkeypatch.delenv("LOG_NAME", raising=False)
+
+
+def test_language_env_overrides(monkeypatch):
+    """Language-related env vars populate the language config subtree."""
+    monkeypatch.setenv("LANGUAGE_TARGET", "Italian")
+    monkeypatch.setenv("LANGUAGE_CODE", "it")
+    monkeypatch.setenv("LANGUAGE_LOCALE", "it-IT")
+    monkeypatch.setenv("LANGUAGE_LEARNER_NATIVE", "English")
+    monkeypatch.setenv("LANGUAGE_SPACY_MODEL", "it_core_news_sm")
+    monkeypatch.setenv("LANGUAGE_GLOSSARY_HEADING", "Vocabolario")
+    monkeypatch.setenv("LANGUAGE_PROMPT_PACK", "italian")
+    monkeypatch.setenv("LANGUAGE_GLOSSARY_RULES", "italian")
+    monkeypatch.setenv("LANGUAGE_SITE_NAME", "BriefItalia")
+    try:
+        config = {}
+        apply_env_overrides(config)
+        assert config["language"]["target_language"] == "Italian"
+        assert config["language"]["target_language_code"] == "it"
+        assert config["language"]["locale"] == "it-IT"
+        assert config["language"]["learner_native_language"] == "English"
+        assert config["language"]["spacy_model"] == "it_core_news_sm"
+        assert config["language"]["glossary_heading"] == "Vocabolario"
+        assert config["language"]["prompt_pack"] == "italian"
+        assert config["language"]["glossary_rules"] == "italian"
+        assert config["language"]["site_name"] == "BriefItalia"
+    finally:
+        for key in (
+            "LANGUAGE_TARGET",
+            "LANGUAGE_CODE",
+            "LANGUAGE_LOCALE",
+            "LANGUAGE_LEARNER_NATIVE",
+            "LANGUAGE_SPACY_MODEL",
+            "LANGUAGE_GLOSSARY_HEADING",
+            "LANGUAGE_PROMPT_PACK",
+            "LANGUAGE_GLOSSARY_RULES",
+            "LANGUAGE_SITE_NAME",
+        ):
+            monkeypatch.delenv(key, raising=False)
+
+
+def test_app_config_rejects_unsupported_prompt_pack(base_config):
+    config_dict = base_config.model_dump()
+    config_dict["language"]["prompt_pack"] = "italian"
+
+    with pytest.raises(ValidationError, match="Unsupported language.prompt_pack"):
+        AppConfig(**config_dict)
+
+
+def test_app_config_rejects_unsupported_glossary_rules(base_config):
+    config_dict = base_config.model_dump()
+    config_dict["language"]["glossary_rules"] = "italian"
+
+    with pytest.raises(ValidationError, match="Unsupported language.glossary_rules"):
+        AppConfig(**config_dict)
+
+
 def test_llm_env_overrides(monkeypatch):
     monkeypatch.setenv("LLM_PROVIDER", "openai")
     monkeypatch.setenv("LLM_BASE_URL", "http://localhost:11434/v1")
@@ -116,6 +184,18 @@ def test_llm_env_overrides(monkeypatch):
             "LLM_TOPIC_EXTRACTION_MODEL",
         ):
             monkeypatch.delenv(key, raising=False)
+
+
+def test_load_language_config_without_llm_keys(monkeypatch):
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+    monkeypatch.delenv("LLM_BASE_URL", raising=False)
+    monkeypatch.setenv("LANGUAGE_GLOSSARY_HEADING", "Vocabolario")
+    try:
+        language_config = load_language_config("local")
+        assert language_config.glossary_heading == "Vocabolario"
+    finally:
+        monkeypatch.delenv("LANGUAGE_GLOSSARY_HEADING", raising=False)
 
 
 def test_load_config_allows_openai_base_url_without_api_key(monkeypatch):

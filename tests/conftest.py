@@ -62,6 +62,18 @@ def base_config() -> AppConfig:
             'retry_on_empty': True,
             'debug_dump': False,
         },
+        'language': {
+            'target_language': 'German',
+            'target_language_code': 'de',
+            'locale': 'de-DE',
+            'learner_native_language': 'English',
+            'spacy_model': 'de_core_news_sm',
+            'glossary_heading': 'Vokabeln',
+            'legacy_glossary_headings': ['Vokabeln'],
+            'prompt_pack': 'german',
+            'glossary_rules': 'german',
+            'site_name': 'BriefBerlin',
+        },
         'sources': {
             'max_words_per_source': 300,
             'min_words_per_source': 100,
@@ -69,6 +81,12 @@ def base_config() -> AppConfig:
         },
         'output': {
             'path': 'output/_posts'
+        },
+        'logging': {
+            'name': 'briefberlin',
+            'level': 'INFO',
+            'format': 'json',
+            'file': 'output/logs/app.log',
         },
         'alerts': {}
     }

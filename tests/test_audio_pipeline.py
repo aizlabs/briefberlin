@@ -249,3 +249,26 @@ def test_build_speech_script_includes_english_only_glossary_items(sample_a2_arti
 
     assert script.includes_vocabulary is True
     assert "Vokabeln. Sturmschäden heißt auf Englisch storm damage." in script.narration
+
+
+def test_build_speech_script_uses_configured_glossary_heading(sample_a2_article):
+    article_with_glossary = sample_a2_article.model_copy(
+        update={
+            "vocabulary": [
+                {
+                    "term": "Sturmschäden",
+                    "english": "storm damage",
+                    "explanation": "",
+                }
+            ]
+        }
+    )
+
+    script = build_speech_script(
+        article_with_glossary,
+        include_vocabulary=True,
+        glossary_heading="Vocabolario",
+    )
+
+    assert "Vocabolario. Sturmschäden heißt auf Englisch storm damage." in script.narration
+    assert "Vokabeln." not in script.narration

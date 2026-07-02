@@ -59,6 +59,19 @@ glossary:
   retry_on_empty: true
   debug_dump: false
 
+language:
+  target_language: German
+  target_language_code: de
+  locale: de-DE
+  learner_native_language: English
+  spacy_model: de_core_news_sm
+  glossary_heading: Vokabeln
+  legacy_glossary_headings:
+    - Vokabeln
+  prompt_pack: german
+  glossary_rules: german
+  site_name: BriefBerlin
+
 # Audio preparation (website first; Telegram and podcast later)
 audio:
   enabled: false
@@ -94,6 +107,7 @@ output:
 
 # Logging (overridden per environment)
 logging:
+  name: briefberlin
   level: INFO
   format: json
   file: output/logs/app.log

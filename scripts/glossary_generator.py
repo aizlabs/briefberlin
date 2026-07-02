@@ -427,7 +427,7 @@ class GlossaryGenerator:
         self.debug_dump = self.glossary_config.debug_dump
         self.metrics_output_dir = Path("output/metrics/glossary")
         self.last_run_stats = self._empty_run_stats()
-        self._nlp = None
+        self._nlp: Any = None
         self._init_chain()
         self._init_nlp()
 
@@ -756,7 +756,7 @@ class GlossaryGenerator:
 
     def _build_retry_shortlist(self, content: str, limit: int = 18) -> List[str]:
         doc = self._analyze_content(content)
-        seen = set()
+        seen: set[str] = set()
         shortlist: List[str] = []
 
         if doc is not None:
@@ -836,11 +836,13 @@ class GlossaryGenerator:
         )
 
     def _init_nlp(self) -> None:
+        model_name = self.config.language.spacy_model
         try:
-            self._nlp = spacy.load("de_core_news_sm")
+            self._nlp = spacy.load(model_name)
         except Exception as exc:
             self.logger.warning(
-                "SpaCy model unavailable for glossary validation; falling back to lightweight rules: %s",
+                "SpaCy model '%s' unavailable for glossary validation; falling back to lightweight rules: %s",
+                model_name,
                 exc,
             )
             self._nlp = None

@@ -21,6 +21,7 @@ import feedparser
 import requests
 import spacy
 
+from scripts.language_profiles import DEFAULT_SPACY_MODEL
 from scripts.models import Topic
 from scripts.topic_utils import sanitize_topic_keywords
 
@@ -51,11 +52,21 @@ class TopicDiscoverer:
         self.cultural_bonus = ranking_config.get('cultural_bonus', 5) if isinstance(ranking_config, dict) else getattr(ranking_config, 'cultural_bonus', 5)
         self.avoid_penalty = ranking_config.get('avoid_penalty', -10) if isinstance(ranking_config, dict) else getattr(ranking_config, 'avoid_penalty', -10)
 
-        # Load SpaCy German model
+        if hasattr(config, 'language'):
+            language_config = config.language
+        else:
+            language_config = config.get('language', {})
+        if isinstance(language_config, dict):
+            spacy_model = language_config.get('spacy_model', DEFAULT_SPACY_MODEL)
+        else:
+            spacy_model = getattr(language_config, 'spacy_model', DEFAULT_SPACY_MODEL)
         try:
-            self.nlp = spacy.load("de_core_news_sm")
+            self.nlp = spacy.load(spacy_model)
         except OSError:
-            self.logger.error("SpaCy German model not found. Install with: python -m spacy download de_core_news_sm")
+            self.logger.error(
+                "SpaCy model not found. Install with: python -m spacy download %s",
+                spacy_model,
+            )
             raise
 
         # Learner-friendly topics

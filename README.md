@@ -70,5 +70,7 @@ calls the configured LLM and is intended for local prompt/model tuning, not norm
 
 The Jekyll site lives under `output/`. Generated posts use CEFR levels `A2` and `B1`, German article text, a `Vokabeln` section when vocabulary exists, and no source attribution.
 
+For language forks, see [docs/language-profile-fork-guide.md](docs/language-profile-fork-guide.md).
+
 Deployment runs through GitHub Pages. See `.github/GITHUB_PAGES_SETUP.md` for `gh run` commands to
 check recent and ongoing deployment status.

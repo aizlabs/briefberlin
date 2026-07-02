@@ -93,6 +93,22 @@ def glossary_generator(monkeypatch, base_config, mock_logger):
     return generator
 
 
+def test_init_nlp_uses_language_spacy_model(monkeypatch, base_config, mock_logger):
+    loaded_models = []
+    monkeypatch.setattr(GlossaryGenerator, "_init_chain", lambda self: None)
+
+    def fake_spacy_load(model_name):
+        loaded_models.append(model_name)
+        return MagicMock()
+
+    monkeypatch.setattr("scripts.glossary_generator.spacy.load", fake_spacy_load)
+    base_config.language.spacy_model = "it_core_news_sm"
+
+    GlossaryGenerator(base_config, mock_logger)
+
+    assert loaded_models == ["it_core_news_sm"]
+
+
 def test_validate_rejects_named_entities_and_transparent_terms(glossary_generator):
     content = (
         "Berlin testete Drohnen nach einem Sturm. Angela Merkel sprach mit Deutschland über Energie. "

@@ -14,6 +14,8 @@ import yaml
 
 from scripts.audio_pipeline import AudioPipeline
 from scripts.config import load_config
+from scripts.glossary_sections import split_at_glossary_heading
+from scripts.logger import get_component_logger
 from scripts.models import AdaptedArticle, AudioAsset, VocabularyItem
 from scripts.text_utils import strip_article_ui_markup
 
@@ -41,19 +43,27 @@ def is_public_post_path(path: Path) -> bool:
     return True
 
 
-def extract_article_content(body: str) -> str:
+def extract_article_content(body: str, glossary_headings: Sequence[str] | None = None) -> str:
     """Extract public article prose, excluding vocabulary and footer blocks."""
-    content = body.split("## Vokabeln", 1)[0]
+    content, _vocabulary_section = split_at_glossary_heading(body, glossary_headings)
     content = content.split("\n---\n", 1)[0]
     return strip_article_ui_markup(content)
 
 
-def extract_vocabulary(body: str) -> list[VocabularyItem]:
+def extract_vocabulary(
+    body: str,
+    glossary_headings: Sequence[str] | None = None,
+) -> list[VocabularyItem]:
     """Extract structured vocabulary items from the public Markdown vocabulary section."""
-    if "## Vokabeln" not in body:
+    _main_text, vocabulary_section = split_at_glossary_heading(body, glossary_headings)
+    if not vocabulary_section:
         return []
 
-    _, vocabulary_section = body.split("## Vokabeln", 1)
+    return extract_vocabulary_from_section(vocabulary_section)
+
+
+def extract_vocabulary_from_section(vocabulary_section: str) -> list[VocabularyItem]:
+    """Extract structured vocabulary items from a pre-split Markdown vocabulary section."""
     items: list[VocabularyItem] = []
     for line in vocabulary_section.splitlines():
         match = VOCABULARY_ITEM_RE.match(line.strip())
@@ -86,14 +96,18 @@ def coerce_post_datetime(value: object) -> datetime:
     raise ValueError("Post front matter must include a Jekyll datetime")
 
 
-def build_article_from_post(path: Path) -> tuple[AdaptedArticle, datetime, dict, str]:
+def build_article_from_post(
+    path: Path,
+    glossary_headings: Sequence[str] | None = None,
+) -> tuple[AdaptedArticle, datetime, dict, str]:
     """Build an AdaptedArticle from public post Markdown."""
     if not is_public_post_path(path):
         raise ValueError("Audio generation only accepts posts under output/_posts")
 
     raw = path.read_text(encoding="utf-8")
     frontmatter, body = split_frontmatter(raw)
-    content = extract_article_content(body)
+    content_body, vocabulary_section = split_at_glossary_heading(body, glossary_headings)
+    content = strip_article_ui_markup(content_body.split("\n---\n", 1)[0])
     if not content:
         raise ValueError("Post body does not contain article content")
 
@@ -103,7 +117,7 @@ def build_article_from_post(path: Path) -> tuple[AdaptedArticle, datetime, dict,
         content=content,
         summary=str(frontmatter.get("summary") or first_sentence(content)),
         reading_time=int(frontmatter.get("reading_time") or 1),
-        vocabulary=extract_vocabulary(body),
+        vocabulary=extract_vocabulary_from_section(vocabulary_section),
         level=str(frontmatter["level"]),
         sources=[],
         audio=AudioAsset(**frontmatter["audio"]) if isinstance(frontmatter.get("audio"), dict) else None,
@@ -155,9 +169,11 @@ def main(argv: Sequence[str] | None = None) -> int:
     try:
         args = parse_args(argv)
         post_path = Path(args.post).expanduser()
-        article, timestamp, frontmatter, body = build_article_from_post(post_path)
-
         config = load_config(args.environment)
+        article, timestamp, frontmatter, body = build_article_from_post(
+            post_path,
+            glossary_headings=config.language.glossary_headings(),
+        )
         config.audio.enabled = True
         config.audio.upload_enabled = bool(args.upload)
         if args.provider:
@@ -176,7 +192,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             config.audio.s3.prefix = args.s3_prefix
 
         logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
-        logger = logging.getLogger("briefberlin.post-audio")
+        logger = get_component_logger("post-audio", config)
         prepared = AudioPipeline(config, logger).prepare_for_publish(article, timestamp=timestamp)
 
         if not prepared.audio:

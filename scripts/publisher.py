@@ -340,7 +340,7 @@ reading_time: {article.reading_time}
         if not rendered_lines:
             return ""
 
-        vocab_lines = ["", "## Vokabeln", "", *rendered_lines]
+        vocab_lines = ["", f"## {self.config.language.glossary_heading}", "", *rendered_lines]
         return '\n'.join(vocab_lines)
 
     def _translation_hints_for_publish(self, article: AdaptedArticle) -> List[VocabularyItem]:
@@ -395,8 +395,12 @@ reading_time: {article.reading_time}
             for index, item in enumerate(translation_hints)
         ]
         encoded = json.dumps(payload, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+        glossary_heading = html_escape(self.config.language.glossary_heading, quote=True)
+        glossary_locale = html_escape(self.config.language.locale, quote=True)
         return (
-            '<script type="application/json" class="article-glossary-data">'
+            '<script type="application/json" class="article-glossary-data" '
+            f'data-glossary-heading="{glossary_heading}" '
+            f'data-glossary-locale="{glossary_locale}">'
             f"{encoded}"
             "</script>\n\n"
         )

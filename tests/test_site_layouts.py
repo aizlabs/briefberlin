@@ -39,8 +39,9 @@ def test_interactive_glossary_toggles_vocabulary_terms():
     script = Path("output/assets/js/glossary-popup.js").read_text(encoding="utf-8")
 
     assert "selectedTerms" in script
-    assert "function addToGlossary(pageContent, item, selectedTerms)" in script
-    assert "function removeFromGlossary(pageContent, item, selectedTerms)" in script
+    assert "const locale = glossaryLocale(pageContent)" in script
+    assert "function addToGlossary(pageContent, item, selectedTerms, locale)" in script
+    assert "function removeFromGlossary(pageContent, item, selectedTerms, locale)" in script
     assert "setArticleTermSelected(pageContent, item, true)" in script
     assert "setArticleTermSelected(pageContent, item, false)" in script
     assert "Aus Vokabelliste entfernen" in script

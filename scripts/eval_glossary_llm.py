@@ -19,6 +19,7 @@ from typing import Any
 
 from scripts.config import load_config
 from scripts.glossary_generator import GlossaryGenerator, StructuredOutputDegradedError
+from scripts.logger import get_component_logger
 from scripts.models import AdaptedArticle, VocabularyItem
 
 BERLIN_HEAT_CONTENT = (
@@ -258,7 +259,7 @@ def main(argv: list[str] | None = None) -> int:
     fixture = FIXTURES[args.fixture]
     article = build_article(fixture)
 
-    logger = logging.getLogger("briefberlin.eval_glossary_llm")
+    logger = get_component_logger("eval_glossary_llm", config)
     logging.basicConfig(level=logging.WARNING)
 
     model_name = config.llm.models.adaptation or config.llm.models.generation

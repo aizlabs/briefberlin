@@ -68,6 +68,7 @@ class AudioPipeline:
         script = build_speech_script(
             article,
             include_vocabulary=self.audio_config.include_vocabulary,
+            glossary_heading=self.config.language.glossary_heading,
         )
 
         script_rel_path = Path(year_month) / f"{artifact_id}.txt"

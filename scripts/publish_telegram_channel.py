@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import argparse
 import json
 import os
 import re
@@ -11,11 +12,14 @@ import time
 from dataclasses import dataclass
 from html import escape
 from pathlib import Path
-from typing import Any, Callable, Iterable, List, Sequence
+from typing import Any, Callable, Iterable, List, Protocol, Sequence
 from urllib import error, request
 
 import yaml
 
+from scripts.config import load_language_config
+from scripts.glossary_sections import normalize_glossary_headings, split_at_glossary_heading
+from scripts.language_profiles import DEFAULT_GLOSSARY_HEADING
 from scripts.text_utils import strip_article_ui_markup
 
 TELEGRAM_MESSAGE_LIMIT = 4096
@@ -23,6 +27,16 @@ TELEGRAM_AUDIO_CAPTION_LIMIT = 1024
 TELEGRAM_AUDIO_TITLE_LIMIT = 128
 DEFAULT_TIMEOUT_SECONDS = 10
 DEFAULT_RETRIES = 3
+
+
+class TelegramHTTPResponse(Protocol):
+    """Minimal context-manager response shape used by urllib and tests."""
+
+    def __enter__(self) -> "TelegramHTTPResponse": ...
+
+    def __exit__(self, exc_type: object, exc: object, tb: object) -> object: ...
+
+    def read(self) -> bytes: ...
 
 
 @dataclass(frozen=True)
@@ -120,7 +134,17 @@ def _strip_attribution_footer(body: str) -> str:
     return body.rstrip()
 
 
-def parse_jekyll_post(path: Path) -> TelegramPost:
+def _split_vocabulary_section(
+    article_body: str,
+    glossary_headings: Sequence[str] | None = None,
+) -> tuple[str, str]:
+    return split_at_glossary_heading(article_body, glossary_headings, strip_before=True)
+
+
+def parse_jekyll_post(
+    path: Path,
+    glossary_headings: Sequence[str] | None = None,
+) -> TelegramPost:
     """Extract the Telegram-relevant content from a generated Jekyll post."""
 
     raw_content = path.read_text(encoding="utf-8")
@@ -129,12 +153,8 @@ def parse_jekyll_post(path: Path) -> TelegramPost:
     audio_url, audio_mime_type, audio_duration_seconds = _extract_audio_metadata(frontmatter_values)
     article_body = _strip_attribution_footer(body)
 
-    vocabulary_lines: List[str] = []
-    if "\n## Vokabeln\n\n" in article_body:
-        main_text, vocabulary_block = article_body.split("\n## Vokabeln\n\n", 1)
-        vocabulary_lines = [line.strip() for line in vocabulary_block.splitlines() if line.strip()]
-    else:
-        main_text = article_body
+    main_text, vocabulary_block = _split_vocabulary_section(article_body, glossary_headings)
+    vocabulary_lines = [line.strip() for line in vocabulary_block.splitlines() if line.strip()]
 
     clean_main_text = strip_article_ui_markup(main_text)
     paragraphs = [
@@ -216,6 +236,7 @@ def _render_message(
     body_blocks: List[str],
     vocabulary_blocks: List[str],
     trimmed: bool,
+    glossary_heading: str = DEFAULT_GLOSSARY_HEADING,
 ) -> str:
     header = "\n".join(
         [
@@ -230,7 +251,7 @@ def _render_message(
         sections.append("\n\n".join(body_blocks))
 
     if vocabulary_blocks:
-        glossary = "<b>Vokabeln</b>\n" + "\n".join(vocabulary_blocks)
+        glossary = f"<b>{escape(glossary_heading)}</b>\n" + "\n".join(vocabulary_blocks)
         sections.append(glossary)
 
     if trimmed:
@@ -241,13 +262,25 @@ def _render_message(
     return "\n\n".join(sections)
 
 
-def format_telegram_message(post: TelegramPost, article_url: str, limit: int = TELEGRAM_MESSAGE_LIMIT) -> str:
+def format_telegram_message(
+    post: TelegramPost,
+    article_url: str,
+    limit: int = TELEGRAM_MESSAGE_LIMIT,
+    glossary_heading: str = DEFAULT_GLOSSARY_HEADING,
+) -> str:
     """Render a Telegram-safe HTML message, trimming at paragraph/list boundaries when needed."""
 
     body_blocks = [markdown_to_telegram_html(paragraph) for paragraph in post.paragraphs]
     vocabulary_blocks = [_format_vocabulary_line(line) for line in post.vocabulary_lines]
 
-    full_message = _render_message(post, article_url, body_blocks, vocabulary_blocks, trimmed=False)
+    full_message = _render_message(
+        post,
+        article_url,
+        body_blocks,
+        vocabulary_blocks,
+        trimmed=False,
+        glossary_heading=glossary_heading,
+    )
     if len(full_message) <= limit:
         return full_message
 
@@ -263,6 +296,7 @@ def format_telegram_message(post: TelegramPost, article_url: str, limit: int = T
             [text for kind, text in tentative if kind == "body"],
             [text for kind, text in tentative if kind == "vocab"],
             trimmed=remaining_blocks,
+            glossary_heading=glossary_heading,
         )
         if len(candidate_message) <= limit:
             selected = tentative
@@ -275,12 +309,20 @@ def format_telegram_message(post: TelegramPost, article_url: str, limit: int = T
         [text for kind, text in selected if kind == "body"],
         [text for kind, text in selected if kind == "vocab"],
         trimmed=True,
+        glossary_heading=glossary_heading,
     )
 
     if len(trimmed_message) <= limit:
         return trimmed_message
 
-    minimal_message = _render_message(post, article_url, [], [], trimmed=True)
+    minimal_message = _render_message(
+        post,
+        article_url,
+        [],
+        [],
+        trimmed=True,
+        glossary_heading=glossary_heading,
+    )
     if len(minimal_message) <= limit:
         return minimal_message
 
@@ -390,7 +432,7 @@ def _send_telegram_request(
     *,
     timeout: int,
     retries: int,
-    opener: Callable[..., object],
+    opener: Callable[..., TelegramHTTPResponse],
     sleep: Callable[[float], None],
 ) -> None:
     """Send a prepared Telegram API request with retry handling."""
@@ -439,7 +481,7 @@ def send_telegram_message(
     *,
     timeout: int = DEFAULT_TIMEOUT_SECONDS,
     retries: int = DEFAULT_RETRIES,
-    opener: Callable[..., object] = request.urlopen,
+    opener: Callable[..., TelegramHTTPResponse] = request.urlopen,
     sleep: Callable[[float], None] = time.sleep,
 ) -> None:
     """Send a Telegram message with retry handling for throttling and transient failures."""
@@ -462,7 +504,7 @@ def send_telegram_audio(
     *,
     timeout: int = DEFAULT_TIMEOUT_SECONDS,
     retries: int = DEFAULT_RETRIES,
-    opener: Callable[..., object] = request.urlopen,
+    opener: Callable[..., TelegramHTTPResponse] = request.urlopen,
     sleep: Callable[[float], None] = time.sleep,
 ) -> None:
     """Send an article audio card to Telegram with identifying metadata."""
@@ -485,29 +527,52 @@ def publish_posts(
     chat_id: str,
     send_func: Callable[[str, str, str], None] = send_telegram_message,
     audio_send_func: Callable[[str, str, TelegramPost, str], None] = send_telegram_audio,
+    glossary_heading: str = DEFAULT_GLOSSARY_HEADING,
+    legacy_glossary_headings: Sequence[str] | None = None,
 ) -> int:
     """Publish a sequence of posts to Telegram in deterministic filename order."""
 
     published_count = 0
+    glossary_headings = normalize_glossary_headings(
+        [glossary_heading, *(legacy_glossary_headings or [])]
+    )
 
     for post_path in sorted(Path(path) for path in post_paths):
-        post = parse_jekyll_post(post_path)
+        post = parse_jekyll_post(post_path, glossary_headings=glossary_headings)
         article_url = build_article_url(post_path, config_path)
         if post.audio_url:
             audio_send_func(bot_token, chat_id, post, article_url)
         else:
-            message = format_telegram_message(post, article_url)
+            message = format_telegram_message(
+                post,
+                article_url,
+                glossary_heading=glossary_heading,
+            )
             send_func(bot_token, chat_id, message)
         published_count += 1
 
     return published_count
 
 
+def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Publish generated Jekyll posts to a Telegram channel.",
+    )
+    parser.add_argument("posts", nargs="+", help="Public Jekyll post Markdown files to publish")
+    parser.add_argument("--environment", default="local", help="Config environment to load")
+    parser.add_argument(
+        "--site-config",
+        default="output/_config.yml",
+        help="Jekyll site config used to build article URLs",
+    )
+    return parser.parse_args(argv)
+
+
 def main(argv: Sequence[str] | None = None) -> int:
-    argv = list(argv or sys.argv[1:])
-    if not argv:
-        print("Usage: publish_telegram_channel.py <post1> [<post2> ...]", file=sys.stderr)
-        return 1
+    try:
+        args = parse_args(argv or sys.argv[1:])
+    except SystemExit as exc:
+        return exc.code if isinstance(exc.code, int) else 1
 
     bot_token = os.getenv("TELEGRAM_PUBLISH_BOT_TOKEN")
     chat_id = os.getenv("TELEGRAM_PUBLISH_CHAT_ID")
@@ -519,11 +584,14 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 1
 
     try:
+        language_config = load_language_config(args.environment)
         published_count = publish_posts(
-            [Path(arg) for arg in argv],
-            config_path=Path("output/_config.yml"),
+            [Path(post) for post in args.posts],
+            config_path=Path(args.site_config),
             bot_token=bot_token,
             chat_id=chat_id,
+            glossary_heading=language_config.glossary_heading,
+            legacy_glossary_headings=language_config.legacy_glossary_headings,
         )
     except Exception as exc:  # noqa: BLE001
         print(f"Telegram channel publish failed: {exc}", file=sys.stderr)

@@ -240,7 +240,10 @@ def test_publisher_embeds_translation_hints_and_clickable_article_terms(
 
     markdown = publisher._generate_markdown(article, datetime(2024, 1, 1, 12, 0, 0))
 
-    assert '<script type="application/json" class="article-glossary-data">' in markdown
+    assert (
+        '<script type="application/json" class="article-glossary-data" '
+        'data-glossary-heading="Vokabeln" data-glossary-locale="de-DE">'
+    ) in markdown
     assert '"term":"Stromnetze"' in markdown
     assert '"defaultGlossary":true' in markdown
     rendered_article = (
@@ -252,6 +255,25 @@ def test_publisher_embeds_translation_hints_and_clickable_article_terms(
     assert rendered_article in markdown
     assert markdown.index(rendered_article) < markdown.index("article-glossary-data")
     assert "- **Strom** - electricity - Energie aus der Steckdose" in markdown
+
+
+def test_publisher_uses_configured_glossary_heading_and_locale(
+    base_config,
+    mock_logger,
+    sample_a2_article,
+    tmp_path,
+):
+    base_config.output['path'] = str(tmp_path)
+    base_config.language.glossary_heading = "Vocabolario"
+    base_config.language.locale = "it-IT"
+    publisher = Publisher(base_config, mock_logger, dry_run=True)
+
+    markdown = publisher._generate_markdown(sample_a2_article, datetime(2024, 1, 1, 12, 0, 0))
+
+    assert "## Vocabolario" in markdown
+    assert "## Vokabeln" not in markdown
+    assert 'data-glossary-heading="Vocabolario"' in markdown
+    assert 'data-glossary-locale="it-IT"' in markdown
 
 
 def test_publisher_falls_back_to_visible_vocabulary_for_clickable_terms(

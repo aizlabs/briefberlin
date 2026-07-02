@@ -9,6 +9,7 @@ from scripts.publish_telegram_channel import (
     TelegramPost,
     build_article_url,
     format_telegram_message,
+    main,
     parse_jekyll_post,
     publish_posts,
     send_telegram_audio,
@@ -112,6 +113,25 @@ def test_parse_jekyll_post_extracts_frontmatter_body_and_vocabulary(tmp_path):
     assert post.audio_url is None
 
 
+def test_parse_jekyll_post_accepts_configured_glossary_heading(tmp_path):
+    post_path = write_post(
+        tmp_path,
+        "2026-03-17-040915-windenergie-a2.md",
+        content=POST_TEMPLATE.replace("## Vokabeln", "## Vocabolario"),
+    )
+
+    post = parse_jekyll_post(post_path, glossary_headings=["Vocabolario", "Vokabeln"])
+
+    assert post.paragraphs == [
+        "Deutschland baut mehr **Windenergie** aus. Das hilft bei der Energiewende.",
+        "Neue **Windräder** produzieren sauberen Strom für viele Haushalte.",
+    ]
+    assert post.vocabulary_lines == [
+        "- **Windenergie** - wind energy - Strom aus der Kraft des Windes",
+        "- **Windräder** - wind turbines - große Anlagen, die mit Wind Strom machen",
+    ]
+
+
 def test_parse_jekyll_post_strips_interactive_glossary_markup(tmp_path):
     post_path = write_post(
         tmp_path,
@@ -191,6 +211,26 @@ def test_format_telegram_message_converts_markdown_and_omits_source_footer():
     assert "**Windenergie**" not in message
     assert "Fuentes" not in message
     assert 'href="https://example.com/articles/040915-windenergie-a2/"' in message
+
+
+def test_format_telegram_message_uses_configured_glossary_heading():
+    post = TelegramPost(
+        path=Path("output/_posts/2026-03-17-040915-windenergie-a2.md"),
+        title="Deutschland baut mehr Windenergie aus",
+        level="A2",
+        reading_time=2,
+        paragraphs=["Deutschland baut mehr **Windenergie** aus."],
+        vocabulary_lines=["- **Windenergie** - wind energy - Strom aus der Kraft des Windes"],
+    )
+
+    message = format_telegram_message(
+        post,
+        "https://example.com/articles/040915-windenergie-a2/",
+        glossary_heading="Vocabolario",
+    )
+
+    assert "<b>Vocabolario</b>" in message
+    assert "<b>Vokabeln</b>" not in message
 
 
 def test_format_telegram_message_trims_at_boundaries_and_preserves_link():
@@ -287,6 +327,46 @@ def test_publish_posts_sends_audio_when_post_has_audio_url(tmp_path):
     assert post.title == "Deutschland baut mehr Windenergie aus"
     assert post.audio_url == "https://media.briefberlin.de/articles/2026/03/windenergie-a2/article.mp3"
     assert article_url == "https://briefberlin.de/articles/040915-windenergie-a2/"
+
+
+def test_main_uses_language_config_for_glossary_heading(monkeypatch, base_config, tmp_path):
+    post_path = write_post(
+        tmp_path,
+        "2026-03-17-040915-windenergie-a2.md",
+        content=POST_TEMPLATE.replace("## Vokabeln", "## Vocabolario"),
+    )
+    site_config = write_site_config(tmp_path)
+    captured: dict[str, object] = {}
+
+    base_config.language.glossary_heading = "Vocabolario"
+    base_config.language.legacy_glossary_headings = ["Vokabeln"]
+
+    def fake_publish_posts(post_paths, **kwargs):  # noqa: ANN001, ANN002
+        captured["post_paths"] = list(post_paths)
+        captured.update(kwargs)
+        return 1
+
+    monkeypatch.setenv("TELEGRAM_PUBLISH_BOT_TOKEN", "bot-token")
+    monkeypatch.setenv("TELEGRAM_PUBLISH_CHAT_ID", "channel-id")
+    monkeypatch.setattr(
+        "scripts.publish_telegram_channel.load_language_config",
+        lambda environment: base_config.language,
+    )
+    monkeypatch.setattr("scripts.publish_telegram_channel.publish_posts", fake_publish_posts)
+
+    result = main([
+        "--environment",
+        "local",
+        "--site-config",
+        str(site_config),
+        str(post_path),
+    ])
+
+    assert result == 0
+    assert captured["post_paths"] == [post_path]
+    assert captured["config_path"] == site_config
+    assert captured["glossary_heading"] == "Vocabolario"
+    assert captured["legacy_glossary_headings"] == ["Vokabeln"]
 
 
 def test_send_telegram_audio_uses_audio_metadata_and_web_button():

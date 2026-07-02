@@ -24,7 +24,11 @@ def _normalized_spoken_text(text: str) -> str:
     return re.sub(r"\s+", " ", _strip_markdown(text)).strip().casefold()
 
 
-def build_speech_script(article: AdaptedArticle, include_vocabulary: bool = False) -> SpeechScript:
+def build_speech_script(
+    article: AdaptedArticle,
+    include_vocabulary: bool = False,
+    glossary_heading: str = "Vokabeln",
+) -> SpeechScript:
     """Convert an adapted article into a narration-friendly plain-text script."""
     raw_vocabulary = article.vocabulary or []
     if all(isinstance(item, VocabularyItem) for item in raw_vocabulary):
@@ -55,7 +59,9 @@ def build_speech_script(article: AdaptedArticle, include_vocabulary: bool = Fals
             )
             for item in vocabulary_items
         ]
-        sections.append("Vokabeln. " + " ".join(_strip_markdown(line) for line in vocabulary_lines))
+        sections.append(
+            f"{glossary_heading}. " + " ".join(_strip_markdown(line) for line in vocabulary_lines)
+        )
 
     sections.append("Ende des Artikels.")
     narration = "\n\n".join(section for section in sections if section)

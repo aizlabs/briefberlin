@@ -91,6 +91,36 @@ In Berlin gibt es eine <button type="button" class="article-term" data-term-id="
     assert "<button" not in article.content
 
 
+def test_build_article_from_post_accepts_configured_glossary_heading(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    post_path = _write_public_post(tmp_path, filename="2026-06-27-vocabolario-a2.md")
+    post_path.write_text(
+        post_path.read_text(encoding="utf-8").replace("## Vokabeln", "## Vocabolario"),
+        encoding="utf-8",
+    )
+
+    article, _timestamp, _frontmatter, _body = build_article_from_post(
+        post_path,
+        glossary_headings=["Vocabolario", "Vokabeln"],
+    )
+
+    assert "## Vocabolario" not in article.content
+    assert article.vocabulary[0].term == "Umfrage"
+
+
+def test_build_article_from_post_keeps_legacy_heading_as_fallback(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    post_path = _write_public_post(tmp_path)
+
+    article, _timestamp, _frontmatter, _body = build_article_from_post(
+        post_path,
+        glossary_headings=["Vocabolario", "Vokabeln"],
+    )
+
+    assert "## Vokabeln" not in article.content
+    assert article.vocabulary[0].term == "Umfrage"
+
+
 def test_build_article_from_post_rejects_paths_outside_public_posts(tmp_path, monkeypatch):
     monkeypatch.chdir(tmp_path)
     private_path = tmp_path / "private-input" / "article.source.txt"

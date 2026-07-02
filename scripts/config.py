@@ -15,10 +15,12 @@ import yaml
 from dotenv import load_dotenv
 from pydantic import BaseModel, Field, model_validator
 
+from scripts.language_profiles import SUPPORTED_GLOSSARY_RULES, SUPPORTED_PROMPT_PACKS
 from scripts.models import (
     AlertsConfig,
     AudioConfig,
     GlossaryConfig,
+    LanguageConfig,
     LLMConfig,
     TwoStepSynthesisConfig,
 )
@@ -53,6 +55,7 @@ class AppConfig(BaseModel):
     llm: LLMConfig
     quality_gate: QualityGateConfig
     glossary: GlossaryConfig = Field(default_factory=GlossaryConfig)
+    language: LanguageConfig = Field(default_factory=LanguageConfig)
     sources: SourceConfig
     audio: AudioConfig = Field(default_factory=AudioConfig)
     output: Dict[str, str] = Field(default_factory=dict)
@@ -75,6 +78,22 @@ class AppConfig(BaseModel):
                 print("⚠️  Switched provider to 'openai' (ANTHROPIC_API_KEY not found but OPENAI_API_KEY is set)")
             else:
                 raise ValueError("ANTHROPIC_API_KEY is required for Anthropic provider")
+
+        if self.language.prompt_pack not in SUPPORTED_PROMPT_PACKS:
+            supported = ", ".join(sorted(SUPPORTED_PROMPT_PACKS))
+            raise ValueError(
+                f"Unsupported language.prompt_pack '{self.language.prompt_pack}'. "
+                f"Supported prompt packs: {supported}. Add a prompt pack implementation "
+                "before enabling this value."
+            )
+
+        if self.language.glossary_rules not in SUPPORTED_GLOSSARY_RULES:
+            supported = ", ".join(sorted(SUPPORTED_GLOSSARY_RULES))
+            raise ValueError(
+                f"Unsupported language.glossary_rules '{self.language.glossary_rules}'. "
+                f"Supported glossary rules: {supported}. Add glossary rule implementation "
+                "before enabling this value."
+            )
         return self
 
 
@@ -131,6 +150,22 @@ def load_config(environment: str = 'local') -> AppConfig:
 
     # Instantiate Pydantic model for validation and type-safe access
     return AppConfig(**final_config_dict)
+
+
+def load_language_config(environment: str = 'local') -> LanguageConfig:
+    """
+    Load language settings without full AppConfig validation.
+
+    Useful for utilities that only need glossary headings or other language
+    labels and should not require LLM API keys at startup.
+    """
+    config_dir = Path(__file__).parent.parent / 'config'
+    base_config_dict = load_yaml(config_dir / 'base.yaml')
+    env_config_dict = load_yaml(config_dir / f'{environment}.yaml')
+    merged_config_dict = deep_merge(base_config_dict, env_config_dict)
+    final_config_dict = apply_env_overrides(merged_config_dict)
+    language_dict = final_config_dict.get('language', {})
+    return LanguageConfig(**language_dict)
 
 
 def apply_env_overrides(config_dict: Dict) -> Dict:
@@ -197,6 +232,23 @@ def apply_env_overrides(config_dict: Dict) -> Dict:
         config_dict.setdefault('glossary', {})
         config_dict['glossary']['debug_dump'] = glossary_debug_dump
 
+    language_env_vars = {
+        'LANGUAGE_TARGET': 'target_language',
+        'LANGUAGE_CODE': 'target_language_code',
+        'LANGUAGE_LOCALE': 'locale',
+        'LANGUAGE_LEARNER_NATIVE': 'learner_native_language',
+        'LANGUAGE_SPACY_MODEL': 'spacy_model',
+        'LANGUAGE_GLOSSARY_HEADING': 'glossary_heading',
+        'LANGUAGE_PROMPT_PACK': 'prompt_pack',
+        'LANGUAGE_GLOSSARY_RULES': 'glossary_rules',
+        'LANGUAGE_SITE_NAME': 'site_name',
+    }
+    for env_var, language_key in language_env_vars.items():
+        language_value = os.getenv(env_var)
+        if language_value:
+            config_dict.setdefault('language', {})
+            config_dict['language'][language_key] = language_value
+
     audio_enabled = parse_bool(os.getenv('AUDIO_ENABLED'))
     if audio_enabled is not None:
         config_dict.setdefault('audio', {})
@@ -249,6 +301,11 @@ def apply_env_overrides(config_dict: Dict) -> Dict:
         config_dict.setdefault('audio', {})
         config_dict['audio'].setdefault('s3', {})
         config_dict['audio']['s3']['prefix'] = audio_s3_prefix
+
+    log_name = os.getenv('LOG_NAME')
+    if log_name:
+        config_dict.setdefault('logging', {})
+        config_dict['logging']['name'] = log_name
 
     # Override alert email
     alert_email = os.getenv('ALERT_EMAIL')

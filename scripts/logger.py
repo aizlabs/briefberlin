@@ -12,6 +12,8 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
+DEFAULT_LOGGER_NAME = "briefberlin"
+
 
 class JSONFormatter(logging.Formatter):
     """JSON formatter for structured logging in production"""
@@ -116,8 +118,6 @@ def setup_logger(config, run_id: str) -> logging.Logger:
     Returns:
         Configured logger
     """
-    logger = logging.getLogger('briefberlin')
-
     # Get logging config (handle both Pydantic model and dict)
     if hasattr(config, 'logging'):
         log_config = config.logging
@@ -127,10 +127,12 @@ def setup_logger(config, run_id: str) -> logging.Logger:
         log_config = {}
 
     # Access values (log_config is always a dict)
+    logger_name = str(log_config.get('name') or DEFAULT_LOGGER_NAME).strip() or DEFAULT_LOGGER_NAME
     level = getattr(logging, log_config.get('level', 'INFO'))
     format_type = log_config.get('format', 'console')
     log_file = log_config.get('file', 'logs/app.log')
 
+    logger = logging.getLogger(logger_name)
     logger.setLevel(level)
     logger.handlers.clear()  # Remove any existing handlers
 
@@ -168,6 +170,20 @@ def setup_logger(config, run_id: str) -> logging.Logger:
     return logger
 
 
-def get_component_logger(name: str) -> logging.Logger:
+def get_logger_name(config=None, component: str | None = None) -> str:
+    """Return configured base logger name, optionally with a component suffix."""
+    log_config = {}
+    if config is not None and hasattr(config, 'logging'):
+        log_config = config.logging
+    elif isinstance(config, dict):
+        log_config = config.get('logging', {})
+
+    base_name = str(log_config.get('name') or DEFAULT_LOGGER_NAME).strip() or DEFAULT_LOGGER_NAME
+    if not component:
+        return base_name
+    return f"{base_name}.{component}"
+
+
+def get_component_logger(name: str, config=None) -> logging.Logger:
     """Get a logger for a specific component"""
-    return logging.getLogger(f'briefberlin.{name}')
+    return logging.getLogger(get_logger_name(config, name))
