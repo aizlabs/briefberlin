@@ -975,7 +975,13 @@
 }
 
 .article-term--default {
+  border-bottom-color: transparent;
   font-weight: 700;
+}
+
+.article-term--default:hover,
+.article-term--default:focus-visible {
+  border-bottom-color: transparent;
 }
 
 .article-glossary-popup {
