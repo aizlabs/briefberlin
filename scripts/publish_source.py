@@ -39,11 +39,6 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         help="Private input files under private-input/, input/private/, or named *.source.txt",
     )
     parser.add_argument(
-        "--topic",
-        default="Manuell bereitgestellter Artikel",
-        help="Non-private topic title used for generation context",
-    )
-    parser.add_argument(
         "--environment",
         default=None,
         help="Configuration environment to load. Defaults to ENVIRONMENT or local.",
@@ -58,7 +53,6 @@ def main(argv: Sequence[str] | None = None) -> int:
         return run_manual_pipeline(
             Namespace(
                 sources=args.sources,
-                topic=args.topic,
                 level=["A2", "B1"],
                 environment=args.environment,
                 dry_run=False,

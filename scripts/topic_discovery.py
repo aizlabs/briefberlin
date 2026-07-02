@@ -22,7 +22,7 @@ import requests
 import spacy
 
 from scripts.models import Topic
-from scripts.topic_utils import is_noisy_topic_keyword
+from scripts.topic_utils import sanitize_topic_keywords
 
 
 class TopicDiscoverer:
@@ -326,11 +326,10 @@ class TopicDiscoverer:
         # Get entities
         entities = [ent.text for ent in doc.ents if len(ent.text) > 2]
 
-        # Count and return top 10, then filter with shared noise detector
+        # Count and return top 10, then filter with shared topic keyword sanitizer
         counter = Counter(entities)
         raw_keywords = [word for word, count in counter.most_common(10)]
-        cleaned_keywords = [kw for kw in raw_keywords if not is_noisy_topic_keyword(kw)]
-        return cleaned_keywords
+        return sanitize_topic_keywords(raw_keywords)
 
     def _rank_topics(self, topics: List[Dict]) -> List[Dict]:
         """Rank topics by learnability"""

@@ -11,6 +11,7 @@ from typing import Any, Dict, cast
 
 from langchain_anthropic import ChatAnthropic
 from langchain_core.language_models.chat_models import BaseChatModel
+from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 
 
@@ -71,3 +72,21 @@ def with_structured_output(
     and validation is handled centrally instead of manual json.loads.
     """
     return cast(Any, chat_model.with_structured_output(response_model, **kwargs))
+
+
+def build_structured_prompt_chain(
+    llm_config: Dict[str, Any],
+    model_name: str,
+    temperature: float,
+    response_model: Any,
+    **structured_output_kwargs: Any,
+) -> Any:
+    """Build the standard `{prompt}` to structured-output chain."""
+    chat_model = create_chat_model(llm_config, model_name, temperature)
+    structured_llm = with_structured_output(
+        chat_model,
+        response_model,
+        **structured_output_kwargs,
+    )
+    prompt_template = ChatPromptTemplate.from_messages([("user", "{prompt}")])
+    return prompt_template | structured_llm

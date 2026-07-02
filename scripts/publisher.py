@@ -16,7 +16,7 @@ from urllib.parse import urlparse
 from scripts.config import AppConfig
 from scripts.models import AdaptedArticle, VocabularyItem, coerce_vocabulary_items
 from scripts.text_utils import normalize_vocabulary_term, slugify_text
-from scripts.topic_utils import is_noisy_topic_keyword
+from scripts.topic_utils import sanitize_topic_keywords
 
 
 class Publisher:
@@ -293,17 +293,18 @@ reading_time: {article.reading_time}
         # Use 'or []' to handle None keywords (model default)
         topic_data = article.topic
         raw_keywords = (topic_data.keywords or []) if topic_data else []
-        filtered_keywords = [k for k in raw_keywords if not is_noisy_topic_keyword(k)]
+        filtered_keywords = sanitize_topic_keywords(
+            [str(keyword) for keyword in raw_keywords],
+            max_keywords=3,
+            lowercase=True,
+        )
 
         if filtered_keywords:
-            # Take first 3 keywords, lowercased
-            topics = [k.lower() for k in filtered_keywords[:3]]
             # Use JSON serialization for proper YAML compatibility
             # This handles apostrophes, quotes, and special characters correctly
-            return json.dumps(topics)
+            return json.dumps(filtered_keywords)
 
-        # Fallback: generic topic
-        return '["general"]'
+        return '[]'
 
     def _format_vocabulary(self, vocabulary, article_title: str) -> str:
         """Format vocabulary section"""

@@ -38,3 +38,30 @@ def is_noisy_topic_keyword(keyword: str) -> bool:
 
     return False
 
+
+def sanitize_topic_keywords(
+    keywords: list[str],
+    *,
+    max_keywords: int | None = None,
+    lowercase: bool = False,
+) -> list[str]:
+    """Normalize, deduplicate, and filter topic keywords."""
+    sanitized: list[str] = []
+    seen: set[str] = set()
+
+    for raw_keyword in keywords:
+        keyword = re.sub(r"\s+", " ", str(raw_keyword)).strip()
+        if not keyword or is_noisy_topic_keyword(keyword):
+            continue
+
+        key = keyword.casefold()
+        if key in seen:
+            continue
+
+        seen.add(key)
+        sanitized.append(keyword.lower() if lowercase else keyword)
+
+        if max_keywords is not None and len(sanitized) >= max_keywords:
+            break
+
+    return sanitized

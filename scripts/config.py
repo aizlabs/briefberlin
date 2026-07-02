@@ -168,23 +168,18 @@ def apply_env_overrides(config_dict: Dict) -> Dict:
         config_dict.setdefault('llm', {})
         config_dict['llm']['base_url'] = llm_base_url
 
-    llm_generation_model = os.getenv('LLM_GENERATION_MODEL')
-    if llm_generation_model:
-        config_dict.setdefault('llm', {})
-        config_dict['llm'].setdefault('models', {})
-        config_dict['llm']['models']['generation'] = llm_generation_model
-
-    llm_adaptation_model = os.getenv('LLM_ADAPTATION_MODEL')
-    if llm_adaptation_model:
-        config_dict.setdefault('llm', {})
-        config_dict['llm'].setdefault('models', {})
-        config_dict['llm']['models']['adaptation'] = llm_adaptation_model
-
-    llm_quality_check_model = os.getenv('LLM_QUALITY_CHECK_MODEL')
-    if llm_quality_check_model:
-        config_dict.setdefault('llm', {})
-        config_dict['llm'].setdefault('models', {})
-        config_dict['llm']['models']['quality_check'] = llm_quality_check_model
+    llm_model_env_vars = {
+        'LLM_GENERATION_MODEL': 'generation',
+        'LLM_ADAPTATION_MODEL': 'adaptation',
+        'LLM_QUALITY_CHECK_MODEL': 'quality_check',
+        'LLM_TOPIC_EXTRACTION_MODEL': 'topic_extraction',
+    }
+    for env_var, model_key in llm_model_env_vars.items():
+        model_value = os.getenv(env_var)
+        if model_value:
+            config_dict.setdefault('llm', {})
+            config_dict['llm'].setdefault('models', {})
+            config_dict['llm']['models'][model_key] = model_value
 
     # Override articles per run
     articles_per_run = os.getenv('ARTICLES_PER_RUN')

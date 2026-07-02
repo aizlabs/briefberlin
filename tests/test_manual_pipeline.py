@@ -5,6 +5,7 @@ from unittest.mock import MagicMock, patch
 
 from scripts.manual_pipeline import load_private_sources, run_manual_pipeline
 from scripts.models import QualityResult
+from scripts.topic_metadata_extractor import TopicMetadataResponse
 
 
 def _write_source(path: Path) -> Path:
@@ -46,11 +47,13 @@ def test_load_private_sources_rejects_non_private_path(tmp_path):
 @patch("scripts.manual_pipeline.GlossaryGenerator")
 @patch("scripts.manual_pipeline.QualityGate")
 @patch("scripts.manual_pipeline.ContentGenerator")
+@patch("scripts.manual_pipeline.TopicMetadataExtractor")
 @patch("scripts.manual_pipeline.setup_logger")
 @patch("scripts.manual_pipeline.load_config")
 def test_run_manual_pipeline_generates_and_publishes(
     mock_load_config,
     mock_setup_logger,
+    mock_topic_metadata_extractor_class,
     mock_generator_class,
     mock_quality_gate_class,
     mock_glossary_class,
@@ -70,6 +73,13 @@ def test_run_manual_pipeline_generates_and_publishes(
     mock_datetime.now.return_value = publish_timestamp
     mock_load_config.return_value = base_config
     mock_setup_logger.return_value = mock_logger
+
+    mock_topic_metadata_extractor = MagicMock()
+    mock_topic_metadata_extractor.extract.return_value = TopicMetadataResponse(
+        title="Milder Frühling in Deutschland",
+        keywords=["frühling", "wetter", "stadtfeste"],
+    )
+    mock_topic_metadata_extractor_class.return_value = mock_topic_metadata_extractor
 
     mock_generator = MagicMock()
     mock_generator.generate_article.return_value = sample_a2_text_article
@@ -102,7 +112,6 @@ def test_run_manual_pipeline_generates_and_publishes(
 
     args = Namespace(
         sources=[str(source_path)],
-        topic="Nicht privater Testtitel",
         level=["A2"],
         environment="local",
         dry_run=False,
@@ -112,9 +121,11 @@ def test_run_manual_pipeline_generates_and_publishes(
 
     assert result == 0
     generated_topic, generated_sources, generated_level = mock_generator.generate_article.call_args.args
-    assert generated_topic.title == "Nicht privater Testtitel"
+    assert generated_topic.title == "Milder Frühling in Deutschland"
+    assert generated_topic.keywords == ["frühling", "wetter", "stadtfeste"]
     assert generated_level == "A2"
     assert [source.source for source in generated_sources] == ["Private source 1"]
+    mock_topic_metadata_extractor.extract.assert_called_once_with(generated_sources)
     mock_publisher_class.assert_called_once_with(base_config, mock_logger, dry_run=False)
     mock_publisher.save_article.assert_called_once_with(
         sample_a2_text_article,
@@ -129,11 +140,13 @@ def test_run_manual_pipeline_generates_and_publishes(
 @patch("scripts.manual_pipeline.GlossaryGenerator")
 @patch("scripts.manual_pipeline.QualityGate")
 @patch("scripts.manual_pipeline.ContentGenerator")
+@patch("scripts.manual_pipeline.TopicMetadataExtractor")
 @patch("scripts.manual_pipeline.setup_logger")
 @patch("scripts.manual_pipeline.load_config")
 def test_run_manual_pipeline_reuses_publish_timestamp_for_audio(
     mock_load_config,
     mock_setup_logger,
+    mock_topic_metadata_extractor_class,
     mock_generator_class,
     mock_quality_gate_class,
     mock_glossary_class,
@@ -153,6 +166,13 @@ def test_run_manual_pipeline_reuses_publish_timestamp_for_audio(
     mock_datetime.now.return_value = publish_timestamp
     mock_load_config.return_value = base_config
     mock_setup_logger.return_value = mock_logger
+
+    mock_topic_metadata_extractor = MagicMock()
+    mock_topic_metadata_extractor.extract.return_value = TopicMetadataResponse(
+        title="Milder Frühling in Deutschland",
+        keywords=["frühling"],
+    )
+    mock_topic_metadata_extractor_class.return_value = mock_topic_metadata_extractor
 
     mock_generator = MagicMock()
     mock_generator.generate_article.return_value = sample_a2_text_article
@@ -189,7 +209,6 @@ def test_run_manual_pipeline_reuses_publish_timestamp_for_audio(
 
     args = Namespace(
         sources=[str(source_path)],
-        topic="Nicht privater Testtitel",
         level=["A2"],
         environment="local",
         dry_run=False,
@@ -213,11 +232,13 @@ def test_run_manual_pipeline_reuses_publish_timestamp_for_audio(
 @patch("scripts.manual_pipeline.GlossaryGenerator")
 @patch("scripts.manual_pipeline.QualityGate")
 @patch("scripts.manual_pipeline.ContentGenerator")
+@patch("scripts.manual_pipeline.TopicMetadataExtractor")
 @patch("scripts.manual_pipeline.setup_logger")
 @patch("scripts.manual_pipeline.load_config")
 def test_run_manual_pipeline_dry_run_skips_audio_preparation(
     mock_load_config,
     mock_setup_logger,
+    mock_topic_metadata_extractor_class,
     mock_generator_class,
     mock_quality_gate_class,
     mock_glossary_class,
@@ -233,6 +254,13 @@ def test_run_manual_pipeline_dry_run_skips_audio_preparation(
     base_config.audio.enabled = True
     mock_load_config.return_value = base_config
     mock_setup_logger.return_value = mock_logger
+
+    mock_topic_metadata_extractor = MagicMock()
+    mock_topic_metadata_extractor.extract.return_value = TopicMetadataResponse(
+        title="Manual source article",
+        keywords=[],
+    )
+    mock_topic_metadata_extractor_class.return_value = mock_topic_metadata_extractor
 
     mock_generator = MagicMock()
     mock_generator.generate_article.return_value = sample_a2_text_article
@@ -268,7 +296,6 @@ def test_run_manual_pipeline_dry_run_skips_audio_preparation(
 
     args = Namespace(
         sources=[str(source_path)],
-        topic="Nicht privater Testtitel",
         level=["A2"],
         environment="local",
         dry_run=True,

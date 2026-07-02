@@ -10,11 +10,10 @@ Uses different strategies per level:
 import logging
 from typing import List, Optional
 
-from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
 
 from scripts.config import AppConfig
-from scripts.llm_factory import create_chat_model, with_structured_output
+from scripts.llm_factory import build_structured_prompt_chain
 from scripts.models import AdaptedArticle, BaseArticle
 
 
@@ -118,8 +117,7 @@ class LevelAdapter:
         model_name = self.llm_config['models'].get(
             'adaptation',
             self.llm_config['models']['generation'],
-        )
-        chat_model = create_chat_model(self.llm_config, model_name, self.temperature)
+        ) or self.llm_config['models']['generation']
 
         class AdaptationResponse(BaseModel):
             title: str = Field(..., description="Level-appropriate title")
@@ -128,13 +126,12 @@ class LevelAdapter:
             reading_time: int = Field(..., description="Estimated reading time in minutes")
 
         self._adaptation_model = AdaptationResponse
-        structured_llm = with_structured_output(chat_model, AdaptationResponse)
-
-        # Prompt template is shared; we inject the full prompt string from prompts.py
-        self.prompt_template = ChatPromptTemplate.from_messages(
-            [("user", "{prompt}")]
+        self.chain = build_structured_prompt_chain(
+            self.llm_config,
+            model_name,
+            self.temperature,
+            AdaptationResponse,
         )
-        self.chain = self.prompt_template | structured_llm
 
     def _call_llm(self, prompt: str, level: str) -> BaseModel:
         """Call LLM for level adaptation and return structured response."""
