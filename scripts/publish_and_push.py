@@ -33,8 +33,12 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     return parser.parse_args(argv)
 
 
-def run_command(command: Sequence[str]) -> subprocess.CompletedProcess[str]:
-    return subprocess.run(command, check=False, text=True, capture_output=True)
+def run_command(
+    command: Sequence[str],
+    *,
+    capture_output: bool = True,
+) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(command, check=False, text=True, capture_output=capture_output)
 
 
 def git_status(pathspec: str | None = None) -> str:
@@ -67,8 +71,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 1
 
     publish_command = ["uv", "run", "briefberlin-publish-source", *args.sources]
-    publish_result = run_command(publish_command)
-    print_command_output(publish_result)
+    publish_result = run_command(publish_command, capture_output=False)
     if publish_result.returncode != 0:
         return publish_result.returncode
 

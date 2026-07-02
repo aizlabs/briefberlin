@@ -7,9 +7,11 @@ class CommandRunner:
     def __init__(self, responses):
         self.responses = list(responses)
         self.commands = []
+        self.capture_output = []
 
-    def __call__(self, command):
+    def __call__(self, command, *, capture_output=True):
         self.commands.append(list(command))
+        self.capture_output.append(capture_output)
         if not self.responses:
             raise AssertionError(f"Unexpected command: {command}")
         return self.responses.pop(0)
@@ -56,6 +58,7 @@ def test_failed_publish_prevents_git_commit_and_push(monkeypatch):
         ["git", "status", "--porcelain"],
         ["uv", "run", "briefberlin-publish-source", "private-input/source-18.txt"],
     ]
+    assert runner.capture_output == [True, False]
 
 
 def test_successful_publish_with_no_post_changes_skips_commit_and_push(monkeypatch, capsys):
@@ -74,6 +77,7 @@ def test_successful_publish_with_no_post_changes_skips_commit_and_push(monkeypat
         ["uv", "run", "briefberlin-publish-source", "private-input/source-18.txt"],
         ["git", "status", "--porcelain", "--", "output/_posts"],
     ]
+    assert runner.capture_output == [True, False, True]
     assert "nothing to commit" in capsys.readouterr().out
 
 
@@ -113,3 +117,4 @@ def test_successful_publish_stages_posts_commits_and_pushes(monkeypatch):
     assert runner.commands[4][:3] == ["git", "commit", "-m"]
     assert runner.commands[4][3].startswith("Generate articles - ")
     assert runner.commands[5] == ["git", "push", "upstream", "main"]
+    assert runner.capture_output == [True, False, True, True, True, True]
