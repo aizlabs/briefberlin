@@ -118,3 +118,39 @@ def test_successful_publish_stages_posts_commits_and_pushes(monkeypatch):
     assert runner.commands[4][3].startswith("Generate articles - ")
     assert runner.commands[5] == ["git", "push", "upstream", "main"]
     assert runner.capture_output == [True, False, True, True, True, True]
+
+
+def test_publish_timestamp_is_forwarded_and_used_for_commit_message(monkeypatch):
+    runner = CommandRunner([
+        completed(),
+        completed(stdout="Generated A2 article\nGenerated B1 article\n"),
+        completed(stdout="?? output/_posts/2026-07-03-test-a2.md\n"),
+        completed(),
+        completed(stdout="[main abc123] Generate articles\n"),
+        completed(),
+    ])
+    monkeypatch.setattr(publish_and_push, "run_command", runner)
+
+    result = publish_and_push.main([
+        "--publish-timestamp",
+        "2026-07-03T09:00:00",
+        "private-input/source-21.txt",
+        "private-input/source-22.txt",
+    ])
+
+    assert result == 0
+    assert runner.commands[1] == [
+        "uv",
+        "run",
+        "briefberlin-publish-source",
+        "--publish-timestamp",
+        "2026-07-03T09:00:00",
+        "private-input/source-21.txt",
+        "private-input/source-22.txt",
+    ]
+    assert runner.commands[4] == [
+        "git",
+        "commit",
+        "-m",
+        "Generate articles - 2026-07-03 09:00 UTC",
+    ]

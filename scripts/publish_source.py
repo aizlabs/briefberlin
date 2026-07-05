@@ -43,6 +43,14 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         default=None,
         help="Configuration environment to load. Defaults to ENVIRONMENT or local.",
     )
+    parser.add_argument(
+        "--publish-timestamp",
+        default=None,
+        help=(
+            "Override the post/audio timestamp with an ISO date or datetime, "
+            "for example 2026-07-03 or 2026-07-03T09:00:00."
+        ),
+    )
     return parser.parse_args(argv)
 
 
@@ -56,6 +64,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                 level=["A2", "B1"],
                 environment=args.environment,
                 dry_run=False,
+                publish_timestamp=args.publish_timestamp,
             )
         )
     except Exception as exc:

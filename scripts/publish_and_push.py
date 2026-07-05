@@ -11,6 +11,20 @@ from typing import Sequence
 POSTS_PATH = "output/_posts"
 
 
+def parse_publish_timestamp(value: str | None) -> datetime | None:
+    """Parse an optional ISO publish timestamp for commit messages."""
+    if not value:
+        return None
+
+    try:
+        return datetime.fromisoformat(value)
+    except ValueError as exc:
+        raise ValueError(
+            "--publish-timestamp must be an ISO date or datetime, "
+            "for example 2026-07-03 or 2026-07-03T09:00:00"
+        ) from exc
+
+
 def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Generate public learner posts, commit output/_posts, and push them.",
@@ -29,6 +43,14 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         "--branch",
         default="main",
         help="Git branch to push. Defaults to main.",
+    )
+    parser.add_argument(
+        "--publish-timestamp",
+        default=None,
+        help=(
+            "Forward an ISO post/audio timestamp to briefberlin-publish-source, "
+            "for example 2026-07-03 or 2026-07-03T09:00:00."
+        ),
     )
     return parser.parse_args(argv)
 
@@ -60,6 +82,7 @@ def print_command_output(result: subprocess.CompletedProcess[str]) -> None:
 
 def main(argv: Sequence[str] | None = None) -> int:
     args = parse_args(argv)
+    publish_timestamp = parse_publish_timestamp(args.publish_timestamp)
 
     dirty_status = git_status()
     if dirty_status:
@@ -70,7 +93,10 @@ def main(argv: Sequence[str] | None = None) -> int:
         )
         return 1
 
-    publish_command = ["uv", "run", "briefberlin-publish-source", *args.sources]
+    publish_command = ["uv", "run", "briefberlin-publish-source"]
+    if args.publish_timestamp:
+        publish_command.extend(["--publish-timestamp", args.publish_timestamp])
+    publish_command.extend(args.sources)
     publish_result = run_command(publish_command, capture_output=False)
     if publish_result.returncode != 0:
         return publish_result.returncode
@@ -85,7 +111,10 @@ def main(argv: Sequence[str] | None = None) -> int:
     if add_result.returncode != 0:
         return add_result.returncode
 
-    timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    timestamp_datetime = publish_timestamp or datetime.now(timezone.utc)
+    if timestamp_datetime.tzinfo is None:
+        timestamp_datetime = timestamp_datetime.replace(tzinfo=timezone.utc)
+    timestamp = timestamp_datetime.astimezone(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
     commit_result = run_command(["git", "commit", "-m", f"Generate articles - {timestamp}"])
     print_command_output(commit_result)
     if commit_result.returncode != 0:

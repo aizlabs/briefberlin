@@ -28,6 +28,20 @@ def create_run_id(environment: str) -> str:
     return f"{environment}-manual-{timestamp}"
 
 
+def parse_publish_timestamp(value: str | None) -> datetime | None:
+    """Parse an optional ISO publish timestamp used for posts and audio assets."""
+    if not value:
+        return None
+
+    try:
+        return datetime.fromisoformat(value)
+    except ValueError as exc:
+        raise ValueError(
+            "--publish-timestamp must be an ISO date or datetime, "
+            "for example 2026-07-03 or 2026-07-03T09:00:00"
+        ) from exc
+
+
 def is_allowed_private_input_path(path: Path) -> bool:
     """Return whether a path follows the repo's private-input conventions."""
     parts = path.parts
@@ -97,6 +111,9 @@ def run_manual_pipeline(args: argparse.Namespace) -> int:
     levels = args.level or config.generation.levels
     source_paths = [Path(path).expanduser() for path in args.sources]
     sources = load_private_sources(source_paths)
+    publish_timestamp_override = parse_publish_timestamp(
+        getattr(args, "publish_timestamp", None)
+    )
 
     logger.info("=" * 60)
     logger.info("BriefBerlin - Manual Private Input Pipeline")
@@ -150,7 +167,7 @@ def run_manual_pipeline(args: argparse.Namespace) -> int:
 
         logger.info("Quality gate passed for %s article: score=%.1f", level, quality_result.score)
         final_article = glossary_generator.enrich_article(final_article)
-        publish_timestamp = datetime.now()
+        publish_timestamp = publish_timestamp_override or datetime.now()
 
         if config.audio.enabled and not dry_run:
             final_article = audio_pipeline.prepare_for_publish(
@@ -201,6 +218,14 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         "--dry-run",
         action="store_true",
         help="Run generation and validation without writing a post.",
+    )
+    parser.add_argument(
+        "--publish-timestamp",
+        default=None,
+        help=(
+            "Override the post/audio timestamp with an ISO date or datetime, "
+            "for example 2026-07-03 or 2026-07-03T09:00:00."
+        ),
     )
     return parser.parse_args(argv)
 
