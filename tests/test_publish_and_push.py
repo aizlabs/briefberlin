@@ -85,6 +85,7 @@ def test_successful_publish_stages_posts_commits_and_pushes(monkeypatch):
     runner = CommandRunner([
         completed(),
         completed(stdout="Generated A2 article\nGenerated B1 article\n"),
+        completed(stdout="Generated A2 article\nGenerated B1 article\n"),
         completed(stdout="?? output/_posts/2026-07-02-test-a2.md\n"),
         completed(),
         completed(stdout="[main abc123] Generate articles\n"),
@@ -102,27 +103,33 @@ def test_successful_publish_stages_posts_commits_and_pushes(monkeypatch):
     ])
 
     assert result == 0
-    assert runner.commands[:4] == [
+    assert runner.commands[:5] == [
         ["git", "status", "--porcelain"],
         [
             "uv",
             "run",
             "briefberlin-publish-source",
             "private-input/source-18.txt",
+        ],
+        [
+            "uv",
+            "run",
+            "briefberlin-publish-source",
             "private-input/source-19.txt",
         ],
         ["git", "status", "--porcelain", "--", "output/_posts"],
         ["git", "add", "output/_posts"],
     ]
-    assert runner.commands[4][:3] == ["git", "commit", "-m"]
-    assert runner.commands[4][3].startswith("Generate articles - ")
-    assert runner.commands[5] == ["git", "push", "upstream", "main"]
-    assert runner.capture_output == [True, False, True, True, True, True]
+    assert runner.commands[5][:3] == ["git", "commit", "-m"]
+    assert runner.commands[5][3].startswith("Generate articles - ")
+    assert runner.commands[6] == ["git", "push", "upstream", "main"]
+    assert runner.capture_output == [True, False, False, True, True, True, True]
 
 
 def test_publish_timestamp_is_forwarded_and_used_for_commit_message(monkeypatch):
     runner = CommandRunner([
         completed(),
+        completed(stdout="Generated A2 article\nGenerated B1 article\n"),
         completed(stdout="Generated A2 article\nGenerated B1 article\n"),
         completed(stdout="?? output/_posts/2026-07-03-test-a2.md\n"),
         completed(),
@@ -146,9 +153,16 @@ def test_publish_timestamp_is_forwarded_and_used_for_commit_message(monkeypatch)
         "--publish-timestamp",
         "2026-07-03T09:00:00",
         "private-input/source-21.txt",
+    ]
+    assert runner.commands[2] == [
+        "uv",
+        "run",
+        "briefberlin-publish-source",
+        "--publish-timestamp",
+        "2026-07-03T09:00:00",
         "private-input/source-22.txt",
     ]
-    assert runner.commands[4] == [
+    assert runner.commands[5] == [
         "git",
         "commit",
         "-m",

@@ -32,7 +32,7 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "sources",
         nargs="+",
-        help="Private input files forwarded to briefberlin-publish-source",
+        help="Private input files. Each source is published as its own A2/B1 article set.",
     )
     parser.add_argument(
         "--remote",
@@ -93,13 +93,15 @@ def main(argv: Sequence[str] | None = None) -> int:
         )
         return 1
 
-    publish_command = ["uv", "run", "briefberlin-publish-source"]
-    if args.publish_timestamp:
-        publish_command.extend(["--publish-timestamp", args.publish_timestamp])
-    publish_command.extend(args.sources)
-    publish_result = run_command(publish_command, capture_output=False)
-    if publish_result.returncode != 0:
-        return publish_result.returncode
+    for source in args.sources:
+        print(f"Publishing source: {source}")
+        publish_command = ["uv", "run", "briefberlin-publish-source"]
+        if args.publish_timestamp:
+            publish_command.extend(["--publish-timestamp", args.publish_timestamp])
+        publish_command.append(source)
+        publish_result = run_command(publish_command, capture_output=False)
+        if publish_result.returncode != 0:
+            return publish_result.returncode
 
     posts_status = git_status(POSTS_PATH)
     if not posts_status:
