@@ -15,6 +15,26 @@ author:
   name: "BriefBerlin"
   bio: "Simplified German learner articles"
 
+# Publisher identity
+publisher:
+  name: "BriefBerlin"
+  legal_name: "BriefBerlin LLC"
+  organization_type: "NewsMediaOrganization"
+  founding_date: "2026-06"
+  email: "info@briefberlin.de"
+  funding: "Independently owned and privately funded by its founder."
+  address:
+    label: "Registered mailing address"
+    street: "1201 North Orange Street, Suite 740"
+    locality: "Wilmington"
+    region: "DE"
+    postal_code: "19801"
+    country: "US"
+  policies:
+    editorial_standards: "/editorial-standards/"
+    corrections: "/corrections/"
+    editorial_process: "/editorial-process/"
+
 copyright: "BriefBerlin"
 copyright_url: "https://briefberlin.de"
 footer:
@@ -42,6 +62,7 @@ defaults:
       type: posts
     values:
       layout: post
+      author: clara-becker
       author_profile: false
       read_time: true
       comments: false

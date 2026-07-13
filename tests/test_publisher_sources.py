@@ -4,6 +4,44 @@ from scripts.models import AudioAsset, SourceMetadata, VocabularyItem
 from scripts.publisher import Publisher
 
 
+def test_publisher_adds_configured_author_to_frontmatter(
+    base_config,
+    mock_logger,
+    sample_a2_article,
+    tmp_path,
+):
+    base_config.output["path"] = str(tmp_path)
+    base_config.output["default_author"] = "clara-becker"
+    publisher = Publisher(base_config, mock_logger, dry_run=True)
+
+    markdown = publisher._generate_markdown(
+        sample_a2_article,
+        datetime(2024, 1, 1, 12, 0, 0),
+    )
+
+    assert 'author: "clara-becker"' in markdown
+
+
+def test_publisher_prefers_article_author_over_configured_default(
+    base_config,
+    mock_logger,
+    sample_a2_article,
+    tmp_path,
+):
+    base_config.output["path"] = str(tmp_path)
+    base_config.output["default_author"] = "clara-becker"
+    article = sample_a2_article.model_copy(update={"author": "future-author"})
+    publisher = Publisher(base_config, mock_logger, dry_run=True)
+
+    markdown = publisher._generate_markdown(
+        article,
+        datetime(2024, 1, 1, 12, 0, 0),
+    )
+
+    assert 'author: "future-author"' in markdown
+    assert 'author: "clara-becker"' not in markdown
+
+
 def test_publisher_formats_sources_with_links(base_config, mock_logger, sample_a2_article, tmp_path):
     """Sources with URLs must not be exposed in public markdown."""
     base_config.output['path'] = str(tmp_path)

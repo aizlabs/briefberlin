@@ -258,6 +258,11 @@ class AdaptedArticle(BaseModel):
 
     # Level and metadata
     level: str = Field(..., pattern="^(A2|B1)$", description="CEFR level")
+    author: Optional[str] = Field(
+        default=None,
+        pattern=r"^[a-z0-9]+(?:-[a-z0-9]+)*$",
+        description="Author key matching an entry in the site's authors data",
+    )
     topic: Optional[Topic] = Field(default=None, description="Source topic")
     sources: List[SourceMetadata] = Field(default_factory=list, description="Source metadata")
 

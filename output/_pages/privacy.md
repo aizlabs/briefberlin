@@ -23,4 +23,4 @@ BriefBerlin does not currently set first-party analytics or advertising cookies.
 
 ## Contact
 
-Operational contact details are not published yet.
+For privacy and data-related questions, email [info@briefberlin.de](mailto:info@briefberlin.de).

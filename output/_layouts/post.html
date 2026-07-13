@@ -2,10 +2,15 @@
 layout: default
 ---
 
-<article class="page" itemscope itemtype="https://schema.org/Article">
+{% assign article_author = site.data.authors[page.author] %}
+<article class="page" itemscope itemtype="https://schema.org/NewsArticle">
   {% if page.title %}<meta itemprop="headline" content="{{ page.title | markdownify | strip_html | strip_newlines | escape_once }}">{% endif %}
   {% if page.date %}<meta itemprop="datePublished" content="{{ page.date | date_to_xmlschema }}">{% endif %}
-  {% if page.date %}<meta itemprop="dateModified" content="{{ page.date | date_to_xmlschema }}">{% endif %}
+  {% if page.last_modified_at %}
+    <meta itemprop="dateModified" content="{{ page.last_modified_at | date_to_xmlschema }}">
+  {% elsif page.date %}
+    <meta itemprop="dateModified" content="{{ page.date | date_to_xmlschema }}">
+  {% endif %}
 
   <div class="page__inner-wrap">
     {% unless page.header.overlay_color or page.header.overlay_image %}
@@ -24,6 +29,13 @@ layout: default
             </span>
           {% endif %}
 
+          {% if article_author %}
+            <span class="article-author" itemprop="author" itemscope itemtype="https://schema.org/Person">
+              <i class="far fa-user" aria-hidden="true"></i>
+              Von <a href="{{ article_author.url | relative_url }}" itemprop="url"><span itemprop="name">{{ article_author.name }}</span></a>
+            </span>
+          {% endif %}
+
           {% if page.reading_time %}
             <span class="article-reading-time">
               <i class="far fa-clock" aria-hidden="true"></i>
@@ -35,6 +47,12 @@ layout: default
     {% endunless %}
 
     <section class="page__content" itemprop="text">
+      {% if page.correction and page.correction.note %}
+        <aside class="article-correction" role="note" aria-label="Correction notice">
+          <strong>Correction{% if page.correction.date %} · {{ page.correction.date | date: "%d.%m.%Y" }}{% endif %}</strong>
+          <p>{{ page.correction.note }}</p>
+        </aside>
+      {% endif %}
       {% if page.audio and page.audio.url %}
         <section class="article-audio" aria-label="Artikel-Audio">
           <audio controls preload="metadata" class="article-audio__native">
@@ -81,7 +99,8 @@ layout: default
         <h4 class="page__meta-title">{{ site.data.ui-text[site.locale].meta_label }}</h4>
       {% endif %}
       {% include page__taxonomy.html %}
-      <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].date_label | default: "Aktualisiert:" }}</strong> <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%d.%m.%Y" }}</time></p>
+      {% assign displayed_update_date = page.last_modified_at | default: page.date %}
+      <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].date_label | default: "Aktualisiert:" }}</strong> <time datetime="{{ displayed_update_date | date_to_xmlschema }}">{{ displayed_update_date | date: "%d.%m.%Y" }}</time></p>
     </footer>
 
     {% if page.share %}{% include social-share.html %}{% endif %}

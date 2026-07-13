@@ -104,6 +104,7 @@ llm:
 output:
   format: jekyll
   path: ./output/_posts
+  default_author: clara-becker
 
 # Logging (overridden per environment)
 logging:

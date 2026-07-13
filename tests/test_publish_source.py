@@ -48,6 +48,7 @@ def test_main_delegates_to_manual_pipeline_with_audio_levels(mock_run_manual_pip
     assert args.level == ["A2", "B1"]
     assert args.dry_run is False
     assert args.publish_timestamp is None
+    assert args.author is None
     assert not hasattr(args, "topic")
 
 
@@ -65,6 +66,22 @@ def test_main_forwards_publish_timestamp(mock_run_manual_pipeline, monkeypatch):
     assert result == 0
     args = mock_run_manual_pipeline.call_args.args[0]
     assert args.publish_timestamp == "2026-07-03T09:00:00"
+
+
+@patch("scripts.publish_source.run_manual_pipeline")
+def test_main_forwards_author(mock_run_manual_pipeline, monkeypatch):
+    monkeypatch.delenv("AUDIO_ENABLED", raising=False)
+    mock_run_manual_pipeline.return_value = 0
+
+    result = main([
+        "--author",
+        "future-author",
+        "private-input/source-5.source.txt",
+    ])
+
+    assert result == 0
+    args = mock_run_manual_pipeline.call_args.args[0]
+    assert args.author == "future-author"
 
 
 def test_main_rejects_removed_topic_option():

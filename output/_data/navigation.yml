@@ -1,0 +1,29 @@
+main:
+  - title: "Articles"
+    url: /
+  - title: "Levels"
+    url: /levels/
+  - title: "About"
+    url: /about/
+  - title: "Authors"
+    url: /authors/
+  - title: "Standards"
+    url: /editorial-standards/
+  - title: "Contact"
+    url: /contact/
+
+levels:
+  - title: "BriefBerlin"
+    children:
+      - title: "All articles"
+        url: /
+      - title: "About"
+        url: /about/
+      - title: "Authors"
+        url: /authors/
+      - title: "Editorial Standards"
+        url: /editorial-standards/
+      - title: "Corrections"
+        url: /corrections/
+      - title: "Contact"
+        url: /contact/
