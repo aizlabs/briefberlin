@@ -9,4 +9,13 @@
 </div>
 {% endif %}
 
+<nav class="page__footer-links" aria-label="Publisher information">
+  <a href="{{ '/about/' | relative_url }}">About</a>
+  <a href="{{ '/editorial-standards/' | relative_url }}">Editorial Standards</a>
+  <a href="{{ '/corrections/' | relative_url }}">Corrections</a>
+  <a href="{{ '/editorial-process/' | relative_url }}">Editorial Process</a>
+  <a href="{{ '/contact/' | relative_url }}">Contact</a>
+  <a href="{{ '/privacy/' | relative_url }}">Privacy</a>
+</nav>
+
 <div class="page__footer-copyright">&copy; {% assign site_time = site.time | date: '%Y' %}{% if site.footer.since and site_time != site.footer.since %}{{ site.footer.since }} - {% endif %}{{ site_time }} <a href="{{ site.copyright_url | default: site.url }}">{{ site.copyright | default: site.title | escape_once | strip }}</a>.</div>

@@ -8,7 +8,7 @@ import sys
 from argparse import Namespace
 from typing import Sequence
 
-from scripts.manual_pipeline import run_manual_pipeline
+from scripts.manual_pipeline import parse_author_slug, run_manual_pipeline
 
 STANDARD_AUDIO_ENV = {
     "AUDIO_PROVIDER": "openai",
@@ -51,6 +51,12 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
             "for example 2026-07-03 or 2026-07-03T09:00:00."
         ),
     )
+    parser.add_argument(
+        "--author",
+        type=parse_author_slug,
+        default=None,
+        help="Author key from output/_data/authors.yml. Defaults to output.default_author.",
+    )
     return parser.parse_args(argv)
 
 
@@ -65,6 +71,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                 environment=args.environment,
                 dry_run=False,
                 publish_timestamp=args.publish_timestamp,
+                author=args.author,
             )
         )
     except Exception as exc:

@@ -1,0 +1,30 @@
+---
+layout: single
+---
+
+{% assign profile = site.data.authors[page.author_key] %}
+<section class="author-profile" aria-labelledby="author-role">
+  <figure class="author-profile__photo">
+    <img src="{{ profile.image | relative_url }}" alt="{{ profile.image_alt | default: profile.name }}">
+  </figure>
+
+  <div class="author-profile__intro">
+    <p class="author-profile__role" id="author-role">{{ profile.role }}</p>
+    <p>{{ profile.bio }}</p>
+    <p><a href="mailto:{{ profile.email }}"><i class="far fa-envelope" aria-hidden="true"></i> {{ profile.email }}</a></p>
+  </div>
+</section>
+
+{{ content }}
+
+<h2>Articles by {{ profile.name }}</h2>
+
+<ul class="author-articles">
+{% assign author_articles = site.posts | where: "author", page.author_key %}
+{% for post in author_articles limit: 12 %}
+  <li>
+    <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+    <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%d.%m.%Y" }}</time>
+  </li>
+{% endfor %}
+</ul>

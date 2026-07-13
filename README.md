@@ -27,6 +27,15 @@ uv run briefberlin-manual private-input/source-1.source.txt private-input/source
 
 Use `--level B1` or repeat `--level A2 --level B1` to override configured levels. Use `--dry-run` to validate without writing a post.
 
+Articles use `output.default_author` from `config/base.yaml` unless an author is selected explicitly:
+
+```bash
+uv run briefberlin-manual --author clara-becker private-input/source-1.source.txt
+```
+
+Author keys map to entries in `output/_data/authors.yml`. Each author profile uses the reusable
+`output/_layouts/author.html` layout and an author page under `output/_pages/`.
+
 To generate A2 and B1 posts with uploaded website audio in one step:
 
 ```bash

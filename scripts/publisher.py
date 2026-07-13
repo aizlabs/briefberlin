@@ -249,10 +249,18 @@ class Publisher:
         # YAML frontmatter
         # Use Jekyll-compatible date format (without microseconds)
         date_str = timestamp.strftime("%Y-%m-%d %H:%M:%S")
+        author = str(
+            article.author or self.config.output.get("default_author") or ""
+        ).strip()
+        author_frontmatter = (
+            f'author: "{self._escape_yaml_string(author)}"\n'
+            if author
+            else ""
+        )
         frontmatter = f"""---
 title: "{escaped_title}"
 date: {date_str}
-level: {article.level}
+{author_frontmatter}level: {article.level}
 topics: {self._format_topics(article)}
 {self._format_sources(article.sources)}
 {self._format_audio(article)}

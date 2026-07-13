@@ -25,21 +25,125 @@
 <meta name="twitter:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
 <meta name="twitter:description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
 
+<!-- Publisher identity -->
+{% if page.organization_schema %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": {{ site.publisher.organization_type | jsonify }},
+  "@id": {{ site.url | append: "/#publisher" | jsonify }},
+  "name": {{ site.publisher.name | jsonify }},
+  "legalName": {{ site.publisher.legal_name | jsonify }},
+  "url": {{ site.url | jsonify }},
+  "logo": {{ "/assets/images/logo.svg" | absolute_url | jsonify }},
+  "foundingDate": {{ site.publisher.founding_date | jsonify }},
+  "email": {{ site.publisher.email | jsonify }},
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": {{ site.publisher.address.street | jsonify }},
+    "addressLocality": {{ site.publisher.address.locality | jsonify }},
+    "addressRegion": {{ site.publisher.address.region | jsonify }},
+    "postalCode": {{ site.publisher.address.postal_code | jsonify }},
+    "addressCountry": {{ site.publisher.address.country | jsonify }}
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "editorial and general inquiries",
+    "email": {{ site.publisher.email | jsonify }}
+  }
+}
+</script>
+{% endif %}
+
+<!-- Author identity -->
+{% if page.author_schema %}
+{% assign profile_author = site.data.authors[page.author_schema] %}
+{% assign profile_author_url = profile_author.url | absolute_url %}
+{% assign profile_author_id = profile_author_url | append: "#person" %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": {{ profile_author_id | jsonify }},
+  "name": {{ profile_author.name | jsonify }},
+  "url": {{ profile_author_url | jsonify }},
+  "image": {{ profile_author.image | absolute_url | jsonify }},
+  "email": {{ profile_author.email | jsonify }},
+  "jobTitle": {{ profile_author.role | jsonify }},
+  "alumniOf": {
+    "@type": "CollegeOrUniversity",
+    "name": {{ profile_author.education | jsonify }}
+  },
+  "worksFor": {
+    "@id": {{ site.url | append: "/#publisher" | jsonify }}
+  }
+}
+</script>
+{% endif %}
+
 <!-- Language Learning Schema -->
 {% if page.level %}
+{% assign article_author = site.data.authors[page.author] %}
+{% assign article_author_url = article_author.url | absolute_url %}
+{% assign article_author_id = article_author_url | append: "#person" %}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "LearningResource",
-  "name": "{{ page.title }}",
-  "description": "{{ page.excerpt | strip_html | strip_newlines }}",
-  "educationalLevel": "{{ page.level }}",
+  "name": {{ page.title | jsonify }},
+  "description": {{ page.excerpt | strip_html | strip_newlines | jsonify }},
+  "educationalLevel": {{ page.level | jsonify }},
   "inLanguage": "de",
   "learningResourceType": "Article",
   "datePublished": "{{ page.date | date_to_xmlschema }}",
   "author": {
-    "@type": "Organization",
-    "name": "BriefBerlin"
+    "@type": "Person",
+    "@id": {{ article_author_id | jsonify }},
+    "name": {{ article_author.name | jsonify }},
+    "url": {{ article_author_url | jsonify }}
+  },
+  "publisher": {
+    "@type": {{ site.publisher.organization_type | jsonify }},
+    "@id": {{ site.url | append: "/#publisher" | jsonify }},
+    "name": {{ site.publisher.name | jsonify }},
+    "url": {{ site.url | jsonify }},
+    "logo": {
+      "@type": "ImageObject",
+      "url": {{ "/assets/images/logo.svg" | absolute_url | jsonify }}
+    }
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  "@id": {{ page.url | absolute_url | append: "#article" | jsonify }},
+  "headline": {{ page.title | jsonify }},
+  "description": {{ page.excerpt | strip_html | strip_newlines | jsonify }},
+  "datePublished": "{{ page.date | date_to_xmlschema }}",
+  "dateModified": "{{ page.last_modified_at | default: page.date | date_to_xmlschema }}",
+  "inLanguage": "de",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": {{ page.url | absolute_url | jsonify }}
+  },
+  "author": {
+    "@type": "Person",
+    "@id": {{ article_author_id | jsonify }},
+    "name": {{ article_author.name | jsonify }},
+    "url": {{ article_author_url | jsonify }}
+  },
+  "publisher": {
+    "@type": {{ site.publisher.organization_type | jsonify }},
+    "@id": {{ site.url | append: "/#publisher" | jsonify }},
+    "name": {{ site.publisher.name | jsonify }},
+    "url": {{ site.url | jsonify }},
+    "logo": {
+      "@type": "ImageObject",
+      "url": {{ "/assets/images/logo.svg" | absolute_url | jsonify }}
+    }
   }
 }
 </script>

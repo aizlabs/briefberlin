@@ -62,9 +62,146 @@
   display: none;
 }
 
-/* Hide unused “Toggle Menu” button when there is no navigation */
-.layout--single .greedy-nav__toggle {
-  display: none;
+/* Publisher links */
+.page__footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.page__footer-links a {
+  color: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.article-correction {
+  margin: 0 0 1.5rem;
+  padding: 1rem 1.1rem;
+  border-left: 4px solid #b42318;
+  background: #fff4f2;
+  color: #3f1511;
+}
+
+.article-correction strong {
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.article-correction p {
+  margin: 0;
+}
+
+.article-author a {
+  font-weight: 600;
+}
+
+.author-profile {
+  display: grid;
+  grid-template-columns: minmax(180px, 260px) minmax(0, 1fr);
+  gap: 1.5rem;
+  align-items: center;
+  margin-bottom: 1.75rem;
+}
+
+.author-profile__photo {
+  aspect-ratio: 4 / 5;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.author-profile__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 64% center;
+}
+
+.author-profile__intro p {
+  margin-top: 0;
+}
+
+.author-profile__role {
+  color: #595959;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.author-articles {
+  padding-left: 1.25rem;
+}
+
+.author-articles li {
+  margin-bottom: 0.65rem;
+}
+
+.author-articles time {
+  margin-left: 0.5rem;
+  color: #6c757d;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.authors-directory {
+  display: grid;
+  gap: 1rem;
+}
+
+.author-card {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.author-card__image {
+  width: 120px;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.author-card__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 64% center;
+}
+
+.author-card h2 {
+  margin: 0 0 0.25rem;
+  font-size: 1.25rem;
+}
+
+.author-card__role {
+  margin: 0 0 0.5rem;
+  color: #595959;
+  font-weight: 700;
+}
+
+.author-card p:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 600px) {
+  .author-profile {
+    grid-template-columns: 1fr;
+  }
+
+  .author-profile__photo {
+    width: min(100%, 320px);
+  }
+
+  .author-card {
+    grid-template-columns: 88px minmax(0, 1fr);
+  }
+
+  .author-card__image {
+    width: 88px;
+  }
 }
 
 /* Center content with reasonable max-width for readability */

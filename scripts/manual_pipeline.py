@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import re
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -20,6 +21,7 @@ from scripts.quality_gate import QualityGate
 from scripts.topic_metadata_extractor import TopicMetadataExtractor, TopicMetadataResponse
 
 MIN_SOURCE_WORDS = 20
+AUTHOR_SLUG_PATTERN = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 
 
 def create_run_id(environment: str) -> str:
@@ -40,6 +42,15 @@ def parse_publish_timestamp(value: str | None) -> datetime | None:
             "--publish-timestamp must be an ISO date or datetime, "
             "for example 2026-07-03 or 2026-07-03T09:00:00"
         ) from exc
+
+
+def parse_author_slug(value: str) -> str:
+    """Validate an author key used by the Jekyll authors data file."""
+    if not AUTHOR_SLUG_PATTERN.fullmatch(value):
+        raise argparse.ArgumentTypeError(
+            "author must use lowercase letters, numbers, and single hyphens"
+        )
+    return value
 
 
 def is_allowed_private_input_path(path: Path) -> bool:
@@ -167,6 +178,9 @@ def run_manual_pipeline(args: argparse.Namespace) -> int:
 
         logger.info("Quality gate passed for %s article: score=%.1f", level, quality_result.score)
         final_article = glossary_generator.enrich_article(final_article)
+        requested_author = getattr(args, "author", None)
+        if requested_author:
+            final_article = final_article.model_copy(update={"author": requested_author})
         publish_timestamp = publish_timestamp_override or datetime.now()
 
         if config.audio.enabled and not dry_run:
@@ -226,6 +240,12 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
             "Override the post/audio timestamp with an ISO date or datetime, "
             "for example 2026-07-03 or 2026-07-03T09:00:00."
         ),
+    )
+    parser.add_argument(
+        "--author",
+        type=parse_author_slug,
+        default=None,
+        help="Author key from output/_data/authors.yml. Defaults to output.default_author.",
     )
     return parser.parse_args(argv)
 

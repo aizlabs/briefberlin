@@ -82,6 +82,31 @@ def test_adapted_article_coerces_legacy_term_gloss_items():
     ]
 
 
+def test_adapted_article_accepts_per_article_author_key():
+    article = AdaptedArticle(
+        title="Titel",
+        content="Dieser Text ist lang genug für die Validierung. " * 4,
+        summary="Ausreichend lange Zusammenfassung.",
+        reading_time=2,
+        level="A2",
+        author="future-author",
+    )
+
+    assert article.author == "future-author"
+
+
+def test_adapted_article_rejects_invalid_author_key():
+    with pytest.raises(ValidationError):
+        AdaptedArticle(
+            title="Titel",
+            content="Dieser Text ist lang genug für die Validierung. " * 4,
+            summary="Ausreichend lange Zusammenfassung.",
+            reading_time=2,
+            level="A2",
+            author="Future Author",
+        )
+
+
 def test_coerce_vocabulary_items_prefers_structured_fields_over_null_gloss():
     items = coerce_vocabulary_items(
         [

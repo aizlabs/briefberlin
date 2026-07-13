@@ -15,16 +15,18 @@ Möchtest du Deutsch lernen? Interessierst du dich für Nachrichten? Dann ist Br
 
 ## Was ist BriefBerlin?
 
-BriefBerlin ist dein persönlicher Deutsch-Trainer. Er ist keine Person. Er ist ein intelligentes System.
+BriefBerlin ist ein Nachrichtenangebot für Menschen, die Deutsch lernen. Die Artikel verbinden aktuelle Themen mit klarer Sprache.
 
-Dieses System:
+Unsere Autorin Clara Becker:
 
-- liest aktuelle Texte und Nachrichten
-- findet wichtige Themen
-- schreibt einfache Artikel für Deutschlernende
-- benutzt klare Wörter und kurze Sätze
+- wählt aktuelle Themen aus
+- prüft Fakten und Zusammenhänge
+- bearbeitet jeden Artikel für Deutschlernende
+- benutzt klare Wörter und gut verständliche Sätze
 
 So kannst du echte Themen lesen und dabei Deutsch üben.
+
+Technische Sprachwerkzeuge helfen bei der Vorbereitung, bei Worterklärungen und beim Audio. Clara prüft, bearbeitet und genehmigt jeden Artikel vor der Veröffentlichung. Sie trägt die Verantwortung für den fertigen Text.
 
 ## Warum ist BriefBerlin anders?
 
