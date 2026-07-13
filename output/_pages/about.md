@@ -7,7 +7,7 @@ layout: single
 
 ## Our Mission
 
-BriefBerlin makes Berlin's news accessible to people learning German, combining clear language with meaningful local context so readers can develop their language skills while staying connected to the city.
+BriefBerlin makes Berlin's news accessible to people learning German, combining clear language with meaningful local context so readers can develop their language skills while staying connected to the city. One of our goals is to make the German language universally accessible and useful. We give learners language they can apply to understand and participate in the communities around them.
 
 ## Our Story
 
