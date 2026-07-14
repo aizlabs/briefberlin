@@ -1,7 +1,7 @@
 # Site Settings
 title: "BriefBerlin"
 name: "BriefBerlin"
-description: "Simplified German articles for A2 and B1 learners"
+description: "Aktuelle Berlin Nachrichten in einfacher Sprache für Deutschlerner (Niveau A2 und B1)."
 url: "https://briefberlin.de"
 baseurl: ""
 repository: "zozulya/briefberlin"
