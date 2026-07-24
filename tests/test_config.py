@@ -186,6 +186,16 @@ def test_llm_env_overrides(monkeypatch):
             monkeypatch.delenv(key, raising=False)
 
 
+def test_audio_model_env_override(monkeypatch):
+    monkeypatch.setenv("AUDIO_MODEL", "custom-tts-model")
+    try:
+        config = {}
+        apply_env_overrides(config)
+        assert config["audio"]["model"] == "custom-tts-model"
+    finally:
+        monkeypatch.delenv("AUDIO_MODEL", raising=False)
+
+
 def test_load_language_config_without_llm_keys(monkeypatch):
     monkeypatch.delenv("OPENAI_API_KEY", raising=False)
     monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)

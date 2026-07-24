@@ -76,6 +76,7 @@ language:
 audio:
   enabled: false
   provider: openai
+  model: gpt-4o-mini-tts
   voice: alloy
   format: mp3
   output_path: ./output/audio

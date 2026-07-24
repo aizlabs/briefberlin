@@ -19,8 +19,6 @@ from scripts.config import AppConfig
 from scripts.models import AdaptedArticle, AudioAsset, AudioManifest
 from scripts.text_utils import slugify_text
 
-OPENAI_TTS_MODEL = "gpt-4o-mini-tts"
-
 
 class AudioPipeline:
     """Build narration scripts and local manifests ahead of real TTS/upload steps."""
@@ -174,7 +172,7 @@ class AudioPipeline:
 
         response = self._get_tts_client().audio.speech.create(
             input=narration,
-            model=OPENAI_TTS_MODEL,
+            model=self.audio_config.model,
             voice=self.audio_config.voice or "alloy",
             response_format=self._openai_response_format(self.audio_config.format),
         )
