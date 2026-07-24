@@ -264,6 +264,11 @@ def apply_env_overrides(config_dict: Dict) -> Dict:
         config_dict.setdefault('audio', {})
         config_dict['audio']['provider'] = audio_provider
 
+    audio_model = os.getenv('AUDIO_MODEL')
+    if audio_model:
+        config_dict.setdefault('audio', {})
+        config_dict['audio']['model'] = audio_model
+
     audio_voice = os.getenv('AUDIO_VOICE')
     if audio_voice:
         config_dict.setdefault('audio', {})

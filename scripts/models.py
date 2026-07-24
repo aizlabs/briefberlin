@@ -448,6 +448,7 @@ class AudioConfig(BaseModel):
 
     enabled: bool = Field(default=False, description="Enable audio preparation for approved articles")
     provider: Optional[str] = Field(default=None, description="TTS provider identifier")
+    model: str = Field(default="gpt-4o-mini-tts", description="TTS model identifier")
     voice: Optional[str] = Field(default=None, description="Voice identifier")
     format: str = Field(default="mp3", pattern="^(mp3|m4a|wav)$", description="Primary output format")
     output_path: str = Field(default="./output/audio", description="Local working directory for audio files")

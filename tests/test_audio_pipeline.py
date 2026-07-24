@@ -23,6 +23,7 @@ def test_audio_pipeline_writes_manifest_and_script_when_enabled(
     base_config.audio.enabled = True
     base_config.audio.output_path = str(tmp_path / "audio")
     base_config.audio.provider = "openai"
+    base_config.audio.model = "custom-tts-model"
     base_config.audio.voice = "alloy"
 
     mock_tts_client = MagicMock()
@@ -72,6 +73,7 @@ def test_audio_pipeline_writes_manifest_and_script_when_enabled(
     assert audio_path.exists()
     assert "Ende des Artikels." in script_path.read_text(encoding="utf-8")
     mock_tts_client.audio.speech.create.assert_called_once()
+    assert mock_tts_client.audio.speech.create.call_args.kwargs["model"] == "custom-tts-model"
     info_messages = [call.args[0] for call in mock_logger.info.call_args_list]
     assert (
         "Skipping audio upload for '%s' because audio.upload_enabled=false; audio remains local at %s"
