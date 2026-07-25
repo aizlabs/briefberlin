@@ -42,6 +42,31 @@ def test_publisher_prefers_article_author_over_configured_default(
     assert 'author: "clara-becker"' not in markdown
 
 
+
+def test_publisher_includes_category_description_and_keywords_in_frontmatter(
+    base_config,
+    mock_logger,
+    sample_a2_article,
+    tmp_path,
+):
+    base_config.output["path"] = str(tmp_path)
+    article = sample_a2_article.model_copy(
+        update={
+            "category": "Verkehr",
+            "description": "Streik bei der BVG in Berlin am Donnerstag.",
+        }
+    )
+    publisher = Publisher(base_config, mock_logger, dry_run=True)
+
+    markdown = publisher._generate_markdown(article, datetime(2024, 1, 1, 12, 0, 0))
+
+    assert 'category: "Verkehr"' in markdown
+    assert 'description: "Streik bei der BVG in Berlin am Donnerstag."' in markdown
+    assert 'keywords:' in markdown
+    assert 'topics:' in markdown
+
+
+
 def test_publisher_formats_sources_with_links(base_config, mock_logger, sample_a2_article, tmp_path):
     """Sources with URLs must not be exposed in public markdown."""
     base_config.output['path'] = str(tmp_path)

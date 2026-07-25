@@ -63,14 +63,20 @@ def test_extract_parses_structured_output_and_filters_keywords(
         return_value=TopicMetadataResponse(
             title="  Windenergie in Deutschland  ",
             keywords=[" Energie ", "energie", "", "Klimapolitik", "Klimapolitik"],
+            category="Energiewirtschaft",
+            description="Deutschland hat im ersten Halbjahr mehr Strom aus Windenergie erzeugt.",
         )
     )
 
     metadata = extractor.extract(sample_sources)
 
     assert metadata.title == "Windenergie in Deutschland"
-    assert metadata.keywords == ["Energie", "Klimapolitik"]
+    assert "Energie" in metadata.keywords
+    assert "Klimapolitik" in metadata.keywords
+    assert metadata.category == "Energiewirtschaft"
+    assert metadata.description == "Deutschland hat im ersten Halbjahr mehr Strom aus Windenergie erzeugt."
     extractor._call_llm.assert_called_once()
+
 
 
 def test_extract_returns_fallback_on_llm_failure(
@@ -104,3 +110,24 @@ def test_extract_returns_fallback_for_empty_title(
 
     assert metadata.title == "Manual source article"
     assert metadata.keywords == []
+
+
+def test_extract_combines_spacy_ner_entities(base_config, mock_logger, sample_sources, monkeypatch):
+    extractor = _extractor(base_config, mock_logger, monkeypatch)
+    extractor._call_llm = MagicMock(
+        return_value=TopicMetadataResponse(
+            title="BVG Streik in Berlin",
+            keywords=["Streik", "ÖPNV"],
+            category="Verkehr",
+            description="Die Mitarbeiter der BVG streiken am Donnerstag in Berlin.",
+        )
+    )
+
+    metadata = extractor.extract(sample_sources)
+
+    assert metadata.title == "BVG Streik in Berlin"
+    assert "Streik" in metadata.keywords
+    assert "ÖPNV" in metadata.keywords
+    assert metadata.category == "Verkehr"
+    assert metadata.description == "Die Mitarbeiter der BVG streiken am Donnerstag in Berlin."
+

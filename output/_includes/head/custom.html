@@ -17,13 +17,25 @@
 <meta property="og:site_name" content="{{ site.title }}">
 <meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
 <meta property="og:url" content="{{ page.url | absolute_url }}">
-<meta property="og:description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+<meta property="og:description" content="{% if page.description %}{{ page.description | strip_html | strip_newlines | truncate: 160 }}{% elsif page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+
+<!-- News SEO & Entity Meta Tags -->
+{% assign article_keywords = page.keywords | default: page.topics %}
+{% if article_keywords %}
+<meta name="keywords" content="{{ article_keywords | join: ', ' }}">
+{% for kw in article_keywords %}
+<meta property="article:tag" content="{{ kw }}">
+{% endfor %}
+{% endif %}
+{% if page.category %}
+<meta property="article:section" content="{{ page.category }}">
+{% endif %}
 
 <!-- Twitter Card meta tags -->
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="{{ site.title }}">
 <meta name="twitter:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
-<meta name="twitter:description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+<meta name="twitter:description" content="{% if page.description %}{{ page.description | strip_html | strip_newlines | truncate: 160 }}{% elsif page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
 
 <!-- Publisher identity -->
 {% if page.organization_schema %}
@@ -121,10 +133,22 @@
   "@type": "NewsArticle",
   "@id": {{ page.url | absolute_url | append: "#article" | jsonify }},
   "headline": {{ page.title | jsonify }},
-  "description": {{ page.excerpt | strip_html | strip_newlines | jsonify }},
+  "description": {{ page.description | default: page.excerpt | strip_html | strip_newlines | jsonify }},
   "datePublished": "{{ page.date | date_to_xmlschema }}",
   "dateModified": "{{ page.last_modified_at | default: page.date | date_to_xmlschema }}",
   "inLanguage": "de",
+  "articleSection": {{ page.category | default: "Nachrichten" | jsonify }},
+  {% assign json_keywords = page.keywords | default: page.topics %}
+  {% if json_keywords %}
+  "keywords": {{ json_keywords | join: ", " | jsonify }},
+  {% endif %}
+  "image": [
+    {% if page.image %}
+      {{ page.image | absolute_url | jsonify }}
+    {% else %}
+      {{ "/assets/images/logo.svg" | absolute_url | jsonify }}
+    {% endif %}
+  ],
   "mainEntityOfPage": {
     "@type": "WebPage",
     "@id": {{ page.url | absolute_url | jsonify }}

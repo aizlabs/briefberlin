@@ -106,8 +106,11 @@ def build_manual_topic(metadata: TopicMetadataResponse, sources: Sequence[Source
         mentions=len(sources),
         score=10.0,
         keywords=metadata.keywords,
+        category=metadata.category,
+        description=metadata.description,
         urls=[],
     )
+
 
 
 def run_manual_pipeline(args: argparse.Namespace) -> int:

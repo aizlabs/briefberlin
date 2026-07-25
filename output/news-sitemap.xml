@@ -1,0 +1,31 @@
+---
+layout: null
+permalink: /news-sitemap.xml
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+  {% assign cutoff_seconds = 172800 %}
+  {% assign current_time = "now" | date: "%s" %}
+  {% for post in site.posts %}
+    {% assign post_time = post.date | date: "%s" %}
+    {% assign time_diff = current_time | minus: post_time %}
+    {% if time_diff <= cutoff_seconds %}
+    <url>
+      <loc>{{ post.url | absolute_url }}</loc>
+      <news:news>
+        <news:publication>
+          <news:name>{{ site.title }}</news:name>
+          <news:language>de</news:language>
+        </news:publication>
+        <news:publication_date>{{ post.date | date_to_xmlschema }}</news:publication_date>
+        <news:title>{{ post.title | xml_escape }}</news:title>
+        {% assign article_keywords = post.keywords | default: post.topics %}
+        {% if article_keywords %}
+        <news:keywords>{{ article_keywords | join: ", " | xml_escape }}</news:keywords>
+        {% endif %}
+      </news:news>
+    </url>
+    {% endif %}
+  {% endfor %}
+</urlset>

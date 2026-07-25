@@ -100,7 +100,11 @@ class ArticleSynthesizer:
                 {'name': s.source, 'url': s.url} if s.url else {'name': s.source}
                 for s in sources
             ]
+            if topic:
+                data['category'] = getattr(topic, 'category', None)
+                data['description'] = getattr(topic, 'description', None)
             return BaseArticle(**data)
+
         except Exception as e:
             self.logger.error(f"Failed to build BaseArticle from synthesis response: {e}")
             raise

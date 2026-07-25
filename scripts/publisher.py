@@ -257,11 +257,31 @@ class Publisher:
             if author
             else ""
         )
+
+        category = (
+            getattr(article, "category", None)
+            or (getattr(article.topic, "category", None) if article.topic else None)
+            or "Nachrichten"
+        )
+        description = (
+            getattr(article, "description", None)
+            or (getattr(article.topic, "description", None) if article.topic else None)
+            or getattr(article, "summary", "")
+        )
+        description_frontmatter = (
+            f'description: "{self._escape_yaml_string(description)}"\n'
+            if description
+            else ""
+        )
+        keywords_json = self._format_topics(article)
+
         frontmatter = f"""---
 title: "{escaped_title}"
 date: {date_str}
 {author_frontmatter}level: {article.level}
-topics: {self._format_topics(article)}
+category: "{self._escape_yaml_string(category)}"
+{description_frontmatter}topics: {keywords_json}
+keywords: {keywords_json}
 {self._format_sources(article.sources)}
 {self._format_audio(article)}
 reading_time: {article.reading_time}
@@ -303,8 +323,8 @@ reading_time: {article.reading_time}
         raw_keywords = (topic_data.keywords or []) if topic_data else []
         filtered_keywords = sanitize_topic_keywords(
             [str(keyword) for keyword in raw_keywords],
-            max_keywords=3,
-            lowercase=True,
+            max_keywords=7,
+            lowercase=False,
         )
 
         if filtered_keywords:
@@ -313,6 +333,7 @@ reading_time: {article.reading_time}
             return json.dumps(filtered_keywords)
 
         return '[]'
+
 
     def _format_vocabulary(self, vocabulary, article_title: str) -> str:
         """Format vocabulary section"""
