@@ -12,10 +12,10 @@ from scripts.config import AppConfig
 from scripts.llm_factory import build_structured_prompt_chain
 from scripts.models import SourceArticle
 from scripts.prompts import prepare_source_context
-from scripts.topic_utils import sanitize_topic_keywords
+from scripts.topic_utils import extract_named_entities, sanitize_topic_keywords
 
 FALLBACK_TOPIC_TITLE = "Manual source article"
-MAX_TOPIC_KEYWORDS = 5
+MAX_TOPIC_KEYWORDS = 7
 
 
 class TopicMetadataResponse(BaseModel):
@@ -23,16 +23,19 @@ class TopicMetadataResponse(BaseModel):
 
     title: str = Field(default="", description="Concise public topic title")
     keywords: List[str] = Field(default_factory=list, description="Short public topic keywords")
+    category: str = Field(default="Nachrichten", description="Public news category, e.g. Verkehr, Politik, Kultur, Stadtleben, Wirtschaft, Wissenschaft")
+    description: str = Field(default="", description="Concise public news summary for SEO (140-160 characters)")
 
 
 class TopicMetadataExtractor:
-    """Use the configured LLM to extract non-private topic title and keywords."""
+    """Use the configured LLM and SpaCy NER to extract non-private topic title, category, description, and keywords."""
 
     def __init__(self, config: AppConfig, logger: logging.Logger):
         self.config = config
         self.logger = logger.getChild("TopicMetadataExtractor")
         self.llm_config = config.llm.model_dump()
         self.max_words_per_source = config.sources.max_words_per_source
+        self.spacy_model = getattr(config.language, "spacy_model", "de_core_news_sm")
         self.temperature = self.llm_config.get(
             "quality_temperature",
             self.llm_config.get("temperature", 0.1),
@@ -40,12 +43,12 @@ class TopicMetadataExtractor:
         self._init_chain()
 
     def extract(self, sources: List[SourceArticle]) -> TopicMetadataResponse:
-        """Return sanitized topic metadata, falling back to blank keywords on failure."""
+        """Return sanitized topic metadata with NER keywords, falling back to blank metadata on failure."""
         prompt = self._build_prompt(sources)
 
         try:
             response = self._call_llm(prompt)
-            metadata = self._sanitize_response(response)
+            metadata = self._sanitize_response(response, sources)
         except Exception as exc:
             self.logger.warning(
                 "Topic metadata extraction failed; using fallback metadata: %s",
@@ -79,17 +82,20 @@ or attribution details. Extract only safe public metadata that can appear in a g
 
 TASK:
 1. Write a concise topic title in the same language as the source material.
-2. Choose 2-5 short public keywords for topic metadata.
-3. Keep keywords as useful topical nouns or short noun phrases.
-4. Avoid private identifiers, source names, URLs, generic language labels, and filler terms.
-5. Never use private proper nouns, person names, internal project names, client names,
+2. Choose 3-7 short public keywords focusing on main named entities (locations, organizations, key topic terms).
+3. Choose a public news category (e.g., "Verkehr", "Politik", "Kultur", "Stadtleben", "Wirtschaft", "Wissenschaft", "Sport").
+4. Write a concise 1-2 sentence public news description (140-160 characters) summarizing the core story.
+5. Avoid private identifiers, source names, URLs, generic language labels, and filler terms.
+6. Never use private proper nouns, person names, internal project names, client names,
    confidential codenames, or unusually specific identifiers as keywords.
-6. If every possible keyword might reveal private source text, return an empty keyword list.
+7. If every possible keyword might reveal private source text, return an empty keyword list.
 
 OUTPUT FORMAT (return ONLY valid JSON, no markdown):
 {{
   "title": "concise public topic title",
-  "keywords": ["keyword one", "keyword two"]
+  "keywords": ["keyword one", "keyword two"],
+  "category": "Verkehr",
+  "description": "concise news summary"
 }}
 
 SOURCES:
@@ -115,17 +121,43 @@ SOURCES:
     def _call_llm(self, prompt: str) -> TopicMetadataResponse:
         return cast(TopicMetadataResponse, self.chain.invoke({"prompt": prompt}))
 
-    def _sanitize_response(self, response: TopicMetadataResponse) -> TopicMetadataResponse:
+    def _sanitize_response(
+        self, response: TopicMetadataResponse, sources: List[SourceArticle] | None = None
+    ) -> TopicMetadataResponse:
         payload = response.model_dump()
         raw_title = payload.get("title") or ""
         title = re.sub(r"\s+", " ", str(raw_title)).strip()
+
         raw_keywords = payload.get("keywords") or []
+        llm_keywords = [str(kw) for kw in raw_keywords] if isinstance(raw_keywords, list) else []
+
+        # SpaCy Named Entity Recognition on source text to pull out entities (LOC, ORG, PER, MISC)
+        ner_entities: List[str] = []
+        if sources:
+            combined_text = "\n".join(s.text for s in sources if s and s.text)
+            ner_entities = extract_named_entities(combined_text, spacy_model=self.spacy_model)
+
+        combined_keywords = llm_keywords + ner_entities
         keywords = sanitize_topic_keywords(
-            [str(keyword) for keyword in raw_keywords] if isinstance(raw_keywords, list) else [],
+            combined_keywords,
             max_keywords=MAX_TOPIC_KEYWORDS,
         )
 
-        return TopicMetadataResponse(title=title, keywords=keywords)
+        category = str(payload.get("category") or "Nachrichten").strip() or "Nachrichten"
+        description = re.sub(r"\s+", " ", str(payload.get("description") or "")).strip()
+
+        return TopicMetadataResponse(
+            title=title,
+            keywords=keywords,
+            category=category,
+            description=description,
+        )
 
     def _fallback_metadata(self) -> TopicMetadataResponse:
-        return TopicMetadataResponse(title=FALLBACK_TOPIC_TITLE, keywords=[])
+        return TopicMetadataResponse(
+            title=FALLBACK_TOPIC_TITLE,
+            keywords=[],
+            category="Nachrichten",
+            description="",
+        )
+

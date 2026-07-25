@@ -36,9 +36,12 @@ class Topic(BaseModel):
     mentions: int = Field(..., ge=1, description="Number of mentions across sources")
     score: float = Field(..., ge=0, description="Ranking score")
     keywords: Optional[List[str]] = Field(default=None, description="Optional keywords")
+    category: Optional[str] = Field(default=None, description="News category/section")
+    description: Optional[str] = Field(default=None, description="Concise SEO news description")
     urls: List[str] = Field(default_factory=list, description="URLs for fetching article content")
 
     model_config = ConfigDict(frozen=False)  # Allow mutation during pipeline
+
 
 
 class SourceArticle(BaseModel):
@@ -75,8 +78,11 @@ class BaseArticle(BaseModel):
     # Metadata from synthesis
     topic: Optional[Topic] = Field(default=None, description="Source topic")
     sources: List[SourceMetadata] = Field(default_factory=list, description="Source metadata used")
+    category: Optional[str] = Field(default=None, description="News category/section")
+    description: Optional[str] = Field(default=None, description="Concise SEO news description")
 
     @field_validator('reading_time', mode='before')
+
     @classmethod
     def coerce_reading_time(cls, v):
         """Convert string to int if needed"""
@@ -265,8 +271,11 @@ class AdaptedArticle(BaseModel):
     )
     topic: Optional[Topic] = Field(default=None, description="Source topic")
     sources: List[SourceMetadata] = Field(default_factory=list, description="Source metadata")
+    category: Optional[str] = Field(default=None, description="News category/section")
+    description: Optional[str] = Field(default=None, description="Concise SEO news description")
 
     # Base article stored for regeneration
+
     base_article: Optional[BaseArticle] = Field(default=None, description="Base article for regeneration")
     audio: Optional[AudioAsset] = Field(default=None, description="Audio metadata for delivery surfaces")
 

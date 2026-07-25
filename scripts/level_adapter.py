@@ -156,9 +156,12 @@ class LevelAdapter:
             parsed['level'] = level
             parsed['topic'] = base_article.topic.model_dump() if base_article.topic else None
             parsed['sources'] = [s.model_dump() for s in base_article.sources]
+            parsed['category'] = getattr(base_article, 'category', None)
+            parsed['description'] = getattr(base_article, 'description', None)
             parsed['base_article'] = base_article.model_dump()
 
             return AdaptedArticle(**parsed)
+
         except Exception as e:
             self.logger.error(f"Invalid adapted article structure or Pydantic validation error: {e}")
             raise ValueError(f"Invalid adapted article structure or Pydantic validation error: {e}")
