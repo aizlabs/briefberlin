@@ -1,16 +1,17 @@
 ---
-title: "Berliner Dachpools: Erfrischung und Aussicht"
+title: 'Berliner Dachpools: Erfrischung und Aussicht'
 date: 2026-06-28 13:31:00
 level: A2
-topics: ["deutsch"]
+topics: &id001 [Berliner Dachpools, Berlin, Abkühlung, Dachpools, Stadt, Pools, Grand
+    Hyatt Hotel]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/06/20260628-133100-berliner-dachpools-erfrischung-und-aussicht-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260628-133100-berliner-dachpools-erfrischung-und-aussicht-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Nachrichten
+description: Im Sommer wird es in Berlin sehr heiß. Viele Menschen suchen dann nach
+  Abkühlung. Eine besondere Möglichkeit sind die Dachpools in der Stadt. Diese Pools...
+keywords: *id001
 ---
 
 Im Sommer wird es in Berlin sehr heiß. Viele Menschen suchen dann nach Abkühlung. Eine besondere Möglichkeit sind die Dachpools in der Stadt. Diese Pools bieten nicht nur **Erfrischung**, sondern auch schöne Ausblicke über Berlin. 

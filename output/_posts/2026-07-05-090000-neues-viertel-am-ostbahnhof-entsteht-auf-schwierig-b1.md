@@ -1,16 +1,17 @@
 ---
-title: "Neues Viertel am Ostbahnhof entsteht auf schwierigem Grundstück"
+title: Neues Viertel am Ostbahnhof entsteht auf schwierigem Grundstück
 date: 2026-07-05 09:00:00
 level: B1
-topics: ["b\u00fcrogeb\u00e4ude", "stadtentwicklung", "mischnutzung"]
+topics: &id001 [bürogebäude, stadtentwicklung, mischnutzung, Neues Viertel, Ostbahnhof,
+  Berliner Ostbahnhof, Geschäften]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260705-090000-neues-viertel-am-ostbahnhof-entsteht-auf-schwierigem-grundstuck-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260705-090000-neues-viertel-am-ostbahnhof-entsteht-auf-schwierigem-grundstuck-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Stadtleben
+description: Am Berliner Ostbahnhof entsteht ein neues Projekt mit Wohnungen, Büros
+  und Geschäften. In der Straße der Pariser Kommune 20 legten die Beteiligten diese...
+keywords: *id001
 ---
 
 Am Berliner Ostbahnhof entsteht ein neues Projekt mit Wohnungen, Büros und Geschäften. In der Straße der Pariser Kommune 20 legten die Beteiligten diese Woche den Grundstein für „B.YARD“. Die Bauarbeiten laufen schon, und Anfang 2028 soll alles fertig sein. Das Projekt kostet nach Angaben der Beteiligten rund 90 Millionen Euro. Gleichzeitig hat die Suche nach Mietern für die Büros begonnen.

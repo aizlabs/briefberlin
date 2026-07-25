@@ -2,16 +2,16 @@
 title: Reform der Rentenversicherung geplant
 date: 2026-06-27 01:17:42
 level: A2
-topics:
-- deutsch
+topics: &id001 [Deutsche, Bundesagentur für Arbeit, Bürger, Die Regierung, Hauptbüro
+    für Organisation]
 sources: []
-audio:
-  url: https://media.briefberlin.de/articles/2026/06/20260627-011742-reform-der-rentenversicherung-geplant-a2/article.mp3
-  format: mp3
-  mime_type: audio/mpeg
-  provider: openai
-  voice: alloy
+audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260627-011742-reform-der-rentenversicherung-geplant-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Politik
+description: Die Deutsche **Rentenversicherung** soll reformiert werden. Eine **Kommission**
+  hat das empfohlen. Sie sagt, die **Rentenversicherung** ist zu kompliziert...
+keywords: *id001
 ---
 
 Die Deutsche **Rentenversicherung** soll reformiert werden. Eine **Kommission** hat das empfohlen. Sie sagt, die **Rentenversicherung** ist zu kompliziert und langsam. Es gibt 16 verschiedene Teile, die zusammenarbeiten müssen. Das kostet viel Geld und Zeit.

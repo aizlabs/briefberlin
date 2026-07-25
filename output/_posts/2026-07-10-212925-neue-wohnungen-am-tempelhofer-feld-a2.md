@@ -1,16 +1,18 @@
 ---
-title: "Neue Wohnungen am Tempelhofer Feld"
+title: Neue Wohnungen am Tempelhofer Feld
 date: 2026-07-10 21:29:25
 level: A2
-topics: ["wohnungsbau", "stadtentwicklung", "baukosten"]
+topics: &id001 [wohnungsbau, stadtentwicklung, baukosten, Neue Wohnungen, Tempelhofer
+    Feld, Stadt Berlin, Berlin]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260710-212925-neue-wohnungen-am-tempelhofer-feld-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260710-212925-neue-wohnungen-am-tempelhofer-feld-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Stadtleben
+description: Die Stadt Berlin prüft neue Wohnungen am Tempelhofer Feld. Das ist eine
+  große freie Fläche in Berlin. Eine neue Rechnung zeigt jetzt Kosten und mögliche
+  Mieten.
+keywords: *id001
 ---
 
 Die Stadt Berlin <button type="button" class="article-term" data-term-id="term-2">prüft</button> neue <button type="button" class="article-term article-term--default" data-term-id="term-1">Wohnungen</button> am Tempelhofer Feld. Das ist eine große <button type="button" class="article-term article-term--default" data-term-id="term-3">freie Fläche</button> in Berlin. Eine neue <button type="button" class="article-term article-term--default" data-term-id="term-4">Rechnung</button> zeigt jetzt <button type="button" class="article-term" data-term-id="term-5">Kosten</button> und <button type="button" class="article-term" data-term-id="term-6">mögliche</button> <button type="button" class="article-term" data-term-id="term-7">Mieten</button>.

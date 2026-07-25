@@ -1,16 +1,17 @@
 ---
-title: "IT-Probleme in Berlin kosten viel Geld"
+title: IT-Probleme in Berlin kosten viel Geld
 date: 2026-07-01 13:41:54
 level: A2
-topics: ["deutsch"]
+topics: &id001 [Berlin, Windows 11., Microsoft, Behörde, Chaos, Andreas Gundlack,
+  IT-Dienstleistungszentrum]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260701-134154-it-probleme-in-berlin-kosten-viel-geld-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260701-134154-it-probleme-in-berlin-kosten-viel-geld-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Wirtschaft
+description: In Berlin gibt es große Probleme mit der IT. Viele Computer haben noch
+  nicht das neue Windows 11. Das kostet Berlin viel Geld, weil sie Hilfe von Microsoft...
+keywords: *id001
 ---
 
 In Berlin gibt es große Probleme mit der IT. Viele Computer haben noch nicht das neue Windows 11. Das kostet Berlin viel Geld, weil sie Hilfe von Microsoft brauchen. 

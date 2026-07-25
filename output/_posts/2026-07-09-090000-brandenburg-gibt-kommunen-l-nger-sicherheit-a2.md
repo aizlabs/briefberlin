@@ -1,16 +1,18 @@
 ---
-title: "Brandenburg gibt Kommunen länger Sicherheit"
+title: Brandenburg gibt Kommunen länger Sicherheit
 date: 2026-07-09 09:00:00
 level: A2
-topics: ["kommunalfinanzierung", "rettungsdienst", "landeshaushalt"]
+topics: &id001 [kommunalfinanzierung, rettungsdienst, landeshaushalt, Brandenburg,
+  Landkreisen, Landkreise, Rettungsdienste]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260709-090000-brandenburg-gibt-kommunen-l-nger-sicherheit-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260709-090000-brandenburg-gibt-kommunen-l-nger-sicherheit-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Politik
+description: Die Regierung von Brandenburg hilft Städten, Gemeinden und Landkreisen.
+  Sie hat mit ihnen neue Regeln für Geld beschlossen. Diese Regeln gelten bis zum
+  Jahr...
+keywords: *id001
 ---
 
 Die <button type="button" class="article-term" data-term-id="term-3">Regierung</button> von Brandenburg <button type="button" class="article-term" data-term-id="term-4">hilft</button> <button type="button" class="article-term" data-term-id="term-5">Städten</button>, <button type="button" class="article-term" data-term-id="term-6">Gemeinden</button> und Landkreisen. Sie hat mit ihnen neue <button type="button" class="article-term" data-term-id="term-8">Regeln</button> für Geld <button type="button" class="article-term" data-term-id="term-7">beschlossen</button>. Diese <button type="button" class="article-term" data-term-id="term-8">Regeln</button> <button type="button" class="article-term" data-term-id="term-9">gelten</button> bis zum Jahr 2030.

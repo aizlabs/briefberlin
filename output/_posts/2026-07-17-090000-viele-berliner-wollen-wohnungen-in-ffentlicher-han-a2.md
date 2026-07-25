@@ -1,17 +1,18 @@
 ---
-title: "Viele Berliner wollen Wohnungen in öffentlicher Hand"
+title: Viele Berliner wollen Wohnungen in öffentlicher Hand
 date: 2026-07-17 09:00:00
-author: "clara-becker"
+author: clara-becker
 level: A2
-topics: ["vergesellschaftung", "wohnungspolitik", "mietmarkt"]
+topics: &id001 [vergesellschaftung, wohnungspolitik, mietmarkt, Berliner, Berlin,
+  Im Jahr 2021, Bürger]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260717-090000-viele-berliner-wollen-wohnungen-in-ffentlicher-hand-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260717-090000-viele-berliner-wollen-wohnungen-in-ffentlicher-hand-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Stadtleben
+description: 'In Berlin gibt es neue Zahlen zu großen Wohnungsfirmen. Viele Menschen
+  wollen: Die Stadt soll Wohnungen von großen privaten Firmen übernehmen. 1021 Berliner...'
+keywords: *id001
 ---
 
 In Berlin gibt es neue Zahlen zu <button type="button" class="article-term" data-term-id="term-3">großen</button> <button type="button" class="article-term article-term--default" data-term-id="term-2">Wohnungsfirmen</button>. Viele Menschen wollen: Die Stadt soll <button type="button" class="article-term" data-term-id="term-1">Wohnungen</button> von <button type="button" class="article-term" data-term-id="term-3">großen</button> privaten Firmen <button type="button" class="article-term article-term--default" data-term-id="term-4">übernehmen</button>. 1021 Berliner mit <button type="button" class="article-term article-term--default" data-term-id="term-5">Wahlrecht</button> <button type="button" class="article-term" data-term-id="term-6">nahmen</button> im Februar an einer <button type="button" class="article-term article-term--default" data-term-id="term-7">Befragung</button> teil.

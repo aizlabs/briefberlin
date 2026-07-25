@@ -1,17 +1,18 @@
 ---
-title: "Neuer Streit um hohen Messeturm am Berliner Westkreuz"
+title: Neuer Streit um hohen Messeturm am Berliner Westkreuz
 date: 2026-07-16 11:17:45
-author: "clara-becker"
+author: clara-becker
 level: B1
-topics: ["hochhausplanung", "stadtentwicklung", "messequartier"]
+topics: &id001 [hochhausplanung, stadtentwicklung, messequartier, Berliner, Westkreuz,
+  Berliner Messegeländes, Halensee]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260716-111745-neuer-streit-um-hohen-messeturm-am-berliner-westkreuz-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260716-111745-neuer-streit-um-hohen-messeturm-am-berliner-westkreuz-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Nachrichten
+description: Am westlichen Rand des Berliner Messegeländes gibt es neuen Streit um
+  ein sehr hohes Gebäude. Es soll am Westkreuz in Halensee entstehen, auf dem Grundstück...
+keywords: *id001
 ---
 
 Am <button type="button" class="article-term" data-term-id="term-1">westlichen Rand</button> des Berliner Messegeländes gibt es neuen Streit um ein sehr hohes Gebäude. Es soll am Westkreuz in Halensee entstehen, auf dem <button type="button" class="article-term article-term--default" data-term-id="term-2">Grundstück</button> des großen Bordells Artemis. Die <button type="button" class="article-term" data-term-id="term-3">Eigentümer</button> wollen den <button type="button" class="article-term" data-term-id="term-4">Betrieb</button> an einen anderen Ort <button type="button" class="article-term article-term--default" data-term-id="term-5">verlegen</button>. Dann könnte dort ein <button type="button" class="article-term article-term--default" data-term-id="term-6">Messeturm</button> gebaut werden, der 178 bis 224 Meter hoch sein soll. Damit wäre er <button type="button" class="article-term" data-term-id="term-7">deutlich</button> höher als die <button type="button" class="article-term" data-term-id="term-8">bisher</button> höchsten Gebäude Berlins. Die Pläne kamen zuerst in den <button type="button" class="article-term" data-term-id="term-9">Stadtentwicklungsausschuss</button> von Charlottenburg-Wilmersdorf. Dort sprachen mehrere <button type="button" class="article-term" data-term-id="term-10">Bezirkspolitiker</button> der CDU <button type="button" class="article-term" data-term-id="term-11">auffallend</button> positiv über das Projekt. Sie lobten die Idee für die <button type="button" class="article-term" data-term-id="term-12">Stadtplanung</button>, <button type="button" class="article-term" data-term-id="term-13">während</button> andere Mitglieder noch keine <button type="button" class="article-term" data-term-id="term-14">feste Meinung</button> nannten.

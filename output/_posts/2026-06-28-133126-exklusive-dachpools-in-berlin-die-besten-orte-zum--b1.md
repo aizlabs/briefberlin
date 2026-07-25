@@ -1,16 +1,17 @@
 ---
-title: "Exklusive Dachpools in Berlin: Die besten Orte zum Entspannen"
+title: 'Exklusive Dachpools in Berlin: Die besten Orte zum Entspannen'
 date: 2026-06-28 13:31:26
 level: B1
-topics: ["deutsch"]
+topics: &id001 [Exklusive Dachpools, Berlin, Dachpools, Grand Hyatt Berlin, Potsdamer
+    Platz, Kulturforum, Spa-Bereich]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/06/20260628-133126-exklusive-dachpools-in-berlin-die-besten-orte-zum-entspannen-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260628-133126-exklusive-dachpools-in-berlin-die-besten-orte-zum-entspannen-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Kultur
+description: Berlin ist bekannt für seine Kultur und Architektur. Im Sommer suchen
+  viele Menschen nach einer **Abkühlung**. Einige der besten Hotels in Berlin haben...
+keywords: *id001
 ---
 
 Berlin ist bekannt für seine Kultur und Architektur. Im Sommer suchen viele Menschen nach einer **Abkühlung**. Einige der besten Hotels in Berlin haben Dachpools, die nicht nur erfrischend sind, sondern auch tolle Ausblicke bieten.

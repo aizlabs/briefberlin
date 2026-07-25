@@ -1,16 +1,17 @@
 ---
-title: "AfD: Mehr Einfluss aus Brandenburg"
+title: 'AfD: Mehr Einfluss aus Brandenburg'
 date: 2026-07-11 16:13:00
 level: A2
-topics: ["rechtsextremismus", "parteivorstand", "ostdeutsche politik"]
+topics: &id001 [rechtsextremismus, parteivorstand, ostdeutsche politik, AfD, Brandenburg,
+  Deutschland, Erfurt]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260711-161300-afd-mehr-einfluss-aus-brandenburg-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260711-161300-afd-mehr-einfluss-aus-brandenburg-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Politik
+description: Die AfD ist eine rechte Partei in Deutschland. Am Wochenende hat sie
+  sich in Erfurt getroffen. Dort haben Mitglieder einen neuen Vorstand für ganz...
+keywords: *id001
 ---
 
 Die AfD ist eine <button type="button" class="article-term article-term--default" data-term-id="term-1">rechte Partei</button> in Deutschland. <button type="button" class="article-term" data-term-id="term-2">Am Wochenende</button> hat sie sich in Erfurt <button type="button" class="article-term" data-term-id="term-3">getroffen</button>. <button type="button" class="article-term" data-term-id="term-4">Dort</button> haben <button type="button" class="article-term" data-term-id="term-5">Mitglieder</button> einen neuen <button type="button" class="article-term article-term--default" data-term-id="term-6">Vorstand</button> für ganz Deutschland <button type="button" class="article-term" data-term-id="term-7">gewählt</button>.

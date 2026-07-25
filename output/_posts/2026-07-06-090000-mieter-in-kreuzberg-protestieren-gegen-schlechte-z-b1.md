@@ -1,16 +1,17 @@
 ---
-title: "Mieter in Kreuzberg protestieren gegen schlechte Zustände im Haus"
+title: Mieter in Kreuzberg protestieren gegen schlechte Zustände im Haus
 date: 2026-07-06 09:00:00
 level: B1
-topics: ["mieterschutz", "wohnungsverwahrlosung", "protest"]
+topics: &id001 [mieterschutz, wohnungsverwahrlosung, protest, Kreuzberg, Haus, Wrangelstraße,
+  Berlin-Kreuzberg]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260706-090000-mieter-in-kreuzberg-protestieren-gegen-schlechte-zust-nde-im-haus-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260706-090000-mieter-in-kreuzberg-protestieren-gegen-schlechte-zust-nde-im-haus-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Nachrichten
+description: In der Wrangelstraße 70 in Berlin-Kreuzberg protestierten Mieterinnen
+  und Mieter öffentlich gegen die Zustände in ihrem Haus. Unterstützer aus der...
+keywords: *id001
 ---
 
 In der Wrangelstraße 70 in Berlin-Kreuzberg protestierten Mieterinnen und Mieter öffentlich gegen die Zustände in ihrem Haus. Unterstützer aus der Nachbarschaft waren dabei. Die Bewohner berichten von großen Problemen. Im Winter fielen zeitweise Strom und Heizung aus. Im Hof liegt Müll, und das Treppenhaus wurde lange nicht gereinigt. Außerdem ist die Haustür seit Monaten kaputt. Deshalb kommen immer wieder fremde Personen in Hof und Keller.

@@ -1,16 +1,17 @@
 ---
-title: "Berliner Polizei prüft antisemitischen Vorfall in Prenzlauer Berg"
+title: Berliner Polizei prüft antisemitischen Vorfall in Prenzlauer Berg
 date: 2026-07-09 09:00:00
 level: B1
-topics: ["antisemitismus", "politische gewalt", "extremismus"]
+topics: &id001 [antisemitismus, politische gewalt, extremismus, Berliner Polizei,
+  Prenzlauer Berg, Berlin, Freitagnachmittag]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260709-090000-berliner-polizei-pruft-antisemitischen-vorfall-in-prenzlauer-berg-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260709-090000-berliner-polizei-pruft-antisemitischen-vorfall-in-prenzlauer-berg-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Nachrichten
+description: Die Polizei in Berlin prüft einen vermutlich antisemitischen Vorfall
+  in Prenzlauer Berg. Er geschah am Freitagnachmittag gegen 15.30 Uhr in der Fehrbelliner...
+keywords: *id001
 ---
 
 Die Polizei in Berlin <button type="button" class="article-term" data-term-id="term-2">prüft</button> einen <button type="button" class="article-term" data-term-id="term-3">vermutlich</button> antisemitischen <button type="button" class="article-term article-term--default" data-term-id="term-1">Vorfall</button> in Prenzlauer Berg. Er <button type="button" class="article-term" data-term-id="term-4">geschah</button> am <button type="button" class="article-term" data-term-id="term-5">Freitagnachmittag</button> <button type="button" class="article-term" data-term-id="term-6">gegen</button> 15.30 Uhr in der Fehrbelliner Straße. Der Ort <button type="button" class="article-term" data-term-id="term-7">liegt</button> <button type="button" class="article-term" data-term-id="term-8">zwischen</button> Choriner Straße und Kastanienallee. Nach ersten Informationen <button type="button" class="article-term article-term--default" data-term-id="term-9">beschimpften</button> zwei Personen ein <button type="button" class="article-term" data-term-id="term-10">Paar</button> mit <button type="button" class="article-term" data-term-id="term-11">Kinderwagen</button> <button type="button" class="article-term article-term--default" data-term-id="term-12">judenfeindlich</button>. In einem Video hört man außerdem <button type="button" class="article-term" data-term-id="term-13">Rufe</button> zur <button type="button" class="article-term" data-term-id="term-14">Unterstützung</button> der Hamas. Die Hamas ist eine islamistische Organisation, die Israel <button type="button" class="article-term" data-term-id="term-15">angegriffen</button> hat. Noch ist <button type="button" class="article-term" data-term-id="term-16">unklar</button>, ob die angegriffenen Personen jüdisch oder israelisch waren.

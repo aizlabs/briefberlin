@@ -1,16 +1,17 @@
 ---
-title: "Weniger Wohnungen in Berlin-Lankwitz"
+title: Weniger Wohnungen in Berlin-Lankwitz
 date: 2026-07-08 15:29:35
 level: A2
-topics: ["wohnungsbau", "gewerbefl\u00e4chen", "stadtentwicklung"]
+topics: &id001 [wohnungsbau, gewerbeflächen, stadtentwicklung, Berlin-Lankwitz, Berlin,
+  Kaiser-Wilhelm-Straße, Teltowkanal]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260708-152935-weniger-wohnungen-in-berlin-lankwitz-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260708-152935-weniger-wohnungen-in-berlin-lankwitz-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Politik
+description: Der Berliner Senat plant weniger neue Wohnungen in Berlin-Lankwitz. Der
+  Senat ist die Stadtregierung von Berlin. Es geht um ein großes Grundstück an der...
+keywords: *id001
 ---
 
 Der Berliner <button type="button" class="article-term article-term--default" data-term-id="term-3">Senat</button> <button type="button" class="article-term" data-term-id="term-2">plant</button> <button type="button" class="article-term" data-term-id="term-1">weniger</button> neue Wohnungen in Berlin-Lankwitz. Der <button type="button" class="article-term article-term--default" data-term-id="term-3">Senat</button> ist die <button type="button" class="article-term" data-term-id="term-4">Stadtregierung</button> von Berlin. Es geht um ein großes <button type="button" class="article-term article-term--default" data-term-id="term-5">Grundstück</button> an der Kaiser-Wilhelm-Straße.

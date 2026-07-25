@@ -1,16 +1,17 @@
 ---
-title: "Streit um Nahostpolitik eskaliert in linkem Berliner Zentrum"
+title: Streit um Nahostpolitik eskaliert in linkem Berliner Zentrum
 date: 2026-07-08 15:44:04
 level: B1
-topics: ["nahostkonflikt", "linke szene", "politische gewalt"]
+topics: &id001 [nahostkonflikt, linke szene, politische gewalt, Berliner, Berlin-Hellersdorf,
+  AJZ Kita, La Casa]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260708-154404-streit-um-nahostpolitik-eskaliert-in-linkem-berliner-zentrum-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260708-154404-streit-um-nahostpolitik-eskaliert-in-linkem-berliner-zentrum-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Politik
+description: Ein Streit über Nahostpolitik hat am Wochenende in Berlin-Hellersdorf
+  zu Gewalt geführt. Betroffen sind das Wohnprojekt AJZ Kita und der Veranstaltungsort...
+keywords: *id001
 ---
 
 Ein <button type="button" class="article-term" data-term-id="term-1">Streit</button> über <button type="button" class="article-term article-term--default" data-term-id="term-2">Nahostpolitik</button> hat <button type="button" class="article-term" data-term-id="term-3">am Wochenende</button> in Berlin-Hellersdorf zu <button type="button" class="article-term" data-term-id="term-4">Gewalt</button> geführt. <button type="button" class="article-term" data-term-id="term-5">Betroffen</button> sind das <button type="button" class="article-term article-term--default" data-term-id="term-6">Wohnprojekt</button> AJZ Kita und der <button type="button" class="article-term article-term--default" data-term-id="term-7">Veranstaltungsort</button> La Casa. Ein <button type="button" class="article-term article-term--default" data-term-id="term-6">Wohnprojekt</button> ist hier ein Haus, in dem Menschen <button type="button" class="article-term" data-term-id="term-8">gemeinsam</button> wohnen und sich politisch <button type="button" class="article-term" data-term-id="term-9">engagieren</button>. La Casa ist ein Ort für <button type="button" class="article-term" data-term-id="term-10">Treffen</button>, Diskussionen und <button type="button" class="article-term" data-term-id="term-11">Veranstaltungen</button>.

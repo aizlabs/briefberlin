@@ -1,16 +1,17 @@
 ---
-title: "Eltern streiten über Tannenhof-Schule an Kreuzberger Grundschule"
+title: Eltern streiten über Tannenhof-Schule an Kreuzberger Grundschule
 date: 2026-07-08 15:00:32
 level: B1
-topics: ["schulstandort", "suchtrehabilitation", "elternprotest"]
+topics: &id001 [schulstandort, suchtrehabilitation, elternprotest, Tannenhof-Schule,
+  Kreuzberger, Berlin-Kreuzberg, Grundschulgebäudes]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260708-150032-eltern-streiten-uber-tannenhof-schule-an-kreuzberger-grundschule-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260708-150032-eltern-streiten-uber-tannenhof-schule-an-kreuzberger-grundschule-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Nachrichten
+description: An der Rosa-Parks-Grundschule in Berlin-Kreuzberg gibt es Streit um neue
+  Räume für die Tannenhof-Schule. Diese Schule unterstützt Jugendliche und...
+keywords: *id001
 ---
 
 An der Rosa-Parks-<button type="button" class="article-term" data-term-id="term-1">Grundschule</button> in Berlin-Kreuzberg gibt es <button type="button" class="article-term" data-term-id="term-2">Streit</button> um neue <button type="button" class="article-term" data-term-id="term-3">Räume</button> für die Tannenhof-Schule. Diese Schule <button type="button" class="article-term" data-term-id="term-4">unterstützt</button> <button type="button" class="article-term" data-term-id="term-5">Jugendliche</button> und <button type="button" class="article-term" data-term-id="term-6">Erwachsene</button>, die <button type="button" class="article-term" data-term-id="term-7">früher</button> <button type="button" class="article-term article-term--default" data-term-id="term-8">suchtkrank</button> waren und wieder lernen wollen. Sie soll für zwei Jahre in einen Teil des Grundschulgebäudes ziehen. Viele Eltern erfuhren <button type="button" class="article-term" data-term-id="term-9">nach eigenen Angaben</button> erst spät von den <button type="button" class="article-term" data-term-id="term-10">Plänen</button>.

@@ -1,16 +1,18 @@
 ---
-title: "Neuer Häuserblock am Berliner Ostbahnhof"
+title: Neuer Häuserblock am Berliner Ostbahnhof
 date: 2026-07-05 09:00:00
 level: A2
-topics: ["b\u00fcrogeb\u00e4ude", "stadtentwicklung", "mischnutzung"]
+topics: &id001 [bürogebäude, stadtentwicklung, mischnutzung, Häuserblock, Berliner,
+  Ostbahnhof, B.YARD]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260705-090000-neuer-h-userblock-am-berliner-ostbahnhof-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260705-090000-neuer-h-userblock-am-berliner-ostbahnhof-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Stadtleben
+description: Am Berliner Ostbahnhof entsteht jetzt ein neuer Häuserblock. Er heißt
+  B.YARD und liegt an der Straße der Pariser Kommune 20. Der Bau an diesem Ort hat
+  diese...
+keywords: *id001
 ---
 
 Am Berliner Ostbahnhof <button type="button" class="article-term article-term--default" data-term-id="term-2">entsteht</button> jetzt ein neuer <button type="button" class="article-term article-term--default" data-term-id="term-1">Häuserblock</button>. Er heißt B.YARD und <button type="button" class="article-term" data-term-id="term-3">liegt</button> an der Straße der Pariser Kommune 20. Der <button type="button" class="article-term" data-term-id="term-4">Bau</button> an diesem <button type="button" class="article-term" data-term-id="term-5">Ort</button> hat diese Woche <button type="button" class="article-term" data-term-id="term-6">begonnen</button>.

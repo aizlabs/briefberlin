@@ -1,16 +1,17 @@
 ---
-title: "Neues Viertel am Molkenmarkt in Berlin"
+title: Neues Viertel am Molkenmarkt in Berlin
 date: 2026-06-30 10:42:47
 level: A2
-topics: ["deutsch"]
+topics: &id001 [Neues Viertel, Molkenmarkt, Berlin, Der Molkenmarkt, europäische,
+  Italien, Tschechien]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/06/20260630-104247-neues-viertel-am-molkenmarkt-in-berlin-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260630-104247-neues-viertel-am-molkenmarkt-in-berlin-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Stadtleben
+description: Der Molkenmarkt in Berlin wird neu gestaltet. Hier trifft Tradition auf
+  Moderne. Nach einem Wettbewerb stehen die neuen Pläne fest. Die Gebäude haben...
+keywords: *id001
 ---
 
 Der Molkenmarkt in Berlin wird neu gestaltet. Hier trifft Tradition auf Moderne. Nach einem Wettbewerb stehen die neuen Pläne fest. Die Gebäude haben europäische Stile. Sie kommen aus Italien, Skandinavien und Tschechien.

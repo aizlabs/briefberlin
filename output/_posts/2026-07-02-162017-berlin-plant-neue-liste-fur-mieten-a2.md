@@ -1,16 +1,17 @@
 ---
-title: "Berlin plant neue Liste für Mieten"
+title: Berlin plant neue Liste für Mieten
 date: 2026-07-02 16:20:17
 level: A2
-topics: ["deutsch"]
+topics: &id001 [Berlin, Parlament von Berlin, Stadt Berlin, Wohnfläche, Computerprogramme,
+  CDU, SPD]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260702-162017-berlin-plant-neue-liste-fur-mieten-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260702-162017-berlin-plant-neue-liste-fur-mieten-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Stadtleben
+description: Berlin will eine neue Liste für Mieten machen. Das Parlament von Berlin
+  soll darüber entscheiden. Die Liste betrifft Wohnungen in der Stadt Berlin.
+keywords: *id001
 ---
 
 Berlin will eine neue Liste für <button type="button" class="article-term article-term--default" data-term-id="term-1">Mieten</button> machen. Das Parlament von Berlin soll <button type="button" class="article-term" data-term-id="term-2">darüber</button> <button type="button" class="article-term" data-term-id="term-3">entscheiden</button>. Die Liste <button type="button" class="article-term" data-term-id="term-4">betrifft</button> <button type="button" class="article-term" data-term-id="term-5">Wohnungen</button> in der Stadt Berlin.

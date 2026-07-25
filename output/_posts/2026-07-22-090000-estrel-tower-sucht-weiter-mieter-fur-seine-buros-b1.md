@@ -1,17 +1,19 @@
 ---
-title: "Estrel Tower sucht weiter Mieter für seine Büros"
+title: Estrel Tower sucht weiter Mieter für seine Büros
 date: 2026-07-22 09:00:00
-author: "clara-becker"
+author: clara-becker
 level: B1
-topics: ["b\u00fcrovermietung", "b\u00fcromarkt", "hochhaus"]
+topics: &id001 [bürovermietung, büromarkt, hochhaus, Estrel Tower, Berlin-Neukölln,
+  Berlins, Mietern]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260722-090000-estrel-tower-sucht-weiter-mieter-fur-seine-buros-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260722-090000-estrel-tower-sucht-weiter-mieter-fur-seine-buros-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Nachrichten
+description: Der Estrel Tower in Berlin-Neukölln soll Berlins erstes Hochhaus mit
+  klar internationalem Anspruch werden. Doch ausgerechnet bei den geplanten Büros
+  kommt...
+keywords: *id001
 ---
 
 Der Estrel Tower in Berlin-Neukölln <button type="button" class="article-term" data-term-id="term-2">soll</button> Berlins erstes <button type="button" class="article-term article-term--default" data-term-id="term-3">Hochhaus</button> mit klar internationalem <button type="button" class="article-term article-term--default" data-term-id="term-4">Anspruch</button> werden. Doch <button type="button" class="article-term" data-term-id="term-5">ausgerechnet</button> bei den <button type="button" class="article-term" data-term-id="term-6">geplanten</button> Büros <button type="button" class="article-term" data-term-id="term-7">kommt</button> die Suche nach Mietern nur <button type="button" class="article-term" data-term-id="term-8">langsam</button> <button type="button" class="article-term" data-term-id="term-9">voran</button>. <button type="button" class="article-term" data-term-id="term-10">Rund</button> ein Jahr <button type="button" class="article-term" data-term-id="term-11">nach dem Start</button> ist noch kein <button type="button" class="article-term article-term--default" data-term-id="term-12">Mietvertrag</button> <button type="button" class="article-term" data-term-id="term-13">öffentlich bekannt</button>. <button type="button" class="article-term" data-term-id="term-14">Es geht um</button> sieben <button type="button" class="article-term" data-term-id="term-15">Büroetagen</button> in einem <button type="button" class="article-term" data-term-id="term-16">Gebäude</button> von 176 Metern <button type="button" class="article-term" data-term-id="term-17">Höhe</button>.

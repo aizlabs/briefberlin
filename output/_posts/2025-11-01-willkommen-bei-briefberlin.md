@@ -1,12 +1,17 @@
 ---
-title: "Willkommen bei BriefBerlin!"
+title: Willkommen bei BriefBerlin!
 date: 2025-11-01 00:00:00
 level: A2
-topics: ["deutsch lernen", "willkommen"]
+topics: &id001 [deutsch lernen, willkommen, BriefBerlin! Hallo, BriefBerlin, Clara
+    Becker, Worterklärungen, Clara]
 sources: []
 audio: null
 reading_time: 2
-summary: "Eine kurze Einführung in BriefBerlin und wie du mit einfachen deutschen Nachrichten üben kannst."
+summary: Eine kurze Einführung in BriefBerlin und wie du mit einfachen deutschen Nachrichten
+  üben kannst.
+category: Nachrichten
+description: Hallo und willkommen!
+keywords: *id001
 ---
 
 Hallo und willkommen!

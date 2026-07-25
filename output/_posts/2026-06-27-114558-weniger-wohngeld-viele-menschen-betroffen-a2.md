@@ -2,16 +2,16 @@
 title: 'Weniger Wohngeld: Viele Menschen betroffen'
 date: 2026-06-27 11:45:58
 level: A2
-topics:
-- deutsch
+topics: &id001 [Wohngeld, Deutschland, Ministerin Verena Hubertz, Nächstes Jahr, Mayra
+    Vrieseema, Grünen, Heizkosten]
 sources: []
-audio:
-  url: https://media.briefberlin.de/articles/2026/06/20260627-114558-weniger-wohngeld-viele-menschen-betroffen-a2/article.mp3
-  format: mp3
-  mime_type: audio/mpeg
-  provider: openai
-  voice: alloy
+audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260627-114558-weniger-wohngeld-viele-menschen-betroffen-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Stadtleben
+description: In Deutschland gibt es Streit über weniger Geld für Wohngeld. Ministerin
+  Verena Hubertz will weniger Geld ausgeben. Das betrifft viele Menschen, die wenig...
+keywords: *id001
 ---
 
 In Deutschland gibt es Streit über weniger Geld für Wohngeld. Ministerin Verena Hubertz will weniger Geld ausgeben. Das betrifft viele Menschen, die wenig verdienen. Sie brauchen das Geld, um Miete zu zahlen. Nächstes Jahr gibt es 738 Millionen Euro weniger für Wohngeld. Auch die Länder geben weniger Geld. 

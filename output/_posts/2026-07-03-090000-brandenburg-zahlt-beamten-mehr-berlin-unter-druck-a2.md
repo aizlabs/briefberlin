@@ -1,16 +1,17 @@
 ---
-title: "Brandenburg zahlt Beamten mehr, Berlin unter Druck"
+title: Brandenburg zahlt Beamten mehr, Berlin unter Druck
 date: 2026-07-03 09:00:00
 level: A2
-topics: ["beamtenbesoldung", "gehaltsanpassung", "\u00f6ffentlicher dienst"]
+topics: &id001 [beamtenbesoldung, gehaltsanpassung, öffentlicher dienst, Brandenburg,
+  Berlin, Landes, Zeit]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260703-090000-brandenburg-zahlt-beamten-mehr-berlin-unter-druck-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260703-090000-brandenburg-zahlt-beamten-mehr-berlin-unter-druck-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Politik
+description: Brandenburg will seinen Beamten deutlich mehr Geld zahlen. Beamte sind
+  Menschen im Staatsdienst. Dazu gehören zum Beispiel Polizisten und Lehrer. Das gilt...
+keywords: *id001
 ---
 
 Brandenburg will seinen <button type="button" class="article-term article-term--default" data-term-id="term-1">Beamten</button> <button type="button" class="article-term" data-term-id="term-2">deutlich</button> mehr <button type="button" class="article-term" data-term-id="term-3">Geld</button> zahlen. Beamte sind Menschen im <button type="button" class="article-term article-term--default" data-term-id="term-4">Staatsdienst</button>. Dazu <button type="button" class="article-term" data-term-id="term-5">gehören</button> <button type="button" class="article-term" data-term-id="term-6">zum Beispiel</button> <button type="button" class="article-term" data-term-id="term-7">Polizisten</button> und <button type="button" class="article-term" data-term-id="term-8">Lehrer</button>. Das <button type="button" class="article-term" data-term-id="term-9">gilt</button> für <button type="button" class="article-term" data-term-id="term-10">etwa</button> 30.000 Menschen im <button type="button" class="article-term" data-term-id="term-11">Dienst</button> des Landes. Das neue <button type="button" class="article-term" data-term-id="term-3">Geld</button> <button type="button" class="article-term" data-term-id="term-9">gilt</button> auch für die Zeit <button type="button" class="article-term" data-term-id="term-12">seit</button> dem 1. Januar 2026. Berlin <button type="button" class="article-term" data-term-id="term-13">schaut</button> nun <button type="button" class="article-term" data-term-id="term-14">genau</button> auf das <button type="button" class="article-term article-term--default" data-term-id="term-15">Nachbarland</button> Brandenburg.

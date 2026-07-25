@@ -1,17 +1,18 @@
 ---
-title: "Leere Büros als Chance für Berlin"
+title: Leere Büros als Chance für Berlin
 date: 2026-07-15 16:06:01
-author: "clara-becker"
+author: clara-becker
 level: A2
-topics: ["wohnungskrise", "bezahlbarer wohnraum", "b\u00fcroleerstand"]
+topics: &id001 [wohnungskrise, bezahlbarer wohnraum, büroleerstand, Leere Büros, Berlin,
+  Stadt, Bürohäusern]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260715-160601-leere-buros-als-chance-fur-berlin-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260715-160601-leere-buros-als-chance-fur-berlin-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Stadtleben
+description: In Berlin fehlen viele bezahlbare Wohnungen. Gleichzeitig stehen viele
+  Büros leer. Fachleute sehen darin eine Chance für neue Wohnungen in der Stadt.
+keywords: *id001
 ---
 
 In Berlin <button type="button" class="article-term article-term--default" data-term-id="term-1">fehlen</button> viele <button type="button" class="article-term article-term--default" data-term-id="term-2">bezahlbare</button> <button type="button" class="article-term article-term--default" data-term-id="term-3">Wohnungen</button>. <button type="button" class="article-term" data-term-id="term-4">Gleichzeitig</button> stehen viele Büros <button type="button" class="article-term" data-term-id="term-5">leer</button>. <button type="button" class="article-term article-term--default" data-term-id="term-6">Fachleute</button> sehen <button type="button" class="article-term" data-term-id="term-7">darin</button> eine Chance für neue <button type="button" class="article-term article-term--default" data-term-id="term-3">Wohnungen</button> in der Stadt.

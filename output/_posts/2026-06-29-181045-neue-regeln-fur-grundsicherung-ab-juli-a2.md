@@ -1,16 +1,17 @@
 ---
-title: "Neue Regeln für Grundsicherung ab Juli"
+title: Neue Regeln für Grundsicherung ab Juli
 date: 2026-06-29 18:10:45
 level: A2
-topics: ["deutsch"]
+topics: &id001 [Bundesagentur für Arbeit, Sanktionen, Vorstellungsgespräch, Bewerbungsgespräch,
+  Bürgergeld]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/06/20260629-181045-neue-regeln-fur-grundsicherung-ab-juli-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260629-181045-neue-regeln-fur-grundsicherung-ab-juli-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Politik
+description: Die Bundesagentur für Arbeit hat neue Regeln. Ab Juli gibt es strengere
+  **Sanktionen** für Menschen, die **Grundsicherung** bekommen. Wenn jemand betrunken...
+keywords: *id001
 ---
 
 Die Bundesagentur für Arbeit hat neue Regeln. Ab Juli gibt es strengere **Sanktionen** für Menschen, die **Grundsicherung** bekommen. Wenn jemand betrunken oder ungepflegt zu einem **Vorstellungsgespräch** kommt, kann das **Jobcenter** die **Unterstützung kürzen**. Diese Änderung ist Teil einer neuen Anweisung der Regierung.

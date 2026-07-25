@@ -1,16 +1,17 @@
 ---
-title: "Kai Wegner gibt CDU-Spitzenkandidatur in Berlin überraschend ab"
+title: Kai Wegner gibt CDU-Spitzenkandidatur in Berlin überraschend ab
 date: 2026-07-11 16:22:35
 level: B1
-topics: ["berliner landespolitik", "spitzenkandidatur", "abgeordnetenhauswahl"]
+topics: &id001 [berliner landespolitik, spitzenkandidatur, abgeordnetenhauswahl, Kai
+    Wegner, Berlin, Berlins, Regierender]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260711-162235-kai-wegner-gibt-cdu-spitzenkandidatur-in-berlin-uberraschend-ab-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260711-162235-kai-wegner-gibt-cdu-spitzenkandidatur-in-berlin-uberraschend-ab-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Politik
+description: Berlins Regierender Bürgermeister Kai Wegner zieht sich als CDU-Spitzenkandidat
+  für die Wahl zum Abgeordnetenhaus zurück. Wenige Wochen zuvor hatte seine...
+keywords: *id001
 ---
 
 Berlins <button type="button" class="article-term article-term--default" data-term-id="term-1">Regierender Bürgermeister</button> Kai Wegner zieht sich als CDU-<button type="button" class="article-term article-term--default" data-term-id="term-2">Spitzenkandidat</button> für die <button type="button" class="article-term" data-term-id="term-3">Wahl</button> zum Abgeordnetenhaus zurück. <button type="button" class="article-term" data-term-id="term-4">Wenige Wochen zuvor</button> hatte seine Partei ihn für die <button type="button" class="article-term" data-term-id="term-3">Wahl</button> am 20. September nominiert. Am Freitag <button type="button" class="article-term" data-term-id="term-5">erklärte</button> Wegner, er könne mit wichtigen Themen für Berlin nicht mehr genug <button type="button" class="article-term article-term--default" data-term-id="term-6">durchdringen</button>. Er will aber <button type="button" class="article-term" data-term-id="term-7">vorerst</button> <button type="button" class="article-term" data-term-id="term-8">Regierungschef</button> bleiben und seinen <button type="button" class="article-term" data-term-id="term-9">Wahlkreis</button> weiter direkt <button type="button" class="article-term" data-term-id="term-10">vertreten</button>. Den CDU-<button type="button" class="article-term article-term--default" data-term-id="term-11">Landesvorsitz</button> gibt er ab, und ein <button type="button" class="article-term" data-term-id="term-12">Senatorenamt</button> nach der <button type="button" class="article-term" data-term-id="term-3">Wahl</button> <button type="button" class="article-term" data-term-id="term-13">schließt er aus</button>.

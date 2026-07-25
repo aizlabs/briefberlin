@@ -1,16 +1,17 @@
 ---
-title: "Streit um Wegners Telefonate in Berlin"
+title: Streit um Wegners Telefonate in Berlin
 date: 2026-07-12 14:30:14
 level: A2
-topics: ["stromausfall", "krisenmanagement", "regierungskommunikation"]
+topics: &id001 [stromausfall, krisenmanagement, regierungskommunikation, Wegners Telefonate,
+  Berlin, Kai Wegner, CDU]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260712-143014-streit-um-wegners-telefonate-in-berlin-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260712-143014-streit-um-wegners-telefonate-in-berlin-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Politik
+description: In Berlin gibt es Streit um Kai Wegner von der CDU. Er ist der Chef der
+  Regierung in Berlin. Anfang Januar gab es in Berlin einen schweren Stromausfall.
+keywords: *id001
 ---
 
 In Berlin <button type="button" class="article-term" data-term-id="term-3">gibt es</button> <button type="button" class="article-term" data-term-id="term-2">Streit um</button> Kai Wegner von der CDU. Er ist der <button type="button" class="article-term" data-term-id="term-4">Chef</button> der <button type="button" class="article-term" data-term-id="term-5">Regierung</button> in Berlin. <button type="button" class="article-term" data-term-id="term-6">Anfang</button> Januar gab es in Berlin einen <button type="button" class="article-term" data-term-id="term-7">schweren</button> <button type="button" class="article-term article-term--default" data-term-id="term-8">Stromausfall</button>.

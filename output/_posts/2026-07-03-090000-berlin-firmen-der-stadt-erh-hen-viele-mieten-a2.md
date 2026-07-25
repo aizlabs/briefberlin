@@ -1,16 +1,17 @@
 ---
-title: "Berlin: Firmen der Stadt erhöhen viele Mieten"
+title: 'Berlin: Firmen der Stadt erhöhen viele Mieten'
 date: 2026-07-03 09:00:00
 level: A2
-topics: ["mieterh\u00f6hungen", "wohnungsbauunternehmen", "mietregulierung"]
+topics: &id001 [mieterhöhungen, wohnungsbauunternehmen, mietregulierung, Berlin, Stadt,
+  Berlins, Wohnungsfirmen der Stadt]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260703-090000-berlin-firmen-der-stadt-erh-hen-viele-mieten-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260703-090000-berlin-firmen-der-stadt-erh-hen-viele-mieten-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Stadtleben
+description: Seit 2024 steigen viele Mieten bei Berlins Wohnungsfirmen der Stadt.
+  Diese Firmen gehören dem Land Berlin und vermieten etwa jede fünfte Wohnung. In...
+keywords: *id001
 ---
 
 Seit 2024 <button type="button" class="article-term" data-term-id="term-2">steigen</button> viele <button type="button" class="article-term article-term--default" data-term-id="term-1">Mieten</button> bei Berlins <button type="button" class="article-term article-term--default" data-term-id="term-3">Wohnungsfirmen</button> der Stadt. Diese Firmen <button type="button" class="article-term" data-term-id="term-4">gehören</button> dem Land Berlin und <button type="button" class="article-term article-term--default" data-term-id="term-5">vermieten</button> <button type="button" class="article-term" data-term-id="term-6">etwa</button> <button type="button" class="article-term" data-term-id="term-7">jede fünfte</button> Wohnung. In <button type="button" class="article-term" data-term-id="term-8">zweieinhalb</button> Jahren haben sie <button type="button" class="article-term" data-term-id="term-9">über</button> 420.000 Briefe mit <button type="button" class="article-term" data-term-id="term-10">höheren</button> <button type="button" class="article-term article-term--default" data-term-id="term-1">Mieten</button> geschickt.

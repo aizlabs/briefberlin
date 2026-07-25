@@ -1,16 +1,17 @@
 ---
-title: "Mehr antisemitische Straftaten in Berlin trotz weniger Nahost-Fälle"
+title: Mehr antisemitische Straftaten in Berlin trotz weniger Nahost-Fälle
 date: 2026-07-04 09:00:00
 level: B1
-topics: ["antisemitismus", "straftaten", "strafverfolgung"]
+topics: &id001 [antisemitismus, straftaten, strafverfolgung, Berlin, Nahostkonflikt,
+  Jahr 2024, Hamas]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260704-090000-mehr-antisemitische-straftaten-in-berlin-trotz-weniger-nahost-f-lle-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260704-090000-mehr-antisemitische-straftaten-in-berlin-trotz-weniger-nahost-f-lle-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Nachrichten
+description: Berlin meldet für 2025 mehr Ermittlungsverfahren wegen antisemitischer
+  Straftaten. Ermittlungsverfahren sind Fälle, die Polizei und Staatsanwaltschaft...
+keywords: *id001
 ---
 
 Berlin <button type="button" class="article-term" data-term-id="term-3">meldet</button> für 2025 mehr <button type="button" class="article-term article-term--default" data-term-id="term-2">Ermittlungsverfahren</button> <button type="button" class="article-term" data-term-id="term-4">wegen</button> antisemitischer <button type="button" class="article-term article-term--default" data-term-id="term-1">Straftaten</button>. <button type="button" class="article-term article-term--default" data-term-id="term-2">Ermittlungsverfahren</button> sind Fälle, die Polizei und <button type="button" class="article-term article-term--default" data-term-id="term-5">Staatsanwaltschaft</button> <button type="button" class="article-term" data-term-id="term-6">prüfen</button>. Die <button type="button" class="article-term article-term--default" data-term-id="term-7">Behörden</button> <button type="button" class="article-term" data-term-id="term-8">zählten</button> 820 <button type="button" class="article-term" data-term-id="term-9">solche</button> Fälle, nach 756 im Jahr 2024. Anders sieht es bei allen <button type="button" class="article-term" data-term-id="term-10">Verfahren</button> mit <button type="button" class="article-term" data-term-id="term-11">Bezug</button> zum Nahostkonflikt aus. Dort <button type="button" class="article-term" data-term-id="term-13">gingen</button> die Zahlen nach dem starken <button type="button" class="article-term article-term--default" data-term-id="term-12">Anstieg</button> im Jahr 2024 zurück.

@@ -1,16 +1,17 @@
 ---
-title: "Berlin kämpft mit alten IT-Systemen und hohen Kosten"
+title: Berlin kämpft mit alten IT-Systemen und hohen Kosten
 date: 2026-07-01 13:42:23
 level: B1
-topics: ["deutsch"]
+topics: &id001 [Berlin, IT-Infrastruktur, Windows-Computer, Microsoft, IT-Systeme,
+  Andreas Gundlack, Infrastruktur-Abteilung]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260701-134223-berlin-k-mpft-mit-alten-it-systemen-und-hohen-kosten-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260701-134223-berlin-k-mpft-mit-alten-it-systemen-und-hohen-kosten-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Wirtschaft
+description: In Berlin gibt es Probleme mit der alten IT-Infrastruktur der öffentlichen
+  Verwaltung. Diese **veralteten Systeme** verursachen hohe Kosten. Eigentlich...
+keywords: *id001
 ---
 
 In Berlin gibt es Probleme mit der alten IT-Infrastruktur der öffentlichen Verwaltung. Diese **veralteten Systeme** verursachen hohe Kosten. Eigentlich sollten bis Oktober 2025 alle Windows-Computer auf die neueste Version umgestellt werden. Doch es gibt große Verzögerungen, weil viele Geräte noch nicht aktualisiert sind. Deshalb muss Berlin viel Geld für zusätzlichen Support von Microsoft bezahlen.

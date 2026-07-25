@@ -1,17 +1,18 @@
 ---
-title: "Viele Menschen in Berlin verdienen wenig"
+title: Viele Menschen in Berlin verdienen wenig
 date: 2026-07-17 09:00:00
-author: "clara-becker"
+author: clara-becker
 level: A2
-topics: ["stundenlohn", "verdienstverteilung", "bruttoverdienst"]
+topics: &id001 [stundenlohn, verdienstverteilung, bruttoverdienst, Berlin, Brandenburg,
+  Brutto, Berliner]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260717-090000-viele-menschen-in-berlin-verdienen-wenig-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260717-090000-viele-menschen-in-berlin-verdienen-wenig-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Wirtschaft
+description: Neue Zahlen zeigen die Löhne in Berlin und Brandenburg. Die Zahlen kommen
+  aus dem April 2025. In Berlin verdienen viele Menschen mehr als in Brandenburg,...
+keywords: *id001
 ---
 
 Neue <button type="button" class="article-term" data-term-id="term-1">Zahlen</button> <button type="button" class="article-term" data-term-id="term-2">zeigen</button> die <button type="button" class="article-term article-term--default" data-term-id="term-3">Löhne</button> in Berlin und Brandenburg. Die <button type="button" class="article-term" data-term-id="term-1">Zahlen</button> kommen aus dem April 2025. In Berlin <button type="button" class="article-term article-term--default" data-term-id="term-4">verdienen</button> viele Menschen <button type="button" class="article-term" data-term-id="term-21">mehr als</button> in Brandenburg, aber viele bekommen <button type="button" class="article-term" data-term-id="term-5">wenig</button> Geld.

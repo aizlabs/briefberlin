@@ -1,17 +1,19 @@
 ---
-title: "Viele Beschäftigte verdienen deutlich weniger als der Durchschnitt"
+title: Viele Beschäftigte verdienen deutlich weniger als der Durchschnitt
 date: 2026-07-17 09:00:00
-author: "clara-becker"
+author: clara-becker
 level: B1
-topics: ["stundenlohn", "verdienstverteilung", "bruttoverdienst"]
+topics: &id001 [stundenlohn, verdienstverteilung, bruttoverdienst, Berlin, Brandenburg,
+  rechnerische, Brutto]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260717-090000-viele-besch-ftigte-verdienen-deutlich-weniger-als-der-durchschnitt-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260717-090000-viele-besch-ftigte-verdienen-deutlich-weniger-als-der-durchschnitt-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Wirtschaft
+description: Die Löhne in Berlin und Brandenburg unterscheiden sich weiter stark.
+  Das zeigen Zahlen für April 2025. In beiden Ländern verdient aber ein großer Teil
+  der...
+keywords: *id001
 ---
 
 Die <button type="button" class="article-term article-term--default" data-term-id="term-2">Löhne</button> in Berlin und Brandenburg <button type="button" class="article-term" data-term-id="term-11">unterscheiden sich</button> <button type="button" class="article-term" data-term-id="term-12">weiter</button> <button type="button" class="article-term" data-term-id="term-13">stark</button>. Das zeigen <button type="button" class="article-term" data-term-id="term-14">Zahlen</button> für April 2025. In beiden <button type="button" class="article-term" data-term-id="term-15">Ländern</button> verdient aber ein <button type="button" class="article-term" data-term-id="term-16">großer Teil</button> der Beschäftigten <button type="button" class="article-term" data-term-id="term-10">deutlich</button> weniger als der <button type="button" class="article-term" data-term-id="term-17">rechnerische</button> <button type="button" class="article-term article-term--default" data-term-id="term-3">Durchschnitt</button>.

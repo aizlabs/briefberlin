@@ -1,16 +1,17 @@
 ---
-title: "Rekordhitze in Europa: Maßnahmen und Herausforderungen"
+title: 'Rekordhitze in Europa: Maßnahmen und Herausforderungen'
 date: 2026-06-29 17:53:59
 level: B1
-topics: ["deutsch"]
+topics: &id001 [Europa, Hitzewelle, Frankreich, Stéphanie Rist, Deutschland, Grad
+    Celsius, Berliner]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/06/20260629-175359-rekordhitze-in-europa-ma-nahmen-und-herausforderungen-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260629-175359-rekordhitze-in-europa-ma-nahmen-und-herausforderungen-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Nachrichten
+description: In den letzten Tagen hat eine extreme **Hitzewelle** Europa getroffen.
+  In Frankreich gab es durch die Hitze etwa 1000 zusätzliche Todesfälle. Die genaue...
+keywords: *id001
 ---
 
 In den letzten Tagen hat eine extreme **Hitzewelle** Europa getroffen. In Frankreich gab es durch die Hitze etwa 1000 zusätzliche Todesfälle. Die genaue Zahl könnte höher sein, da noch Daten aus Pflegeheimen fehlen. Besonders betroffen sind ältere Menschen über 65 Jahre. Gesundheitsministerin Stéphanie Rist erklärte, dass die Folgen der Hitze noch bis zu zehn Tage nach dem Ende spürbar sein könnten.

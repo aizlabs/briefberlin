@@ -1,16 +1,17 @@
 ---
-title: "Neues Wohnquartier mit Klimapark an der Spree geplant"
+title: Neues Wohnquartier mit Klimapark an der Spree geplant
 date: 2026-07-04 09:00:00
 level: B1
-topics: ["stadtquartier", "wohnungsbau", "sozialwohnungen"]
+topics: &id001 [stadtquartier, wohnungsbau, sozialwohnungen, Klimapark an der Spree,
+  Friedrichshain-Kreuzberg, Schillingbrücke, Köpenicker Straße]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260704-090000-neues-wohnquartier-mit-klimapark-an-der-spree-geplant-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260704-090000-neues-wohnquartier-mit-klimapark-an-der-spree-geplant-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Nachrichten
+description: Auf dem Gelände der früheren Victoriaspeicher in Friedrichshain-Kreuzberg
+  soll ein großes neues Stadtviertel entstehen. Es liegt zwischen Spreeufer,...
+keywords: *id001
 ---
 
 Auf dem <button type="button" class="article-term article-term--default" data-term-id="term-1">Gelände</button> der <button type="button" class="article-term" data-term-id="term-2">früheren</button> Victoriaspeicher in Friedrichshain-Kreuzberg soll ein großes neues <button type="button" class="article-term" data-term-id="term-3">Stadtviertel</button> <button type="button" class="article-term" data-term-id="term-4">entstehen</button>. Es liegt zwischen Spreeufer, Schillingbrücke und Köpenicker Straße. Geplant sind <button type="button" class="article-term" data-term-id="term-5">rund</button> 1000 Wohnungen und ein <button type="button" class="article-term" data-term-id="term-6">Klimapark</button> am Wasser. Dieser Park soll <button type="button" class="article-term" data-term-id="term-7">öffentlich</button> sein und bei Hitze sowie <button type="button" class="article-term" data-term-id="term-8">starkem Regen</button> helfen. <button type="button" class="article-term" data-term-id="term-9">Zurzeit</button> nutzt die Berliner Hafen- und Lagerhausgesellschaft das <button type="button" class="article-term article-term--default" data-term-id="term-10">Areal</button> noch als <button type="button" class="article-term" data-term-id="term-11">Lagerfläche</button>. <button type="button" class="article-term" data-term-id="term-12">Nach aktuellem Stand</button> beginnt der Bau im Jahr 2030.

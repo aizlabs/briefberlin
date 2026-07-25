@@ -1,16 +1,18 @@
 ---
-title: "Millionenaufträge bringen Berlins zentralen IT-Dienstleister zusätzlich unter Druck"
+title: Millionenaufträge bringen Berlins zentralen IT-Dienstleister zusätzlich unter
+  Druck
 date: 2026-07-13 19:47:03
 level: B1
-topics: ["vergabeverfahren", "korruptionsverdacht", "it-dienstleister"]
+topics: &id001 [vergabeverfahren, korruptionsverdacht, it-dienstleister, Berlins,
+  Berliner, Berliner Verwaltung, Maria Borelli]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260713-194703-millionenauftr-ge-bringen-berlins-zentralen-it-dienstleister-zus-tzlich-unter-druck-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260713-194703-millionenauftr-ge-bringen-berlins-zentralen-it-dienstleister-zus-tzlich-unter-druck-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Wirtschaft
+description: Das Berliner IT-Dienstleistungszentrum steht derzeit stark unter Druck.
+  Die öffentliche Einrichtung kümmert sich um Technik und digitale Dienste für die...
+keywords: *id001
 ---
 
 Das Berliner IT-Dienstleistungszentrum steht derzeit stark <button type="button" class="article-term article-term--default" data-term-id="term-1">unter Druck</button>. Die <button type="button" class="article-term article-term--default" data-term-id="term-2">öffentliche Einrichtung</button> <button type="button" class="article-term" data-term-id="term-3">kümmert sich</button> um Technik und digitale <button type="button" class="article-term" data-term-id="term-4">Dienste</button> für die Berliner Verwaltung. Schon vorher war ihre <button type="button" class="article-term article-term--default" data-term-id="term-5">Finanzlage</button> <button type="button" class="article-term" data-term-id="term-6">angespannt</button>. Nun kommen neue <button type="button" class="article-term article-term--default" data-term-id="term-7">Vorwürfe</button> gegen die Vorständin Maria Borelli <button type="button" class="article-term" data-term-id="term-8">hinzu</button>, die zur <button type="button" class="article-term" data-term-id="term-9">Leitung</button> gehört.

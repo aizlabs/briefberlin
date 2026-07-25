@@ -1,17 +1,19 @@
 ---
-title: "Drei Brüder nach tödlichen Schüssen in Berlin angeklagt"
+title: Drei Brüder nach tödlichen Schüssen in Berlin angeklagt
 date: 2026-07-16 23:09:16
-author: "clara-becker"
+author: clara-becker
 level: B1
-topics: ["blutrache", "mordanklage", "waffengesetz"]
+topics: &id001 [blutrache, mordanklage, waffengesetz, Berlin, Schüssen, Berlin-Weißensee,
+  Gustav-Adolf-Straße]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260716-230916-drei-bruder-nach-t-dlichen-schussen-in-berlin-angeklagt-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260716-230916-drei-bruder-nach-t-dlichen-schussen-in-berlin-angeklagt-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Nachrichten
+description: Nach tödlichen Schüssen auf einen 44-jährigen Mann in Berlin-Weißensee
+  stehen drei Brüder im Mittelpunkt einer Anklage. Die Tat geschah am frühen Morgen
+  des...
+keywords: *id001
 ---
 
 Nach <button type="button" class="article-term article-term--default" data-term-id="term-1">tödlichen Schüssen</button> auf einen 44-jährigen Mann in Berlin-Weißensee stehen drei Brüder <button type="button" class="article-term" data-term-id="term-2">im Mittelpunkt</button> einer <button type="button" class="article-term article-term--default" data-term-id="term-3">Anklage</button>. Die <button type="button" class="article-term" data-term-id="term-4">Tat</button> <button type="button" class="article-term" data-term-id="term-5">geschah</button> am frühen Morgen des 31. Januar 2026 vor einem <button type="button" class="article-term" data-term-id="term-6">Wohnhaus</button> in der Gustav-Adolf-Straße. Nun muss das Berliner Landgericht über den Fall <button type="button" class="article-term" data-term-id="term-7">entscheiden</button>.

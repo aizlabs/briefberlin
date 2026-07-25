@@ -2,16 +2,16 @@
 title: Rentenkommission schlägt Reformen für bessere Verwaltung vor
 date: 2026-06-27 01:17:55
 level: B1
-topics:
-- deutsch
+topics: &id001 [Rentenkommission, Deutsche, Kommission, Deutschland, Deutschen Rentenversicherung
+    Bund, Bundesagentur für Arbeit, CDU]
 sources: []
-audio:
-  url: https://media.briefberlin.de/articles/2026/06/20260627-011755-rentenkommission-schl-gt-reformen-fur-bessere-verwaltung-vor-b1/article.mp3
-  format: mp3
-  mime_type: audio/mpeg
-  provider: openai
-  voice: alloy
+audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260627-011755-rentenkommission-schl-gt-reformen-fur-bessere-verwaltung-vor-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Wirtschaft
+description: Die **Rentenkommission** hat in einem Bericht die **Deutsche Rentenversicherung**
+  kritisiert und Reformen vorgeschlagen. Die Experten sagen, dass die...
+keywords: *id001
 ---
 
 Die **Rentenkommission** hat in einem Bericht die **Deutsche Rentenversicherung** kritisiert und Reformen vorgeschlagen. Die Experten sagen, dass die Organisation **schwerfällig und ineffizient** ist. Dadurch wird viel Geld verschwendet. Die Rentenversicherung besteht aus 16 unabhängigen Trägern. Diese Struktur macht Entscheidungen langsam und schwierig.

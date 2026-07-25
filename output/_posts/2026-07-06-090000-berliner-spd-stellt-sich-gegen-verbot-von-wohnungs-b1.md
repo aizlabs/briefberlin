@@ -1,16 +1,18 @@
 ---
-title: "Berliner SPD stellt sich gegen Verbot von Wohnungs-Enteignungen"
+title: Berliner SPD stellt sich gegen Verbot von Wohnungs-Enteignungen
 date: 2026-07-06 09:00:00
 level: B1
-topics: ["wohnungspolitik", "enteignungsverbot", "vergesellschaftung"]
+topics: &id001 [wohnungspolitik, enteignungsverbot, vergesellschaftung, Berliner,
+  SPD, Verbot von Wohnungs-Enteignungen, Gemeineigentum]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260706-090000-berliner-spd-stellt-sich-gegen-verbot-von-wohnungs-enteignungen-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260706-090000-berliner-spd-stellt-sich-gegen-verbot-von-wohnungs-enteignungen-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Politik
+description: 'Die Bundesregierung will künftig verhindern, dass Bundesländer große
+  private Wohnungsbestände in Gemeineigentum überführen. Das heißt: Die Wohnungen
+  würden...'
+keywords: *id001
 ---
 
 Die Bundesregierung will künftig verhindern, dass Bundesländer große private Wohnungsbestände in Gemeineigentum überführen. Das heißt: Die Wohnungen würden nicht mehr privaten Konzernen gehören. In Berlin stößt dieser Plan auf deutlichen Widerstand, auch bei mehreren SPD-Abgeordneten im Bundestag. Sie erinnern an den Volksentscheid von 2021. Damals stimmte eine Mehrheit in Berlin dafür, große Wohnungskonzerne zu enteignen.

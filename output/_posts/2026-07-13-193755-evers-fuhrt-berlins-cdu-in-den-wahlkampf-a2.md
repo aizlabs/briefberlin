@@ -1,16 +1,17 @@
 ---
-title: "Evers führt Berlins CDU in den Wahlkampf"
+title: Evers führt Berlins CDU in den Wahlkampf
 date: 2026-07-13 19:37:55
 level: A2
-topics: ["berliner politik", "wahlkampf", "spitzenkandidatur"]
+topics: &id001 [berliner politik, wahlkampf, spitzenkandidatur, Evers, Berlins, CDU,
+  Berliner Parlament]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260713-193755-evers-fuhrt-berlins-cdu-in-den-wahlkampf-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260713-193755-evers-fuhrt-berlins-cdu-in-den-wahlkampf-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Politik
+description: In zehn Wochen wählen die Menschen das Berliner Parlament. Die CDU in
+  Berlin ändert kurz davor ihre Pläne. Kai Wegner will nicht mehr der wichtigste...
+keywords: *id001
 ---
 
 <button type="button" class="article-term" data-term-id="term-2">In zehn Wochen</button> <button type="button" class="article-term" data-term-id="term-3">wählen</button> die <button type="button" class="article-term" data-term-id="term-4">Menschen</button> das Berliner Parlament. Die CDU in Berlin <button type="button" class="article-term" data-term-id="term-5">ändert</button> <button type="button" class="article-term" data-term-id="term-6">kurz davor</button> ihre <button type="button" class="article-term" data-term-id="term-7">Pläne</button>. Kai Wegner will <button type="button" class="article-term" data-term-id="term-8">nicht mehr</button> der <button type="button" class="article-term" data-term-id="term-9">wichtigste</button> Kandidat seiner <button type="button" class="article-term" data-term-id="term-10">Partei</button> sein.

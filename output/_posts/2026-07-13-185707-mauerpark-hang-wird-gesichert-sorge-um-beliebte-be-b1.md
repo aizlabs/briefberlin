@@ -1,16 +1,18 @@
 ---
-title: "Mauerpark-Hang wird gesichert: Sorge um beliebte Berliner Rodelstelle"
+title: 'Mauerpark-Hang wird gesichert: Sorge um beliebte Berliner Rodelstelle'
 date: 2026-07-13 18:57:07
 level: B1
-topics: ["hangsicherung", "erosion", "rodelhang"]
+topics: &id001 [hangsicherung, erosion, rodelhang, Mauerpark-Hang, Berliner, Berliner
+    Mauerpark, Jahn-Sportparks]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260713-185707-mauerpark-hang-wird-gesichert-sorge-um-beliebte-berliner-rodelstelle-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260713-185707-mauerpark-hang-wird-gesichert-sorge-um-beliebte-berliner-rodelstelle-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Stadtleben
+description: Im Berliner Mauerpark ist ein Teil eines Hangs gesperrt. Er liegt am
+  früheren Gelände des Jahn-Sportparks, im Westen des alten Stadions. Das Stadion
+  wird...
+keywords: *id001
 ---
 
 Im Berliner Mauerpark ist ein Teil eines Hangs <button type="button" class="article-term article-term--default" data-term-id="term-2">gesperrt</button>. Er liegt am früheren <button type="button" class="article-term" data-term-id="term-3">Gelände</button> des Jahn-Sportparks, im Westen des alten Stadions. Das Stadion wird <button type="button" class="article-term" data-term-id="term-4">zurzeit</button> <button type="button" class="article-term" data-term-id="term-5">abgerissen</button>. Der <button type="button" class="article-term" data-term-id="term-1">Hang</button> wird instabil, weil Wetter und Regen Erde <button type="button" class="article-term" data-term-id="term-6">lösen</button>. Deshalb <button type="button" class="article-term" data-term-id="term-7">prüft</button> Grün Berlin, die <button type="button" class="article-term" data-term-id="term-8">Betreiberin</button> vieler Parks, nun <button type="button" class="article-term article-term--default" data-term-id="term-9">Sicherungsarbeiten</button>.

@@ -1,17 +1,18 @@
 ---
-title: "Neue Hinweise nach Angriffen auf das Berliner Stromnetz"
+title: Neue Hinweise nach Angriffen auf das Berliner Stromnetz
 date: 2026-07-19 17:21:24
-author: "clara-becker"
+author: clara-becker
 level: B1
-topics: ["stromversorgung", "sabotage", "brandanschlag"]
+topics: &id001 [stromversorgung, sabotage, brandanschlag, Angriffen, Berliner, Berlin,
+  Technologiepark Adlershof]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260719-172124-neue-hinweise-nach-angriffen-auf-das-berliner-stromnetz-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260719-172124-neue-hinweise-nach-angriffen-auf-das-berliner-stromnetz-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Nachrichten
+description: Die Ermittlungen zu Angriffen auf die Berliner Stromversorgung kommen
+  offenbar voran. Es geht um mehrere Fälle in Berlin. Im Mittelpunkt steht ein Anschlag...
+keywords: *id001
 ---
 
 Die <button type="button" class="article-term article-term--default" data-term-id="term-3">Ermittlungen</button> zu <button type="button" class="article-term" data-term-id="term-2">Angriffen</button> auf die Berliner <button type="button" class="article-term" data-term-id="term-4">Stromversorgung</button> kommen <button type="button" class="article-term" data-term-id="term-5">offenbar</button> <button type="button" class="article-term" data-term-id="term-6">voran</button>. Es geht um mehrere <button type="button" class="article-term" data-term-id="term-7">Fälle</button> in Berlin. <button type="button" class="article-term" data-term-id="term-8">Im Mittelpunkt</button> steht ein <button type="button" class="article-term article-term--default" data-term-id="term-9">Anschlag</button> auf <button type="button" class="article-term" data-term-id="term-10">Strommasten</button> nahe dem Technologiepark Adlershof im September 2025.

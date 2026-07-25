@@ -1,17 +1,18 @@
 ---
-title: "Berlin kontrolliert Baustellen auf Straßen"
+title: Berlin kontrolliert Baustellen auf Straßen
 date: 2026-07-15 16:16:40
-author: "clara-becker"
+author: clara-becker
 level: A2
-topics: ["baustellenkontrollen", "sondernutzungserlaubnis", "verkehrssicherung"]
+topics: &id001 [baustellenkontrollen, sondernutzungserlaubnis, verkehrssicherung,
+  Berlin, Stadt, Bezirken prüft, Charlottenburg-Wilmersdorf]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260715-161640-berlin-kontrolliert-baustellen-auf-stra-en-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260715-161640-berlin-kontrolliert-baustellen-auf-stra-en-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Nachrichten
+description: Berlin kontrolliert jetzt Baustellen auf Straßen in der Stadt genauer.
+  Eine neue Gruppe aus Verkehrsamt, Polizei und Bezirken prüft die Arbeiten. In den...
+keywords: *id001
 ---
 
 Berlin <button type="button" class="article-term" data-term-id="term-2">kontrolliert</button> jetzt <button type="button" class="article-term article-term--default" data-term-id="term-1">Baustellen</button> auf Straßen in der Stadt <button type="button" class="article-term" data-term-id="term-3">genauer</button>. Eine neue Gruppe aus Verkehrsamt, Polizei und Bezirken <button type="button" class="article-term" data-term-id="term-4">prüft</button> die <button type="button" class="article-term" data-term-id="term-5">Arbeiten</button>. In den letzten Wochen sah sie mehr als 30 <button type="button" class="article-term article-term--default" data-term-id="term-1">Baustellen</button> in Charlottenburg-Wilmersdorf und Pankow an.

@@ -1,17 +1,18 @@
 ---
-title: "Leere Büros könnten in Berlin neue Wohnungen bringen"
+title: Leere Büros könnten in Berlin neue Wohnungen bringen
 date: 2026-07-15 16:08:52
-author: "clara-becker"
+author: clara-becker
 level: B1
-topics: ["wohnungskrise", "bezahlbarer wohnraum", "b\u00fcroleerstand"]
+topics: &id001 [wohnungskrise, bezahlbarer wohnraum, büroleerstand, Berlin, Stadt,
+  Realistisch, Bauturbo]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260715-160852-leere-buros-k-nnten-in-berlin-neue-wohnungen-bringen-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260715-160852-leere-buros-k-nnten-in-berlin-neue-wohnungen-bringen-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Politik
+description: In Berlin diskutieren Politik, Verwaltung und Firmen aus der Wohnungsbranche
+  stärker über leere Büros. Sie sollen künftig öfter zu Wohnungen werden. Der...
+keywords: *id001
 ---
 
 In Berlin diskutieren Politik, Verwaltung und Firmen aus der <button type="button" class="article-term article-term--default" data-term-id="term-2">Wohnungsbranche</button> stärker über <button type="button" class="article-term" data-term-id="term-1">leere Büros</button>. Sie sollen <button type="button" class="article-term" data-term-id="term-3">künftig</button> <button type="button" class="article-term" data-term-id="term-4">öfter</button> zu Wohnungen werden. Der Grund ist klar: Viele Menschen suchen <button type="button" class="article-term article-term--default" data-term-id="term-5">bezahlbare</button> Wohnungen, <button type="button" class="article-term" data-term-id="term-6">während</button> Bauen teuer bleibt. <button type="button" class="article-term" data-term-id="term-7">Gleichzeitig</button> stehen in der Stadt etwa zwei Millionen Quadratmeter <button type="button" class="article-term article-term--default" data-term-id="term-8">Bürofläche</button> <button type="button" class="article-term" data-term-id="term-9">leer</button>.

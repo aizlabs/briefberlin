@@ -1,17 +1,18 @@
 ---
-title: "Tegel wird ein neuer Stadtteil"
+title: Tegel wird ein neuer Stadtteil
 date: 2026-07-21 09:00:00
-author: "clara-becker"
+author: clara-becker
 level: A2
-topics: ["quartiersentwicklung", "nachhaltigkeit", "autonome mobilit\u00e4t"]
+topics: &id001 [quartiersentwicklung, nachhaltigkeit, autonome mobilität, Flughafen
+    Tegel, Berlin, Flughafen-Gebäuden, Tech Republic]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260721-090000-tegel-wird-ein-neuer-stadtteil-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260721-090000-tegel-wird-ein-neuer-stadtteil-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Verkehr
+description: Der alte Flughafen Tegel in Berlin bekommt eine neue Aufgabe. Seit November
+  2020 fliegen dort keine normalen Passagiere mehr ab. Die Stadt macht aus dem...
+keywords: *id001
 ---
 
 Der <button type="button" class="article-term" data-term-id="term-1">alte</button> Flughafen Tegel in Berlin <button type="button" class="article-term" data-term-id="term-2">bekommt</button> eine neue <button type="button" class="article-term" data-term-id="term-3">Aufgabe</button>. <button type="button" class="article-term" data-term-id="term-4">Seit</button> November 2020 <button type="button" class="article-term" data-term-id="term-5">fliegen</button> <button type="button" class="article-term" data-term-id="term-6">dort</button> keine normalen <button type="button" class="article-term" data-term-id="term-7">Passagiere</button> <button type="button" class="article-term" data-term-id="term-8">mehr</button> ab. Die Stadt <button type="button" class="article-term" data-term-id="term-9">macht aus</button> dem großen <button type="button" class="article-term article-term--default" data-term-id="term-10">Gelände</button> einen neuen <button type="button" class="article-term article-term--default" data-term-id="term-11">Stadtteil</button>.

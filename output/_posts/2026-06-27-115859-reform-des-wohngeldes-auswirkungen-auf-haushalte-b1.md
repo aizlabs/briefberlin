@@ -1,16 +1,18 @@
 ---
-title: "Reform des Wohngeldes: Auswirkungen auf Haushalte"
+title: 'Reform des Wohngeldes: Auswirkungen auf Haushalte'
 date: 2026-06-27 11:58:59
 level: B1
-topics: ["deutsch"]
+topics: &id001 [Wohngeldes, Verena Hubertz, Wohn­geldes, Bundes, Hubertz, Reformpläne,
+  Mayra]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/06/20260627-095837-reform-des-wohngeldes-auswirkungen-auf-haushalte-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260627-095837-reform-des-wohngeldes-auswirkungen-auf-haushalte-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Politik
+description: Die Bau­mi­ni­sterin Verena Hubertz plant eine Reform des Wohn­geldes,
+  die viele Diskussionen auslöst. Ziel ist es, die Ausgaben des Bundes zu senken.
+  Im...
+keywords: *id001
 ---
 
 Die Bau­mi­ni­sterin Verena Hubertz plant eine Reform des Wohn­geldes, die viele Diskussionen auslöst. Ziel ist es, die Ausgaben des Bundes zu senken. Im nächsten Jahr sollen die Ausgaben um 738 Millionen Euro reduziert werden. Dies betrifft vor allem Haushalte mit geringem Einkommen, die das Wohn­geld benötigen, um in Städten die hohen **Lebenshaltungskosten** zu decken.

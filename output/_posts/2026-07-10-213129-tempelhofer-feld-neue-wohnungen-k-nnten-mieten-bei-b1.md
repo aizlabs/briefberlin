@@ -1,16 +1,17 @@
 ---
-title: "Tempelhofer Feld: Neue Wohnungen könnten Mieten bei 16 Euro bringen"
+title: 'Tempelhofer Feld: Neue Wohnungen könnten Mieten bei 16 Euro bringen'
 date: 2026-07-10 21:31:29
 level: B1
-topics: ["wohnungsbau", "stadtentwicklung", "baukosten"]
+topics: &id001 [wohnungsbau, stadtentwicklung, baukosten, Tempelhofer Feld, Berlin,
+  Investitionsbank Berlin, Land Berlin]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260710-213129-tempelhofer-feld-neue-wohnungen-k-nnten-mieten-bei-16-euro-bringen-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260710-213129-tempelhofer-feld-neue-wohnungen-k-nnten-mieten-bei-16-euro-bringen-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Stadtleben
+description: Auf dem Tempelhofer Feld in Berlin könnten viele neue Wohnungen entstehen.
+  Die Investitionsbank Berlin hat jetzt einen Entwurf für eine Randbebauung...
+keywords: *id001
 ---
 
 Auf dem Tempelhofer Feld in Berlin könnten viele neue <button type="button" class="article-term" data-term-id="term-1">Wohnungen</button> <button type="button" class="article-term article-term--default" data-term-id="term-2">entstehen</button>. Die Investitionsbank Berlin hat jetzt einen <button type="button" class="article-term article-term--default" data-term-id="term-3">Entwurf</button> für eine <button type="button" class="article-term article-term--default" data-term-id="term-4">Randbebauung</button> <button type="button" class="article-term" data-term-id="term-5">geprüft</button>. Nach dieser <button type="button" class="article-term" data-term-id="term-6">Prüfung</button> ist das Projekt finanziell <button type="button" class="article-term" data-term-id="term-7">grundsätzlich</button> möglich. Es wäre eines der größten <button type="button" class="article-term article-term--default" data-term-id="term-8">Wohnungsbauprojekte</button> der Hauptstadt. Die Bank <button type="button" class="article-term" data-term-id="term-9">gehört</button> dem Land Berlin und <button type="button" class="article-term" data-term-id="term-10">unterstützt</button> große Projekte.

@@ -1,16 +1,17 @@
 ---
-title: "BVG und Uniqlo machen T-Shirts"
+title: BVG und Uniqlo machen T-Shirts
 date: 2026-07-03 09:00:00
 level: A2
-topics: ["modekooperation", "\u00f6ffentlicher nahverkehr", "merchandising"]
+topics: &id001 [modekooperation, öffentlicher nahverkehr, merchandising, BVG, Uniqlo,
+  Berlin, Straßenbahnen]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260703-090000-bvg-und-uniqlo-machen-t-shirts-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260703-090000-bvg-und-uniqlo-machen-t-shirts-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Verkehr
+description: Die BVG und Uniqlo starten eine Modeaktion in Berlin. Die BVG fährt Busse,
+  U-Bahnen und Straßenbahnen in der Stadt. Seit Donnerstag können Kunden T-Shirts...
+keywords: *id001
 ---
 
 Die BVG und Uniqlo starten eine <button type="button" class="article-term article-term--default" data-term-id="term-1">Modeaktion</button> in Berlin. Die BVG <button type="button" class="article-term" data-term-id="term-2">fährt</button> Busse, U-Bahnen und <button type="button" class="article-term" data-term-id="term-3">Straßenbahnen</button> in der Stadt. <button type="button" class="article-term" data-term-id="term-4">Seit</button> <button type="button" class="article-term" data-term-id="term-5">Donnerstag</button> können <button type="button" class="article-term" data-term-id="term-6">Kunden</button> T-Shirts und <button type="button" class="article-term" data-term-id="term-7">Taschen</button> <button type="button" class="article-term article-term--default" data-term-id="term-8">selbst gestalten</button>.

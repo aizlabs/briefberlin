@@ -1,16 +1,17 @@
 ---
-title: "Berliner Landesvermieter erhöhen viele Mieten trotz strenger Regeln"
+title: Berliner Landesvermieter erhöhen viele Mieten trotz strenger Regeln
 date: 2026-07-03 09:00:00
 level: B1
-topics: ["mieterh\u00f6hungen", "wohnungsbauunternehmen", "mietregulierung"]
+topics: &id001 [mieterhöhungen, wohnungsbauunternehmen, mietregulierung, Berliner,
+  Berlin, Land Berlin, Berliner Landesregierung]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260703-090000-berliner-landesvermieter-erh-hen-viele-mieten-trotz-strenger-regeln-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260703-090000-berliner-landesvermieter-erh-hen-viele-mieten-trotz-strenger-regeln-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Stadtleben
+description: Seit Anfang 2024 haben die landeseigenen Wohnungsunternehmen in Berlin
+  viele Mieten erhöht. Diese Firmen gehören dem Land Berlin. Nach einer aktuellen...
+keywords: *id001
 ---
 
 Seit Anfang 2024 haben die <button type="button" class="article-term article-term--default" data-term-id="term-1">landeseigenen Wohnungsunternehmen</button> in Berlin viele Mieten erhöht. Diese Firmen <button type="button" class="article-term" data-term-id="term-2">gehören</button> dem Land Berlin. Nach einer <button type="button" class="article-term" data-term-id="term-3">aktuellen</button> <button type="button" class="article-term article-term--default" data-term-id="term-4">Auswertung</button> <button type="button" class="article-term" data-term-id="term-5">verschickten</button> sie mehr als 420.000 <button type="button" class="article-term" data-term-id="term-6">Schreiben</button> mit <button type="button" class="article-term article-term--default" data-term-id="term-7">Mieterhöhungen</button>. <button type="button" class="article-term" data-term-id="term-8">Etwa</button> <button type="button" class="article-term" data-term-id="term-9">jede fünfte</button> Berliner Wohnung gehört einem dieser Unternehmen. Deshalb sind sie für den <button type="button" class="article-term article-term--default" data-term-id="term-10">Wohnungsmarkt</button> der <button type="button" class="article-term" data-term-id="term-11">Hauptstadt</button> wichtig. Für sie <button type="button" class="article-term" data-term-id="term-12">gelten</button> <button type="button" class="article-term" data-term-id="term-13">strengere Regeln</button> als für private <button type="button" class="article-term" data-term-id="term-14">Vermieter</button>. Trotzdem schützen diese Regeln nicht jeden <button type="button" class="article-term" data-term-id="term-15">Haushalt</button> vor <button type="button" class="article-term" data-term-id="term-16">deutlich</button> <button type="button" class="article-term" data-term-id="term-17">höheren Kosten</button>.

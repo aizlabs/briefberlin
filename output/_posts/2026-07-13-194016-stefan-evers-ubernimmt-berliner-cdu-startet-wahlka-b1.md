@@ -1,16 +1,17 @@
 ---
-title: "Stefan Evers übernimmt: Berliner CDU startet Wahlkampf neu"
+title: 'Stefan Evers übernimmt: Berliner CDU startet Wahlkampf neu'
 date: 2026-07-13 19:40:16
 level: B1
-topics: ["berliner politik", "wahlkampf", "spitzenkandidatur"]
+topics: &id001 [berliner politik, wahlkampf, spitzenkandidatur, Stefan Evers, Berliner,
+  CDU, Berliner Abgeordnetenhaus]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260713-194016-stefan-evers-ubernimmt-berliner-cdu-startet-wahlkampf-neu-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260713-194016-stefan-evers-ubernimmt-berliner-cdu-startet-wahlkampf-neu-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Politik
+description: Zehn Wochen vor der Wahl zum Berliner Abgeordnetenhaus, dem Landesparlament,
+  wechselt die CDU ihren Spitzenkandidaten. Finanzsenator Stefan Evers übernimmt...
+keywords: *id001
 ---
 
 Zehn Wochen vor der Wahl zum Berliner Abgeordnetenhaus, dem <button type="button" class="article-term article-term--default" data-term-id="term-3">Landesparlament</button>, wechselt die CDU ihren <button type="button" class="article-term article-term--default" data-term-id="term-4">Spitzenkandidaten</button>. Finanzsenator Stefan Evers <button type="button" class="article-term article-term--default" data-term-id="term-1">übernimmt</button> von Kai Wegner. Evers soll die Partei auch <button type="button" class="article-term" data-term-id="term-5">vorläufig</button> führen. Wegner ist <button type="button" class="article-term" data-term-id="term-6">Regierender Bürgermeister</button>, also <button type="button" class="article-term" data-term-id="term-7">Regierungschef</button> von Berlin. Sein <button type="button" class="article-term article-term--default" data-term-id="term-8">Rückzug</button> ist ein <button type="button" class="article-term" data-term-id="term-9">ungewöhnlicher</button> <button type="button" class="article-term" data-term-id="term-10">Schritt</button> in einem wichtigen <button type="button" class="article-term" data-term-id="term-11">Wahljahr</button>.

@@ -1,17 +1,18 @@
 ---
-title: "Evers will Wohnungen am Tempelhofer Feld"
+title: Evers will Wohnungen am Tempelhofer Feld
 date: 2026-07-16 11:03:20
-author: "clara-becker"
+author: clara-becker
 level: A2
-topics: ["randbebauung", "wohnungsbau", "wohnungsnot"]
+topics: &id001 [randbebauung, wohnungsbau, wohnungsnot, Evers, Tempelhofer Feld, Stefan
+    Evers, CDU]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260716-110320-evers-will-wohnungen-am-tempelhofer-feld-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260716-110320-evers-will-wohnungen-am-tempelhofer-feld-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Politik
+description: Stefan Evers ist der wichtigste Kandidat der CDU, einer politischen Partei
+  in Berlin. Er macht das Tempelhofer Feld zu einem wichtigen Thema vor der Wahl....
+keywords: *id001
 ---
 
 Stefan Evers ist der wichtigste Kandidat der CDU, einer politischen Partei in Berlin. Er macht das Tempelhofer Feld zu einem wichtigen Thema <button type="button" class="article-term" data-term-id="term-1">vor der Wahl</button>. Am 20. September <button type="button" class="article-term article-term--default" data-term-id="term-2">wählen</button> die Berliner ein neues Parlament.

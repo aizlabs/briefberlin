@@ -1,16 +1,17 @@
 ---
-title: "Debatte um Abriss des letzten NS-Bunkers in Berlin"
+title: Debatte um Abriss des letzten NS-Bunkers in Berlin
 date: 2026-07-01 13:44:21
 level: B1
-topics: ["deutsch"]
+topics: &id001 [Abriss, NS-Bunkers, Berlin, Berlin-Mitte, NS-Zeit, Neuen Reichskanzlei,
+  Berliner Unterwelten]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260701-134421-debatte-um-abriss-des-letzten-ns-bunkers-in-berlin-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260701-134421-debatte-um-abriss-des-letzten-ns-bunkers-in-berlin-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Stadtleben
+description: In Berlin-Mitte gibt es eine Diskussion über den Abriss des letzten Vorkriegsbunkers
+  aus der NS-Zeit. Auf dem Gelände der ehemaligen Neuen Reichskanzlei...
+keywords: *id001
 ---
 
 In Berlin-Mitte gibt es eine Diskussion über den Abriss des letzten Vorkriegsbunkers aus der NS-Zeit. Auf dem Gelände der ehemaligen Neuen Reichskanzlei soll ein neues Wohn- und Bürogebäude gebaut werden. Diese Pläne treffen auf Widerstand. Besonders **Denkmalschützer** und der **Verein Berliner Unterwelten** sind dagegen. Der Vorsitzende des Vereins, Dietmar Arnold, nennt den Abriss "Wahnsinn" und möchte den Bunker als **historisches Zeugnis** erhalten.

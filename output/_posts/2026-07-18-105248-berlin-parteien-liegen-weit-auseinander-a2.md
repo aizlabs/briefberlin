@@ -1,17 +1,19 @@
 ---
-title: "Berlin: Parteien liegen weit auseinander"
+title: 'Berlin: Parteien liegen weit auseinander'
 date: 2026-07-18 10:52:48
-author: "clara-becker"
+author: clara-becker
 level: A2
-topics: ["politische spaltung", "umfragen", "parteienlandschaft"]
+topics: &id001 [politische spaltung, umfragen, parteienlandschaft, Berlin, Abgeordnetenhaus,
+  CDU, Die Grünen]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260718-105248-berlin-parteien-liegen-weit-auseinander-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260718-105248-berlin-parteien-liegen-weit-auseinander-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Nachrichten
+description: Eine neue Umfrage zeigt die politische Lage in Berlin. Es geht um das
+  Abgeordnetenhaus, also das Parlament der Stadt. Die Umfrage zeigt aktuelle Werte
+  für...
+keywords: *id001
 ---
 
 Eine neue <button type="button" class="article-term article-term--default" data-term-id="term-1">Umfrage</button> <button type="button" class="article-term" data-term-id="term-2">zeigt</button> die <button type="button" class="article-term article-term--default" data-term-id="term-3">politische Lage</button> in Berlin. Es geht um das Abgeordnetenhaus, <button type="button" class="article-term" data-term-id="term-4">also</button> das Parlament der Stadt. Die <button type="button" class="article-term article-term--default" data-term-id="term-1">Umfrage</button> <button type="button" class="article-term" data-term-id="term-2">zeigt</button> <button type="button" class="article-term" data-term-id="term-5">aktuelle</button> <button type="button" class="article-term" data-term-id="term-6">Werte</button> für die Parteien.

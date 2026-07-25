@@ -1,11 +1,15 @@
 ---
-title: "Tödliche Schüsse in Stade: Polizei prüft familiären Konflikt"
+title: 'Tödliche Schüsse in Stade: Polizei prüft familiären Konflikt'
 date: 2026-07-01 19:12:22
 level: B1
-topics: ["deutsch"]
+topics: &id001 [Stade, Schüssen, Dankersstraße, Stadt, Niedersachsen, Hamburg, Garbsen]
 sources: []
 audio: null
 reading_time: 3
+category: Nachrichten
+description: Nach den tödlichen Schüssen in einer Jugendhilfeeinrichtung in Stade
+  prüft die Polizei ein mögliches Motiv. Die Ermittler sehen immer mehr Hinweise auf...
+keywords: *id001
 ---
 
 Nach den <button type="button" class="article-term article-term--default" data-term-id="term-1">tödlichen</button> Schüssen in einer Jugendhilfeeinrichtung in Stade <button type="button" class="article-term" data-term-id="term-2">prüft</button> die Polizei ein mögliches Motiv. Die <button type="button" class="article-term" data-term-id="term-3">Ermittler</button> sehen <button type="button" class="article-term" data-term-id="term-4">immer mehr</button> <button type="button" class="article-term article-term--default" data-term-id="term-5">Hinweise</button> auf einen familiären Konflikt. Die <button type="button" class="article-term article-term--default" data-term-id="term-6">Tat</button> <button type="button" class="article-term" data-term-id="term-7">geschah</button> in einem <button type="button" class="article-term" data-term-id="term-8">Gebäude</button> an der Dankersstraße. <button type="button" class="article-term" data-term-id="term-9">Dort</button> <button type="button" class="article-term" data-term-id="term-10">starben</button> sechs Menschen. Die Stadt Stade <button type="button" class="article-term" data-term-id="term-11">liegt</button> in Niedersachsen, <button type="button" class="article-term" data-term-id="term-12">westlich</button> von Hamburg.

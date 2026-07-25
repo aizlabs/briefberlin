@@ -1,17 +1,18 @@
 ---
-title: "Estrel Tower findet noch keine Büromieter"
+title: Estrel Tower findet noch keine Büromieter
 date: 2026-07-22 09:00:00
-author: "clara-becker"
+author: clara-becker
 level: A2
-topics: ["b\u00fcrovermietung", "b\u00fcromarkt", "hochhaus"]
+topics: &id001 [bürovermietung, büromarkt, hochhaus, Estrel Tower, Berlin-Neukölln,
+  Sonnenallee, Berlin]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260722-090000-estrel-tower-findet-noch-keine-buromieter-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260722-090000-estrel-tower-findet-noch-keine-buromieter-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Nachrichten
+description: Der Estrel Tower steht in Berlin-Neukölln an der Sonnenallee. Das Hochhaus
+  ist 176 Meter hoch und hat 45 Etagen. Es soll das höchste Gebäude in Berlin sein.
+keywords: *id001
 ---
 
 Der Estrel Tower <button type="button" class="article-term" data-term-id="term-1">steht</button> in Berlin-Neukölln an der Sonnenallee. Das <button type="button" class="article-term article-term--default" data-term-id="term-2">Hochhaus</button> ist 176 Meter hoch und hat 45 <button type="button" class="article-term article-term--default" data-term-id="term-3">Etagen</button>. Es <button type="button" class="article-term" data-term-id="term-5">soll</button> das <button type="button" class="article-term" data-term-id="term-6">höchste</button> <button type="button" class="article-term" data-term-id="term-4">Gebäude</button> in Berlin sein.

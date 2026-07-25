@@ -1,17 +1,19 @@
 ---
-title: "Arbeitsdienst in Berlin: Nutzen hängt vom Einzelfall ab"
+title: 'Arbeitsdienst in Berlin: Nutzen hängt vom Einzelfall ab'
 date: 2026-07-15 16:22:59
-author: "clara-becker"
+author: clara-becker
 level: B1
-topics: ["b\u00fcrgergeld", "arbeitsgelegenheiten", "arbeitsmarktpolitik"]
+topics: &id001 [bürgergeld, arbeitsgelegenheiten, arbeitsmarktpolitik, Arbeitsdienst,
+  Berlin, Stadt, Klar]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260715-162259-arbeitsdienst-in-berlin-nutzen-h-ngt-vom-einzelfall-ab-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260715-162259-arbeitsdienst-in-berlin-nutzen-h-ngt-vom-einzelfall-ab-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Nachrichten
+description: In Berlin gibt es erneut eine Diskussion über Arbeit für Menschen, die
+  staatliche Leistungen bekommen. Ein Vorschlag sieht vor, diese Menschen stärker
+  für...
+keywords: *id001
 ---
 
 In Berlin gibt es <button type="button" class="article-term" data-term-id="term-3">erneut</button> eine Diskussion über Arbeit für Menschen, die <button type="button" class="article-term article-term--default" data-term-id="term-4">staatliche Leistungen</button> bekommen. Ein <button type="button" class="article-term" data-term-id="term-5">Vorschlag</button> <button type="button" class="article-term" data-term-id="term-6">sieht vor</button>, diese Menschen <button type="button" class="article-term" data-term-id="term-7">stärker</button> für <button type="button" class="article-term article-term--default" data-term-id="term-8">gemeinnützige Aufgaben</button> <button type="button" class="article-term" data-term-id="term-9">einzusetzen</button>. Dazu könnte zum Beispiel Arbeit für mehr <button type="button" class="article-term" data-term-id="term-10">Sauberkeit</button> in der Stadt gehören. Die Debatte <button type="button" class="article-term" data-term-id="term-11">betrifft</button> <button type="button" class="article-term" data-term-id="term-12">vor allem</button> <button type="button" class="article-term" data-term-id="term-13">Arbeitslose</button>, die Hilfe vom Jobcenter bekommen.

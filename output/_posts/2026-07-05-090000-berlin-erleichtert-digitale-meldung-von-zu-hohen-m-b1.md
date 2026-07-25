@@ -1,16 +1,17 @@
 ---
-title: "Berlin erleichtert digitale Meldung von zu hohen Mieten"
+title: Berlin erleichtert digitale Meldung von zu hohen Mieten
 date: 2026-07-05 09:00:00
 level: B1
-topics: ["mieterschutz", "mietpreis\u00fcberh\u00f6hung", "vergleichsmiete"]
+topics: &id001 [mieterschutz, mietpreisüberhöhung, vergleichsmiete, Berlin, Zuständig,
+  Service-Portal, Landes Berlin]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260705-090000-berlin-erleichtert-digitale-meldung-von-zu-hohen-mieten-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260705-090000-berlin-erleichtert-digitale-meldung-von-zu-hohen-mieten-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Stadtleben
+description: Berliner Mieterinnen und Mieter können zu hohe Mieten künftig online
+  melden. Zuständig ist das Bezirksamt in ihrem Bezirk. Die Meldung läuft über das...
+keywords: *id001
 ---
 
 Berliner <button type="button" class="article-term" data-term-id="term-2">Mieterinnen und Mieter</button> können <button type="button" class="article-term article-term--default" data-term-id="term-1">zu hohe Mieten</button> künftig online <button type="button" class="article-term" data-term-id="term-3">melden</button>. Zuständig ist das <button type="button" class="article-term article-term--default" data-term-id="term-4">Bezirksamt</button> in ihrem <button type="button" class="article-term" data-term-id="term-5">Bezirk</button>. Die <button type="button" class="article-term article-term--default" data-term-id="term-6">Meldung</button> läuft über das Service-Portal des Landes Berlin. Bisher mussten viele <button type="button" class="article-term" data-term-id="term-7">Betroffene</button> erst <button type="button" class="article-term" data-term-id="term-8">persönlich</button> zur <button type="button" class="article-term" data-term-id="term-9">Verwaltung</button> gehen. Künftig ist das nicht mehr <button type="button" class="article-term" data-term-id="term-10">nötig</button>. Das neue <button type="button" class="article-term" data-term-id="term-11">Verfahren</button> soll <button type="button" class="article-term" data-term-id="term-12">Prüfungen</button> einfacher und schneller machen. Es <button type="button" class="article-term" data-term-id="term-13">ergänzt</button> andere <button type="button" class="article-term" data-term-id="term-14">Hilfen</button> für Mieter in einer Stadt mit stark steigenden <button type="button" class="article-term" data-term-id="term-15">Wohnkosten</button>.

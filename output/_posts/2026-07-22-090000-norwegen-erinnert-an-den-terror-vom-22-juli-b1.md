@@ -1,17 +1,19 @@
 ---
-title: "Norwegen erinnert an den Terror vom 22. Juli"
+title: Norwegen erinnert an den Terror vom 22. Juli
 date: 2026-07-22 09:00:00
-author: "clara-becker"
+author: clara-becker
 level: B1
-topics: ["rechtsterrorismus", "terroranschl\u00e4ge", "\u00fcberlebende"]
+topics: &id001 [rechtsterrorismus, terroranschläge, überlebende, Norwegen, Anschlägen,
+  Oslo, Insel Utøya]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260722-090000-norwegen-erinnert-an-den-terror-vom-22-juli-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260722-090000-norwegen-erinnert-an-den-terror-vom-22-juli-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Nachrichten
+description: Fünfzehn Jahre nach den rechtsextremen Anschlägen vom 22. Juli 2011 ringt
+  Norwegen weiter um die Erinnerung. Es geht auch um die politische Bedeutung und
+  um...
+keywords: *id001
 ---
 
 Fünfzehn Jahre nach den <button type="button" class="article-term article-term--default" data-term-id="term-1">rechtsextremen</button> Anschlägen vom 22. Juli 2011 <button type="button" class="article-term" data-term-id="term-2">ringt</button> Norwegen weiter um die <button type="button" class="article-term" data-term-id="term-3">Erinnerung</button>. Es geht auch um die politische <button type="button" class="article-term" data-term-id="term-4">Bedeutung</button> und um die <button type="button" class="article-term" data-term-id="term-5">Folgen</button> für <button type="button" class="article-term article-term--default" data-term-id="term-6">Überlebende</button>. <button type="button" class="article-term" data-term-id="term-7">Am Nachmittag</button> <button type="button" class="article-term" data-term-id="term-8">explodierte</button> im <button type="button" class="article-term" data-term-id="term-9">Regierungsviertel</button> von Oslo eine <button type="button" class="article-term" data-term-id="term-10">Autobombe</button>. Sie <button type="button" class="article-term" data-term-id="term-11">zerstörte</button> viele Gebäude und tötete acht Menschen. Kurz danach fuhr der <button type="button" class="article-term article-term--default" data-term-id="term-12">Täter</button> zur Insel Utøya. Dort <button type="button" class="article-term" data-term-id="term-13">griff</button> er ein <button type="button" class="article-term" data-term-id="term-14">Sommerlager</button> der sozialdemokratischen <button type="button" class="article-term" data-term-id="term-15">Jugendorganisation</button> AUF an.

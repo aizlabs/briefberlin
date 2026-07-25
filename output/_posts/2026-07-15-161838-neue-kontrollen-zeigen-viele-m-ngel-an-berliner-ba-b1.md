@@ -1,17 +1,18 @@
 ---
-title: "Neue Kontrollen zeigen viele Mängel an Berliner Baustellen"
+title: Neue Kontrollen zeigen viele Mängel an Berliner Baustellen
 date: 2026-07-15 16:18:38
-author: "clara-becker"
+author: clara-becker
 level: B1
-topics: ["baustellenkontrollen", "sondernutzungserlaubnis", "verkehrssicherung"]
+topics: &id001 [baustellenkontrollen, sondernutzungserlaubnis, verkehrssicherung,
+  Berliner, Berlins, Bezirken, Schilder]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260715-161838-neue-kontrollen-zeigen-viele-m-ngel-an-berliner-baustellen-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260715-161838-neue-kontrollen-zeigen-viele-m-ngel-an-berliner-baustellen-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Nachrichten
+description: Berlins neue Kontrollgruppe für Baustellen auf Straßen hat bei ihren
+  ersten Einsätzen viele Probleme gefunden. Sie prüfte mehr als 30 Baustellen in zwei...
+keywords: *id001
 ---
 
 Berlins neue <button type="button" class="article-term article-term--default" data-term-id="term-2">Kontrollgruppe</button> für <button type="button" class="article-term article-term--default" data-term-id="term-3">Baustellen</button> auf Straßen hat bei ihren ersten <button type="button" class="article-term" data-term-id="term-4">Einsätzen</button> viele Probleme gefunden. Sie prüfte mehr als 30 <button type="button" class="article-term article-term--default" data-term-id="term-3">Baustellen</button> in zwei Bezirken. Fast jede dritte Baustelle hatte keine <button type="button" class="article-term" data-term-id="term-5">nötige</button> <button type="button" class="article-term article-term--default" data-term-id="term-6">Anordnung</button> der <button type="button" class="article-term article-term--default" data-term-id="term-7">Verkehrsbehörde</button>. Diese <button type="button" class="article-term article-term--default" data-term-id="term-6">Anordnung</button> <button type="button" class="article-term" data-term-id="term-8">legt fest</button>, wo Schilder, <button type="button" class="article-term" data-term-id="term-9">Sperren</button> und Wege stehen müssen. Bei mehr als jeder dritten Baustelle <button type="button" class="article-term" data-term-id="term-10">fehlte</button> <button type="button" class="article-term" data-term-id="term-62">außerdem</button> die <button type="button" class="article-term" data-term-id="term-11">Erlaubnis</button>, öffentlichen <button type="button" class="article-term article-term--default" data-term-id="term-12">Straßenraum</button> besonders zu nutzen. <button type="button" class="article-term" data-term-id="term-13">Insgesamt</button> fanden die <button type="button" class="article-term" data-term-id="term-14">Kontrolleure</button> bei über 80 Prozent der <button type="button" class="article-term" data-term-id="term-15">Arbeitsstellen</button> <button type="button" class="article-term article-term--default" data-term-id="term-16">Mängel</button>.

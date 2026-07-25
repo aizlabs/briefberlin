@@ -1,16 +1,17 @@
 ---
-title: "Neue lange Straßenbahn fährt auf der M4"
+title: Neue lange Straßenbahn fährt auf der M4
 date: 2026-07-10 21:34:11
 level: A2
-topics: ["stra\u00dfenbahn", "\u00f6ffentlicher nahverkehr", "berlin"]
+topics: &id001 [straßenbahn, öffentlicher nahverkehr, berlin, Neue lange Straßenbahn,
+  Urbanliner, Sulzfelder Straße, BVG]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260710-213411-neue-lange-stra-enbahn-f-hrt-auf-der-m4-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260710-213411-neue-lange-stra-enbahn-f-hrt-auf-der-m4-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Verkehr
+description: Berlin hat eine neue sehr lange Straßenbahn. Seit Mittwoch fährt der
+  Urbanliner auf der Linie M4. Die Strecke geht vom Hackeschen Markt bis zur Sulzfelder...
+keywords: *id001
 ---
 
 Berlin hat eine neue sehr lange <button type="button" class="article-term article-term--default" data-term-id="term-1">Straßenbahn</button>. <button type="button" class="article-term" data-term-id="term-2">Seit</button> Mittwoch fährt der Urbanliner auf der Linie M4. Die <button type="button" class="article-term" data-term-id="term-3">Strecke</button> geht <button type="button" class="article-term" data-term-id="term-4">vom</button> Hackeschen Markt <button type="button" class="article-term" data-term-id="term-5">bis</button> zur Sulzfelder Straße.

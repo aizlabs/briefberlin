@@ -1,17 +1,18 @@
 ---
-title: "Weniger Straftaten, mehr sexuelle Angriffe"
+title: Weniger Straftaten, mehr sexuelle Angriffe
 date: 2026-07-20 09:00:00
-author: "clara-becker"
+author: clara-becker
 level: A2
-topics: ["\u00f6ffentlicher nahverkehr", "kriminalit\u00e4t", "sexualdelikte"]
+topics: &id001 [öffentlicher nahverkehr, kriminalität, sexualdelikte, Berlin, Stadt,
+  Im Jahr 2025, BVG]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260720-090000-weniger-straftaten-mehr-sexuelle-angriffe-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260720-090000-weniger-straftaten-mehr-sexuelle-angriffe-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Nachrichten
+description: 'In Berlin gibt es neue Zahlen zur Sicherheit im Nahverkehr. Das heißt:
+  Busse, Bahnen und Haltestellen in der Stadt. Im Jahr 2025 meldeten Polizei und...'
+keywords: *id001
 ---
 
 In Berlin gibt es neue <button type="button" class="article-term" data-term-id="term-3">Zahlen</button> zur <button type="button" class="article-term" data-term-id="term-4">Sicherheit</button> im <button type="button" class="article-term article-term--default" data-term-id="term-5">Nahverkehr</button>. <button type="button" class="article-term" data-term-id="term-6">Das heißt</button>: Busse, <button type="button" class="article-term" data-term-id="term-7">Bahnen</button> und <button type="button" class="article-term" data-term-id="term-8">Haltestellen</button> in der Stadt. Im Jahr 2025 <button type="button" class="article-term" data-term-id="term-9">meldeten</button> Polizei und <button type="button" class="article-term" data-term-id="term-10">Verkehrsfirmen</button> <button type="button" class="article-term" data-term-id="term-1">weniger</button> <button type="button" class="article-term article-term--default" data-term-id="term-2">Straftaten</button> als 2024.

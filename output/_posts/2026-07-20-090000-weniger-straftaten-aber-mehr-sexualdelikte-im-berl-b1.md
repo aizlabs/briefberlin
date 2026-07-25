@@ -1,17 +1,18 @@
 ---
-title: "Weniger Straftaten, aber mehr Sexualdelikte im Berliner Nahverkehr"
+title: Weniger Straftaten, aber mehr Sexualdelikte im Berliner Nahverkehr
 date: 2026-07-20 09:00:00
-author: "clara-becker"
+author: clara-becker
 level: B1
-topics: ["\u00f6ffentlicher nahverkehr", "kriminalit\u00e4t", "sexualdelikte"]
+topics: &id001 [öffentlicher nahverkehr, kriminalität, sexualdelikte, Berliner, Berliner
+    Nahverkehr, Berliner Verkehrsbetriebe, BVG]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260720-090000-weniger-straftaten-aber-mehr-sexualdelikte-im-berliner-nahverkehr-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260720-090000-weniger-straftaten-aber-mehr-sexualdelikte-im-berliner-nahverkehr-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Nachrichten
+description: Im Berliner Nahverkehr hat die Polizei im vergangenen Jahr weniger Straftaten
+  gezählt. Gleichzeitig gab es mehr Sexualdelikte in Bussen und Bahnen....
+keywords: *id001
 ---
 
 Im Berliner <button type="button" class="article-term article-term--default" data-term-id="term-1">Nahverkehr</button> hat die Polizei im <button type="button" class="article-term" data-term-id="term-2">vergangenen Jahr</button> weniger Straftaten <button type="button" class="article-term" data-term-id="term-3">gezählt</button>. <button type="button" class="article-term" data-term-id="term-4">Gleichzeitig</button> gab es mehr <button type="button" class="article-term article-term--default" data-term-id="term-5">Sexualdelikte</button> in Bussen und Bahnen. <button type="button" class="article-term" data-term-id="term-6">Betroffen</button> sind Busse, <button type="button" class="article-term" data-term-id="term-7">U-Bahnen</button>, <button type="button" class="article-term" data-term-id="term-8">Straßenbahnen</button> und <button type="button" class="article-term article-term--default" data-term-id="term-9">Haltestellen</button> der Berliner Verkehrsbetriebe, kurz BVG. Dort <button type="button" class="article-term" data-term-id="term-10">registrierte</button> die Polizei 11.330 <button type="button" class="article-term" data-term-id="term-11">Fälle</button>, etwa zwölf Prozent weniger als ein Jahr <button type="button" class="article-term" data-term-id="term-12">zuvor</button>. Auch in S-Bahnen und <button type="button" class="article-term" data-term-id="term-13">Regionalzügen</button> <button type="button" class="article-term" data-term-id="term-14">sank</button> die Zahl <button type="button" class="article-term" data-term-id="term-15">gegenüber</button> 2024 um <button type="button" class="article-term" data-term-id="term-16">rund</button> zehn Prozent auf 2.532 Straftaten. <button type="button" class="article-term" data-term-id="term-17">Trotzdem</button> bleibt die <button type="button" class="article-term" data-term-id="term-18">Belastung</button> hoch. Rechnerisch <button type="button" class="article-term" data-term-id="term-19">passieren</button> täglich mehrere <button type="button" class="article-term" data-term-id="term-20">Dutzend</button> Straftaten in Fahrzeugen und an Stationen.

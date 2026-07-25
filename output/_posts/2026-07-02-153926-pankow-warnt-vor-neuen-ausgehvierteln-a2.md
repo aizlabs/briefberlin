@@ -1,16 +1,17 @@
 ---
-title: "Pankow warnt vor neuen Ausgehvierteln"
+title: Pankow warnt vor neuen Ausgehvierteln
 date: 2026-07-02 15:39:26
 level: A2
-topics: ["deutsch"]
+topics: &id001 [Pankow, Berliner, Bezirk Pankow, Berlin, Deutschland, Nachtruhe, Berlins
+    Regierung]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260702-153926-pankow-warnt-vor-neuen-ausgehvierteln-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260702-153926-pankow-warnt-vor-neuen-ausgehvierteln-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Politik
+description: Der Berliner Bezirk Pankow kritisiert ein neues Gesetz für Restaurants
+  und Kneipen. Das Gesetz soll in Berlin neue Ausgehviertel möglich machen. Dort dürfen...
+keywords: *id001
 ---
 
 Der Berliner Bezirk Pankow kritisiert ein neues <button type="button" class="article-term" data-term-id="term-1">Gesetz</button> für Restaurants und <button type="button" class="article-term article-term--default" data-term-id="term-2">Kneipen</button>. Das <button type="button" class="article-term" data-term-id="term-1">Gesetz</button> soll in Berlin neue <button type="button" class="article-term article-term--default" data-term-id="term-3">Ausgehviertel</button> <button type="button" class="article-term" data-term-id="term-4">möglich machen</button>. Dort <button type="button" class="article-term" data-term-id="term-5">dürfen</button> <button type="button" class="article-term article-term--default" data-term-id="term-6">Lokale</button> vielleicht länger Tische <button type="button" class="article-term" data-term-id="term-7">draußen</button> haben, auch <button type="button" class="article-term" data-term-id="term-8">am Abend</button>.

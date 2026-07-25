@@ -1,16 +1,17 @@
 ---
-title: "Brandenburger AfD-Politiker gewinnen nun mehr Einfluss in der Bundespartei"
+title: Brandenburger AfD-Politiker gewinnen nun mehr Einfluss in der Bundespartei
 date: 2026-07-11 16:14:51
 level: B1
-topics: ["rechtsextremismus", "parteivorstand", "ostdeutsche politik"]
+topics: &id001 [rechtsextremismus, parteivorstand, ostdeutsche politik, Brandenburger
+    AfD-Politiker, Brandenburg, AfD, Bundesebene]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260711-161451-brandenburger-afd-politiker-gewinnen-nun-mehr-einfluss-in-der-bundespartei-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260711-161451-brandenburger-afd-politiker-gewinnen-nun-mehr-einfluss-in-der-bundespartei-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Politik
+description: Nach der Wahl von drei Politikern aus Brandenburg verändert sich die
+  AfD auf Bundesebene sichtbar. Dennis Hohloch, Jean-Pascal Hohm und Hannes Gnauck...
+keywords: *id001
 ---
 
 Nach der <button type="button" class="article-term" data-term-id="term-1">Wahl</button> von drei Politikern aus Brandenburg <button type="button" class="article-term" data-term-id="term-3">verändert sich</button> die AfD <button type="button" class="article-term article-term--default" data-term-id="term-4">auf Bundesebene</button> <button type="button" class="article-term" data-term-id="term-5">sichtbar</button>. Dennis Hohloch, Jean-Pascal Hohm und Hannes Gnauck <button type="button" class="article-term" data-term-id="term-6">gehören</button> jetzt zum <button type="button" class="article-term article-term--default" data-term-id="term-7">Bundesvorstand</button>. Dieses <button type="button" class="article-term" data-term-id="term-8">Gremium</button> <button type="button" class="article-term" data-term-id="term-9">führt</button> die Partei in ganz Deutschland. Damit bekommt der Brandenburger Landesverband <button type="button" class="article-term" data-term-id="term-10">mehr Gewicht</button> in der Bundespartei.

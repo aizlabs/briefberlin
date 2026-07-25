@@ -1,16 +1,17 @@
 ---
-title: "Weniger Wohnungen auf früherem Tanklager in Berlin-Lankwitz geplant"
+title: Weniger Wohnungen auf früherem Tanklager in Berlin-Lankwitz geplant
 date: 2026-07-08 15:34:25
 level: B1
-topics: ["wohnungsbau", "gewerbefl\u00e4chen", "stadtentwicklung"]
+topics: &id001 [wohnungsbau, gewerbeflächen, stadtentwicklung, Berlin-Lankwitz, Kaiser-Wilhelm-Straße,
+  Berliner, Stadt]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260708-153425-weniger-wohnungen-auf-fruherem-tanklager-in-berlin-lankwitz-geplant-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260708-153425-weniger-wohnungen-auf-fruherem-tanklager-in-berlin-lankwitz-geplant-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Stadtleben
+description: Auf dem früheren Tanklager in Berlin-Lankwitz sollen weniger Wohnungen
+  entstehen als gehofft. Das Gelände an der Kaiser-Wilhelm-Straße ist 122.000...
+keywords: *id001
 ---
 
 Auf dem früheren Tanklager in Berlin-Lankwitz sollen weniger Wohnungen entstehen als gehofft. Das Gelände an der Kaiser-Wilhelm-Straße ist 122.000 Quadratmeter groß. Die zuständigen Stellen der Berliner Landesregierung haben sich nun auf eine Aufteilung geeinigt. 60 Prozent der Fläche sollen für Wohnungen genutzt werden. 40 Prozent bleiben für Gewerbe, also für Firmen und Betriebe. Damit endet vorerst ein Streit zwischen mehr Wohnraum und dem Schutz von Wirtschaftsflächen. Nach der neuen Linie sind eher etwa 500 Wohnungen möglich, nicht 1000.

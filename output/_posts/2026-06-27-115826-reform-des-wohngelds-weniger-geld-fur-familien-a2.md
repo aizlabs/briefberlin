@@ -1,16 +1,17 @@
 ---
-title: "Reform des Wohngelds: Weniger Geld für Familien"
+title: 'Reform des Wohngelds: Weniger Geld für Familien'
 date: 2026-06-27 11:58:26
 level: A2
-topics: ["deutsch"]
+topics: &id001 [Wohngelds, Die Regierung, Wohngeld, Verena Hubertz, Stadt, Heizkostenhilfe,
+  Ukraine]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/06/20260627-095814-reform-des-wohngelds-weniger-geld-fur-familien-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260627-095814-reform-des-wohngelds-weniger-geld-fur-familien-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Politik
+description: Die Regierung will weniger Geld für das **Wohngeld** ausgeben. Das hat
+  die Ministerin Verena Hubertz gesagt. Im nächsten Jahr sollen 738 Millionen Euro...
+keywords: *id001
 ---
 
 Die Regierung will weniger Geld für das **Wohngeld** ausgeben. Das hat die Ministerin Verena Hubertz gesagt. Im nächsten Jahr sollen 738 Millionen Euro gespart werden. Das betrifft vor allem arme Familien in der Stadt. Sie brauchen das Geld für Miete und Heizung.

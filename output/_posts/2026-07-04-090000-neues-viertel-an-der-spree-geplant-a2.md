@@ -1,16 +1,17 @@
 ---
-title: "Neues Viertel an der Spree geplant"
+title: Neues Viertel an der Spree geplant
 date: 2026-07-04 09:00:00
 level: A2
-topics: ["stadtquartier", "wohnungsbau", "sozialwohnungen"]
+topics: &id001 [stadtquartier, wohnungsbau, sozialwohnungen, Neues Viertel, Spree,
+  Berlin, Friedrichshain-Kreuzberg]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260704-090000-neues-viertel-an-der-spree-geplant-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260704-090000-neues-viertel-an-der-spree-geplant-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Nachrichten
+description: Berlin plant ein neues Viertel an der Spree. Es soll in den nächsten
+  Jahren in Friedrichshain-Kreuzberg entstehen. Dort liegen die alten Victoriaspeicher...
+keywords: *id001
 ---
 
 Berlin plant ein neues <button type="button" class="article-term article-term--default" data-term-id="term-1">Viertel</button> an der Spree. Es soll in den nächsten Jahren in Friedrichshain-Kreuzberg <button type="button" class="article-term article-term--default" data-term-id="term-2">entstehen</button>. Dort <button type="button" class="article-term" data-term-id="term-3">liegen</button> die alten Victoriaspeicher <button type="button" class="article-term" data-term-id="term-4">nahe</button> der Schillingbrücke. Die Stadt plant <button type="button" class="article-term" data-term-id="term-19">etwa</button> 1000 <button type="button" class="article-term" data-term-id="term-5">Wohnungen</button>, Firmen, Kultur und einen Park am Wasser.

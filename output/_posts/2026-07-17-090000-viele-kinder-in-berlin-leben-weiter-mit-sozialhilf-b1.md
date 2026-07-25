@@ -1,17 +1,18 @@
 ---
-title: "Viele Kinder in Berlin leben weiter mit Sozialhilfe"
+title: Viele Kinder in Berlin leben weiter mit Sozialhilfe
 date: 2026-07-17 09:00:00
-author: "clara-becker"
+author: clara-becker
 level: B1
-topics: ["kinderarmut", "sozialleistungen", "regionale unterschiede"]
+topics: &id001 [kinderarmut, sozialleistungen, regionale unterschiede, Berlin, Staat,
+  Berliner Bezirken, soziale]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260717-090000-viele-kinder-in-berlin-leben-weiter-mit-sozialhilfe-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260717-090000-viele-kinder-in-berlin-leben-weiter-mit-sozialhilfe-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Wirtschaft
+description: In Berlin wachsen weiterhin fast 140.000 Kinder und Jugendliche in Familien
+  auf, die Geld vom Staat brauchen. Die Zahlen beziehen sich auf das Jahresende...
+keywords: *id001
 ---
 
 In Berlin <button type="button" class="article-term" data-term-id="term-3">wachsen</button> <button type="button" class="article-term" data-term-id="term-1">weiterhin</button> fast 140.000 <button type="button" class="article-term" data-term-id="term-2">Kinder und Jugendliche</button> in Familien auf, die Geld vom Staat brauchen. Die Zahlen <button type="button" class="article-term" data-term-id="term-4">beziehen sich auf</button> das <button type="button" class="article-term" data-term-id="term-5">Jahresende</button> 2025. Sie zeigen die <button type="button" class="article-term" data-term-id="term-6">Lage</button> der <button type="button" class="article-term" data-term-id="term-7">unter 18-Jährigen</button> in der <button type="button" class="article-term" data-term-id="term-8">Hauptstadt</button>. <button type="button" class="article-term" data-term-id="term-9">Betroffen</button> waren 139.930 von <button type="button" class="article-term" data-term-id="term-10">insgesamt</button> 627.798 Kindern und Jugendlichen. Das <button type="button" class="article-term" data-term-id="term-11">entspricht</button> einem <button type="button" class="article-term" data-term-id="term-12">Anteil</button> von 22,3 Prozent.

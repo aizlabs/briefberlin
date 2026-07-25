@@ -1,16 +1,17 @@
 ---
-title: "Berliner Bündnis fordert Regeln für E-Scooter-Parken"
+title: Berliner Bündnis fordert Regeln für E-Scooter-Parken
 date: 2026-07-01 13:47:28
 level: B1
-topics: ["deutsch"]
+topics: &id001 [Berliner, E-Scooter-Parken, Berlin, Bündnis, Roland Stimpel, FUSS
+    e. V., Landesseniorenbeirat]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260701-134728-berliner-bundnis-fordert-regeln-fur-e-scooter-parken-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260701-134728-berliner-bundnis-fordert-regeln-fur-e-scooter-parken-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Verkehr
+description: In Berlin gibt es ein **Bündnis** aus Blindenvereinen, Umweltgruppen
+  und Seniorenvertretungen. Sie sind gegen das Chaos durch **falsch geparkte E-Scooter**....
+keywords: *id001
 ---
 
 In Berlin gibt es ein **Bündnis** aus Blindenvereinen, Umweltgruppen und Seniorenvertretungen. Sie sind gegen das Chaos durch **falsch geparkte E-Scooter**. Das **Bündnis** möchte, dass E-Scooter nur an festen Stationen abgestellt werden dürfen. Diese Forderung ist wichtig, weil bald die **Berliner Senatswahl** stattfindet. Parteien können sich mit diesem Thema profilieren.

@@ -2,16 +2,16 @@
 title: 'Zukunft des ICC: Neues Zentrum in Berlin'
 date: 2026-06-27 01:19:20
 level: A2
-topics:
-- deutsch
+topics: &id001 [ICC, Neues Zentrum, Berlin, Internationale Congress Centrum, Kai Wegner,
+  MIB AG, Coloured Fields]
 sources: []
-audio:
-  url: https://media.briefberlin.de/articles/2026/06/20260627-011920-zukunft-des-icc-neues-zentrum-in-berlin-a2/article.mp3
-  format: mp3
-  mime_type: audio/mpeg
-  provider: openai
-  voice: alloy
+audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260627-011920-zukunft-des-icc-neues-zentrum-in-berlin-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Politik
+description: Das Internationale Congress Centrum (ICC) in Berlin soll **neu gestaltet**
+  werden. Der Bürgermeister Kai Wegner möchte das ICC zu einem Ort für Kultur und...
+keywords: *id001
 ---
 
 Das Internationale Congress Centrum (ICC) in Berlin soll **neu gestaltet** werden. Der Bürgermeister Kai Wegner möchte das ICC zu einem Ort für Kultur und Wissenschaft machen. 

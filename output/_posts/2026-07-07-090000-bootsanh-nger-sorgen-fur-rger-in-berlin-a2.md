@@ -1,16 +1,18 @@
 ---
-title: "Bootsanhänger sorgen für Ärger in Berlin"
+title: Bootsanhänger sorgen für Ärger in Berlin
 date: 2026-07-07 09:00:00
 level: A2
-topics: ["bootsanh\u00e4nger", "stra\u00dfenparken", "stra\u00dfenverkehrsordnung"]
+topics: &id001 [bootsanhänger, straßenparken, straßenverkehrsordnung, Berlin, Wannsee,
+  Zehlendorf, Reinickendorf]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260707-090000-bootsanh-nger-sorgen-fur-rger-in-berlin-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260707-090000-bootsanh-nger-sorgen-fur-rger-in-berlin-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Nachrichten
+description: In mehreren Außenbezirken von Berlin gibt es Ärger. Seit Wochen stehen
+  dort viele Bootsanhänger am Straßenrand. Mit solchen Anhängern bringen Menschen
+  Boote...
+keywords: *id001
 ---
 
 In mehreren <button type="button" class="article-term article-term--default" data-term-id="term-2">Außenbezirken</button> von Berlin gibt es <button type="button" class="article-term" data-term-id="term-1">Ärger</button>. <button type="button" class="article-term" data-term-id="term-3">Seit Wochen</button> <button type="button" class="article-term" data-term-id="term-4">stehen</button> dort viele Bootsanhänger am <button type="button" class="article-term article-term--default" data-term-id="term-5">Straßenrand</button>. Mit solchen <button type="button" class="article-term" data-term-id="term-6">Anhängern</button> bringen Menschen <button type="button" class="article-term" data-term-id="term-7">Boote</button> zum Wasser.

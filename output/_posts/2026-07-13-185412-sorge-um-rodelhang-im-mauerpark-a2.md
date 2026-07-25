@@ -1,16 +1,17 @@
 ---
-title: "Sorge um Rodelhang im Mauerpark"
+title: Sorge um Rodelhang im Mauerpark
 date: 2026-07-13 18:54:12
 level: A2
-topics: ["hangsicherung", "erosion", "rodelhang"]
+topics: &id001 [hangsicherung, erosion, rodelhang, Berliner Mauerpark, Sonnenhügel,
+  Jahn-Sportpark, Erde]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260713-185412-sorge-um-rodelhang-im-mauerpark-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260713-185412-sorge-um-rodelhang-im-mauerpark-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Stadtleben
+description: Im Berliner Mauerpark gibt es Sorge um einen Hügel. Der Hügel heißt Sonnenhügel
+  und liegt neben dem Jahn-Sportpark. Dort arbeiten Firmen seit kurzer Zeit am...
+keywords: *id001
 ---
 
 Im Berliner Mauerpark gibt es <button type="button" class="article-term article-term--default" data-term-id="term-1">Sorge um</button> einen <button type="button" class="article-term article-term--default" data-term-id="term-3">Hügel</button>. Der <button type="button" class="article-term article-term--default" data-term-id="term-3">Hügel</button> heißt Sonnenhügel und <button type="button" class="article-term" data-term-id="term-4">liegt</button> <button type="button" class="article-term" data-term-id="term-5">neben</button> dem Jahn-Sportpark. Dort <button type="button" class="article-term" data-term-id="term-35">arbeiten</button> Firmen <button type="button" class="article-term" data-term-id="term-6">seit kurzer Zeit</button> am <button type="button" class="article-term article-term--default" data-term-id="term-7">Hang</button>.

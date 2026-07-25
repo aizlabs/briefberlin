@@ -1,16 +1,17 @@
 ---
-title: "Abriss eines alten Bunkers in Berlin"
+title: Abriss eines alten Bunkers in Berlin
 date: 2026-07-01 13:43:50
 level: A2
-topics: ["deutsch"]
+topics: &id001 [Abriss, Berlin, Berlin-Mitte, NS-Zeit, Berliner Unterwelten, Der Bunker,
+  Landesdenkmalrat]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260701-134350-abriss-eines-alten-bunkers-in-berlin-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260701-134350-abriss-eines-alten-bunkers-in-berlin-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Stadtleben
+description: In Berlin soll ein alter Bunker **abgerissen** werden. Der Bunker steht
+  in Berlin-Mitte. Er ist der letzte Vorkriegsbunker aus der NS-Zeit. An seiner Stelle...
+keywords: *id001
 ---
 
 In Berlin soll ein alter Bunker **abgerissen** werden. Der Bunker steht in Berlin-Mitte. Er ist der letzte Vorkriegsbunker aus der NS-Zeit. An seiner Stelle sollen neue Wohnungen und Büros gebaut werden. Viele Menschen sind dagegen. Besonders **Denkmalschützer** und der **Verein Berliner Unterwelten** wollen den Bunker behalten.

@@ -1,16 +1,17 @@
 ---
-title: "Neue BVG-App Max startet später als bisher geplant"
+title: Neue BVG-App Max startet später als bisher geplant
 date: 2026-07-08 15:11:19
 level: B1
-topics: ["nahverkehrs-app", "digitalisierung", "projektverz\u00f6gerung"]
+topics: &id001 [nahverkehrs-app, digitalisierung, projektverzögerung, Neue BVG-App,
+  Max, Berliner Nahverkehr, Berlin]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260708-151119-neue-bvg-app-max-startet-sp-ter-als-bisher-geplant-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260708-151119-neue-bvg-app-max-startet-sp-ter-als-bisher-geplant-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Verkehr
+description: Die neue App „Max“ für den Berliner Nahverkehr startet später als erwartet.
+  Einen sicheren neuen Termin gibt es inzwischen nicht mehr. Das betrifft...
+keywords: *id001
 ---
 
 Die neue App „Max“ für den Berliner <button type="button" class="article-term article-term--default" data-term-id="term-3">Nahverkehr</button> startet <button type="button" class="article-term" data-term-id="term-1">später</button> als <button type="button" class="article-term" data-term-id="term-2">erwartet</button>. Einen <button type="button" class="article-term" data-term-id="term-4">sicheren</button> neuen Termin gibt es <button type="button" class="article-term" data-term-id="term-5">inzwischen</button> nicht mehr. Das <button type="button" class="article-term" data-term-id="term-6">betrifft</button> Fahrgäste in Berlin, die <button type="button" class="article-term" data-term-id="term-7">künftig</button> <button type="button" class="article-term" data-term-id="term-8">Verbindungen</button>, Tickets und andere <button type="button" class="article-term" data-term-id="term-9">Angebote</button> in einer <button type="button" class="article-term" data-term-id="term-10">Anwendung</button> finden sollen. Die Berliner Verkehrsbetriebe, kurz BVG, planen die App als <button type="button" class="article-term article-term--default" data-term-id="term-11">Nachfolgerin</button> der <button type="button" class="article-term" data-term-id="term-12">bisherigen</button> App „Fahrinfo“.

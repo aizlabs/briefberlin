@@ -1,16 +1,17 @@
 ---
-title: "Probleme beim Berliner ITDZ"
+title: Probleme beim Berliner ITDZ
 date: 2026-07-13 19:44:37
 level: A2
-topics: ["vergabeverfahren", "korruptionsverdacht", "it-dienstleister"]
+topics: &id001 [vergabeverfahren, korruptionsverdacht, it-dienstleister, Berliner
+    ITDZ, ITDZ, Berlin, Berliner Ämtern]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260713-194437-probleme-beim-berliner-itdz-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260713-194437-probleme-beim-berliner-itdz-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Wirtschaft
+description: Das ITDZ in Berlin hat jetzt neue Probleme. Das ITDZ hilft den Berliner
+  Ämtern mit Computern und Technik. Im Mittelpunkt steht jetzt die Chefin Maria Borelli.
+keywords: *id001
 ---
 
 Das ITDZ in Berlin hat <button type="button" class="article-term" data-term-id="term-1">jetzt</button> neue Probleme. Das ITDZ <button type="button" class="article-term" data-term-id="term-2">hilft</button> den Berliner <button type="button" class="article-term article-term--default" data-term-id="term-3">Ämtern</button> mit Computern und Technik. <button type="button" class="article-term" data-term-id="term-4">Im Mittelpunkt</button> steht <button type="button" class="article-term" data-term-id="term-1">jetzt</button> die <button type="button" class="article-term" data-term-id="term-5">Chefin</button> Maria Borelli.

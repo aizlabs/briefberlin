@@ -1,16 +1,17 @@
 ---
-title: "Streit in linkem Zentrum in Hellersdorf"
+title: Streit in linkem Zentrum in Hellersdorf
 date: 2026-07-08 15:41:34
 level: A2
-topics: ["nahostkonflikt", "linke szene", "politische gewalt"]
+topics: &id001 [nahostkonflikt, linke szene, politische gewalt, Hellersdorf, Berlin-Hellersdorf,
+  Israel, Palästina]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260708-154134-streit-in-linkem-zentrum-in-hellersdorf-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260708-154134-streit-in-linkem-zentrum-in-hellersdorf-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Politik
+description: Am Wochenende gab es Gewalt in Berlin-Hellersdorf. Linke Gruppen stritten
+  über den Nahen Osten, also über Israel und Palästina. Der Streit passierte im...
+keywords: *id001
 ---
 
 <button type="button" class="article-term" data-term-id="term-1">Am Wochenende</button> <button type="button" class="article-term" data-term-id="term-2">gab es</button> <button type="button" class="article-term article-term--default" data-term-id="term-3">Gewalt</button> in Berlin-Hellersdorf. <button type="button" class="article-term" data-term-id="term-4">Linke Gruppen</button> <button type="button" class="article-term article-term--default" data-term-id="term-5">stritten</button> über den Nahen Osten, also über Israel und Palästina. Der <button type="button" class="article-term article-term--default" data-term-id="term-6">Streit</button> <button type="button" class="article-term" data-term-id="term-7">passierte</button> im Zentrum AJZ Kita und im <button type="button" class="article-term" data-term-id="term-8">Raum</button> La Casa.

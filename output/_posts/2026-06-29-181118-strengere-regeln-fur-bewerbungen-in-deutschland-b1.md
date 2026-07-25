@@ -1,16 +1,17 @@
 ---
-title: "Strengere Regeln für Bewerbungen in Deutschland"
+title: Strengere Regeln für Bewerbungen in Deutschland
 date: 2026-06-29 18:11:18
 level: B1
-topics: ["deutsch"]
+topics: &id001 [Deutschland, Bundesagentur für Arbeit, Bewerbungsgespräch, Arbeitslosengeld]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/06/20260629-181118-strengere-regeln-fur-bewerbungen-in-deutschland-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260629-181118-strengere-regeln-fur-bewerbungen-in-deutschland-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Politik
+description: Die Bundesagentur für Arbeit hat neue Regeln eingeführt, die ab Juli
+  in ganz Deutschland gelten. Wenn jemand, der Arbeitslosengeld erhält, betrunken
+  oder...
+keywords: *id001
 ---
 
 Die Bundesagentur für Arbeit hat neue Regeln eingeführt, die ab Juli in ganz Deutschland gelten. Wenn jemand, der Arbeitslosengeld erhält, betrunken oder ungepflegt zu einem **Bewerbungsgespräch** kommt, kann das Jobcenter die Unterstützung kürzen. Diese Maßnahme ist Teil eines neuen Sanktionsrechts, das von der Regierung beschlossen wurde.

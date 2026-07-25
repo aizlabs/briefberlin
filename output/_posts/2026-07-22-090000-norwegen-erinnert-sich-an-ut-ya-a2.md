@@ -1,17 +1,18 @@
 ---
-title: "Norwegen erinnert sich an Utøya"
+title: Norwegen erinnert sich an Utøya
 date: 2026-07-22 09:00:00
-author: "clara-becker"
+author: clara-becker
 level: A2
-topics: ["rechtsterrorismus", "terroranschl\u00e4ge", "\u00fcberlebende"]
+topics: &id001 [rechtsterrorismus, terroranschläge, überlebende, Norwegen, Utøya,
+  Ein Mann mit sehr rechten, Oslo]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260722-090000-norwegen-erinnert-sich-an-ut-ya-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260722-090000-norwegen-erinnert-sich-an-ut-ya-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Nachrichten
+description: Norwegen erinnert sich 15 Jahre nach dem 22. Juli 2011 an zwei Angriffe.
+  Ein Mann mit sehr rechten Ideen hat in Oslo und auf Utøya 77 Menschen getötet....
+keywords: *id001
 ---
 
 Norwegen <button type="button" class="article-term" data-term-id="term-1">erinnert sich</button> 15 Jahre nach dem 22. Juli 2011 an zwei <button type="button" class="article-term article-term--default" data-term-id="term-2">Angriffe</button>. Ein Mann mit sehr <button type="button" class="article-term" data-term-id="term-3">rechten Ideen</button> hat in Oslo und auf Utøya 77 Menschen <button type="button" class="article-term" data-term-id="term-4">getötet</button>. Viele <button type="button" class="article-term article-term--default" data-term-id="term-5">Opfer</button> waren junge Leute in einem <button type="button" class="article-term" data-term-id="term-6">Sommerlager</button> der Arbeiterpartei.

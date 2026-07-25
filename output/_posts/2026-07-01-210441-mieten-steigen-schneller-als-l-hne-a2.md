@@ -1,16 +1,17 @@
 ---
-title: "Mieten steigen schneller als Löhne"
+title: Mieten steigen schneller als Löhne
 date: 2026-07-01 21:04:41
 level: A2
-topics: ["deutsch"]
+topics: &id001 [Mieten, deutschen, Hamburg, Dresden, Frankfurt am Main, Mietverträge,
+  Bauen]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260701-210441-mieten-steigen-schneller-als-l-hne-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260701-210441-mieten-steigen-schneller-als-l-hne-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Stadtleben
+description: Viele Menschen suchen in deutschen Großstädten eine neue Wohnung. Diese
+  Suche ist für viele Menschen sehr teuer. Besonders neue Mietwohnungen kosten seit...
+keywords: *id001
 ---
 
 Viele Menschen <button type="button" class="article-term" data-term-id="term-3">suchen</button> in deutschen <button type="button" class="article-term" data-term-id="term-4">Großstädten</button> eine neue <button type="button" class="article-term article-term--default" data-term-id="term-5">Wohnung</button>. Diese <button type="button" class="article-term" data-term-id="term-6">Suche</button> ist für viele Menschen sehr <button type="button" class="article-term" data-term-id="term-7">teuer</button>. <button type="button" class="article-term" data-term-id="term-8">Besonders</button> neue <button type="button" class="article-term article-term--default" data-term-id="term-9">Mietwohnungen</button> kosten <button type="button" class="article-term" data-term-id="term-10">seit</button> 2023 viel mehr.

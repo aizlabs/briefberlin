@@ -1,17 +1,18 @@
 ---
-title: "Streit um neuen Turm am Westkreuz"
+title: Streit um neuen Turm am Westkreuz
 date: 2026-07-16 11:14:33
-author: "clara-becker"
+author: clara-becker
 level: A2
-topics: ["hochhausplanung", "stadtentwicklung", "messequartier"]
+topics: &id001 [hochhausplanung, stadtentwicklung, messequartier, Westkreuz, Berliner
+    Westkreuz, Berlin, Artemis]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260716-111433-streit-um-neuen-turm-am-westkreuz-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260716-111433-streit-um-neuen-turm-am-westkreuz-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Nachrichten
+description: Am Berliner Westkreuz gibt es Streit um ein neues Hochhaus mit 178 bis
+  224 Metern Höhe. So kann es das höchste Haus in Berlin werden. Die Besitzer von...
+keywords: *id001
 ---
 
 Am Berliner Westkreuz gibt es <button type="button" class="article-term article-term--default" data-term-id="term-1">Streit</button> <button type="button" class="article-term" data-term-id="term-2">um</button> ein neues <button type="button" class="article-term article-term--default" data-term-id="term-4">Hochhaus</button> mit 178 bis 224 Metern <button type="button" class="article-term" data-term-id="term-5">Höhe</button>. So kann es das <button type="button" class="article-term" data-term-id="term-6">höchste</button> Haus in Berlin werden. Die <button type="button" class="article-term article-term--default" data-term-id="term-7">Besitzer</button> von Artemis in Halensee <button type="button" class="article-term" data-term-id="term-8">wollen</button> den <button type="button" class="article-term" data-term-id="term-9">Turm</button> bauen, und ihr Haus für Sex-Arbeit soll <button type="button" class="article-term article-term--default" data-term-id="term-10">umziehen</button>.

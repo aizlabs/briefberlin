@@ -1,16 +1,17 @@
 ---
-title: "Viele Haftbefehle in Berlin sind offen"
+title: Viele Haftbefehle in Berlin sind offen
 date: 2026-07-05 09:00:00
 level: A2
-topics: ["haftbefehle", "strafvollstreckung", "strafverfolgung"]
+topics: &id001 [haftbefehle, strafvollstreckung, strafverfolgung, Berlin, Berliner
+    Innenverwaltung, Behörde, Person]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260705-090000-viele-haftbefehle-in-berlin-sind-offen-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260705-090000-viele-haftbefehle-in-berlin-sind-offen-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Nachrichten
+description: 'In Berlin gibt es zurzeit 9.459 offene Haftbefehle. Ein Haftbefehl bedeutet:
+  Die Polizei soll eine Person festnehmen. Das hat die Berliner Innenverwaltung...'
+keywords: *id001
 ---
 
 In Berlin gibt es <button type="button" class="article-term" data-term-id="term-1">zurzeit</button> 9.459 offene Haftbefehle. Ein <button type="button" class="article-term article-term--default" data-term-id="term-3">Haftbefehl</button> bedeutet: Die Polizei soll eine Person <button type="button" class="article-term article-term--default" data-term-id="term-4">festnehmen</button>. Das hat die Berliner <button type="button" class="article-term" data-term-id="term-5">Innenverwaltung</button> <button type="button" class="article-term" data-term-id="term-6">mitgeteilt</button>, eine <button type="button" class="article-term" data-term-id="term-7">Behörde</button> für Sicherheit.

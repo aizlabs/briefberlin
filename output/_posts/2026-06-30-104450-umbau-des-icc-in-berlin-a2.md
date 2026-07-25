@@ -1,16 +1,17 @@
 ---
-title: "Umbau des ICC in Berlin"
+title: Umbau des ICC in Berlin
 date: 2026-06-30 10:44:50
 level: A2
-topics: ["deutsch"]
+topics: &id001 [ICC, Berlin, Internationale Congress Centrum, Hochhäuser, Artemis-Gelände,
+  Johannes Heyne, FDP]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/06/20260630-104450-umbau-des-icc-in-berlin-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260630-104450-umbau-des-icc-in-berlin-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Kultur
+description: Das Internationale Congress Centrum (ICC) in Berlin wird **umgebaut**.
+  Es soll ein neues Zentrum für **Veranstaltungen** und Kultur werden. Zwei neue...
+keywords: *id001
 ---
 
 Das Internationale Congress Centrum (ICC) in Berlin wird **umgebaut**. Es soll ein neues Zentrum für **Veranstaltungen** und Kultur werden. Zwei neue Hochhäuser sind auch geplant. Experten finden die Pläne gut. Sie glauben, dass das Projekt die **Umgebung** verbessern kann.

@@ -1,16 +1,17 @@
 ---
-title: "Berlin: Zu hohe Mieten online melden"
+title: 'Berlin: Zu hohe Mieten online melden'
 date: 2026-07-05 09:00:00
 level: A2
-topics: ["mieterschutz", "mietpreis\u00fcberh\u00f6hung", "vergleichsmiete"]
+topics: &id001 [mieterschutz, mietpreisüberhöhung, vergleichsmiete, Berlin, Internet-Seite,
+  Stadt, Internet]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260705-090000-berlin-zu-hohe-mieten-online-melden-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260705-090000-berlin-zu-hohe-mieten-online-melden-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Stadtleben
+description: In Berlin können Mieterinnen und Mieter ab jetzt zu hohe Mieten online
+  melden. Das geht über die Internet-Seite der Stadt für Dienste. Die Meldung kommt...
+keywords: *id001
 ---
 
 In Berlin können <button type="button" class="article-term article-term--default" data-term-id="term-4">Mieterinnen und Mieter</button> <button type="button" class="article-term" data-term-id="term-5">ab jetzt</button> <button type="button" class="article-term" data-term-id="term-1">zu hohe</button> <button type="button" class="article-term article-term--default" data-term-id="term-2">Mieten</button> online <button type="button" class="article-term article-term--default" data-term-id="term-3">melden</button>. <button type="button" class="article-term" data-term-id="term-6">Das geht</button> <button type="button" class="article-term" data-term-id="term-7">über</button> die Internet-Seite der Stadt für <button type="button" class="article-term" data-term-id="term-8">Dienste</button>. Die <button type="button" class="article-term article-term--default" data-term-id="term-9">Meldung</button> <button type="button" class="article-term" data-term-id="term-10">kommt</button> dann beim <button type="button" class="article-term article-term--default" data-term-id="term-11">Bezirksamt</button> an.

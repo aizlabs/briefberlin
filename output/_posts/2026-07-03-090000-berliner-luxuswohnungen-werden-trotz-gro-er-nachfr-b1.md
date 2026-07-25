@@ -1,16 +1,17 @@
 ---
-title: "Berliner Luxuswohnungen werden trotz großer Nachfrage etwas günstiger"
+title: Berliner Luxuswohnungen werden trotz großer Nachfrage etwas günstiger
 date: 2026-07-03 09:00:00
 level: B1
-topics: ["luxuswohnungen", "immobilienpreise", "eigentumswohnungen"]
+topics: &id001 [luxuswohnungen, immobilienpreise, eigentumswohnungen, Berliner Luxuswohnungen,
+  Berlin, 'affordable","explanation":"Kostet', 'continuing","explanation":"Hier']
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260703-090000-berliner-luxuswohnungen-werden-trotz-gro-er-nachfrage-etwas-gunstiger-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260703-090000-berliner-luxuswohnungen-werden-trotz-gro-er-nachfrage-etwas-gunstiger-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Stadtleben
+description: Luxuswohnungen in Berlin werden günstiger, obwohl viele Menschen weiter
+  Interesse an solchen Wohnungen haben. Das zeigt eine aktuelle Auswertung von...
+keywords: *id001
 ---
 
 <button type="button" class="article-term article-term--default" data-term-id="term-1">Luxuswohnungen</button> in Berlin werden <button type="button" class="article-term" data-term-id="term-3">günstiger</button>, <button type="button" class="article-term" data-term-id="term-4">obwohl</button> viele Menschen <button type="button" class="article-term" data-term-id="term-5">weiter</button> Interesse an <button type="button" class="article-term" data-term-id="term-6">solchen</button> Wohnungen haben. Das zeigt eine aktuelle <button type="button" class="article-term article-term--default" data-term-id="term-7">Auswertung</button> von <button type="button" class="article-term article-term--default" data-term-id="term-8">Wohnungsanzeigen</button> für das erste <button type="button" class="article-term" data-term-id="term-9">Quartal</button> 2026. Die <button type="button" class="article-term article-term--default" data-term-id="term-7">Auswertung</button> <button type="button" class="article-term" data-term-id="term-10">untersuchte</button> den oberen Teil des Marktes, also die teuersten zehn Prozent der <button type="button" class="article-term" data-term-id="term-11">angebotenen</button> Wohnungen. <button type="button" class="article-term" data-term-id="term-12">Dazu zählten</button> nur <button type="button" class="article-term" data-term-id="term-13">Angebote</button> <button type="button" class="article-term" data-term-id="term-14">ab</button> 8.076 Euro pro Quadratmeter.

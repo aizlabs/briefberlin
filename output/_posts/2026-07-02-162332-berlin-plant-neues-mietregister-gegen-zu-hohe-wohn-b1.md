@@ -1,16 +1,16 @@
 ---
-title: "Berlin plant neues Mietregister gegen zu hohe Wohnkosten"
+title: Berlin plant neues Mietregister gegen zu hohe Wohnkosten
 date: 2026-07-02 16:23:32
 level: B1
-topics: ["deutsch"]
+topics: &id001 [Berlin, Abgeordnetenhaus, Berliner Parlament, CDU, SPD, Land, Berliner]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260702-162332-berlin-plant-neues-mietregister-gegen-zu-hohe-wohnkosten-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260702-162332-berlin-plant-neues-mietregister-gegen-zu-hohe-wohnkosten-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Nachrichten
+description: Berlin will als erstes Bundesland ein Mietenkataster einführen, also
+  ein zentrales Register für Mietdaten. Das Abgeordnetenhaus, das Berliner Parlament,...
+keywords: *id001
 ---
 
 Berlin will als erstes <button type="button" class="article-term" data-term-id="term-2">Bundesland</button> ein <button type="button" class="article-term article-term--default" data-term-id="term-1">Mietenkataster</button> <button type="button" class="article-term" data-term-id="term-3">einführen</button>, also ein <button type="button" class="article-term" data-term-id="term-4">zentrales</button> Register für <button type="button" class="article-term" data-term-id="term-5">Mietdaten</button>. Das Abgeordnetenhaus, das Berliner Parlament, soll den Plan am Donnerstag <button type="button" class="article-term" data-term-id="term-6">beschließen</button>. Ab dem kommenden Jahr sollen zu etwa 1,7 Millionen <button type="button" class="article-term" data-term-id="term-7">Mietverträgen</button> wichtige <button type="button" class="article-term" data-term-id="term-8">Angaben</button> <button type="button" class="article-term" data-term-id="term-9">gemeldet</button> werden. Dazu gehören die <button type="button" class="article-term" data-term-id="term-10">Wohnungsgröße</button>, die Adresse und der Preis pro Quadratmeter. Die <button type="button" class="article-term" data-term-id="term-11">zuständige</button> <button type="button" class="article-term" data-term-id="term-12">Senatsverwaltung</button> soll die Daten digital <button type="button" class="article-term" data-term-id="term-13">prüfen</button> können. Auch <button type="button" class="article-term" data-term-id="term-14">künstliche Intelligenz</button>, also lernende Computerprogramme, kann dabei helfen. Die Regierung aus CDU und SPD hofft auf mehr Kontrolle bei möglichen <button type="button" class="article-term article-term--default" data-term-id="term-15">Verstößen</button> gegen das <button type="button" class="article-term article-term--default" data-term-id="term-16">Mietrecht</button>.

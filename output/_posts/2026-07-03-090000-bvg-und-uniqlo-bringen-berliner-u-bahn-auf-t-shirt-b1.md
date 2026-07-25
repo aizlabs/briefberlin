@@ -1,16 +1,17 @@
 ---
-title: "BVG und Uniqlo bringen Berliner U-Bahn auf T-Shirts"
+title: BVG und Uniqlo bringen Berliner U-Bahn auf T-Shirts
 date: 2026-07-03 09:00:00
 level: B1
-topics: ["modekooperation", "\u00f6ffentlicher nahverkehr", "merchandising"]
+topics: &id001 [modekooperation, öffentlicher nahverkehr, merchandising, BVG, Uniqlo,
+  Berliner U-Bahn, Berliner Verkehrsbetriebe]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260703-090000-bvg-und-uniqlo-bringen-berliner-u-bahn-auf-t-shirts-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260703-090000-bvg-und-uniqlo-bringen-berliner-u-bahn-auf-t-shirts-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Verkehr
+description: Die Berliner Verkehrsbetriebe, kurz BVG, arbeiten mit Uniqlo zusammen.
+  Seit Donnerstag können Kundinnen und Kunden im Berliner Hauptgeschäft der japanischen...
+keywords: *id001
 ---
 
 Die Berliner Verkehrsbetriebe, <button type="button" class="article-term" data-term-id="term-1">kurz</button> BVG, arbeiten mit Uniqlo zusammen. Seit Donnerstag können <button type="button" class="article-term" data-term-id="term-2">Kundinnen und Kunden</button> im Berliner <button type="button" class="article-term" data-term-id="term-3">Hauptgeschäft</button> der japanischen <button type="button" class="article-term" data-term-id="term-4">Modefirma</button> eigene T-Shirts und Taschen <button type="button" class="article-term article-term--default" data-term-id="term-5">gestalten</button>. Der <button type="button" class="article-term" data-term-id="term-6">Laden</button> <button type="button" class="article-term" data-term-id="term-7">liegt</button> in Schöneberg. <button type="button" class="article-term article-term--default" data-term-id="term-8">Zur Auswahl stehen</button> mehr als zwölf <button type="button" class="article-term" data-term-id="term-9">Motive</button> aus dem <button type="button" class="article-term" data-term-id="term-10">Alltag</button> der BVG. <button type="button" class="article-term" data-term-id="term-11">Dazu gehören</button> <button type="button" class="article-term" data-term-id="term-12">U-Bahn-Linien</button>, <button type="button" class="article-term article-term--default" data-term-id="term-13">Bahnhofsschilder</button> und Logos. Die <button type="button" class="article-term" data-term-id="term-14">Drucke</button> <button type="button" class="article-term" data-term-id="term-15">entstehen</button> direkt im Geschäft. Kinder-Shirts kosten 12,90 Euro, große <button type="button" class="article-term" data-term-id="term-16">Tragetaschen</button> 24,90 Euro. Die <button type="button" class="article-term" data-term-id="term-17">Aktion</button> heißt Einkleiden bitte! und soll bis <button type="button" class="article-term" data-term-id="term-18">Jahresende</button> <button type="button" class="article-term" data-term-id="term-19">laufen</button>. Sie bleibt auf diesen <button type="button" class="article-term" data-term-id="term-20">Standort</button> <button type="button" class="article-term article-term--default" data-term-id="term-21">beschränkt</button>.

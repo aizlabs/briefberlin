@@ -1,16 +1,17 @@
 ---
-title: "Teure Wohnungen in Berlin werden billiger"
+title: Teure Wohnungen in Berlin werden billiger
 date: 2026-07-03 09:00:00
 level: A2
-topics: ["luxuswohnungen", "immobilienpreise", "eigentumswohnungen"]
+topics: &id001 [luxuswohnungen, immobilienpreise, eigentumswohnungen, Teure Wohnungen,
+  Berlin, Dahlem, Marshallstraße]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260703-090000-teure-wohnungen-in-berlin-werden-billiger-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260703-090000-teure-wohnungen-in-berlin-werden-billiger-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Stadtleben
+description: Viele Menschen bauen in Berlin weiter sehr teure Wohnungen. Aber die
+  Preise für solche Wohnungen sinken. Ein neues Projekt entsteht in Dahlem, in der...
+keywords: *id001
 ---
 
 Viele Menschen <button type="button" class="article-term" data-term-id="term-3">bauen</button> in Berlin <button type="button" class="article-term" data-term-id="term-4">weiter</button> sehr <button type="button" class="article-term" data-term-id="term-1">teure</button> <button type="button" class="article-term article-term--default" data-term-id="term-2">Wohnungen</button>. Aber die <button type="button" class="article-term" data-term-id="term-5">Preise</button> für solche <button type="button" class="article-term article-term--default" data-term-id="term-2">Wohnungen</button> <button type="button" class="article-term article-term--default" data-term-id="term-6">sinken</button>. Ein neues Projekt <button type="button" class="article-term article-term--default" data-term-id="term-7">entsteht</button> in Dahlem, in der Marshallstraße 1.

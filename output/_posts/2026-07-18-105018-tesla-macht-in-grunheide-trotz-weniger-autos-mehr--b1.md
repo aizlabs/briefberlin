@@ -1,17 +1,18 @@
 ---
-title: "Tesla macht in Grünheide trotz weniger Autos mehr Gewinn"
+title: Tesla macht in Grünheide trotz weniger Autos mehr Gewinn
 date: 2026-07-18 10:50:18
-author: "clara-becker"
+author: clara-becker
 level: B1
-topics: ["elektroautos", "autofabrik", "gesch\u00e4ftsbericht"]
+topics: &id001 [elektroautos, autofabrik, geschäftsbericht, Tesla, Grünheide, Berlin,
+  Brandenburg]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260718-105018-tesla-macht-in-grunheide-trotz-weniger-autos-mehr-gewinn-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260718-105018-tesla-macht-in-grunheide-trotz-weniger-autos-mehr-gewinn-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Wirtschaft
+description: Teslas Fabrik in Grünheide bei Berlin hat 2025 mehr Gewinn gemacht. Das
+  passierte, obwohl Tesla weltweit weniger Autos verkaufte und in Brandenburg weniger...
+keywords: *id001
 ---
 
 Teslas Fabrik in Grünheide bei Berlin hat 2025 mehr <button type="button" class="article-term article-term--default" data-term-id="term-1">Gewinn</button> gemacht. <button type="button" class="article-term" data-term-id="term-2">Das passierte</button>, <button type="button" class="article-term" data-term-id="term-3">obwohl</button> Tesla <button type="button" class="article-term" data-term-id="term-4">weltweit</button> weniger Autos <button type="button" class="article-term" data-term-id="term-5">verkaufte</button> und in Brandenburg weniger <button type="button" class="article-term" data-term-id="term-6">Fahrzeuge</button> <button type="button" class="article-term" data-term-id="term-7">baute</button>. Die deutsche <button type="button" class="article-term" data-term-id="term-8">Produktionsfirma</button> <button type="button" class="article-term" data-term-id="term-9">verdiente</button> 77,1 Millionen Euro. Im Jahr 2024 waren es 56,8 Millionen Euro. Der <button type="button" class="article-term article-term--default" data-term-id="term-10">Umsatz</button>, also das Geld <button type="button" class="article-term" data-term-id="term-11">aus Verkäufen</button>, <button type="button" class="article-term article-term--default" data-term-id="term-12">sank</button> <button type="button" class="article-term" data-term-id="term-13">jedoch</button> von 7,6 auf 7,1 Milliarden Euro. Ein wichtiger Grund ist: Tesla <button type="button" class="article-term" data-term-id="term-14">senkte</button> die <button type="button" class="article-term" data-term-id="term-15">Kosten</button> in der Produktion <button type="button" class="article-term" data-term-id="term-16">weiter</button>.

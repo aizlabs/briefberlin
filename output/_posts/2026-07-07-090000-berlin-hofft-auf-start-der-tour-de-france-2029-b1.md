@@ -1,16 +1,17 @@
 ---
-title: "Berlin hofft auf Start der Tour de France 2029"
+title: Berlin hofft auf Start der Tour de France 2029
 date: 2026-07-07 09:00:00
 level: B1
-topics: ["tour de france", "grand d\u00e9part", "berlin"]
+topics: &id001 [tour de france, grand départ, berlin, Tour de France 2029 Berlin,
+  Stadt, Radrennens, deutsche]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260707-090000-berlin-hofft-auf-start-der-tour-de-france-2029-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260707-090000-berlin-hofft-auf-start-der-tour-de-france-2029-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Kultur
+description: Berlin hat bessere Chancen, im Jahr 2029 den Start der Tour de France
+  zu erleben. Die Stadt soll Schauplatz des Grand Départ werden, also des großen...
+keywords: *id001
 ---
 
 Berlin hat bessere Chancen, im Jahr 2029 den Start der Tour de France zu <button type="button" class="article-term" data-term-id="term-1">erleben</button>. Die Stadt soll <button type="button" class="article-term article-term--default" data-term-id="term-2">Schauplatz</button> des Grand Départ werden, <button type="button" class="article-term" data-term-id="term-3">also</button> des großen <button type="button" class="article-term article-term--default" data-term-id="term-4">Auftakts</button> des <button type="button" class="article-term" data-term-id="term-5">berühmten</button> Radrennens. <button type="button" class="article-term" data-term-id="term-6">Dafür</button> haben deutsche Partner jetzt einen <button type="button" class="article-term" data-term-id="term-7">wichtigen Schritt gemacht</button>.

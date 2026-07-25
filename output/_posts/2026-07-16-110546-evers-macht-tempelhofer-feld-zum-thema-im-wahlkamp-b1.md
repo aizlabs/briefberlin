@@ -1,17 +1,19 @@
 ---
-title: "Evers macht Tempelhofer Feld zum Thema im Wahlkampf"
+title: Evers macht Tempelhofer Feld zum Thema im Wahlkampf
 date: 2026-07-16 11:05:46
-author: "clara-becker"
+author: clara-becker
 level: B1
-topics: ["randbebauung", "wohnungsbau", "wohnungsnot"]
+topics: &id001 [randbebauung, wohnungsbau, wohnungsnot, Evers, Tempelhofer Feld, Berliner
+    Wahlkampf, Stefan Evers]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260716-110546-evers-macht-tempelhofer-feld-zum-thema-im-wahlkampf-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260716-110546-evers-macht-tempelhofer-feld-zum-thema-im-wahlkampf-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Politik
+description: Im Berliner Wahlkampf wird das Tempelhofer Feld wieder ein wichtiges
+  Thema. CDU-Spitzenkandidat Stefan Evers will dort Wohnungen am Rand möglich machen.
+  Die...
+keywords: *id001
 ---
 
 Im Berliner <button type="button" class="article-term article-term--default" data-term-id="term-1">Wahlkampf</button> wird das Tempelhofer Feld wieder ein wichtiges Thema. CDU-Spitzenkandidat Stefan Evers will dort Wohnungen <button type="button" class="article-term" data-term-id="term-3">am Rand</button> <button type="button" class="article-term" data-term-id="term-2">möglich machen</button>. Die Wahl am 20. September soll <button type="button" class="article-term" data-term-id="term-4">nach seiner Meinung</button> auch <button type="button" class="article-term" data-term-id="term-5">darüber entscheiden</button>. <button type="button" class="article-term" data-term-id="term-6">Bisher</button> gibt es auf dem <button type="button" class="article-term" data-term-id="term-7">früheren</button> <button type="button" class="article-term article-term--default" data-term-id="term-8">Flughafengelände</button> ein <button type="button" class="article-term article-term--default" data-term-id="term-9">Bauverbot</button>. Die <button type="button" class="article-term" data-term-id="term-10">bisherige</button> CDU-SPD-Regierung wollte dazu eher eine neue <button type="button" class="article-term article-term--default" data-term-id="term-11">Bürgerbefragung</button> starten.

@@ -1,17 +1,18 @@
 ---
-title: "Streit um Arbeit für Bürgergeld-Empfänger"
+title: Streit um Arbeit für Bürgergeld-Empfänger
 date: 2026-07-15 16:20:54
-author: "clara-becker"
+author: clara-becker
 level: A2
-topics: ["b\u00fcrgergeld", "arbeitsgelegenheiten", "arbeitsmarktpolitik"]
+topics: &id001 [bürgergeld, arbeitsgelegenheiten, arbeitsmarktpolitik, Bürgergeld-Empfänger,
+  Berlin, CDU-Politiker, Stefan Evers]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260715-162054-streit-um-arbeit-fur-burgergeld-empf-nger-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260715-162054-streit-um-arbeit-fur-burgergeld-empf-nger-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Politik
+description: In Berlin gibt es Streit über Arbeit für Bürgergeld-Empfänger. Bürgergeld
+  ist Geld vom Staat für Menschen ohne Arbeit. CDU-Politiker Stefan Evers will mehr...
+keywords: *id001
 ---
 
 In Berlin gibt es <button type="button" class="article-term article-term--default" data-term-id="term-1">Streit</button> über Arbeit für <button type="button" class="article-term article-term--default" data-term-id="term-2">Bürgergeld-Empfänger</button>. Bürgergeld ist Geld <button type="button" class="article-term" data-term-id="term-3">vom Staat</button> für Menschen ohne Arbeit. CDU-Politiker Stefan Evers will mehr <button type="button" class="article-term article-term--default" data-term-id="term-4">Pflichtarbeit</button> für diese Menschen.

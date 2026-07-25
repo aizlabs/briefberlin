@@ -1,16 +1,17 @@
 ---
-title: "Mieter protestieren gegen schlechtes Haus"
+title: Mieter protestieren gegen schlechtes Haus
 date: 2026-07-06 09:00:00
 level: A2
-topics: ["mieterschutz", "wohnungsverwahrlosung", "protest"]
+topics: &id001 [mieterschutz, wohnungsverwahrlosung, protest, Wrangelstraße, Berlin-Kreuzberg,
+  LIRIK Group, Haustür]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260706-090000-mieter-protestieren-gegen-schlechtes-haus-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260706-090000-mieter-protestieren-gegen-schlechtes-haus-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Nachrichten
+description: In der Wrangelstraße 70 in Berlin-Kreuzberg gibt es Streit um ein Wohnhaus.
+  Die Mieterinnen und Mieter protestieren gegen die LIRIK Group. Dieser Firma...
+keywords: *id001
 ---
 
 In der Wrangelstraße 70 in Berlin-Kreuzberg <button type="button" class="article-term" data-term-id="term-2">gibt es</button> <button type="button" class="article-term article-term--default" data-term-id="term-3">Streit</button> um ein <button type="button" class="article-term article-term--default" data-term-id="term-4">Wohnhaus</button>. Die <button type="button" class="article-term article-term--default" data-term-id="term-1">Mieterinnen und Mieter</button> protestieren gegen die LIRIK Group. Dieser Firma <button type="button" class="article-term" data-term-id="term-5">gehört</button> das Haus.

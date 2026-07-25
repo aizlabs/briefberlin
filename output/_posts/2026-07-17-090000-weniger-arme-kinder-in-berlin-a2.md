@@ -1,17 +1,18 @@
 ---
-title: "Weniger arme Kinder in Berlin"
+title: Weniger arme Kinder in Berlin
 date: 2026-07-17 09:00:00
-author: "clara-becker"
+author: clara-becker
 level: A2
-topics: ["kinderarmut", "sozialleistungen", "regionale unterschiede"]
+topics: &id001 [kinderarmut, sozialleistungen, regionale unterschiede, Berlin, Stadt,
+  'vorher","defaultGlossary":false},{"id":"term-4","term":"die', 'Zahl","english":"the']
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260717-090000-weniger-arme-kinder-in-berlin-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260717-090000-weniger-arme-kinder-in-berlin-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Nachrichten
+description: In Berlin leben etwas weniger arme Kinder als vorher. Aber die Zahl bleibt
+  in der Stadt sehr hoch. Das zeigen neue Zahlen aus Berlin von Ende 2025.
+keywords: *id001
 ---
 
 In Berlin leben etwas <button type="button" class="article-term" data-term-id="term-1">weniger</button> <button type="button" class="article-term article-term--default" data-term-id="term-2">arme</button> Kinder <button type="button" class="article-term" data-term-id="term-3">als vorher</button>. Aber <button type="button" class="article-term" data-term-id="term-4">die Zahl</button> <button type="button" class="article-term" data-term-id="term-5">bleibt</button> in der Stadt sehr hoch. Das <button type="button" class="article-term" data-term-id="term-6">zeigen</button> neue Zahlen aus Berlin von <button type="button" class="article-term" data-term-id="term-7">Ende</button> 2025.

@@ -1,16 +1,17 @@
 ---
-title: "Umbau des ICC: Neues Leben für Berlins Westen"
+title: 'Umbau des ICC: Neues Leben für Berlins Westen'
 date: 2026-06-30 10:45:17
 level: B1
-topics: ["deutsch"]
+topics: &id001 [ICC, Berlins, Internationale Congress Centrum, Berlin, Zentrum, Hochhäuser,
+  Platz für Hotels]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/06/20260630-104517-umbau-des-icc-neues-leben-fur-berlins-westen-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260630-104517-umbau-des-icc-neues-leben-fur-berlins-westen-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Kultur
+description: Das Internationale Congress Centrum (ICC) in Berlin soll umgebaut werden.
+  Das Gebäude steht seit Jahren leer und soll jetzt ein **lebendiges Zentrum** für...
+keywords: *id001
 ---
 
 Das Internationale Congress Centrum (ICC) in Berlin soll umgebaut werden. Das Gebäude steht seit Jahren leer und soll jetzt ein **lebendiges Zentrum** für Veranstaltungen und Kultur werden. Geplant sind auch zwei neue Hochhäuser neben dem ICC. Diese sollen Platz für Hotels, Restaurants und Konzerte bieten. Der **Bauausschuss** im Bezirk Charlottenburg-Wilmersdorf unterstützt die Pläne.

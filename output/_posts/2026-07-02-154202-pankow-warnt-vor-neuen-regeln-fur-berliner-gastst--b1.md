@@ -1,16 +1,17 @@
 ---
-title: "Pankow warnt vor neuen Regeln für Berliner Gaststätten"
+title: Pankow warnt vor neuen Regeln für Berliner Gaststätten
 date: 2026-07-02 15:42:02
 level: B1
-topics: ["deutsch"]
+topics: &id001 [Pankow, Berliner, Berlin, Bezirksamt Pankow, Außengastronomie, Stadt,
+  Prenzlauer Bergs]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260702-154202-pankow-warnt-vor-neuen-regeln-fur-berliner-gastst-tten-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260702-154202-pankow-warnt-vor-neuen-regeln-fur-berliner-gastst-tten-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Nachrichten
+description: In Berlin sorgt das neue Gaststättengesetz für Streit. Das Bezirksamt
+  Pankow hat sich deutlich kritisch geäußert. Pankow ist der einwohnerstärkste Bezirk...
+keywords: *id001
 ---
 
 In Berlin <button type="button" class="article-term" data-term-id="term-2">sorgt</button> das neue <button type="button" class="article-term article-term--default" data-term-id="term-1">Gaststättengesetz</button> für <button type="button" class="article-term" data-term-id="term-3">Streit</button>. Das Bezirksamt Pankow hat sich deutlich kritisch <button type="button" class="article-term" data-term-id="term-4">geäußert</button>. Pankow ist der <button type="button" class="article-term article-term--default" data-term-id="term-5">einwohnerstärkste</button> Bezirk der <button type="button" class="article-term" data-term-id="term-6">Hauptstadt</button>. Es <button type="button" class="article-term" data-term-id="term-7">warnt vor</button> <button type="button" class="article-term" data-term-id="term-8">Folgen</button> für <button type="button" class="article-term article-term--default" data-term-id="term-9">Wohngebiete</button> mit vielen Restaurants, Cafés und Bars.

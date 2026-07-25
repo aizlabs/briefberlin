@@ -1,16 +1,17 @@
 ---
-title: "Berlin bereitet sich auf heiße Tage vor"
+title: Berlin bereitet sich auf heiße Tage vor
 date: 2026-06-27 12:00:05
 level: B1
-topics: ["deutsch"]
+topics: &id001 [Berlin, Deutsche Wetterdienst, Hitzewelle, Ticketsteuer, Das Wohlbefinden,
+  economically more]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/06/20260627-095949-berlin-bereitet-sich-auf-hei-e-tage-vor-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260627-095949-berlin-bereitet-sich-auf-hei-e-tage-vor-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Nachrichten
+description: Berlin erwartet ein sehr heißes Wochenende mit Temperaturen bis zu 41
+  Grad. Der Deutsche Wetterdienst hat diese hohen Temperaturen vorhergesagt. Diese...
+keywords: *id001
 ---
 
 Berlin erwartet ein sehr heißes Wochenende mit Temperaturen bis zu 41 Grad. Der Deutsche Wetterdienst hat diese hohen Temperaturen vorhergesagt. Diese **Hitzewelle** zeigt, dass der **Klimawandel** bereits unseren Alltag beeinflusst. Während andere Städte Maßnahmen gegen die Hitze ergreifen, hat Berlin noch nicht viel getan. 

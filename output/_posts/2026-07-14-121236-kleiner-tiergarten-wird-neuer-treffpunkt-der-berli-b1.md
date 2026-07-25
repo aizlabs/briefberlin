@@ -1,17 +1,18 @@
 ---
-title: "Kleiner Tiergarten wird neuer Treffpunkt der Berliner Drogenszene"
+title: Kleiner Tiergarten wird neuer Treffpunkt der Berliner Drogenszene
 date: 2026-07-14 12:12:36
-author: "clara-becker"
+author: clara-becker
 level: B1
-topics: ["crack-konsum", "drogenhandel", "\u00f6ffentlicher raum"]
+topics: &id001 [crack-konsum, drogenhandel, öffentlicher raum, Tiergarten, Berliner,
+  Kleinen Tiergarten, Berlin-Moabit]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260714-121236-kleiner-tiergarten-wird-neuer-treffpunkt-der-berliner-drogenszene-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260714-121236-kleiner-tiergarten-wird-neuer-treffpunkt-der-berliner-drogenszene-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Nachrichten
+description: Seit Monaten verändert sich die Lage im Kleinen Tiergarten in Berlin-Moabit.
+  Rund um den U-Bahnhof Turmstraße treffen sich regelmäßig Gruppen von Menschen,...
+keywords: *id001
 ---
 
 <button type="button" class="article-term" data-term-id="term-1">Seit Monaten</button> <button type="button" class="article-term" data-term-id="term-2">verändert sich</button> die Lage im Kleinen Tiergarten in Berlin-Moabit. <button type="button" class="article-term" data-term-id="term-3">Rund um</button> den U-Bahnhof Turmstraße treffen sich <button type="button" class="article-term" data-term-id="term-4">regelmäßig</button> Gruppen von Menschen, die dort <button type="button" class="article-term article-term--default" data-term-id="term-5">Drogen nehmen</button>. Auch Dealer <button type="button" class="article-term" data-term-id="term-6">wechseln</button> zwischen verschiedenen Treffpunkten im Park. Viele Menschen waren vorher am Leopoldplatz, wo die Polizei stärker <button type="button" class="article-term" data-term-id="term-7">kontrolliert</button> hat. Dort gibt es auch eine Zone, in der <button type="button" class="article-term" data-term-id="term-8">Waffen</button> und <button type="button" class="article-term" data-term-id="term-9">Messer</button> <button type="button" class="article-term" data-term-id="term-10">verboten</button> sind. Deshalb <button type="button" class="article-term article-term--default" data-term-id="term-11">weichen</button> Teile der Szene nun in <button type="button" class="article-term" data-term-id="term-12">nahe Orte</button> aus.

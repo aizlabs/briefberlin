@@ -1,16 +1,17 @@
 ---
-title: "Berlin hofft auf Tour-Start 2029"
+title: Berlin hofft auf Tour-Start 2029
 date: 2026-07-07 09:00:00
 level: A2
-topics: ["tour de france", "grand d\u00e9part", "berlin"]
+topics: &id001 [tour de france, grand départ, berlin, Tour-Start, deutsche, Grand
+    Départ Allemagne, deutschen Radsportverband]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260707-090000-berlin-hofft-auf-tour-start-2029-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260707-090000-berlin-hofft-auf-tour-start-2029-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Kultur
+description: Berlin kann 2029 vielleicht den Start der Tour de France haben. Die Tour
+  de France ist ein sehr großes Radrennen. Eine deutsche Gruppe hat nun Interesse...
+keywords: *id001
 ---
 
 Berlin kann 2029 <button type="button" class="article-term" data-term-id="term-1">vielleicht</button> den Start der Tour de France haben. Die Tour de France ist ein sehr großes <button type="button" class="article-term article-term--default" data-term-id="term-2">Radrennen</button>. Eine deutsche <button type="button" class="article-term" data-term-id="term-5">Gruppe</button> hat <button type="button" class="article-term" data-term-id="term-3">nun</button> <button type="button" class="article-term" data-term-id="term-4">Interesse angemeldet</button>.

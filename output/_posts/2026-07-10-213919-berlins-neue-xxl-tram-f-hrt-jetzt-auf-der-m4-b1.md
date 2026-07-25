@@ -1,16 +1,18 @@
 ---
-title: "Berlins neue XXL-Tram fährt jetzt auf der M4"
+title: Berlins neue XXL-Tram fährt jetzt auf der M4
 date: 2026-07-10 21:39:19
 level: B1
-topics: ["stra\u00dfenbahn", "\u00f6ffentlicher nahverkehr", "berlin"]
+topics: &id001 [straßenbahn, öffentlicher nahverkehr, berlin, Berlins, XXL-Tram, Urbanliner,
+  Hackeschem]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260710-213919-berlins-neue-xxl-tram-f-hrt-jetzt-auf-der-m4-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260710-213919-berlins-neue-xxl-tram-f-hrt-jetzt-auf-der-m4-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Verkehr
+description: Berlin hat seit Mittwoch eine neue sehr lange Straßenbahn im normalen
+  Fahrgastbetrieb. Der „Urbanliner“ fährt auf der Linie M4 zwischen Hackeschem Markt
+  und...
+keywords: *id001
 ---
 
 Berlin <button type="button" class="article-term" data-term-id="term-1">hat seit</button> Mittwoch eine neue sehr lange <button type="button" class="article-term" data-term-id="term-3">Straßenbahn</button> im normalen <button type="button" class="article-term article-term--default" data-term-id="term-2">Fahrgastbetrieb</button>. Der „Urbanliner“ fährt auf der Linie M4 <button type="button" class="article-term" data-term-id="term-4">zwischen</button> Hackeschem Markt und Sulzfelder Straße. Die BVG <button type="button" class="article-term" data-term-id="term-5">stellte</button> den Start nicht groß <button type="button" class="article-term" data-term-id="term-6">öffentlich</button> vor. <button type="button" class="article-term" data-term-id="term-7">Deshalb</button> <button type="button" class="article-term" data-term-id="term-8">bemerkten</button> viele <button type="button" class="article-term article-term--default" data-term-id="term-9">Fahrgäste</button> die Premiere <button type="button" class="article-term" data-term-id="term-10">kaum</button>, <button type="button" class="article-term" data-term-id="term-11">obwohl</button> der <button type="button" class="article-term" data-term-id="term-12">Zug</button> mehr als 50 Meter lang ist. <button type="button" class="article-term" data-term-id="term-13">Besonders</button> in Kurven sieht man seine Größe. Vorn fährt er schon wieder <button type="button" class="article-term" data-term-id="term-14">geradeaus</button>, <button type="button" class="article-term" data-term-id="term-15">während</button> das <button type="button" class="article-term" data-term-id="term-16">Ende</button> <button type="button" class="article-term" data-term-id="term-54">noch</button> vor der Kurve ist.

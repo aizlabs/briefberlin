@@ -1,17 +1,18 @@
 ---
-title: "App zeigt gefährliche Stellen für Radfahrende in Städten"
+title: App zeigt gefährliche Stellen für Radfahrende in Städten
 date: 2026-07-14 11:45:54
-author: "clara-becker"
+author: clara-becker
 level: B1
-topics: ["radverkehr", "gefahrenstellen", "verkehrssicherheit"]
+topics: &id001 [radverkehr, gefahrenstellen, verkehrssicherheit, Radfahrende, Berlin,
+  Potsdam, Sicherheitsgefühl]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260714-114554-app-zeigt-gef-hrliche-stellen-fur-radfahrende-in-st-dten-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260714-114554-app-zeigt-gef-hrliche-stellen-fur-radfahrende-in-st-dten-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Nachrichten
+description: Radfahren gehört in Berlin und Potsdam für viele Menschen zum Alltag.
+  Doch an vielen Stellen bleibt es gefährlich, besonders bei engen Straßen, parkenden...
+keywords: *id001
 ---
 
 <button type="button" class="article-term" data-term-id="term-2">Radfahren</button> gehört in Berlin und Potsdam für viele Menschen <button type="button" class="article-term" data-term-id="term-3">zum Alltag</button>. Doch an vielen Stellen <button type="button" class="article-term" data-term-id="term-4">bleibt</button> es gefährlich, besonders bei <button type="button" class="article-term" data-term-id="term-5">engen Straßen</button>, <button type="button" class="article-term" data-term-id="term-6">parkenden Autos</button> und starkem <button type="button" class="article-term" data-term-id="term-7">Autoverkehr</button>. Es kommt oft zu <button type="button" class="article-term" data-term-id="term-8">knappem Überholen</button> oder zu Autos, die <button type="button" class="article-term" data-term-id="term-9">rechts abbiegen</button> und <button type="button" class="article-term article-term--default" data-term-id="term-1">Radfahrende</button> <button type="button" class="article-term" data-term-id="term-10">übersehen</button>. Auch <button type="button" class="article-term" data-term-id="term-11">plötzlich</button> <button type="button" class="article-term" data-term-id="term-12">geöffnete Türen</button> und <button type="button" class="article-term" data-term-id="term-13">Hindernisse</button> können riskant sein. Viele <button type="button" class="article-term article-term--default" data-term-id="term-14">Beinaheunfälle</button> stehen in keiner offiziellen Statistik, <button type="button" class="article-term" data-term-id="term-15">beeinflussen</button> aber stark das <button type="button" class="article-term article-term--default" data-term-id="term-16">Sicherheitsgefühl</button>.

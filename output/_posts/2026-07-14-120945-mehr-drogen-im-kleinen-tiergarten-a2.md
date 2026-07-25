@@ -1,17 +1,18 @@
 ---
-title: "Mehr Drogen im Kleinen Tiergarten"
+title: Mehr Drogen im Kleinen Tiergarten
 date: 2026-07-14 12:09:45
-author: "clara-becker"
+author: clara-becker
 level: A2
-topics: ["crack-konsum", "drogenhandel", "\u00f6ffentlicher raum"]
+topics: &id001 [crack-konsum, drogenhandel, öffentlicher raum, Kleinen Tiergarten,
+  Berlin-Mitte, U-Bahnhof Turmstraße, Gruppe]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260714-120945-mehr-drogen-im-kleinen-tiergarten-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260714-120945-mehr-drogen-im-kleinen-tiergarten-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Nachrichten
+description: Im Kleinen Tiergarten in Berlin-Mitte gibt es seit Monaten mehr Drogenprobleme.
+  Viele Menschen nehmen dort Drogen oder verkaufen sie offen. Früher sah man...
+keywords: *id001
 ---
 
 Im Kleinen Tiergarten in Berlin-Mitte <button type="button" class="article-term" data-term-id="term-1">gibt es</button> <button type="button" class="article-term article-term--default" data-term-id="term-2">seit Monaten</button> <button type="button" class="article-term" data-term-id="term-3">mehr</button> <button type="button" class="article-term article-term--default" data-term-id="term-4">Drogenprobleme</button>. <button type="button" class="article-term" data-term-id="term-5">Viele Menschen</button> <button type="button" class="article-term" data-term-id="term-25">nehmen</button> <button type="button" class="article-term" data-term-id="term-16">dort</button> Drogen oder <button type="button" class="article-term article-term--default" data-term-id="term-7">verkaufen</button> sie <button type="button" class="article-term" data-term-id="term-8">offen</button>. <button type="button" class="article-term" data-term-id="term-9">Früher</button> <button type="button" class="article-term" data-term-id="term-10">sah man</button> diese Probleme <button type="button" class="article-term" data-term-id="term-11">stärker</button> am Leopoldplatz.

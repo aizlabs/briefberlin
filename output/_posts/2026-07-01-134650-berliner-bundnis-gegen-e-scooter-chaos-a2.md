@@ -1,16 +1,18 @@
 ---
-title: "Berliner Bündnis gegen E-Scooter-Chaos"
+title: Berliner Bündnis gegen E-Scooter-Chaos
 date: 2026-07-01 13:46:50
 level: A2
-topics: ["deutsch"]
+topics: &id001 [Berliner, E-Scooter-Chaos, Berlin, Bündnis, Berliner Senat, Straße,
+  Roland Stimpel]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260701-134650-berliner-bundnis-gegen-e-scooter-chaos-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260701-134650-berliner-bundnis-gegen-e-scooter-chaos-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Verkehr
+description: In Berlin gibt es ein **Bündnis**. Es besteht aus **Blindenvereinen**,
+  **Senioren** und Umweltgruppen. Sie wollen das Chaos mit E-Scootern beenden. Bis
+  2027...
+keywords: *id001
 ---
 
 In Berlin gibt es ein **Bündnis**. Es besteht aus **Blindenvereinen**, **Senioren** und Umweltgruppen. Sie wollen das Chaos mit E-Scootern beenden. Bis 2027 sollen E-Scooter an festen Stationen stehen. Der Berliner Senat plant eine Lösung bis 2035. Das **Bündnis** sagt, das ist zu spät.

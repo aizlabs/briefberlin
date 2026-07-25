@@ -1,17 +1,18 @@
 ---
-title: "Berliner Mehrheit will große Vermieter weiter öffentlich kontrollieren"
+title: Berliner Mehrheit will große Vermieter weiter öffentlich kontrollieren
 date: 2026-07-17 09:00:00
-author: "clara-becker"
+author: clara-becker
 level: B1
-topics: ["vergesellschaftung", "wohnungspolitik", "mietmarkt"]
+topics: &id001 [vergesellschaftung, wohnungspolitik, mietmarkt, Berliner Mehrheit,
+  Berliner Wahlberechtigten, Berlin, Abgeordnetenhaus]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260717-090000-berliner-mehrheit-will-gro-e-vermieter-weiter-ffentlich-kontrollieren-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260717-090000-berliner-mehrheit-will-gro-e-vermieter-weiter-ffentlich-kontrollieren-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Nachrichten
+description: 'Eine Mehrheit der Berliner Wahlberechtigten unterstützt weiter eine
+  Vergesellschaftung großer privater Wohnungsbestände. Das bedeutet: Wohnungen großer...'
+keywords: *id001
 ---
 
 Eine <button type="button" class="article-term" data-term-id="term-1">Mehrheit</button> der Berliner <button type="button" class="article-term article-term--default" data-term-id="term-3">Wahlberechtigten</button> <button type="button" class="article-term" data-term-id="term-4">unterstützt</button> weiter eine <button type="button" class="article-term article-term--default" data-term-id="term-5">Vergesellschaftung</button> großer privater <button type="button" class="article-term article-term--default" data-term-id="term-6">Wohnungsbestände</button>. Das bedeutet: Wohnungen großer Immobilienfirmen sollen in <button type="button" class="article-term" data-term-id="term-7">gemeinsames</button> oder öffentliches <button type="button" class="article-term article-term--default" data-term-id="term-8">Eigentum</button> kommen. In einer <button type="button" class="article-term" data-term-id="term-9">bisher</button> nicht veröffentlichten <button type="button" class="article-term article-term--default" data-term-id="term-10">Befragung</button> vom Februar waren 56 Prozent klar oder eher <button type="button" class="article-term" data-term-id="term-11">dafür</button>. 25 Prozent waren <button type="button" class="article-term" data-term-id="term-12">unentschlossen</button>, 17 Prozent waren eher oder klar <button type="button" class="article-term" data-term-id="term-13">dagegen</button>. Zwei Prozent <button type="button" class="article-term" data-term-id="term-14">machten keine Angabe</button>.

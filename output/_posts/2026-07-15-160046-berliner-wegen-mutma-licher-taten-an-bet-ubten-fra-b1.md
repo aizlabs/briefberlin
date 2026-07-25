@@ -1,17 +1,19 @@
 ---
-title: "Berliner wegen mutmaßlicher Taten an betäubten Frauen angeklagt"
+title: Berliner wegen mutmaßlicher Taten an betäubten Frauen angeklagt
 date: 2026-07-15 16:00:46
-author: "clara-becker"
+author: clara-becker
 level: B1
-topics: ["vergewaltigung", "bet\u00e4ubungsmittel", "sexueller missbrauch"]
+topics: &id001 [vergewaltigung, betäubungsmittel, sexueller missbrauch, Berliner,
+  mutmaßlicher, Die Berliner Staatsanwaltschaft, Berlin]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260715-160046-berliner-wegen-mutma-licher-taten-an-bet-ubten-frauen-angeklagt-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260715-160046-berliner-wegen-mutma-licher-taten-an-bet-ubten-frauen-angeklagt-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Nachrichten
+description: Die Berliner Staatsanwaltschaft hat einen 68-jährigen Mann angeklagt.
+  Sie wirft ihm 22 mutmaßliche Taten gegen 14 Frauen vor. Die Taten sollen zwischen
+  2016...
+keywords: *id001
 ---
 
 Die Berliner <button type="button" class="article-term article-term--default" data-term-id="term-1">Staatsanwaltschaft</button> hat einen 68-jährigen Mann <button type="button" class="article-term article-term--default" data-term-id="term-2">angeklagt</button>. Sie <button type="button" class="article-term" data-term-id="term-3">wirft</button> ihm 22 <button type="button" class="article-term article-term--default" data-term-id="term-4">mutmaßliche</button> Taten gegen 14 Frauen vor. Die Taten <button type="button" class="article-term" data-term-id="term-5">sollen</button> zwischen 2016 und 2022 in Berlin passiert sein. <button type="button" class="article-term" data-term-id="term-6">Es geht um</button> <button type="button" class="article-term article-term--default" data-term-id="term-7">Vergewaltigung</button> und gefährliche <button type="button" class="article-term article-term--default" data-term-id="term-8">Körperverletzung</button>, also schwere Angriffe auf die Gesundheit. Der Mann sitzt seit März 2026 in <button type="button" class="article-term article-term--default" data-term-id="term-9">Untersuchungshaft</button>, also in Haft vor dem Prozess. Er hat sich bisher nicht zu den <button type="button" class="article-term" data-term-id="term-10">Vorwürfen</button> <button type="button" class="article-term" data-term-id="term-11">geäußert</button>. Bis ein <button type="button" class="article-term" data-term-id="term-12">Gericht</button> <button type="button" class="article-term" data-term-id="term-13">endgültig</button> entscheidet, <button type="button" class="article-term" data-term-id="term-14">gilt</button> er als <button type="button" class="article-term" data-term-id="term-15">unschuldig</button>.

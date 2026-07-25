@@ -1,16 +1,16 @@
 ---
-title: "Pop Inn: Berliner Jugendclub kehrt zurück"
+title: 'Pop Inn: Berliner Jugendclub kehrt zurück'
 date: 2026-06-29 17:54:54
 level: A2
-topics: ["deutsch"]
+topics: &id001 [Pop Inn, Berliner, Berlin-Steglitz, Jugendclub, Türsteher, Club, Leuchtbuchstaben]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/06/20260629-175454-pop-inn-berliner-jugendclub-kehrt-zuruck-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260629-175454-pop-inn-berliner-jugendclub-kehrt-zuruck-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Kultur
+description: In Berlin-Steglitz gibt es ein neues Projekt. Der alte **Jugendclub**
+  Pop Inn wird **wiederbelebt**. Früher war er ein wichtiger **Treffpunkt** für...
+keywords: *id001
 ---
 
 In Berlin-Steglitz gibt es ein neues Projekt. Der alte **Jugendclub** Pop Inn wird **wiederbelebt**. Früher war er ein wichtiger **Treffpunkt** für Jugendliche. Das **Kulturamt** arbeitet mit Künstlern und einer Tanzschule zusammen. Sie wollen die Geschichte des Clubs zeigen.

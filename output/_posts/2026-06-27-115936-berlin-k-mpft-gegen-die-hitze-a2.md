@@ -1,16 +1,17 @@
 ---
-title: "Berlin kämpft gegen die Hitze"
+title: Berlin kämpft gegen die Hitze
 date: 2026-06-27 11:59:36
 level: A2
-topics: ["deutsch"]
+topics: &id001 [Berlin, Stadt, Hitzeaktionsplan, Berliner Senats, Deutschland, Tag,
+  Hitze]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/06/20260627-095922-berlin-k-mpft-gegen-die-hitze-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260627-095922-berlin-k-mpft-gegen-die-hitze-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Politik
+description: Berlin hat ein **heißes Wochenende** vor sich. Die Temperaturen können
+  bis zu 41 Grad steigen. Das ist sehr heiß. Der bisherige Rekord liegt bei 41,2 Grad....
+keywords: *id001
 ---
 
 Berlin hat ein **heißes Wochenende** vor sich. Die Temperaturen können bis zu 41 Grad steigen. Das ist sehr heiß. Der bisherige Rekord liegt bei 41,2 Grad. Die Sonne scheint stark auf die Stadt. Der **Hitzeaktionsplan** des Berliner Senats ist noch nicht fertig.

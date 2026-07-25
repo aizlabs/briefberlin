@@ -1,17 +1,18 @@
 ---
-title: "Polizei kommt Verdächtigen in Berlin näher"
+title: Polizei kommt Verdächtigen in Berlin näher
 date: 2026-07-19 17:19:35
-author: "clara-becker"
+author: clara-becker
 level: A2
-topics: ["stromversorgung", "sabotage", "brandanschlag"]
+topics: &id001 [stromversorgung, sabotage, brandanschlag, Berlin, Adlershof, Lichterfelde,
+  Hamburg]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260719-171935-polizei-kommt-verd-chtigen-in-berlin-n-her-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260719-171935-polizei-kommt-verd-chtigen-in-berlin-n-her-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Nachrichten
+description: Die Polizei untersucht zwei Angriffe auf Strom in Berlin. Der erste Angriff
+  war im September 2025 in Adlershof, einem Ort mit vielen Technik-Firmen. Der...
+keywords: *id001
 ---
 
 Die Polizei <button type="button" class="article-term" data-term-id="term-9">untersucht</button> zwei <button type="button" class="article-term article-term--default" data-term-id="term-2">Angriffe</button> auf <button type="button" class="article-term article-term--default" data-term-id="term-1">Strom</button> in Berlin. Der <button type="button" class="article-term" data-term-id="term-10">erste</button> Angriff war im September 2025 in Adlershof, einem <button type="button" class="article-term" data-term-id="term-11">Ort</button> mit <button type="button" class="article-term" data-term-id="term-12">vielen</button> Technik-Firmen. Der zweite Angriff war am 3. Januar 2026 in Lichterfelde.

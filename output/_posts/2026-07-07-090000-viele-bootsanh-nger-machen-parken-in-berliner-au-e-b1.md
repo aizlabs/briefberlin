@@ -1,16 +1,17 @@
 ---
-title: "Viele Bootsanhänger machen Parken in Berliner Außenbezirken schwer"
+title: Viele Bootsanhänger machen Parken in Berliner Außenbezirken schwer
 date: 2026-07-07 09:00:00
 level: B1
-topics: ["bootsanh\u00e4nger", "stra\u00dfenparken", "stra\u00dfenverkehrsordnung"]
+topics: &id001 [bootsanhänger, straßenparken, straßenverkehrsordnung, Parken, Berliner
+    Außenbezirken, Berliner, Außenbezirken]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260707-090000-viele-bootsanh-nger-machen-parken-in-berliner-au-enbezirken-schwer-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260707-090000-viele-bootsanh-nger-machen-parken-in-berliner-au-enbezirken-schwer-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Nachrichten
+description: Zurzeit wächst in mehreren Berliner Außenbezirken der Ärger über abgestellte
+  Bootsanhänger. Bootsanhänger, auch Trailer genannt, transportieren Boote auf...
+keywords: *id001
 ---
 
 <button type="button" class="article-term" data-term-id="term-1">Zurzeit</button> wächst in mehreren Berliner <button type="button" class="article-term article-term--default" data-term-id="term-2">Außenbezirken</button> der <button type="button" class="article-term" data-term-id="term-3">Ärger</button> über <button type="button" class="article-term" data-term-id="term-4">abgestellte</button> Bootsanhänger. Bootsanhänger, auch Trailer genannt, transportieren Boote auf der Straße. <button type="button" class="article-term" data-term-id="term-5">Anwohnerinnen und Anwohner</button> sehen an manchen Orten <button type="button" class="article-term" data-term-id="term-6">ganze Reihen</button> davon. Besonders oft stehen sie an <button type="button" class="article-term" data-term-id="term-7">breiten</button> Ausfallstraßen, also großen Straßen aus der Stadt <button type="button" class="article-term" data-term-id="term-8">hinaus</button>. Auch <button type="button" class="article-term" data-term-id="term-9">nahe am</button> Wasser und an S-Bahnhöfen <button type="button" class="article-term article-term--default" data-term-id="term-10">häufen sich</button> die <button type="button" class="article-term" data-term-id="term-11">Anhänger</button>. Solche Orte sind für <button type="button" class="article-term" data-term-id="term-12">Besitzer</button> praktisch, weil sie Boote oder Autos gut <button type="button" class="article-term" data-term-id="term-13">erreichen</button>. Für Nachbarn <button type="button" class="article-term" data-term-id="term-14">wirkt</button> die Situation jedoch wie eine <button type="button" class="article-term" data-term-id="term-15">dauerhafte</button> Blockade.

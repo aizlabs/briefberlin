@@ -1,16 +1,17 @@
 ---
-title: "Brandenburgs höhere Beamtengehälter bringen Berlin jetzt unter Druck"
+title: Brandenburgs höhere Beamtengehälter bringen Berlin jetzt unter Druck
 date: 2026-07-03 09:00:00
 level: B1
-topics: ["beamtenbesoldung", "gehaltsanpassung", "\u00f6ffentlicher dienst"]
+topics: &id001 [beamtenbesoldung, gehaltsanpassung, öffentlicher dienst, Brandenburgs,
+  Berlin, Brandenburg, Zeit]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260703-090000-brandenburgs-h-here-beamtengeh-lter-bringen-berlin-jetzt-unter-druck-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260703-090000-brandenburgs-h-here-beamtengeh-lter-bringen-berlin-jetzt-unter-druck-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Nachrichten
+description: Brandenburg will die Gehälter seiner rund 30.000 Landesbeamten deutlich
+  erhöhen. Das gilt rückwirkend ab dem 1. Januar 2026, also auch für diese Zeit...
+keywords: *id001
 ---
 
 Brandenburg will die Gehälter seiner rund 30.000 <button type="button" class="article-term article-term--default" data-term-id="term-1">Landesbeamten</button> <button type="button" class="article-term" data-term-id="term-2">deutlich</button> <button type="button" class="article-term" data-term-id="term-3">erhöhen</button>. Das gilt <button type="button" class="article-term article-term--default" data-term-id="term-4">rückwirkend</button> <button type="button" class="article-term" data-term-id="term-5">ab</button> dem 1. Januar 2026, also auch für diese Zeit zurück. Die <button type="button" class="article-term article-term--default" data-term-id="term-6">Bezüge</button> sollen um acht bis 19 Prozent <button type="button" class="article-term" data-term-id="term-7">steigen</button>. Polizisten bekommen <button type="button" class="article-term" data-term-id="term-8">dadurch</button> <button type="button" class="article-term" data-term-id="term-9">monatlich</button> bis zu 700 Euro mehr. <button type="button" class="article-term" data-term-id="term-10">Lehrkräfte</button> können in <button type="button" class="article-term" data-term-id="term-11">einzelnen Fällen</button> bis zu 1000 Euro mehr <button type="button" class="article-term" data-term-id="term-12">erhalten</button>. <button type="button" class="article-term" data-term-id="term-13">Gleichzeitig</button> sollen <button type="button" class="article-term" data-term-id="term-16">Beamte</button> <button type="button" class="article-term" data-term-id="term-14">künftig</button> 41 <button type="button" class="article-term" data-term-id="term-15">statt</button> 40 Stunden pro Woche arbeiten.

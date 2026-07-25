@@ -1,17 +1,19 @@
 ---
-title: "Junge Neonazis planen Protest gegen die Berliner CSD-Parade"
+title: Junge Neonazis planen Protest gegen die Berliner CSD-Parade
 date: 2026-07-25 02:34:13
-author: "clara-becker"
+author: clara-becker
 level: B1
-topics: ["christopher street day", "rechtsextremismus", "pride-paraden"]
+topics: &id001 [christopher street day, rechtsextremismus, pride-paraden, Berliner,
+  CSD, Berlin, Pride-Parade]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260725-023413-junge-neonazis-planen-protest-gegen-die-berliner-csd-parade-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260725-023413-junge-neonazis-planen-protest-gegen-die-berliner-csd-parade-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Kultur
+description: Eine Gruppe junger Neonazis hat für den Berliner Christopher Street Day,
+  kurz CSD, am Samstag, 25. Juli, einen Gegenprotest angekündigt. Der Protest soll
+  in...
+keywords: *id001
 ---
 
 Eine Gruppe <button type="button" class="article-term" data-term-id="term-1">junger</button> <button type="button" class="article-term article-term--default" data-term-id="term-2">Neonazis</button> hat für den Berliner Christopher Street Day, kurz CSD, am Samstag, 25. Juli, einen <button type="button" class="article-term article-term--default" data-term-id="term-3">Gegenprotest</button> <button type="button" class="article-term article-term--default" data-term-id="term-4">angekündigt</button>. Der Protest soll in Berlin <button type="button" class="article-term" data-term-id="term-5">stattfinden</button> und <button type="button" class="article-term" data-term-id="term-6">sich gegen</button> die große Pride-Parade richten. Es ist <button type="button" class="article-term" data-term-id="term-7">erneut</button> ein <button type="button" class="article-term article-term--default" data-term-id="term-8">Aufruf</button> aus der <button type="button" class="article-term article-term--default" data-term-id="term-9">rechtsextremen Szene</button>.

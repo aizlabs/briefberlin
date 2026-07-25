@@ -2,16 +2,16 @@
 title: Berliner unterstützen neue Wohnungen am Tempelhofer Feld
 date: 2026-06-27 01:35:20
 level: B1
-topics:
-- deutsch
+topics: &id001 [Berliner, Tempelhofer Feld, Tempelhofer Feldes, IHK, Wohnungsnot,
+  Berlin, Grünen]
 sources: []
-audio:
-  url: https://media.briefberlin.de/articles/2026/06/20260627-013520-berliner-unterstutzen-neue-wohnungen-am-tempelhofer-feld-b1/article.mp3
-  format: mp3
-  mime_type: audio/mpeg
-  provider: openai
-  voice: alloy
+audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260627-013520-berliner-unterstutzen-neue-wohnungen-am-tempelhofer-feld-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Stadtleben
+description: Fast zwei Drittel der Berliner sind jetzt für den Bau von Wohnungen am
+  Rand des Tempelhofer Feldes. Das zeigt eine Umfrage der Industrie- und Handelskammer...
+keywords: *id001
 ---
 
 Fast zwei Drittel der Berliner sind jetzt für den Bau von Wohnungen am Rand des Tempelhofer Feldes. Das zeigt eine Umfrage der Industrie- und Handelskammer (IHK). Dies ist ein großer Wandel seit 2014. Damals stimmten 64,3 Prozent der Berliner gegen jede **Bebauung**. Heute sind 59 Prozent dafür, dass neue Wohnungen entstehen. Das liegt an der Wohnungsnot in Berlin.

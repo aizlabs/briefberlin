@@ -1,17 +1,18 @@
 ---
-title: "Tesla in Grünheide verdient mehr Geld"
+title: Tesla in Grünheide verdient mehr Geld
 date: 2026-07-18 10:48:27
-author: "clara-becker"
+author: clara-becker
 level: A2
-topics: ["elektroautos", "autofabrik", "gesch\u00e4ftsbericht"]
+topics: &id001 [elektroautos, autofabrik, geschäftsbericht, Tesla, Grünheide, Berlin,
+  Ein Jahr vorher]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260718-104827-tesla-in-grunheide-verdient-mehr-geld-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260718-104827-tesla-in-grunheide-verdient-mehr-geld-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Wirtschaft
+description: Tesla hat ein großes Werk in Grünheide bei Berlin. Dort hat die Firma
+  2025 mehr Gewinn gemacht. Die Nachfrage nach Autos war aber schwächer.
+keywords: *id001
 ---
 
 Tesla hat ein großes <button type="button" class="article-term article-term--default" data-term-id="term-1">Werk</button> in Grünheide bei Berlin. <button type="button" class="article-term" data-term-id="term-2">Dort</button> hat die <button type="button" class="article-term" data-term-id="term-3">Firma</button> 2025 mehr <button type="button" class="article-term article-term--default" data-term-id="term-4">Gewinn</button> gemacht. Die <button type="button" class="article-term article-term--default" data-term-id="term-5">Nachfrage</button> nach Autos war aber <button type="button" class="article-term" data-term-id="term-6">schwächer</button>.

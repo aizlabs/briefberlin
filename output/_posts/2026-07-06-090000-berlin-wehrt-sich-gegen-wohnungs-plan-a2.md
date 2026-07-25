@@ -1,16 +1,17 @@
 ---
-title: "Berlin wehrt sich gegen Wohnungs-Plan"
+title: Berlin wehrt sich gegen Wohnungs-Plan
 date: 2026-07-06 09:00:00
 level: A2
-topics: ["wohnungspolitik", "enteignungsverbot", "vergesellschaftung"]
+topics: &id001 [wohnungspolitik, enteignungsverbot, vergesellschaftung, Berlin, Wohnungs-Plan,
+  Stadt, Berliner]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260706-090000-berlin-wehrt-sich-gegen-wohnungs-plan-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260706-090000-berlin-wehrt-sich-gegen-wohnungs-plan-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Politik
+description: Die Bundesregierung plant ein neues Gesetz. Es soll Ländern wie Berlin
+  etwas verbieten. Sie sollen Firmen mit sehr vielen Wohnungen nicht in öffentliches...
+keywords: *id001
 ---
 
 Die <button type="button" class="article-term article-term--default" data-term-id="term-1">Bundesregierung</button> plant ein neues <button type="button" class="article-term article-term--default" data-term-id="term-2">Gesetz</button>. Es soll <button type="button" class="article-term" data-term-id="term-4">Ländern</button> wie Berlin etwas <button type="button" class="article-term" data-term-id="term-3">verbieten</button>. Sie sollen <button type="button" class="article-term" data-term-id="term-5">Firmen</button> mit sehr vielen Wohnungen nicht in <button type="button" class="article-term article-term--default" data-term-id="term-6">öffentliches Eigentum</button> bringen <button type="button" class="article-term" data-term-id="term-7">dürfen</button>. Dann <button type="button" class="article-term" data-term-id="term-8">gehören</button> die Wohnungen dem <button type="button" class="article-term" data-term-id="term-9">Staat</button> oder der Stadt.

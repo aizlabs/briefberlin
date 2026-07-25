@@ -1,16 +1,17 @@
 ---
-title: "Fast zehntausend Haftbefehle sind in Berlin noch offen"
+title: Fast zehntausend Haftbefehle sind in Berlin noch offen
 date: 2026-07-05 09:00:00
 level: B1
-topics: ["haftbefehle", "strafvollstreckung", "strafverfolgung"]
+topics: &id001 [haftbefehle, strafvollstreckung, strafverfolgung, Berlin, Person,
+  Deutschland, Fahndungen]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260705-090000-fast-zehntausend-haftbefehle-sind-in-berlin-noch-offen-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260705-090000-fast-zehntausend-haftbefehle-sind-in-berlin-noch-offen-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Nachrichten
+description: In Berlin sind zurzeit 9459 Haftbefehle offen, zeigt eine aktuelle Übersicht
+  der Behörden. Ein Haftbefehl bedeutet, dass die Polizei eine Person festnehmen...
+keywords: *id001
 ---
 
 In Berlin sind <button type="button" class="article-term" data-term-id="term-4">zurzeit</button> 9459 <button type="button" class="article-term article-term--default" data-term-id="term-2">Haftbefehle</button> <button type="button" class="article-term" data-term-id="term-3">offen</button>, zeigt eine aktuelle <button type="button" class="article-term" data-term-id="term-5">Übersicht</button> der <button type="button" class="article-term" data-term-id="term-6">Behörden</button>. Ein <button type="button" class="article-term article-term--default" data-term-id="term-7">Haftbefehl</button> bedeutet, dass die Polizei eine Person <button type="button" class="article-term" data-term-id="term-8">festnehmen</button> soll. <button type="button" class="article-term" data-term-id="term-9">Betroffen</button> sind <button type="button" class="article-term" data-term-id="term-10">Verurteilte</button>, die ihre <button type="button" class="article-term" data-term-id="term-11">Haft</button> nicht <button type="button" class="article-term" data-term-id="term-12">begonnen</button> haben. <button type="button" class="article-term" data-term-id="term-13">Außerdem</button> geht es um <button type="button" class="article-term" data-term-id="term-14">Beschuldigte</button>, die in einem <button type="button" class="article-term" data-term-id="term-15">laufenden</button> <button type="button" class="article-term article-term--default" data-term-id="term-16">Strafverfahren</button> <button type="button" class="article-term" data-term-id="term-17">gesucht</button> werden.

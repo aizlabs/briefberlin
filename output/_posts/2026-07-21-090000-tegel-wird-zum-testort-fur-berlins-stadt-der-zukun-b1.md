@@ -1,17 +1,18 @@
 ---
-title: "Tegel wird zum Testort für Berlins Stadt der Zukunft"
+title: Tegel wird zum Testort für Berlins Stadt der Zukunft
 date: 2026-07-21 09:00:00
-author: "clara-becker"
+author: clara-becker
 level: B1
-topics: ["quartiersentwicklung", "nachhaltigkeit", "autonome mobilit\u00e4t"]
+topics: &id001 [quartiersentwicklung, nachhaltigkeit, autonome mobilität, Berlins,
+  Flughafen Tegel, Berlin, Passagierbetrieb]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260721-090000-tegel-wird-zum-testort-fur-berlins-stadt-der-zukunft-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260721-090000-tegel-wird-zum-testort-fur-berlins-stadt-der-zukunft-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Verkehr
+description: Auf dem früheren Flughafen Tegel in Berlin entsteht seit 2020 ein neues
+  Stadtgebiet. Damals endete der Passagierbetrieb. Seitdem baut Berlin das rund 500...
+keywords: *id001
 ---
 
 Auf dem <button type="button" class="article-term" data-term-id="term-1">früheren</button> Flughafen Tegel in Berlin <button type="button" class="article-term" data-term-id="term-2">entsteht</button> seit 2020 ein neues <button type="button" class="article-term" data-term-id="term-3">Stadtgebiet</button>. Damals endete der <button type="button" class="article-term article-term--default" data-term-id="term-4">Passagierbetrieb</button>. <button type="button" class="article-term" data-term-id="term-5">Seitdem</button> baut Berlin das rund 500 Hektar große <button type="button" class="article-term article-term--default" data-term-id="term-6">Gelände</button> <button type="button" class="article-term" data-term-id="term-7">Schritt für Schritt</button> um. Dort sollen Wohnen, Arbeit, Forschung, Produktion und <button type="button" class="article-term" data-term-id="term-8">Erholung</button> <button type="button" class="article-term" data-term-id="term-9">zusammenkommen</button>. Das Gebiet soll wenig Ressourcen <button type="button" class="article-term" data-term-id="term-10">verbrauchen</button> und <button type="button" class="article-term" data-term-id="term-11">möglichst</button> klimaneutral werden. Dafür setzt Berlin auf <button type="button" class="article-term article-term--default" data-term-id="term-12">erneuerbare Energien</button> wie Sonne und Wind.

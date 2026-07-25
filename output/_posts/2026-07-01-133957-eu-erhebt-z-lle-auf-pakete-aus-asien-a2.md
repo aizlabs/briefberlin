@@ -1,16 +1,17 @@
 ---
-title: "EU erhebt Zölle auf Pakete aus Asien"
+title: EU erhebt Zölle auf Pakete aus Asien
 date: 2026-07-01 13:39:57
 level: A2
-topics: ["deutsch"]
+topics: &id001 [Asien, Europäische Union, Online-Shops wie Shein, Temu, Shein, China,
+  Bernd Lange]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260701-133957-eu-erhebt-z-lle-auf-pakete-aus-asien-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260701-133957-eu-erhebt-z-lle-auf-pakete-aus-asien-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Wirtschaft
+description: Die Europäische Union erhebt jetzt **Zölle** auf kleine Pakete aus Asien.
+  Das Ziel ist, die vielen billigen Waren zu stoppen. Besonders betroffen sind...
+keywords: *id001
 ---
 
 Die Europäische Union erhebt jetzt **Zölle** auf kleine Pakete aus Asien. Das Ziel ist, die vielen billigen Waren zu stoppen. Besonders betroffen sind Online-Shops wie Shein und Temu. Ab Mittwoch kostet jede Bestellung mindestens drei Euro Zoll.

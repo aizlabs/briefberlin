@@ -2,16 +2,16 @@
 title: 'Zukunft des ICC: Neues Kultur- und Wissenschaftszentrum'
 date: 2026-06-27 01:19:35
 level: B1
-topics:
-- deutsch
+topics: &id001 [ICC, Internationale Congress Centrum, Berlin, Zeit, Kai Wegner, Bertram
+    Schultze, Coloured Fields]
 sources: []
-audio:
-  url: https://media.briefberlin.de/articles/2026/06/20260627-011935-zukunft-des-icc-neues-kultur-und-wissenschaftszentrum-b1/article.mp3
-  format: mp3
-  mime_type: audio/mpeg
-  provider: openai
-  voice: alloy
+audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260627-011935-zukunft-des-icc-neues-kultur-und-wissenschaftszentrum-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Politik
+description: Das Internationale Congress Centrum (ICC) in Berlin soll in ein **Zentrum
+  für Kultur und Wissenschaft** umgewandelt werden. Diese Pläne wurden von den neuen...
+keywords: *id001
 ---
 
 Das Internationale Congress Centrum (ICC) in Berlin soll in ein **Zentrum für Kultur und Wissenschaft** umgewandelt werden. Diese Pläne wurden von den neuen Betreibern vorgestellt. Das ICC war lange Zeit ungenutzt, aber jetzt gibt es neue Ideen für seine Zukunft. Der Bürgermeister von Berlin, Kai Wegner, sieht darin eine große Chance.

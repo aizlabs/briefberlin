@@ -1,17 +1,18 @@
 ---
-title: "App zeigt gefährliche Stellen für Fahrräder"
+title: App zeigt gefährliche Stellen für Fahrräder
 date: 2026-07-14 11:43:56
-author: "clara-becker"
+author: clara-becker
 level: A2
-topics: ["radverkehr", "gefahrenstellen", "verkehrssicherheit"]
+topics: &id001 [radverkehr, gefahrenstellen, verkehrssicherheit, Berlin, Potsdam,
+  App SimRa, Radfahrenden]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260714-114356-app-zeigt-gef-hrliche-stellen-fur-fahrr-der-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260714-114356-app-zeigt-gef-hrliche-stellen-fur-fahrr-der-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Verkehr
+description: Viele Menschen fahren in Berlin und Potsdam mit dem Fahrrad. Die App
+  SimRa zeigt gefährliche Stellen auf ihren Wegen. Die Daten kommen dabei von den...
+keywords: *id001
 ---
 
 Viele Menschen fahren in Berlin und Potsdam mit dem <button type="button" class="article-term" data-term-id="term-2">Fahrrad</button>. Die App SimRa zeigt <button type="button" class="article-term article-term--default" data-term-id="term-1">gefährliche Stellen</button> auf ihren <button type="button" class="article-term" data-term-id="term-3">Wegen</button>. Die Daten kommen <button type="button" class="article-term" data-term-id="term-4">dabei</button> von den Radfahrenden selbst.

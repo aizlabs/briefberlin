@@ -1,16 +1,17 @@
 ---
-title: "Neues Spreequartier soll Wohnungen und Klimapark nach Kreuzberg bringen"
+title: Neues Spreequartier soll Wohnungen und Klimapark nach Kreuzberg bringen
 date: 2026-07-06 09:00:00
 level: B1
-topics: ["stadtquartier", "wohnungsbau", "klimapark"]
+topics: &id001 [stadtquartier, wohnungsbau, klimapark, Neues Spreequartier, Kreuzberg,
+  Friedrichshain-Kreuzberg, Spree]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260706-090000-neues-spreequartier-soll-wohnungen-und-klimapark-nach-kreuzberg-bringen-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260706-090000-neues-spreequartier-soll-wohnungen-und-klimapark-nach-kreuzberg-bringen-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Stadtleben
+description: Auf dem Gelände der früheren Victoriaspeicher in Friedrichshain-Kreuzberg
+  soll in den nächsten Jahren ein neues Stadtquartier entstehen. Geplant sind rund...
+keywords: *id001
 ---
 
 Auf dem Gelände der früheren Victoriaspeicher in Friedrichshain-Kreuzberg soll in den nächsten Jahren ein neues Stadtquartier entstehen. Geplant sind rund 1000 Wohnungen und ein öffentlicher Klimapark an der Spree. Das Areal liegt zwischen Spreeufer, Schillingbrücke und Köpenicker Straße. Bisher nutzen Firmen die Fläche vor allem als Lagerplatz.

@@ -1,16 +1,17 @@
 ---
-title: "Streit um Wegners Telefonat während Berliner Stromausfall im Januar"
+title: Streit um Wegners Telefonat während Berliner Stromausfall im Januar
 date: 2026-07-12 14:31:48
 level: B1
-topics: ["stromausfall", "krisenmanagement", "regierungskommunikation"]
+topics: &id001 [stromausfall, krisenmanagement, regierungskommunikation, Wegners,
+  Berliner Stromausfall, Kai Wegner, Berlin]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260712-143148-streit-um-wegners-telefonat-w-hrend-berliner-stromausfall-im-januar-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260712-143148-streit-um-wegners-telefonat-w-hrend-berliner-stromausfall-im-januar-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Politik
+description: Beim Berliner Stromausfall im Januar gibt es neue Widersprüche. Der Streit
+  betrifft das Krisenmanagement von Kai Wegner, dem Regierenden Bürgermeister von...
+keywords: *id001
 ---
 
 Beim Berliner <button type="button" class="article-term article-term--default" data-term-id="term-1">Stromausfall</button> im Januar gibt es neue <button type="button" class="article-term article-term--default" data-term-id="term-4">Widersprüche</button>. Der <button type="button" class="article-term" data-term-id="term-2">Streit</button> <button type="button" class="article-term" data-term-id="term-5">betrifft</button> das Krisenmanagement von Kai Wegner, dem <button type="button" class="article-term" data-term-id="term-6">Regierenden Bürgermeister</button> von Berlin. Es <button type="button" class="article-term" data-term-id="term-7">geht um</button> die <button type="button" class="article-term" data-term-id="term-8">Frage</button>, <button type="button" class="article-term" data-term-id="term-9">ob</button> Wegner <button type="button" class="article-term" data-term-id="term-3">während</button> des <button type="button" class="article-term article-term--default" data-term-id="term-10">mehrtägigen</button> Blackouts mit Bundeskanzler Friedrich Merz <button type="button" class="article-term" data-term-id="term-11">telefoniert</button> hat. Ein Blackout ist ein großer <button type="button" class="article-term article-term--default" data-term-id="term-1">Stromausfall</button>, der länger <button type="button" class="article-term" data-term-id="term-12">dauern</button> kann. Für die Politik ist das Thema wichtig, weil es um Vertrauen in einer Krise geht.

@@ -1,16 +1,17 @@
 ---
-title: "Neue Mieten in Großstädten steigen schneller als Löhne"
+title: Neue Mieten in Großstädten steigen schneller als Löhne
 date: 2026-07-01 21:06:30
 level: B1
-topics: ["deutsch"]
+topics: &id001 [Neue Mieten in Großstädten, deutschen, Mietverträge, Bezahlbar, 'becoming","explanation":"Form',
+  'clearly","explanation":"Stark', 'cause","explanation":"Warum']
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260701-210630-neue-mieten-in-gro-st-dten-steigen-schneller-als-l-hne-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260701-210630-neue-mieten-in-gro-st-dten-steigen-schneller-als-l-hne-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Stadtleben
+description: Die Wohnungssuche in deutschen Großstädten wird für viele Menschen immer
+  schwieriger. Wer jetzt eine neue Wohnung sucht, muss oft deutlich höhere Mieten...
+keywords: *id001
 ---
 
 Die <button type="button" class="article-term article-term--default" data-term-id="term-1">Wohnungssuche</button> in deutschen <button type="button" class="article-term" data-term-id="term-3">Großstädten</button> <button type="button" class="article-term" data-term-id="term-4">wird</button> für viele Menschen immer <button type="button" class="article-term" data-term-id="term-5">schwieriger</button>. Wer jetzt eine neue Wohnung <button type="button" class="article-term" data-term-id="term-6">sucht</button>, muss oft <button type="button" class="article-term" data-term-id="term-7">deutlich</button> höhere <button type="button" class="article-term article-term--default" data-term-id="term-2">Mieten</button> <button type="button" class="article-term" data-term-id="term-8">einplanen</button>. Das <button type="button" class="article-term" data-term-id="term-9">betrifft</button> besonders <button type="button" class="article-term article-term--default" data-term-id="term-10">Haushalte</button>, also einzelne Personen, Paare oder Familien mit gemeinsamem <button type="button" class="article-term article-term--default" data-term-id="term-11">Einkommen</button>.

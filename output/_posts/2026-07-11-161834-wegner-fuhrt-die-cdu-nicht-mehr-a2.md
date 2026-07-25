@@ -1,16 +1,17 @@
 ---
-title: "Wegner führt die CDU nicht mehr"
+title: Wegner führt die CDU nicht mehr
 date: 2026-07-11 16:18:34
 level: A2
-topics: ["berliner landespolitik", "spitzenkandidatur", "abgeordnetenhauswahl"]
+topics: &id001 [berliner landespolitik, spitzenkandidatur, abgeordnetenhauswahl, Wegner,
+  CDU, Berlins, Berliner Parlament]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260711-161834-wegner-fuhrt-die-cdu-nicht-mehr-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260711-161834-wegner-fuhrt-die-cdu-nicht-mehr-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Politik
+description: Kai Wegner ist Berlins Regierungschef und Mitglied der CDU. Er führt
+  die CDU nicht mehr als wichtigster Kandidat in die Wahl. Die Wahl für das Berliner...
+keywords: *id001
 ---
 
 Kai Wegner ist Berlins <button type="button" class="article-term article-term--default" data-term-id="term-2">Regierungschef</button> und <button type="button" class="article-term" data-term-id="term-3">Mitglied</button> der CDU. Er <button type="button" class="article-term" data-term-id="term-1">führt</button> die CDU nicht mehr als <button type="button" class="article-term" data-term-id="term-4">wichtigster</button> Kandidat in die <button type="button" class="article-term article-term--default" data-term-id="term-5">Wahl</button>. Die <button type="button" class="article-term article-term--default" data-term-id="term-5">Wahl</button> für das Berliner Parlament ist am 20. September.

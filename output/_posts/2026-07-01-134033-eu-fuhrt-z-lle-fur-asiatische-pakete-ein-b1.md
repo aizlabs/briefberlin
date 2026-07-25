@@ -1,16 +1,17 @@
 ---
-title: "EU führt Zölle für asiatische Pakete ein"
+title: EU führt Zölle für asiatische Pakete ein
 date: 2026-07-01 13:40:33
 level: B1
-topics: ["deutsch"]
+topics: &id001 [Europäische Union, Nicht-EU-Ländern, Asien, Temu, Europa, EU-Kommission,
+  E-Commerce-Pakete]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260701-134033-eu-fuhrt-z-lle-fur-asiatische-pakete-ein-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260701-134033-eu-fuhrt-z-lle-fur-asiatische-pakete-ein-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Wirtschaft
+description: Die Europäische Union hat beschlossen, ab Mittwoch **Zölle** auf kleine
+  Pakete aus Nicht-EU-Ländern zu erheben. Damit will sie die steigende Menge an...
+keywords: *id001
 ---
 
 Die Europäische Union hat beschlossen, ab Mittwoch **Zölle** auf kleine Pakete aus Nicht-EU-Ländern zu erheben. Damit will sie die steigende Menge an günstigen Waren aus Asien eindämmen. Besonders betroffen sind Online-Plattformen wie Shein und Temu, die viele Pakete nach Europa schicken. Laut der EU-Kommission kamen im Jahr 2025 täglich 16 Millionen solcher Pakete in die EU, ohne dass **Zölle** bezahlt wurden. Nun müssen pro Bestellung mindestens drei Euro Zoll gezahlt werden.

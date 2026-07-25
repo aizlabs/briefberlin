@@ -1,17 +1,18 @@
 ---
-title: "Berlins politische Mitte steht weiter stark unter Druck"
+title: Berlins politische Mitte steht weiter stark unter Druck
 date: 2026-07-18 10:54:24
-author: "clara-becker"
+author: clara-becker
 level: B1
-topics: ["politische spaltung", "umfragen", "parteienlandschaft"]
+topics: &id001 [politische spaltung, umfragen, parteienlandschaft, Berlins, Berlin,
+  Die Linke, CDU]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260718-105424-berlins-politische-mitte-steht-weiter-stark-unter-druck-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260718-105424-berlins-politische-mitte-steht-weiter-stark-unter-druck-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Politik
+description: 'Die politische Lage in Berlin verändert sich weiter. Eine neue Umfrage
+  zeigt: Die Linke liegt mit 22 Prozent erstmals klar vorn. Die CDU hat zwar ihren...'
+keywords: *id001
 ---
 
 Die <button type="button" class="article-term" data-term-id="term-1">politische Lage</button> in Berlin <button type="button" class="article-term" data-term-id="term-2">verändert sich</button> weiter. Eine neue <button type="button" class="article-term article-term--default" data-term-id="term-3">Umfrage</button> zeigt: Die Linke liegt mit 22 Prozent <button type="button" class="article-term" data-term-id="term-4">erstmals</button> <button type="button" class="article-term" data-term-id="term-5">klar vorn</button>. Die CDU hat <button type="button" class="article-term" data-term-id="term-6">zwar</button> ihren langen <button type="button" class="article-term article-term--default" data-term-id="term-7">Abwärtstrend</button> <button type="button" class="article-term" data-term-id="term-8">vorerst</button> <button type="button" class="article-term" data-term-id="term-9">gestoppt</button>, kommt aber nur auf 20 Prozent. Die Grünen <button type="button" class="article-term" data-term-id="term-10">erreichen</button> 17 Prozent, die AfD 16 Prozent. Für die SPD geht es weiter nach unten. Sie <button type="button" class="article-term" data-term-id="term-11">fällt</button> auf zwölf Prozent und <button type="button" class="article-term" data-term-id="term-12">bleibt weit unter</button> ihrem <button type="button" class="article-term" data-term-id="term-13">Ergebnis</button> von 2023. FDP und BSW <button type="button" class="article-term" data-term-id="term-14">kämen</button> mit <button type="button" class="article-term" data-term-id="term-15">je</button> drei Prozent nicht ins <button type="button" class="article-term article-term--default" data-term-id="term-16">Abgeordnetenhaus</button>, also in das Berliner Parlament.

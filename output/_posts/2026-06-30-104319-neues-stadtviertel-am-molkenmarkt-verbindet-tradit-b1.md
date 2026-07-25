@@ -1,16 +1,16 @@
 ---
-title: "Neues Stadtviertel am Molkenmarkt verbindet Tradition und Moderne"
+title: Neues Stadtviertel am Molkenmarkt verbindet Tradition und Moderne
 date: 2026-06-30 10:43:19
 level: B1
-topics: ["deutsch"]
+topics: &id001 [Molkenmarkt, Berlin, europäische, Kolonnaden, Arkaden, Loggien, Italien]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/06/20260630-104319-neues-stadtviertel-am-molkenmarkt-verbindet-tradition-und-moderne-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260630-104319-neues-stadtviertel-am-molkenmarkt-verbindet-tradition-und-moderne-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Stadtleben
+description: Ein neues Stadtviertel entsteht am Molkenmarkt in Berlin. Nach einem
+  **Architekturwettbewerb** sind die Pläne für das Viertel nun konkreter. Die Entwürfe...
+keywords: *id001
 ---
 
 Ein neues Stadtviertel entsteht am Molkenmarkt in Berlin. Nach einem **Architekturwettbewerb** sind die Pläne für das Viertel nun konkreter. Die Entwürfe für die vier Bauabschnitte zeigen viele europäische Architekturtraditionen. Es gibt Kolonnaden, Arkaden, Loggien und **Erker**. Diese Elemente sollen ein europäisches Viertel mit Einflüssen aus Italien, Skandinavien und Tschechien schaffen. Die Juryvorsitzende Antje Freiesleben lobte die Entwürfe als eine gute Mischung aus Tradition und Moderne.

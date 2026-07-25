@@ -1,16 +1,17 @@
 ---
-title: "Brandenburg sichert Kommunen Geld und hilft den Rettungsdiensten"
+title: Brandenburg sichert Kommunen Geld und hilft den Rettungsdiensten
 date: 2026-07-09 09:00:00
 level: B1
-topics: ["kommunalfinanzierung", "rettungsdienst", "landeshaushalt"]
+topics: &id001 [kommunalfinanzierung, rettungsdienst, landeshaushalt, Brandenburg,
+  Landkreisen, Landes, Kommunen]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260709-090000-brandenburg-sichert-kommunen-geld-und-hilft-den-rettungsdiensten-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260709-090000-brandenburg-sichert-kommunen-geld-und-hilft-den-rettungsdiensten-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Wirtschaft
+description: Die Landesregierung von Brandenburg hat sich mit Landkreisen, Städten
+  und Gemeinden auf sichere Finanzen bis 2030 geeinigt. Das teilte das Land nach...
+keywords: *id001
 ---
 
 Die <button type="button" class="article-term article-term--default" data-term-id="term-1">Landesregierung</button> von Brandenburg hat sich mit Landkreisen, Städten und <button type="button" class="article-term" data-term-id="term-8">Gemeinden</button> auf sichere Finanzen bis 2030 <button type="button" class="article-term" data-term-id="term-9">geeinigt</button>. Das <button type="button" class="article-term" data-term-id="term-10">teilte</button> das Land nach Gesprächen über den kommunalen <button type="button" class="article-term article-term--default" data-term-id="term-2">Finanzausgleich</button> mit. Dieser <button type="button" class="article-term" data-term-id="term-11">Ausgleich</button> bedeutet: Die Kommunen bekommen einen <button type="button" class="article-term article-term--default" data-term-id="term-3">festen Anteil</button> an den <button type="button" class="article-term" data-term-id="term-12">Einnahmen</button> des Landes. Die sogenannte <button type="button" class="article-term" data-term-id="term-13">Verbundquote</button> bleibt bei 22,43 Prozent.

@@ -1,16 +1,17 @@
 ---
-title: "Pop Inn: Berliner Jugendkultur kehrt zurück"
+title: 'Pop Inn: Berliner Jugendkultur kehrt zurück'
 date: 2026-06-29 17:55:28
 level: B1
-topics: ["deutsch"]
+topics: &id001 [Pop Inn, Berlin-Steglitz, Im Jahr 2013, Kulturamts Steglitz-Zehlendorf,
+  Liebschaften, Disco, Erwachsenwerdens]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/06/20260629-175528-pop-inn-berliner-jugendkultur-kehrt-zuruck-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260629-175528-pop-inn-berliner-jugendkultur-kehrt-zuruck-b1/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
+category: Nachrichten
+description: Das Pop Inn war eine bekannte Disco für Jugendliche in Berlin-Steglitz.
+  Es wurde in den 1960er Jahren gegründet und bot jungen Menschen ab 14 Jahren einen...
+keywords: *id001
 ---
 
 Das Pop Inn war eine bekannte Disco für Jugendliche in Berlin-Steglitz. Es wurde in den 1960er Jahren gegründet und bot jungen Menschen ab 14 Jahren einen sicheren Ort zum Feiern. Im Jahr 2013 wurde der Club geschlossen. Jetzt wird das Pop Inn durch ein Projekt des Kulturamts Steglitz-Zehlendorf und der Künstlergruppe „**Syndikat Gefährliche Liebschaften**“ wiederbelebt.

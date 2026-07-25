@@ -1,11 +1,15 @@
 ---
-title: "Streit um Prada und Tote in Stade"
+title: Streit um Prada und Tote in Stade
 date: 2026-07-01 19:10:34
 level: A2
-topics: ["deutsch"]
+topics: &id001 [Prada, Tote, Stade, Deutschland, Italien, Niedersachsen, Videos]
 sources: []
 audio: null
 reading_time: 2
+category: Nachrichten
+description: In Deutschland sprechen viele Menschen über zwei sehr verschiedene Themen.
+  Zuerst geht es um Prada, eine teure Modemarke aus Italien. Außerdem geht es um...
+keywords: *id001
 ---
 
 In Deutschland <button type="button" class="article-term" data-term-id="term-2">sprechen</button> viele Menschen über zwei sehr <button type="button" class="article-term" data-term-id="term-3">verschiedene</button> <button type="button" class="article-term" data-term-id="term-4">Themen</button>. <button type="button" class="article-term" data-term-id="term-5">Zuerst</button> <button type="button" class="article-term article-term--default" data-term-id="term-6">geht es um</button> Prada, eine <button type="button" class="article-term" data-term-id="term-7">teure</button> <button type="button" class="article-term" data-term-id="term-8">Modemarke</button> aus Italien. <button type="button" class="article-term" data-term-id="term-9">Außerdem</button> <button type="button" class="article-term article-term--default" data-term-id="term-6">geht es um</button> eine <button type="button" class="article-term article-term--default" data-term-id="term-10">schwere Tat</button> in Stade in Niedersachsen.

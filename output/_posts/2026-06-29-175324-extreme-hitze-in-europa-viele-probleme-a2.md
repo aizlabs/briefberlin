@@ -1,16 +1,17 @@
 ---
-title: "Extreme Hitze in Europa: Viele Probleme"
+title: 'Extreme Hitze in Europa: Viele Probleme'
 date: 2026-06-29 17:53:24
 level: A2
-topics: ["deutsch"]
+topics: &id001 [Extreme Hitze, Europa, Hitzewelle, Frankreich, Deutschland, Grad Celsius,
+  Berlin]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/06/20260629-175324-extreme-hitze-in-europa-viele-probleme-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260629-175324-extreme-hitze-in-europa-viele-probleme-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Nachrichten
+description: Europa hat eine sehr starke **Hitzewelle**. Diese Hitze macht viele Menschen
+  krank. In Frankreich sind etwa 1000 Menschen mehr gestorben. Meistens sind alte...
+keywords: *id001
 ---
 
 Europa hat eine sehr starke **Hitzewelle**. Diese Hitze macht viele Menschen krank. In Frankreich sind etwa 1000 Menschen mehr gestorben. Meistens sind alte Menschen betroffen. Die Hitze kann noch lange Probleme machen, sagt die Gesundheitsministerin von Frankreich.

@@ -1,16 +1,17 @@
 ---
-title: "Eltern protestieren gegen Plan für Schulgelände"
+title: Eltern protestieren gegen Plan für Schulgelände
 date: 2026-07-08 14:57:08
 level: A2
-topics: ["schulstandort", "suchtrehabilitation", "elternprotest"]
+topics: &id001 [schulstandort, suchtrehabilitation, elternprotest, Rosa-Parks-Grundschule,
+  Berlin-Kreuzberg, Tannenhof-Schule, Berliner Amt]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260708-145708-eltern-protestieren-gegen-plan-fur-schulgel-nde-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260708-145708-eltern-protestieren-gegen-plan-fur-schulgel-nde-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Nachrichten
+description: An der Rosa-Parks-Grundschule in Berlin-Kreuzberg gibt es Streit. Seit
+  Sonntagabend sind viele Eltern gegen einen Plan für das Gelände. Die Tannenhof-Schule...
+keywords: *id001
 ---
 
 An der Rosa-Parks-Grundschule in Berlin-Kreuzberg gibt es <button type="button" class="article-term article-term--default" data-term-id="term-3">Streit</button>. <button type="button" class="article-term" data-term-id="term-4">Seit</button> <button type="button" class="article-term" data-term-id="term-5">Sonntagabend</button> sind viele <button type="button" class="article-term" data-term-id="term-1">Eltern</button> <button type="button" class="article-term" data-term-id="term-2">gegen</button> einen Plan für das <button type="button" class="article-term" data-term-id="term-6">Gelände</button>. Die Tannenhof-Schule soll dort <button type="button" class="article-term" data-term-id="term-7">zwei Jahre lang</button> <button type="button" class="article-term" data-term-id="term-8">Räume</button> <button type="button" class="article-term" data-term-id="term-9">nutzen</button>.

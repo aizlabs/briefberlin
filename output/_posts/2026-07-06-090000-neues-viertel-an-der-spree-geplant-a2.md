@@ -1,16 +1,17 @@
 ---
-title: "Neues Viertel an der Spree geplant"
+title: Neues Viertel an der Spree geplant
 date: 2026-07-06 09:00:00
 level: A2
-topics: ["stadtquartier", "wohnungsbau", "klimapark"]
+topics: &id001 [stadtquartier, wohnungsbau, klimapark, Neues Viertel, Spree, Berlin-Friedrichshain-Kreuzberg,
+  Schillingbrücke]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260706-090000-neues-viertel-an-der-spree-geplant-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260706-090000-neues-viertel-an-der-spree-geplant-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Nachrichten
+description: In Berlin-Friedrichshain-Kreuzberg soll in den nächsten Jahren ein neues
+  Stadtviertel entstehen. Es liegt an der Spree, bei der Schillingbrücke und der...
+keywords: *id001
 ---
 
 In Berlin-Friedrichshain-Kreuzberg soll in den <button type="button" class="article-term" data-term-id="term-4">nächsten Jahren</button> ein neues <button type="button" class="article-term article-term--default" data-term-id="term-2">Stadtviertel</button> <button type="button" class="article-term" data-term-id="term-3">entstehen</button>. Es <button type="button" class="article-term" data-term-id="term-5">liegt</button> an der Spree, bei der Schillingbrücke und der Köpenicker Straße. Der <button type="button" class="article-term article-term--default" data-term-id="term-6">Bau</button> kann vielleicht im Jahr 2030 <button type="button" class="article-term" data-term-id="term-7">beginnen</button>.

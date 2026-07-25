@@ -1,17 +1,18 @@
 ---
-title: "Protest gegen Berliner CSD geplant"
+title: Protest gegen Berliner CSD geplant
 date: 2026-07-25 02:32:19
-author: "clara-becker"
+author: clara-becker
 level: A2
-topics: ["christopher street day", "rechtsextremismus", "pride-paraden"]
+topics: &id001 [christopher street day, rechtsextremismus, pride-paraden, Berliner
+    CSD, Berlin, CSD, Potsdamer Platz]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260725-023219-protest-gegen-berliner-csd-geplant-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260725-023219-protest-gegen-berliner-csd-geplant-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Kultur
+description: Am 25. Juli findet in Berlin der Christopher Street Day statt. Bei diesem
+  großen Zug wollen Menschen gleiche Rechte für lesbische, schwule, bisexuelle und...
+keywords: *id001
 ---
 
 Am 25. Juli <button type="button" class="article-term" data-term-id="term-1">findet</button> in Berlin der Christopher Street Day <button type="button" class="article-term" data-term-id="term-2">statt</button>. Bei diesem großen <button type="button" class="article-term article-term--default" data-term-id="term-3">Zug</button> wollen Menschen <button type="button" class="article-term article-term--default" data-term-id="term-4">gleiche Rechte</button> für lesbische, <button type="button" class="article-term" data-term-id="term-5">schwule</button>, bisexuelle und trans Menschen. <button type="button" class="article-term article-term--default" data-term-id="term-7">Rechtsextreme</button> Gruppen planen am <button type="button" class="article-term" data-term-id="term-6">selben</button> Tag einen Protest gegen den CSD.

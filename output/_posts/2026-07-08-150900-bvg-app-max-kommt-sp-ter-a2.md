@@ -1,16 +1,18 @@
 ---
-title: "BVG-App Max kommt später"
+title: BVG-App Max kommt später
 date: 2026-07-08 15:09:00
 level: A2
-topics: ["nahverkehrs-app", "digitalisierung", "projektverz\u00f6gerung"]
+topics: &id001 [nahverkehrs-app, digitalisierung, projektverzögerung, BVG-App Max,
+  Berlin, BVG, Max]
 sources: []
-audio:
-  url: "https://media.briefberlin.de/articles/2026/07/20260708-150900-bvg-app-max-kommt-sp-ter-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "openai"
-  voice: "alloy"
+audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260708-150900-bvg-app-max-kommt-sp-ter-a2/article.mp3',
+  format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
+category: Verkehr
+description: Die neue BVG-App Max kommt später nach Berlin. Die BVG ist die Firma
+  für U-Bahn, Bus und Tram in Berlin. Die Menschen sollen dann Max statt der alten
+  App...
+keywords: *id001
 ---
 
 Die neue BVG-App Max kommt <button type="button" class="article-term" data-term-id="term-1">später</button> nach Berlin. Die BVG ist die <button type="button" class="article-term article-term--default" data-term-id="term-2">Firma</button> für <button type="button" class="article-term article-term--default" data-term-id="term-3">U-Bahn</button>, Bus und Tram in Berlin. Die Menschen <button type="button" class="article-term article-term--default" data-term-id="term-4">sollen</button> dann Max <button type="button" class="article-term article-term--default" data-term-id="term-5">statt</button> der <button type="button" class="article-term" data-term-id="term-6">alten</button> App Fahrinfo <button type="button" class="article-term" data-term-id="term-7">nutzen</button>. Aber <button type="button" class="article-term" data-term-id="term-8">bis heute</button> gibt es noch keinen <button type="button" class="article-term article-term--default" data-term-id="term-9">Starttermin</button>.
