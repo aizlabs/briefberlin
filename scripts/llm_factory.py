@@ -13,6 +13,7 @@ from langchain_anthropic import ChatAnthropic
 from langchain_core.language_models.chat_models import BaseChatModel
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
+from pydantic import SecretStr
 
 
 def create_chat_model(llm_config: Dict[str, Any], model_name: str, temperature: float) -> BaseChatModel:
@@ -35,10 +36,12 @@ def create_chat_model(llm_config: Dict[str, Any], model_name: str, temperature: 
             raise ValueError("Missing ANTHROPIC_API_KEY in config/environment")
 
         return ChatAnthropic(
-            api_key=api_key,
-            model=model_name,
-            max_tokens=llm_config.get("max_tokens", 4096),
+            api_key=SecretStr(api_key),
+            model_name=model_name,
+            max_tokens_to_sample=llm_config.get("max_tokens", 4096),
             temperature=temperature,
+            timeout=None,
+            stop=None,
         )
 
     if provider == "openai":
@@ -49,10 +52,10 @@ def create_chat_model(llm_config: Dict[str, Any], model_name: str, temperature: 
 
         # Use OpenAI's JSON/structured output features under the hood
         return ChatOpenAI(
-            api_key=api_key or "local-api-key",
+            api_key=SecretStr(api_key or "local-api-key"),
             base_url=base_url,
             model=model_name,
-            max_tokens=llm_config.get("max_tokens", 4096),
+            max_completion_tokens=llm_config.get("max_tokens", 4096),
             temperature=temperature,
         )
 

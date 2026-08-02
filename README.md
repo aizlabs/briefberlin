@@ -53,6 +53,11 @@ This requires `OPENAI_API_KEY`. Local audio files are written under `output/audi
 uncommitted. To publish playable website audio in post front matter, also enable upload and configure
 the audio delivery variables documented in `docs/website-audio-checklist.md`.
 
+Model-calling commands print a run-level ASCII table with token usage by model and estimated USD
+cost. The table combines LangChain text usage with exact OpenAI speech usage when the configured
+audio model supports SSE usage events. See [model usage reporting](docs/model-usage-reporting.md) for
+pricing configuration, limitations, and how to disable the report.
+
 ## Manual Evaluation
 
 Run the live glossary-hint eval when tuning glossary prompts or comparing models:

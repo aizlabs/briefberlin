@@ -13,11 +13,12 @@ from typing import Sequence
 import yaml
 
 from scripts.audio_pipeline import AudioPipeline
-from scripts.config import load_config
+from scripts.config import AppConfig, load_config
 from scripts.glossary_sections import split_at_glossary_heading
 from scripts.logger import get_component_logger
 from scripts.models import AdaptedArticle, AudioAsset, VocabularyItem
 from scripts.text_utils import strip_article_ui_markup
+from scripts.usage_report import RunUsageReport, collect_run_usage
 
 POSTS_DIR = Path("output/_posts")
 FRONTMATTER_RE = re.compile(r"\A---\n(.*?)\n---\n(.*)\Z", flags=re.S)
@@ -165,55 +166,69 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     return parser.parse_args(argv)
 
 
+def _run_post_audio(args: argparse.Namespace, config: AppConfig) -> int:
+    """Generate audio while a run-level usage collector is active."""
+    post_path = Path(args.post).expanduser()
+    article, timestamp, frontmatter, body = build_article_from_post(
+        post_path,
+        glossary_headings=config.language.glossary_headings(),
+    )
+    config.audio.enabled = True
+    config.audio.upload_enabled = bool(args.upload)
+    if args.provider:
+        config.audio.provider = args.provider
+    if args.voice:
+        config.audio.voice = args.voice
+    if args.format:
+        config.audio.format = args.format
+    if args.public_base_url:
+        config.audio.public_base_url = args.public_base_url
+    if args.s3_bucket:
+        config.audio.s3.bucket = args.s3_bucket
+    if args.s3_region:
+        config.audio.s3.region = args.s3_region
+    if args.s3_prefix:
+        config.audio.s3.prefix = args.s3_prefix
+
+    logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
+    logger = get_component_logger("post-audio", config)
+    prepared = AudioPipeline(config, logger).prepare_for_publish(article, timestamp=timestamp)
+
+    if not prepared.audio:
+        raise RuntimeError("Audio pipeline completed without audio metadata")
+    if args.upload and not prepared.audio.url:
+        raise RuntimeError("Audio upload was requested but no public audio URL was produced")
+
+    if prepared.audio.url:
+        update_post_audio(post_path, prepared.audio, frontmatter, body)
+        print(f"Updated post audio: {post_path}")
+    else:
+        print("Generated local audio without updating post front matter because --upload was not set.")
+
+    print(f"Storage key: {prepared.audio.storage_key}")
+    print(f"Local audio: {prepared.audio.local_audio_path}")
+    if prepared.audio.url:
+        print(f"Public URL: {prepared.audio.url}")
+    return 0
+
+
 def main(argv: Sequence[str] | None = None) -> int:
+    report: RunUsageReport | None = None
+    failed = False
     try:
         args = parse_args(argv)
-        post_path = Path(args.post).expanduser()
         config = load_config(args.environment)
-        article, timestamp, frontmatter, body = build_article_from_post(
-            post_path,
-            glossary_headings=config.language.glossary_headings(),
-        )
-        config.audio.enabled = True
-        config.audio.upload_enabled = bool(args.upload)
-        if args.provider:
-            config.audio.provider = args.provider
-        if args.voice:
-            config.audio.voice = args.voice
-        if args.format:
-            config.audio.format = args.format
-        if args.public_base_url:
-            config.audio.public_base_url = args.public_base_url
-        if args.s3_bucket:
-            config.audio.s3.bucket = args.s3_bucket
-        if args.s3_region:
-            config.audio.s3.region = args.s3_region
-        if args.s3_prefix:
-            config.audio.s3.prefix = args.s3_prefix
-
-        logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
-        logger = get_component_logger("post-audio", config)
-        prepared = AudioPipeline(config, logger).prepare_for_publish(article, timestamp=timestamp)
-
-        if not prepared.audio:
-            raise RuntimeError("Audio pipeline completed without audio metadata")
-        if args.upload and not prepared.audio.url:
-            raise RuntimeError("Audio upload was requested but no public audio URL was produced")
-
-        if prepared.audio.url:
-            update_post_audio(post_path, prepared.audio, frontmatter, body)
-            print(f"Updated post audio: {post_path}")
-        else:
-            print("Generated local audio without updating post front matter because --upload was not set.")
-
-        print(f"Storage key: {prepared.audio.storage_key}")
-        print(f"Local audio: {prepared.audio.local_audio_path}")
-        if prepared.audio.url:
-            print(f"Public URL: {prepared.audio.url}")
-        return 0
+        with collect_run_usage(config.llm.usage_reporting, config.llm.provider) as report:
+            return _run_post_audio(args, config)
     except Exception as exc:
+        failed = True
         print(f"Post audio generation failed: {exc}", file=sys.stderr)
         return 1
+    finally:
+        if report is not None:
+            rendered_report = report.render_ascii()
+            if rendered_report:
+                print(f"\n{rendered_report}", file=sys.stderr if failed else sys.stdout)
 
 
 if __name__ == "__main__":

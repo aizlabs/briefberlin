@@ -1,5 +1,7 @@
 from unittest.mock import MagicMock
 
+from pydantic import SecretStr
+
 from scripts.llm_factory import (
     build_structured_prompt_chain,
     create_chat_model,
@@ -41,10 +43,10 @@ def test_create_chat_model_passes_openai_base_url(monkeypatch):
 
     assert result == "chat-model"
     chat_openai.assert_called_once_with(
-        api_key="local-api-key",
+        api_key=SecretStr("local-api-key"),
         base_url="http://localhost:11434/v1",
         model="local-model",
-        max_tokens=2048,
+        max_completion_tokens=2048,
         temperature=0.1,
     )
 

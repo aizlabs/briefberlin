@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import logging
 import os
 import re
 import sys
@@ -11,7 +12,7 @@ from pathlib import Path
 from typing import Sequence
 
 from scripts.audio_pipeline import AudioPipeline
-from scripts.config import load_config
+from scripts.config import AppConfig, load_config
 from scripts.content_generator import ContentGenerator
 from scripts.glossary_generator import GlossaryGenerator
 from scripts.logger import setup_logger
@@ -19,6 +20,7 @@ from scripts.models import AdaptedArticle, QualityResult, SourceArticle, Topic
 from scripts.publisher import Publisher
 from scripts.quality_gate import QualityGate
 from scripts.topic_metadata_extractor import TopicMetadataExtractor, TopicMetadataResponse
+from scripts.usage_report import RunUsageReport, collect_run_usage
 
 MIN_SOURCE_WORDS = 20
 AUTHOR_SLUG_PATTERN = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
@@ -121,6 +123,35 @@ def run_manual_pipeline(args: argparse.Namespace) -> int:
 
     config = load_config(environment)
     logger = setup_logger(config, run_id)
+
+    report: RunUsageReport | None = None
+    try:
+        with collect_run_usage(config.llm.usage_reporting, config.llm.provider) as report:
+            return _execute_manual_pipeline(
+                args,
+                config=config,
+                logger=logger,
+                environment=environment,
+                dry_run=dry_run,
+                run_id=run_id,
+            )
+    finally:
+        if report is not None:
+            rendered_report = report.render_ascii()
+            if rendered_report:
+                print(f"\n{rendered_report}")
+
+
+def _execute_manual_pipeline(
+    args: argparse.Namespace,
+    *,
+    config: AppConfig,
+    logger: logging.Logger,
+    environment: str,
+    dry_run: bool,
+    run_id: str,
+) -> int:
+    """Execute the manual pipeline inside an active run-usage context."""
 
     levels = args.level or config.generation.levels
     source_paths = [Path(path).expanduser() for path in args.sources]

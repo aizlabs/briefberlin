@@ -1,7 +1,9 @@
+from contextlib import contextmanager
 from pathlib import Path
 
 import pytest
 
+import scripts.post_audio as post_audio
 from scripts.models import AudioAsset
 from scripts.post_audio import build_article_from_post, update_post_audio
 
@@ -153,3 +155,32 @@ def test_update_post_audio_writes_audio_frontmatter_only(tmp_path, monkeypatch):
     assert "audio:\n  url: https://media.briefberlin.de/articles/test/article.mp3" in updated
     assert "mime_type: audio/mpeg" in updated
     assert "In Berlin gibt es eine neue Meinung. Eine Umfrage zeigt neue Pläne." in updated
+
+
+def test_main_routes_usage_report_to_stderr_when_audio_generation_fails(
+    monkeypatch,
+    capsys,
+    base_config,
+):
+    class StubReport:
+        def render_ascii(self) -> str:
+            return "AI usage and estimated cost\n\nNo model usage was recorded."
+
+    @contextmanager
+    def stub_collect_run_usage(*_args):
+        yield StubReport()
+
+    def fail_generation(*_args):
+        raise RuntimeError("synthetic failure")
+
+    monkeypatch.setattr(post_audio, "load_config", lambda _environment: base_config)
+    monkeypatch.setattr(post_audio, "collect_run_usage", stub_collect_run_usage)
+    monkeypatch.setattr(post_audio, "_run_post_audio", fail_generation)
+
+    exit_code = post_audio.main(["output/_posts/example.md"])
+
+    captured = capsys.readouterr()
+    assert exit_code == 1
+    assert captured.out == ""
+    assert "Post audio generation failed: synthetic failure" in captured.err
+    assert "AI usage and estimated cost" in captured.err

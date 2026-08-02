@@ -5,7 +5,9 @@ These models ensure data integrity throughout the pipeline and provide
 automatic validation, serialization, and clear type hints.
 """
 
-from typing import Any, Dict, List, Optional, Union
+from datetime import date
+from decimal import Decimal
+from typing import Any, Dict, List, Literal, Optional, Union
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
@@ -377,6 +379,36 @@ class LLMModelsConfig(BaseModel):
     )
 
 
+class ModelPricingConfig(BaseModel):
+    """Per-million-token rates and reporting capabilities for one provider model."""
+
+    aliases: List[str] = Field(
+        default_factory=list,
+        description="Optional fnmatch patterns for dated model snapshots",
+    )
+    modality: Literal["text", "audio"] = Field(
+        default="text",
+        description="Output modality used to label the usage report",
+    )
+    supports_sse_usage: bool = Field(
+        default=False,
+        description="Whether speech requests can stream exact token usage through SSE",
+    )
+    input_per_million: Decimal = Field(..., ge=0)
+    cached_input_per_million: Optional[Decimal] = Field(default=None, ge=0)
+    cache_write_per_million: Optional[Decimal] = Field(default=None, ge=0)
+    output_per_million: Decimal = Field(..., ge=0)
+
+
+class UsageReportingConfig(BaseModel):
+    """Run-level model usage and estimated-cost reporting settings."""
+
+    enabled: bool = True
+    currency: Literal["USD"] = "USD"
+    pricing_as_of: Optional[date] = None
+    prices: Dict[str, Dict[str, ModelPricingConfig]] = Field(default_factory=dict)
+
+
 class LLMConfig(BaseModel):
     """LLM configuration"""
     provider: str = Field(
@@ -396,6 +428,7 @@ class LLMConfig(BaseModel):
         default=0.1, ge=0, le=1, description="Temperature for quality checks"
     )
     max_tokens: int = Field(default=4096, ge=100, le=100000, description="Max tokens")
+    usage_reporting: UsageReportingConfig = Field(default_factory=UsageReportingConfig)
 
 
 class SMTPConfig(BaseModel):
@@ -457,7 +490,10 @@ class AudioConfig(BaseModel):
 
     enabled: bool = Field(default=False, description="Enable audio preparation for approved articles")
     provider: Optional[str] = Field(default=None, description="TTS provider identifier")
-    model: str = Field(default="gpt-4o-mini-tts", description="TTS model identifier")
+    model: str = Field(
+        default="gpt-4o-mini-tts-2025-12-15",
+        description="TTS model identifier",
+    )
     voice: Optional[str] = Field(default=None, description="Voice identifier")
     format: str = Field(default="mp3", pattern="^(mp3|m4a|wav)$", description="Primary output format")
     output_path: str = Field(default="./output/audio", description="Local working directory for audio files")

@@ -196,6 +196,16 @@ def test_audio_model_env_override(monkeypatch):
         monkeypatch.delenv("AUDIO_MODEL", raising=False)
 
 
+def test_usage_reporting_enabled_env_override(monkeypatch):
+    monkeypatch.setenv("USAGE_REPORTING_ENABLED", "false")
+    try:
+        config = {}
+        apply_env_overrides(config)
+        assert config["llm"]["usage_reporting"]["enabled"] is False
+    finally:
+        monkeypatch.delenv("USAGE_REPORTING_ENABLED", raising=False)
+
+
 def test_load_language_config_without_llm_keys(monkeypatch):
     monkeypatch.delenv("OPENAI_API_KEY", raising=False)
     monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)

@@ -141,7 +141,7 @@ def test_init_llm_client_passes_openai_base_url_without_api_key(
 
     QualityGate(base_config, mock_logger)
 
-    assert captured_kwargs["api_key"] == "local-api-key"
+    assert captured_kwargs["api_key"].get_secret_value() == "local-api-key"
     assert captured_kwargs["base_url"] == "http://localhost:11434/v1"
     assert captured_kwargs["model"] == "local-quality"
     assert captured_kwargs["model_kwargs"] == {"response_format": {"type": "json_object"}}
