@@ -17,10 +17,11 @@ from collections import Counter
 from dataclasses import dataclass
 from typing import Any
 
-from scripts.config import load_config
+from scripts.config import AppConfig, load_config
 from scripts.glossary_generator import GlossaryGenerator, StructuredOutputDegradedError
 from scripts.logger import get_component_logger
 from scripts.models import AdaptedArticle, VocabularyItem
+from scripts.usage_report import RunUsageReport, collect_run_usage
 
 BERLIN_HEAT_CONTENT = (
     "Ein heißes Wochenende steht Berlin bevor. Die Temperaturen könnten bis zu 41 Grad erreichen. "
@@ -247,15 +248,8 @@ def print_report(
             print(f"- {failure}")
 
 
-def main(argv: list[str] | None = None) -> int:
-    args = parse_args(argv)
-    if args.list_fixtures:
-        for fixture_name in sorted(FIXTURES):
-            print(fixture_name)
-        return 0
-
-    apply_preload_env_overrides(args)
-    config = load_config(args.environment)
+def _run_eval(args: argparse.Namespace, config: AppConfig) -> int:
+    """Execute the live eval while a run-level usage collector is active."""
     fixture = FIXTURES[args.fixture]
     article = build_article(fixture)
 
@@ -370,6 +364,27 @@ def main(argv: list[str] | None = None) -> int:
         )
 
     return 1 if failures else 0
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = parse_args(argv)
+    if args.list_fixtures:
+        for fixture_name in sorted(FIXTURES):
+            print(fixture_name)
+        return 0
+
+    apply_preload_env_overrides(args)
+    config = load_config(args.environment)
+    report: RunUsageReport | None = None
+    try:
+        with collect_run_usage(config.llm.usage_reporting, config.llm.provider) as report:
+            return _run_eval(args, config)
+    finally:
+        if report is not None:
+            rendered_report = report.render_ascii()
+            if rendered_report:
+                output = sys.stderr if args.json else sys.stdout
+                print(f"\n{rendered_report}", file=output)
 
 
 if __name__ == "__main__":

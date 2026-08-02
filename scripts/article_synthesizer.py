@@ -7,7 +7,7 @@ and natural German expression.
 """
 
 import logging
-from typing import List
+from typing import List, cast
 
 from pydantic import BaseModel, Field
 
@@ -81,7 +81,7 @@ class ArticleSynthesizer:
     def _call_llm(self, prompt: str) -> SynthesisResponse:
         """Call LLM with prompt for synthesis and return structured response."""
         try:
-            return self.chain.invoke({"prompt": prompt})
+            return cast(SynthesisResponse, self.chain.invoke({"prompt": prompt}))
         except Exception as e:
             self.logger.error(f"LLM API call failed during synthesis: {e}")
             raise

@@ -36,7 +36,14 @@ class AlertManager:
 
         try:
             with self.cooldown_file.open("r", encoding="utf-8") as file:
-                return json.load(file)
+                loaded = json.load(file)
+            if not isinstance(loaded, dict):
+                return {}
+            return {
+                key: value
+                for key, value in loaded.items()
+                if isinstance(key, str) and isinstance(value, str)
+            }
         except Exception:
             return {}
 

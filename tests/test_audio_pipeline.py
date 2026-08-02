@@ -1,9 +1,11 @@
 from datetime import datetime
 from pathlib import Path
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 
 from scripts.audio_pipeline import AudioPipeline
 from scripts.audio_script_builder import build_speech_script
+from scripts.openai_speech_stream import SpeechTokenUsage
+from scripts.usage_report import collect_run_usage
 
 
 class DummySpeechResponse:
@@ -12,6 +14,39 @@ class DummySpeechResponse:
 
     def write_to_file(self, path: str | Path) -> None:
         Path(path).write_bytes(self.payload)
+
+
+@patch("scripts.audio_pipeline.synthesize_speech_sse")
+def test_audio_pipeline_registers_exact_sse_usage_in_active_run(
+    mock_synthesize_speech_sse,
+    base_config,
+    mock_logger,
+    sample_a2_article,
+    tmp_path,
+):
+    base_config.audio.enabled = True
+    base_config.audio.output_path = str(tmp_path / "audio")
+    base_config.audio.provider = "openai"
+    base_config.audio.model = "gpt-4o-mini-tts"
+    base_config.audio.voice = "alloy"
+    mock_synthesize_speech_sse.return_value = SpeechTokenUsage(
+        input_tokens=12,
+        output_tokens=34,
+        total_tokens=46,
+    )
+
+    pipeline = AudioPipeline(base_config, mock_logger, tts_client=MagicMock())
+    with collect_run_usage(base_config.llm.usage_reporting, "openai") as report:
+        pipeline.prepare_for_publish(
+            sample_a2_article,
+            timestamp=datetime(2024, 1, 2, 12, 0, 0),
+        )
+
+    [usage] = report.as_dict()["models"]
+    assert usage["model"] == "gpt-4o-mini-tts"
+    assert usage["modality"] == "audio"
+    assert usage["input_tokens"] == 12
+    assert usage["output_tokens"] == 34
 
 
 def test_audio_pipeline_writes_manifest_and_script_when_enabled(
@@ -89,6 +124,7 @@ def test_audio_pipeline_uploads_and_sets_public_url_when_upload_enabled(
 ):
     base_config.audio.enabled = True
     base_config.audio.provider = "openai"
+    base_config.audio.model = "custom-tts-model"
     base_config.audio.voice = "alloy"
     base_config.audio.upload_enabled = True
     base_config.audio.output_path = str(tmp_path / "audio")
@@ -135,6 +171,7 @@ def test_audio_pipeline_maps_m4a_to_openai_aac_response_format(
 ):
     base_config.audio.enabled = True
     base_config.audio.provider = "openai"
+    base_config.audio.model = "custom-tts-model"
     base_config.audio.voice = "alloy"
     base_config.audio.format = "m4a"
     base_config.audio.output_path = str(tmp_path / "audio")
@@ -165,6 +202,7 @@ def test_audio_pipeline_raises_when_upload_enabled_without_bucket(
 ):
     base_config.audio.enabled = True
     base_config.audio.provider = "openai"
+    base_config.audio.model = "custom-tts-model"
     base_config.audio.voice = "alloy"
     base_config.audio.upload_enabled = True
     base_config.audio.output_path = str(tmp_path / "audio")

@@ -8,7 +8,7 @@ Uses different strategies per level:
 """
 
 import logging
-from typing import List, Optional
+from typing import List, Optional, cast
 
 from pydantic import BaseModel, Field
 
@@ -136,7 +136,7 @@ class LevelAdapter:
     def _call_llm(self, prompt: str, level: str) -> BaseModel:
         """Call LLM for level adaptation and return structured response."""
         try:
-            return self.chain.invoke({"prompt": prompt})
+            return cast(BaseModel, self.chain.invoke({"prompt": prompt}))
         except Exception as e:
             self.logger.error(f"LLM API call failed during {level} adaptation: {e}")
             raise

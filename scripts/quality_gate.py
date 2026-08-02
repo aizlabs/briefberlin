@@ -6,13 +6,14 @@ Regenerates articles that fail, with feedback for improvement.
 """
 
 import logging
-from typing import Dict, List, Optional, Tuple, Union, cast
+from typing import Dict, List, Optional, Tuple, cast
 
 from langchain_anthropic import ChatAnthropic
+from langchain_core.language_models.chat_models import BaseChatModel
 from langchain_core.output_parsers import PydanticOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, SecretStr
 
 from scripts import prompts
 from scripts.config import AppConfig
@@ -63,11 +64,13 @@ class QualityGate:
             if not api_key:
                 raise ValueError("Missing ANTHROPIC_API_KEY in config/environment")
 
-            self.llm_client: Union[ChatAnthropic, ChatOpenAI] = ChatAnthropic(
-                api_key=api_key,
-                model=self.llm_config['models']['quality_check'],
-                max_tokens=self.llm_config.get('max_tokens', 4096),
+            self.llm_client: BaseChatModel = ChatAnthropic(
+                api_key=SecretStr(api_key),
+                model_name=self.llm_config['models']['quality_check'],
+                max_tokens_to_sample=self.llm_config.get('max_tokens', 4096),
                 temperature=self.quality_temperature,
+                timeout=None,
+                stop=None,
             )
             self.logger.info("Initialized Anthropic client for quality checks")
 
@@ -78,10 +81,10 @@ class QualityGate:
                 raise ValueError("Missing OPENAI_API_KEY in config/environment")
 
             self.llm_client = ChatOpenAI(
-                api_key=api_key or "local-api-key",
+                api_key=SecretStr(api_key or "local-api-key"),
                 base_url=base_url,
                 model=self.llm_config['models']['quality_check'],
-                max_tokens=self.llm_config.get('max_tokens', 4096),
+                max_completion_tokens=self.llm_config.get('max_tokens', 4096),
                 temperature=self.quality_temperature,
                 model_kwargs={'response_format': {'type': 'json_object'}},
             )
@@ -95,9 +98,7 @@ class QualityGate:
         parser = PydanticOutputParser(pydantic_object=JudgeResponse)
         self.format_instructions = parser.get_format_instructions()
 
-        structured_llm = cast(
-            ChatAnthropic | ChatOpenAI, self.llm_client
-        ).with_structured_output(JudgeResponse)
+        structured_llm = self.llm_client.with_structured_output(JudgeResponse)
 
         self.judge_prompt = ChatPromptTemplate.from_messages([
             ("user", "{prompt}\n\n{format_instructions}"),

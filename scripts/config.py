@@ -216,6 +216,12 @@ def apply_env_overrides(config_dict: Dict) -> Dict:
             config_dict['llm'].setdefault('models', {})
             config_dict['llm']['models'][model_key] = model_value
 
+    usage_reporting_enabled = parse_bool(os.getenv('USAGE_REPORTING_ENABLED'))
+    if usage_reporting_enabled is not None:
+        config_dict.setdefault('llm', {})
+        config_dict['llm'].setdefault('usage_reporting', {})
+        config_dict['llm']['usage_reporting']['enabled'] = usage_reporting_enabled
+
     # Override articles per run
     articles_per_run = os.getenv('ARTICLES_PER_RUN')
     if articles_per_run:

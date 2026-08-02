@@ -3,7 +3,7 @@ Topic and keyword utilities shared across discovery and publishing.
 """
 
 import re
-from typing import Final
+from typing import Any, Final
 
 _LETTER_PATTERN: Final[re.Pattern[str]] = re.compile(r"[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]")
 
@@ -76,7 +76,7 @@ def sanitize_topic_keywords(
     return sanitized
 
 
-_NLP_CACHE: dict[str, str] = {}
+_NLP_CACHE: dict[str, Any] = {}
 
 
 def extract_named_entities(text: str, spacy_model: str = "de_core_news_sm") -> list[str]:
@@ -98,4 +98,3 @@ def extract_named_entities(text: str, spacy_model: str = "de_core_news_sm") -> l
         return entities
     except Exception:
         return []
-
