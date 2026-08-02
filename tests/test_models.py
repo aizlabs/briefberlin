@@ -3,11 +3,16 @@ from pydantic import ValidationError
 
 from scripts.models import (
     AdaptedArticle,
+    AudioConfig,
     LLMConfig,
     LLMModelsConfig,
     VocabularyItem,
     coerce_vocabulary_items,
 )
+
+
+def test_audio_config_defaults_to_recommended_openai_voice():
+    assert AudioConfig().voice == "marin"
 
 
 def _valid_models() -> LLMModelsConfig:

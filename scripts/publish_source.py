@@ -12,7 +12,7 @@ from scripts.manual_pipeline import parse_author_slug, run_manual_pipeline
 
 STANDARD_AUDIO_ENV = {
     "AUDIO_PROVIDER": "openai",
-    "AUDIO_VOICE": "alloy",
+    "AUDIO_VOICE": "marin",
     "AUDIO_FORMAT": "mp3",
     "AUDIO_PUBLIC_BASE_URL": "https://media.briefberlin.de",
     "AUDIO_S3_BUCKET": "briefberlin-audio-prod",

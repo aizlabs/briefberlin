@@ -50,6 +50,7 @@ def test_main_delegates_to_manual_pipeline_with_audio_levels(mock_run_manual_pip
     assert args.publish_timestamp is None
     assert args.author is None
     assert not hasattr(args, "topic")
+    assert os.environ["AUDIO_VOICE"] == "marin"
 
 
 @patch("scripts.publish_source.run_manual_pipeline")

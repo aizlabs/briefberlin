@@ -77,7 +77,7 @@ audio:
   enabled: false
   provider: openai
   model: gpt-4o-mini-tts-2025-12-15
-  voice: alloy
+  voice: marin
   format: mp3
   output_path: ./output/audio
   include_vocabulary: false

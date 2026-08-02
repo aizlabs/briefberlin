@@ -94,7 +94,7 @@ class AudioPipeline:
             "Synthesizing audio for '%s' with provider=%s voice=%s format=%s",
             article.title,
             self.audio_config.provider,
-            self.audio_config.voice or "alloy",
+            self.audio_config.voice,
             self.audio_config.format,
         )
         try:
@@ -233,7 +233,7 @@ class AudioPipeline:
                 tts_client,
                 input_text=narration,
                 model=self.audio_config.model,
-                voice=self.audio_config.voice or "alloy",
+                voice=self.audio_config.voice,
                 response_format=response_format,
                 destination=audio_path,
             )
@@ -241,7 +241,7 @@ class AudioPipeline:
         response = tts_client.audio.speech.create(
             input=narration,
             model=self.audio_config.model,
-            voice=self.audio_config.voice or "alloy",
+            voice=self.audio_config.voice,
             response_format=response_format,
         )
         response.write_to_file(audio_path)
