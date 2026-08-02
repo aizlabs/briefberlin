@@ -18,7 +18,7 @@ from scripts.audio_script_builder import build_speech_script
 from scripts.config import AppConfig
 from scripts.models import AdaptedArticle, AudioAsset, AudioManifest
 from scripts.openai_speech_stream import (
-    SpeechTokenUsage,
+    SpeechSynthesisResult,
     supports_speech_usage_stream,
     synthesize_speech_sse,
 )
@@ -98,7 +98,7 @@ class AudioPipeline:
             self.audio_config.format,
         )
         try:
-            speech_usage = self._synthesize_audio(article.title, script.narration, audio_path)
+            speech_result = self._synthesize_audio(article.title, script.narration, audio_path)
         except Exception:
             record_direct_model_usage(
                 ModelUsageRecord(
@@ -113,14 +113,14 @@ class AudioPipeline:
                 f"{self.audio_config.model}: speech generation failed before exact usage was returned."
             )
             raise
-        if speech_usage is not None:
+        if speech_result.usage is not None:
             record_direct_model_usage(
                 ModelUsageRecord(
                     provider=self.audio_config.provider or "unknown",
                     model=self.audio_config.model,
                     modality="audio",
-                    input_tokens=speech_usage.input_tokens,
-                    output_tokens=speech_usage.output_tokens,
+                    input_tokens=speech_result.usage.input_tokens,
+                    output_tokens=speech_result.usage.output_tokens,
                     source="openai_speech",
                 )
             )
@@ -135,7 +135,8 @@ class AudioPipeline:
                 )
             )
             add_usage_report_note(
-                f"{self.audio_config.model}: exact speech token usage was not returned."
+                f"{self.audio_config.model}: "
+                f"{speech_result.usage_note or 'exact speech token usage was not returned.'}"
             )
         self.logger.info("Synthesized audio for '%s' at %s", article.title, audio_path)
 
@@ -214,7 +215,7 @@ class AudioPipeline:
         article_title: str,
         narration: str,
         audio_path: Path,
-    ) -> SpeechTokenUsage | None:
+    ) -> SpeechSynthesisResult:
         provider = (self.audio_config.provider or "").strip().lower()
         if provider != "openai":
             self.logger.error(
@@ -226,7 +227,8 @@ class AudioPipeline:
 
         tts_client = self._get_tts_client()
         response_format = self._openai_response_format(self.audio_config.format)
-        if supports_speech_usage_stream(self.audio_config.model):
+        openai_model_configs = self.config.llm.usage_reporting.prices.get("openai", {})
+        if supports_speech_usage_stream(self.audio_config.model, openai_model_configs):
             return synthesize_speech_sse(
                 tts_client,
                 input_text=narration,
@@ -243,7 +245,10 @@ class AudioPipeline:
             response_format=response_format,
         )
         response.write_to_file(audio_path)
-        return None
+        return SpeechSynthesisResult(
+            usage=None,
+            usage_note="the configured speech model does not expose exact usage through SSE.",
+        )
 
     def _upload_audio_file(
         self,

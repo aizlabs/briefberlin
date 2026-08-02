@@ -74,35 +74,63 @@ class RunUsageReport:
         self.default_provider = default_provider.strip().lower()
         self._records: dict[tuple[str, str, str], ModelUsageRecord] = {}
         self._notes: set[str] = set()
+        self._collection_complete = True
         self._lock = Lock()
 
     @property
     def enabled(self) -> bool:
         return self.config.enabled
 
-    def merge_langchain_usage(self, usage_by_model: Mapping[str, Mapping[str, Any]]) -> None:
+    def merge_langchain_usage(self, usage_by_model: Any) -> None:
         """Normalize LangChain's provider-agnostic UsageMetadata mapping."""
-        for model, raw_usage in usage_by_model.items():
-            input_details = _mapping(raw_usage.get("input_token_details"))
-            record = ModelUsageRecord(
-                provider=self.default_provider,
-                model=str(model),
-                modality="text",
-                input_tokens=_non_negative_int(raw_usage.get("input_tokens")),
-                cached_input_tokens=_non_negative_int(input_details.get("cache_read")),
-                cache_write_tokens=_non_negative_int(input_details.get("cache_creation")),
-                output_tokens=_non_negative_int(raw_usage.get("output_tokens")),
-                source="langchain",
+        if not isinstance(usage_by_model, Mapping):
+            self.mark_incomplete(
+                "LangChain returned malformed usage metadata; usage may be incomplete."
             )
+            return
+        for model, raw_usage in usage_by_model.items():
+            try:
+                if not isinstance(raw_usage, Mapping):
+                    raise TypeError("usage metadata must be an object")
+                input_details = _mapping(raw_usage.get("input_token_details"))
+                record = ModelUsageRecord(
+                    provider=self.default_provider,
+                    model=str(model),
+                    modality="text",
+                    input_tokens=_non_negative_int(raw_usage.get("input_tokens")),
+                    cached_input_tokens=_non_negative_int(input_details.get("cache_read")),
+                    cache_write_tokens=_non_negative_int(input_details.get("cache_creation")),
+                    output_tokens=_non_negative_int(raw_usage.get("output_tokens")),
+                    source="langchain",
+                )
+            except (TypeError, ValueError) as exc:
+                self._record_incomplete(
+                    provider=self.default_provider,
+                    model=str(model),
+                    modality="text",
+                    source="langchain",
+                    note=f"{model}: malformed LangChain usage metadata ({exc}).",
+                )
+                continue
             self.record(record)
 
     def record(self, record: ModelUsageRecord) -> None:
         """Add a normalized usage record to this run."""
         if not self.enabled:
             return
-        _validate_record(record)
-        provider = record.provider.strip().lower()
-        model = record.model.strip()
+        try:
+            _validate_record(record)
+            provider = record.provider.strip().lower()
+            model = record.model.strip()
+        except (AttributeError, TypeError, ValueError) as exc:
+            self._record_incomplete(
+                provider=record.provider,
+                model=record.model,
+                modality=record.modality,
+                source=record.source,
+                note=f"Malformed {record.source} usage record could not be normalized ({exc}).",
+            )
+            return
         normalized = ModelUsageRecord(
             provider=provider,
             model=model,
@@ -114,17 +142,46 @@ class RunUsageReport:
             usage_complete=record.usage_complete,
             source=record.source,
         )
-        key = (provider, model, record.modality)
+        self._merge_record(normalized)
+
+    def _record_incomplete(
+        self,
+        *,
+        provider: Any,
+        model: Any,
+        modality: Literal["text", "audio"],
+        source: Literal["langchain", "openai_speech"],
+        note: str,
+    ) -> None:
+        normalized = ModelUsageRecord(
+            provider=str(provider).strip().lower() or self.default_provider or "unknown",
+            model=str(model).strip() or "unknown-model",
+            modality=modality,
+            usage_complete=False,
+            source=source,
+        )
+        self._merge_record(normalized)
+        self.mark_incomplete(note)
+
+    def _merge_record(self, record: ModelUsageRecord) -> None:
+        key = (record.provider, record.model, record.modality)
         with self._lock:
             current = self._records.get(key)
             if current is None:
-                self._records[key] = normalized
+                self._records[key] = record
             else:
-                current.add(normalized)
+                current.add(record)
 
     def add_note(self, note: str) -> None:
         if note:
             with self._lock:
+                self._notes.add(note)
+
+    def mark_incomplete(self, note: str) -> None:
+        """Mark collection incomplete without interrupting the underlying model call."""
+        with self._lock:
+            self._collection_complete = False
+            if note:
                 self._notes.add(note)
 
     def costed_rows(self) -> list[CostedUsage]:
@@ -145,7 +202,7 @@ class RunUsageReport:
             (row.total_cost for row in rows if row.total_cost is not None),
             Decimal(0),
         )
-        complete = all(row.total_cost is not None for row in rows)
+        complete = self._collection_complete and all(row.total_cost is not None for row in rows)
         return {
             "currency": self.config.currency,
             "pricing_as_of": (
@@ -181,7 +238,11 @@ class RunUsageReport:
         rows = self.costed_rows()
         title = "AI usage and estimated cost"
         if not rows:
-            return f"{title}\n\nNo model usage was recorded."
+            empty_report_notes = "\n".join(
+                f"Note: {note}" for note in sorted(self._notes)
+            )
+            suffix = f"\n\n{empty_report_notes}" if empty_report_notes else ""
+            return f"{title}\n\nNo model usage was recorded.{suffix}"
 
         headers = [
             "Provider",
@@ -323,7 +384,12 @@ def collect_run_usage(
             try:
                 yield report
             finally:
-                report.merge_langchain_usage(callback.usage_metadata)
+                try:
+                    report.merge_langchain_usage(callback.usage_metadata)
+                except Exception as exc:
+                    report.mark_incomplete(
+                        f"LangChain usage collection failed ({exc}); usage may be incomplete."
+                    )
     finally:
         _active_report.reset(context_token)
 

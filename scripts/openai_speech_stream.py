@@ -9,8 +9,11 @@ import os
 import tempfile
 from collections.abc import Iterable, Iterator, Mapping
 from dataclasses import dataclass
+from fnmatch import fnmatchcase
 from pathlib import Path
 from typing import Any
+
+from scripts.models import ModelPricingConfig
 
 
 @dataclass(frozen=True)
@@ -22,9 +25,25 @@ class SpeechTokenUsage:
     total_tokens: int
 
 
-def supports_speech_usage_stream(model: str) -> bool:
-    """Return whether the configured OpenAI speech model supports SSE usage events."""
-    return model == "gpt-4o-mini-tts" or model.startswith("gpt-4o-mini-tts-")
+@dataclass(frozen=True)
+class SpeechSynthesisResult:
+    """Generated speech usage plus a best-effort reporting diagnostic."""
+
+    usage: SpeechTokenUsage | None
+    usage_note: str | None = None
+
+
+def supports_speech_usage_stream(
+    model: str,
+    model_configs: Mapping[str, ModelPricingConfig],
+) -> bool:
+    """Return the configured SSE-usage capability for one speech model."""
+    matches = [
+        config
+        for canonical, config in model_configs.items()
+        if canonical == model or any(fnmatchcase(model, alias) for alias in config.aliases)
+    ]
+    return len(matches) == 1 and matches[0].supports_sse_usage
 
 
 def synthesize_speech_sse(
@@ -35,12 +54,13 @@ def synthesize_speech_sse(
     voice: str,
     response_format: str,
     destination: Path,
-) -> SpeechTokenUsage | None:
+) -> SpeechSynthesisResult:
     """Stream speech audio atomically and return exact usage from the done event."""
     destination.parent.mkdir(parents=True, exist_ok=True)
     temp_path: Path | None = None
     done_seen = False
     usage: SpeechTokenUsage | None = None
+    usage_note: str | None = None
 
     try:
         with tempfile.NamedTemporaryFile(
@@ -69,7 +89,10 @@ def synthesize_speech_sse(
                         if done_seen:
                             raise ValueError("OpenAI speech stream emitted duplicate completion")
                         done_seen = True
-                        usage = _parse_usage(event.get("usage"))
+                        try:
+                            usage = _parse_usage(event.get("usage"))
+                        except (TypeError, ValueError) as exc:
+                            usage_note = f"exact speech token usage could not be parsed: {exc}"
                     elif event_type == "error":
                         raise RuntimeError(_format_error_event(event))
 
@@ -80,7 +103,7 @@ def synthesize_speech_sse(
 
         os.replace(temp_path, destination)
         temp_path = None
-        return usage
+        return SpeechSynthesisResult(usage=usage, usage_note=usage_note)
     finally:
         if temp_path is not None:
             temp_path.unlink(missing_ok=True)

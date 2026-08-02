@@ -214,19 +214,21 @@ def _run_post_audio(args: argparse.Namespace, config: AppConfig) -> int:
 
 def main(argv: Sequence[str] | None = None) -> int:
     report: RunUsageReport | None = None
+    failed = False
     try:
         args = parse_args(argv)
         config = load_config(args.environment)
         with collect_run_usage(config.llm.usage_reporting, config.llm.provider) as report:
             return _run_post_audio(args, config)
     except Exception as exc:
+        failed = True
         print(f"Post audio generation failed: {exc}", file=sys.stderr)
         return 1
     finally:
         if report is not None:
             rendered_report = report.render_ascii()
             if rendered_report:
-                print(f"\n{rendered_report}")
+                print(f"\n{rendered_report}", file=sys.stderr if failed else sys.stdout)
 
 
 if __name__ == "__main__":

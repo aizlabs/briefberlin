@@ -380,7 +380,7 @@ class LLMModelsConfig(BaseModel):
 
 
 class ModelPricingConfig(BaseModel):
-    """Per-million-token rates for one canonical provider model."""
+    """Per-million-token rates and reporting capabilities for one provider model."""
 
     aliases: List[str] = Field(
         default_factory=list,
@@ -389,6 +389,10 @@ class ModelPricingConfig(BaseModel):
     modality: Literal["text", "audio"] = Field(
         default="text",
         description="Output modality used to label the usage report",
+    )
+    supports_sse_usage: bool = Field(
+        default=False,
+        description="Whether speech requests can stream exact token usage through SSE",
     )
     input_per_million: Decimal = Field(..., ge=0)
     cached_input_per_million: Optional[Decimal] = Field(default=None, ge=0)

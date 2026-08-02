@@ -1,9 +1,11 @@
 import base64
+import json
 from pathlib import Path
 from types import SimpleNamespace
 
 import pytest
 
+from scripts.models import ModelPricingConfig
 from scripts.openai_speech_stream import (
     SpeechTokenUsage,
     iter_sse_json_events,
@@ -64,7 +66,7 @@ def test_speech_sse_writes_audio_and_returns_exact_usage(tmp_path: Path):
     client, create = _client(lines)
     destination = tmp_path / "article.mp3"
 
-    usage = synthesize_speech_sse(
+    result = synthesize_speech_sse(
         client,
         input_text="Hallo Berlin",
         model="gpt-4o-mini-tts",
@@ -74,7 +76,8 @@ def test_speech_sse_writes_audio_and_returns_exact_usage(tmp_path: Path):
     )
 
     assert destination.read_bytes() == b"audio-bytes"
-    assert usage == SpeechTokenUsage(input_tokens=12, output_tokens=34, total_tokens=46)
+    assert result.usage == SpeechTokenUsage(input_tokens=12, output_tokens=34, total_tokens=46)
+    assert result.usage_note is None
     assert create.kwargs == {
         "input": "Hallo Berlin",
         "model": "gpt-4o-mini-tts",
@@ -103,23 +106,37 @@ def test_speech_sse_does_not_replace_existing_file_when_stream_is_incomplete(tmp
     assert list(tmp_path.glob("*.tmp")) == []
 
 
-def test_speech_sse_rejects_inconsistent_usage(tmp_path: Path):
+@pytest.mark.parametrize(
+    "raw_usage",
+    [
+        {"input_tokens": 1, "output_tokens": 2, "total_tokens": 4},
+        {"input_tokens": 1},
+        ["unexpected", "shape"],
+    ],
+)
+def test_speech_sse_preserves_audio_when_usage_is_malformed(tmp_path: Path, raw_usage):
+    encoded_audio = base64.b64encode(b"complete-audio").decode("ascii")
     client, _create = _client(
-        _event(
-            '{"type":"speech.audio.done","usage":'
-            '{"input_tokens":1,"output_tokens":2,"total_tokens":4}}'
-        )
+        [
+            *_event(json.dumps({"type": "speech.audio.delta", "audio": encoded_audio})),
+            *_event(json.dumps({"type": "speech.audio.done", "usage": raw_usage})),
+        ]
+    )
+    destination = tmp_path / "article.mp3"
+
+    result = synthesize_speech_sse(
+        client,
+        input_text="Hallo",
+        model="gpt-4o-mini-tts",
+        voice="alloy",
+        response_format="mp3",
+        destination=destination,
     )
 
-    with pytest.raises(ValueError, match="do not match"):
-        synthesize_speech_sse(
-            client,
-            input_text="Hallo",
-            model="gpt-4o-mini-tts",
-            voice="alloy",
-            response_format="mp3",
-            destination=tmp_path / "article.mp3",
-        )
+    assert destination.read_bytes() == b"complete-audio"
+    assert result.usage is None
+    assert result.usage_note is not None
+    assert "could not be parsed" in result.usage_note
 
 
 def test_sse_parser_uses_event_field_and_supports_final_unterminated_frame():
@@ -143,6 +160,21 @@ def test_sse_parser_uses_event_field_and_supports_final_unterminated_frame():
 
 
 def test_supports_speech_usage_stream_only_for_compatible_model_family():
-    assert supports_speech_usage_stream("gpt-4o-mini-tts")
-    assert supports_speech_usage_stream("gpt-4o-mini-tts-2025-12-15")
-    assert not supports_speech_usage_stream("tts-1")
+    model_configs = {
+        "gpt-4o-mini-tts": ModelPricingConfig(
+            aliases=["gpt-4o-mini-tts-*"],
+            modality="audio",
+            supports_sse_usage=True,
+            input_per_million="0.60",
+            output_per_million="12.00",
+        ),
+        "tts-1": ModelPricingConfig(
+            modality="audio",
+            input_per_million="15.00",
+            output_per_million="15.00",
+        ),
+    }
+
+    assert supports_speech_usage_stream("gpt-4o-mini-tts", model_configs)
+    assert supports_speech_usage_stream("gpt-4o-mini-tts-2025-12-15", model_configs)
+    assert not supports_speech_usage_stream("tts-1", model_configs)

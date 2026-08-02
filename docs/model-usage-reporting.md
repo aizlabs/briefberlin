@@ -14,11 +14,17 @@ The report is emitted from a `finally` block, so completed calls remain visible 
 step fails. Rows are grouped by provider, exact returned model name, and modality. Cached input is a
 subset of input tokens and is charged at its configured cached-input rate.
 
+Usage collection is best-effort. Malformed provider or LangChain usage metadata creates an incomplete
+row and diagnostic note; it does not fail an otherwise successful model call or discard generated
+audio.
+
 ## Pricing
 
 Rates live under `llm.usage_reporting.prices` in `config/base.yaml`. They are decimal USD prices per
 one million tokens. A canonical model may declare `aliases` using shell-style patterns so dated model
 identifiers returned by providers use the intended price without being relabeled in the report.
+Speech models that support exact SSE usage declare `supports_sse_usage: true` in the same model entry,
+so routing and pricing aliases share one source of truth.
 
 Update both the rates and `pricing_as_of` after checking the provider's official pricing page. Avoid
 broad aliases that could match models with different prices. If a returned model has no matching rate,

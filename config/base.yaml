@@ -107,7 +107,7 @@ llm:
     prices:
       openai:
         gpt-5.5:
-          aliases: ["gpt-5.5-????-??-??"]
+          aliases: ["gpt-5.5-2026-04-23"]
           modality: text
           input_per_million: 5.00
           cached_input_per_million: 0.50
@@ -121,6 +121,7 @@ llm:
         gpt-4o-mini-tts:
           aliases: ["gpt-4o-mini-tts-*"]
           modality: audio
+          supports_sse_usage: true
           input_per_million: 0.60
           output_per_million: 12.00
 

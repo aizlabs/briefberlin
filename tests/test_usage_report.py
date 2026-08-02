@@ -1,6 +1,7 @@
+from contextlib import contextmanager
 from decimal import Decimal
+from types import SimpleNamespace
 
-import pytest
 from langchain_core.language_models.fake_chat_models import FakeMessagesListChatModel
 from langchain_core.messages import AIMessage
 
@@ -137,19 +138,58 @@ def test_report_marks_missing_or_incomplete_costs_as_unknown():
     assert "N/A" in report.render_ascii()
 
 
-def test_report_rejects_invalid_token_breakdown():
+def test_report_degrades_invalid_token_breakdown_to_incomplete_note():
     report = RunUsageReport(_usage_config(), "openai")
 
-    with pytest.raises(ValueError, match="cannot exceed input"):
-        report.record(
-            ModelUsageRecord(
-                provider="openai",
-                model="gpt-text",
-                modality="text",
-                input_tokens=10,
-                cached_input_tokens=11,
-            )
+    report.record(
+        ModelUsageRecord(
+            provider="openai",
+            model="gpt-text",
+            modality="text",
+            input_tokens=10,
+            cached_input_tokens=11,
         )
+    )
+
+    payload = report.as_dict()
+    [usage] = payload["models"]
+    assert usage["usage_complete"] is False
+    assert usage["total_cost"] is None
+    assert any("Malformed langchain usage record" in note for note in payload["notes"])
+
+
+def test_collect_run_usage_does_not_raise_on_malformed_langchain_metadata(monkeypatch):
+    @contextmanager
+    def malformed_callback():
+        yield SimpleNamespace(
+            usage_metadata={
+                "gpt-text": {
+                    "input_tokens": "not-an-integer",
+                    "output_tokens": 2,
+                }
+            }
+        )
+
+    monkeypatch.setattr("scripts.usage_report.get_usage_metadata_callback", malformed_callback)
+
+    with collect_run_usage(_usage_config(), "openai") as report:
+        pass
+
+    payload = report.as_dict()
+    [usage] = payload["models"]
+    assert usage["usage_complete"] is False
+    assert any("malformed LangChain usage metadata" in note for note in payload["notes"])
+
+
+def test_report_marks_non_mapping_langchain_metadata_incomplete_without_raising():
+    report = RunUsageReport(_usage_config(), "openai")
+
+    report.merge_langchain_usage(["unexpected", "shape"])
+
+    payload = report.as_dict()
+    assert payload["complete"] is False
+    assert payload["models"] == []
+    assert "malformed usage metadata" in report.render_ascii()
 
 
 def test_ambiguous_pricing_is_reported_as_unknown_instead_of_breaking_the_job():
