@@ -324,21 +324,23 @@ class RunUsageReport:
         cache_write = min(usage.cache_write_tokens, max(usage.input_tokens - cached, 0))
         regular = max(usage.input_tokens - cached - cache_write, 0)
         cached_rate = pricing.cached_input_per_million
-        if cached and cached_rate is None:
+        if cached_rate is None:
             cached_rate = pricing.input_per_million
+        if cached and pricing.cached_input_per_million is None:
             self.add_note(
                 f"{usage.model}: cached input used the standard input rate because no cache rate was configured."
             )
         cache_write_rate = pricing.cache_write_per_million
-        if cache_write and cache_write_rate is None:
+        if cache_write_rate is None:
             cache_write_rate = pricing.input_per_million
+        if cache_write and pricing.cache_write_per_million is None:
             self.add_note(
                 f"{usage.model}: cache creation used the standard input rate because no cache-write rate was configured."
             )
         input_cost = (
             Decimal(regular) * pricing.input_per_million
-            + Decimal(cached) * (cached_rate or pricing.input_per_million)
-            + Decimal(cache_write) * (cache_write_rate or pricing.input_per_million)
+            + Decimal(cached) * cached_rate
+            + Decimal(cache_write) * cache_write_rate
         ) / MILLION
         output_cost = Decimal(usage.output_tokens) * pricing.output_per_million / MILLION
         return CostedUsage(usage, pricing_name, input_cost, output_cost)

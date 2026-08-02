@@ -8,15 +8,13 @@ Regenerates articles that fail, with feedback for improvement.
 import logging
 from typing import Dict, List, Optional, Tuple, cast
 
-from langchain_anthropic import ChatAnthropic
-from langchain_core.language_models.chat_models import BaseChatModel
 from langchain_core.output_parsers import PydanticOutputParser
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_openai import ChatOpenAI
-from pydantic import BaseModel, Field, SecretStr
+from pydantic import BaseModel, Field
 
 from scripts import prompts
 from scripts.config import AppConfig
+from scripts.llm_factory import create_chat_model
 from scripts.models import AdaptedArticle, QualityResult, SourceArticle, Topic
 
 
@@ -58,40 +56,18 @@ class QualityGate:
     def _init_llm_client(self):
         """Initialize LLM client (Anthropic or OpenAI) based on config"""
         provider = self.llm_config['provider']
-
-        if provider == 'anthropic':
-            api_key = self.llm_config.get('anthropic_api_key')
-            if not api_key:
-                raise ValueError("Missing ANTHROPIC_API_KEY in config/environment")
-
-            self.llm_client: BaseChatModel = ChatAnthropic(
-                api_key=SecretStr(api_key),
-                model_name=self.llm_config['models']['quality_check'],
-                max_tokens_to_sample=self.llm_config.get('max_tokens', 4096),
-                temperature=self.quality_temperature,
-                timeout=None,
-                stop=None,
-            )
-            self.logger.info("Initialized Anthropic client for quality checks")
-
-        elif provider == 'openai':
-            api_key = self.llm_config.get('openai_api_key')
-            base_url = self.llm_config.get('base_url')
-            if not api_key and not base_url:
-                raise ValueError("Missing OPENAI_API_KEY in config/environment")
-
-            self.llm_client = ChatOpenAI(
-                api_key=SecretStr(api_key or "local-api-key"),
-                base_url=base_url,
-                model=self.llm_config['models']['quality_check'],
-                max_completion_tokens=self.llm_config.get('max_tokens', 4096),
-                temperature=self.quality_temperature,
-                model_kwargs={'response_format': {'type': 'json_object'}},
-            )
-            self.logger.info("Initialized OpenAI client for quality checks")
-
-        else:
-            raise ValueError(f"Unknown LLM provider: {provider}")
+        provider_options = (
+            {'model_kwargs': {'response_format': {'type': 'json_object'}}}
+            if provider == 'openai'
+            else None
+        )
+        self.llm_client = create_chat_model(
+            self.llm_config,
+            self.llm_config['models']['quality_check'],
+            self.quality_temperature,
+            provider_options=provider_options,
+        )
+        self.logger.info("Initialized %s client for quality checks", provider.capitalize())
 
     def _init_judge_chain(self):
         """Build a LangChain pipeline that enforces structured JSON responses."""

@@ -69,6 +69,28 @@ def test_report_aggregates_snapshots_and_applies_cached_input_pricing():
     assert row.total_cost == Decimal("0.00192")
 
 
+def test_report_preserves_explicit_zero_cache_rates():
+    config = _usage_config()
+    pricing = config.prices["openai"]["gpt-text"]
+    pricing.cached_input_per_million = Decimal(0)
+    pricing.cache_write_per_million = Decimal(0)
+    report = RunUsageReport(config, "openai")
+
+    report.record(
+        ModelUsageRecord(
+            provider="openai",
+            model="gpt-text",
+            modality="text",
+            input_tokens=200,
+            cached_input_tokens=100,
+            cache_write_tokens=100,
+        )
+    )
+
+    [row] = report.costed_rows()
+    assert row.input_cost == Decimal(0)
+
+
 def test_report_merges_langchain_and_direct_speech_usage_in_one_table():
     fake_model = FakeMessagesListChatModel(
         responses=[
