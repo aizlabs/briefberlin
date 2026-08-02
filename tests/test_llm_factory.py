@@ -39,6 +39,7 @@ def test_create_chat_model_passes_openai_base_url(monkeypatch):
         },
         "local-model",
         0.1,
+        provider_options={"model_kwargs": {"response_format": {"type": "json_object"}}},
     )
 
     assert result == "chat-model"
@@ -48,6 +49,32 @@ def test_create_chat_model_passes_openai_base_url(monkeypatch):
         model="local-model",
         max_completion_tokens=2048,
         temperature=0.1,
+        model_kwargs={"response_format": {"type": "json_object"}},
+    )
+
+
+def test_create_chat_model_constructs_anthropic_with_shared_sdk_options(monkeypatch):
+    chat_anthropic = MagicMock(return_value="chat-model")
+    monkeypatch.setattr("scripts.llm_factory.ChatAnthropic", chat_anthropic)
+
+    result = create_chat_model(
+        {
+            "provider": "anthropic",
+            "anthropic_api_key": "anthropic-key",
+            "max_tokens": 3072,
+        },
+        "claude-model",
+        0.2,
+    )
+
+    assert result == "chat-model"
+    chat_anthropic.assert_called_once_with(
+        api_key=SecretStr("anthropic-key"),
+        model_name="claude-model",
+        max_tokens_to_sample=3072,
+        temperature=0.2,
+        timeout=None,
+        stop=None,
     )
 
 

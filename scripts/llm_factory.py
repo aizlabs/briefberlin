@@ -7,7 +7,7 @@ level adapter, quality gate) can share configuration and easily support
 multiple providers (OpenAI, Anthropic, etc.).
 """
 
-from typing import Any, Dict, cast
+from typing import Any, Dict, Mapping, cast
 
 from langchain_anthropic import ChatAnthropic
 from langchain_core.language_models.chat_models import BaseChatModel
@@ -16,7 +16,13 @@ from langchain_openai import ChatOpenAI
 from pydantic import SecretStr
 
 
-def create_chat_model(llm_config: Dict[str, Any], model_name: str, temperature: float) -> BaseChatModel:
+def create_chat_model(
+    llm_config: Dict[str, Any],
+    model_name: str,
+    temperature: float,
+    *,
+    provider_options: Mapping[str, Any] | None = None,
+) -> BaseChatModel:
     """
     Create a LangChain chat model instance based on provider.
 
@@ -24,11 +30,13 @@ def create_chat_model(llm_config: Dict[str, Any], model_name: str, temperature: 
         llm_config: LLM configuration dict (typically config.llm.model_dump()).
         model_name: Model name to use (generation/adaptation/quality).
         temperature: Sampling temperature.
+        provider_options: Extra constructor options for the selected LangChain provider.
 
     Returns:
         A LangChain chat model instance.
     """
     provider = llm_config["provider"]
+    extra_options = dict(provider_options or {})
 
     if provider == "anthropic":
         api_key = llm_config.get("anthropic_api_key")
@@ -42,6 +50,7 @@ def create_chat_model(llm_config: Dict[str, Any], model_name: str, temperature: 
             temperature=temperature,
             timeout=None,
             stop=None,
+            **extra_options,
         )
 
     if provider == "openai":
@@ -57,6 +66,7 @@ def create_chat_model(llm_config: Dict[str, Any], model_name: str, temperature: 
             model=model_name,
             max_completion_tokens=llm_config.get("max_tokens", 4096),
             temperature=temperature,
+            **extra_options,
         )
 
     # Future providers (e.g., mistral, qwen) can be added here

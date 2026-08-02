@@ -106,45 +106,67 @@ def test_call_llm_passes_prompt_and_format_instructions(quality_gate):
     assert result == response
 
 
-def test_init_llm_client_uses_quality_temperature(monkeypatch, base_config, mock_logger):
-    captured_kwargs = {}
-
-    class DummyOpenAI:
-        def __init__(self, *args, **kwargs):
-            captured_kwargs.update(kwargs)
-
+def test_init_llm_client_delegates_openai_with_quality_options(
+    monkeypatch,
+    base_config,
+    mock_logger,
+):
+    create_chat_model = MagicMock(return_value=MagicMock())
     monkeypatch.setattr(QualityGate, "_init_judge_chain", lambda self: None)
-    monkeypatch.setattr("scripts.quality_gate.ChatOpenAI", DummyOpenAI)
+    monkeypatch.setattr("scripts.quality_gate.create_chat_model", create_chat_model)
 
     gate = QualityGate(base_config, mock_logger)
 
     assert gate.quality_temperature == base_config.llm.quality_temperature
-    assert captured_kwargs["temperature"] == base_config.llm.quality_temperature
-    assert captured_kwargs["model_kwargs"] == {"response_format": {"type": "json_object"}}
+    create_chat_model.assert_called_once_with(
+        gate.llm_config,
+        base_config.llm.models.quality_check,
+        base_config.llm.quality_temperature,
+        provider_options={"model_kwargs": {"response_format": {"type": "json_object"}}},
+    )
 
 
-def test_init_llm_client_passes_openai_base_url_without_api_key(
+def test_init_llm_client_delegates_openai_base_url_without_api_key(
     monkeypatch, base_config, mock_logger
 ):
-    captured_kwargs = {}
-
-    class DummyOpenAI:
-        def __init__(self, *args, **kwargs):
-            captured_kwargs.update(kwargs)
-
     base_config.llm.openai_api_key = None
     base_config.llm.base_url = "http://localhost:11434/v1"
     base_config.llm.models.quality_check = "local-quality"
 
+    create_chat_model = MagicMock(return_value=MagicMock())
     monkeypatch.setattr(QualityGate, "_init_judge_chain", lambda self: None)
-    monkeypatch.setattr("scripts.quality_gate.ChatOpenAI", DummyOpenAI)
+    monkeypatch.setattr("scripts.quality_gate.create_chat_model", create_chat_model)
 
-    QualityGate(base_config, mock_logger)
+    gate = QualityGate(base_config, mock_logger)
 
-    assert captured_kwargs["api_key"].get_secret_value() == "local-api-key"
-    assert captured_kwargs["base_url"] == "http://localhost:11434/v1"
-    assert captured_kwargs["model"] == "local-quality"
-    assert captured_kwargs["model_kwargs"] == {"response_format": {"type": "json_object"}}
+    assert gate.llm_config["base_url"] == "http://localhost:11434/v1"
+    create_chat_model.assert_called_once_with(
+        gate.llm_config,
+        "local-quality",
+        base_config.llm.quality_temperature,
+        provider_options={"model_kwargs": {"response_format": {"type": "json_object"}}},
+    )
+
+
+def test_init_llm_client_delegates_anthropic_without_openai_options(
+    monkeypatch,
+    base_config,
+    mock_logger,
+):
+    base_config.llm.provider = "anthropic"
+    base_config.llm.anthropic_api_key = "anthropic-key"
+    create_chat_model = MagicMock(return_value=MagicMock())
+    monkeypatch.setattr(QualityGate, "_init_judge_chain", lambda self: None)
+    monkeypatch.setattr("scripts.quality_gate.create_chat_model", create_chat_model)
+
+    gate = QualityGate(base_config, mock_logger)
+
+    create_chat_model.assert_called_once_with(
+        gate.llm_config,
+        base_config.llm.models.quality_check,
+        base_config.llm.quality_temperature,
+        provider_options=None,
+    )
 
 
 def test_evaluate_returns_model_dump(monkeypatch, quality_gate, sample_a2_article):
