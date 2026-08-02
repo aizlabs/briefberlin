@@ -301,7 +301,7 @@ Use these local `.env` values when audio delivery is ready:
 AUDIO_ENABLED=true
 AUDIO_UPLOAD_ENABLED=true
 AUDIO_PROVIDER=openai
-AUDIO_VOICE=alloy
+AUDIO_VOICE=marin
 AUDIO_FORMAT=mp3
 AUDIO_PUBLIC_BASE_URL=https://media.briefberlin.de
 AUDIO_S3_BUCKET=briefberlin-audio-prod
@@ -341,7 +341,7 @@ the post-audio command:
 uv run briefberlin-audio-post output/_posts/YYYY-MM-DD-HHMMSS-slug-level.md \
   --upload \
   --provider openai \
-  --voice alloy \
+  --voice marin \
   --format mp3 \
   --public-base-url https://media.briefberlin.de \
   --s3-bucket briefberlin-audio-prod \

@@ -494,7 +494,7 @@ class AudioConfig(BaseModel):
         default="gpt-4o-mini-tts-2025-12-15",
         description="TTS model identifier",
     )
-    voice: Optional[str] = Field(default=None, description="Voice identifier")
+    voice: str = Field(default="marin", min_length=1, description="Voice identifier")
     format: str = Field(default="mp3", pattern="^(mp3|m4a|wav)$", description="Primary output format")
     output_path: str = Field(default="./output/audio", description="Local working directory for audio files")
     include_vocabulary: bool = Field(
