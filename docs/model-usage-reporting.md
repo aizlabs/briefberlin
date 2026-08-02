@@ -7,6 +7,9 @@ the end of each run. One ASCII table combines:
 - direct OpenAI speech usage collected from `speech.audio.done` SSE events for
   `gpt-4o-mini-tts` and its dated snapshots.
 
+Audio generation defaults to OpenAI's recommended current snapshot,
+`gpt-4o-mini-tts-2025-12-15`. Set `AUDIO_MODEL` to override it.
+
 The report is emitted from a `finally` block, so completed calls remain visible when a later pipeline
 step fails. Rows are grouped by provider, exact returned model name, and modality. Cached input is a
 subset of input tokens and is charged at its configured cached-input rate.

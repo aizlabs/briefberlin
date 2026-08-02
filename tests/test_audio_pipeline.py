@@ -27,7 +27,7 @@ def test_audio_pipeline_registers_exact_sse_usage_in_active_run(
     base_config.audio.enabled = True
     base_config.audio.output_path = str(tmp_path / "audio")
     base_config.audio.provider = "openai"
-    base_config.audio.model = "gpt-4o-mini-tts"
+    base_config.audio.model = "gpt-4o-mini-tts-2025-12-15"
     base_config.audio.voice = "alloy"
     mock_synthesize_speech_sse.return_value = SpeechTokenUsage(
         input_tokens=12,
@@ -43,7 +43,7 @@ def test_audio_pipeline_registers_exact_sse_usage_in_active_run(
         )
 
     [usage] = report.as_dict()["models"]
-    assert usage["model"] == "gpt-4o-mini-tts"
+    assert usage["model"] == "gpt-4o-mini-tts-2025-12-15"
     assert usage["modality"] == "audio"
     assert usage["input_tokens"] == 12
     assert usage["output_tokens"] == 34
