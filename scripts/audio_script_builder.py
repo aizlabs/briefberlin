@@ -5,9 +5,15 @@ Build provider-neutral narration scripts from approved articles.
 from __future__ import annotations
 
 import re
-from typing import List
+from typing import List, Literal
 
-from scripts.models import AdaptedArticle, SpeechScript, VocabularyItem, coerce_vocabulary_items
+from scripts.models import (
+    AdaptedArticle,
+    SpeechBlock,
+    SpeechScript,
+    VocabularyItem,
+    coerce_vocabulary_items,
+)
 
 _EMPHASIS_PATTERN = re.compile(r"\*\*(.+?)\*\*")
 
@@ -43,12 +49,19 @@ def build_speech_script(
     paragraphs = [paragraph.strip() for paragraph in article.content.split("\n\n") if paragraph.strip()]
     normalized_summary = _normalized_spoken_text(article.summary)
     normalized_body = _normalized_spoken_text("\n\n".join(paragraphs))
-    intro = article.title.strip()
+    block_values: list[
+        tuple[
+            str,
+            Literal["title", "summary", "body", "vocabulary", "closing"],
+            str,
+        ]
+    ] = [("title", "title", article.title.strip())]
     if normalized_summary and not normalized_body.startswith(normalized_summary):
-        intro = f"{intro}. {article.summary}".strip()
-
-    sections: List[str] = [intro]
-    sections.extend(_strip_markdown(paragraph) for paragraph in paragraphs)
+        block_values.append(("summary", "summary", _strip_markdown(article.summary)))
+    block_values.extend(
+        (f"body-{index}", "body", _strip_markdown(paragraph))
+        for index, paragraph in enumerate(paragraphs)
+    )
 
     if vocabulary_included:
         vocabulary_lines = [
@@ -59,16 +72,38 @@ def build_speech_script(
             )
             for item in vocabulary_items
         ]
-        sections.append(
-            f"{glossary_heading}. " + " ".join(_strip_markdown(line) for line in vocabulary_lines)
+        block_values.append(
+            (
+                "vocabulary",
+                "vocabulary",
+                f"{glossary_heading}. "
+                + " ".join(_strip_markdown(line) for line in vocabulary_lines),
+            )
         )
 
-    sections.append("Ende des Artikels.")
-    narration = "\n\n".join(section for section in sections if section)
+    block_values.append(("closing", "closing", "Ende des Artikels."))
+    sections: List[str] = [text for _block_id, _kind, text in block_values if text]
+    narration = "\n\n".join(sections)
+    blocks: list[SpeechBlock] = []
+    cursor = 0
+    for block_id, kind, text in block_values:
+        if not text:
+            continue
+        blocks.append(
+            SpeechBlock(
+                id=block_id,
+                kind=kind,
+                text=text,
+                text_start=cursor,
+                text_end=cursor + len(text),
+            )
+        )
+        cursor += len(text) + 2
 
     return SpeechScript(
         title=article.title,
         sections=sections,
+        blocks=blocks,
         narration=narration,
         includes_vocabulary=vocabulary_included,
     )

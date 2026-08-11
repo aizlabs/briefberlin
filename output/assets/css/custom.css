@@ -1031,6 +1031,35 @@
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.14);
 }
 
+.article-audio-word {
+  border-radius: 0.2em;
+  transition: background-color 90ms linear, box-shadow 90ms linear;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.article-audio-word.is-active-context {
+  background: rgba(255, 211, 77, 0.2);
+  box-shadow: 0 0 0 0.08em rgba(255, 211, 77, 0.2);
+}
+
+.article-audio-word.is-active-word {
+  background: rgba(255, 193, 7, 0.62);
+  box-shadow: 0 0 0 0.12em rgba(255, 193, 7, 0.36);
+}
+
+.is-active-audio-paragraph {
+  background: rgba(255, 211, 77, 0.12);
+  box-shadow: 0 0 0 0.35em rgba(255, 211, 77, 0.12);
+  border-radius: 0.2em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .article-audio-word {
+    transition: none;
+  }
+}
+
 @media (max-width: 760px) {
   .article-audio.is-enhanced .article-audio__player {
     column-gap: 0.65rem;

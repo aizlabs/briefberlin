@@ -19,6 +19,21 @@ def test_post_layout_does_not_render_audio_voice_label():
     assert "Descargar audio" not in layout
     assert "Voz:" not in layout
     assert "page.audio.voice" not in layout
+    assert "data-timings-url" in layout
+    assert "data-highlight-context" in layout
+
+
+def test_audio_player_supports_optional_synchronized_highlighting():
+    script = Path("output/assets/js/audio-player.js").read_text(encoding="utf-8")
+    styles = Path("output/assets/css/custom.css").read_text(encoding="utf-8")
+
+    assert "initTextHighlighting" in script
+    assert "root.dataset.timingsUrl" in script
+    assert 'root.dataset.highlightContext === "paragraph"' in script
+    assert "article-audio-word" in script
+    assert ".article-audio-word.is-active-context" in styles
+    assert ".article-audio-word.is-active-word" in styles
+    assert ".is-active-audio-paragraph" in styles
 
 
 def test_head_includes_interactive_glossary_script():

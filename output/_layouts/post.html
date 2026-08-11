@@ -54,7 +54,12 @@ layout: default
         </aside>
       {% endif %}
       {% if page.audio and page.audio.url %}
-        <section class="article-audio" aria-label="Artikel-Audio">
+        <section
+          class="article-audio"
+          aria-label="Artikel-Audio"
+          {% if page.audio.timings_url %}data-timings-url="{{ page.audio.timings_url | escape }}"{% endif %}
+          data-highlight-context="{{ page.audio.highlight_context | default: 'sentence' | escape }}"
+        >
           <audio controls preload="metadata" class="article-audio__native">
             <source src="{{ page.audio.url }}" type="{{ page.audio.mime_type | default: 'audio/mpeg' }}">
             Dein Browser unterstützt die Audiowiedergabe nicht.

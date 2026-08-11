@@ -11,8 +11,12 @@ from scripts.models import (
 )
 
 
-def test_audio_config_defaults_to_recommended_openai_voice():
-    assert AudioConfig().voice == "marin"
+def test_audio_config_defaults_to_recommended_elevenlabs_voice():
+    config = AudioConfig()
+
+    assert config.provider == "elevenlabs"
+    assert config.resolved_model() == "eleven_multilingual_v2"
+    assert config.resolved_voice() == "OYTbf65OHHFELVut7v2H"
 
 
 def _valid_models() -> LLMModelsConfig:

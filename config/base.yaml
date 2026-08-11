@@ -75,9 +75,7 @@ language:
 # Audio preparation (website first; Telegram and podcast later)
 audio:
   enabled: false
-  provider: openai
-  model: gpt-4o-mini-tts-2025-12-15
-  voice: marin
+  provider: elevenlabs
   format: mp3
   output_path: ./output/audio
   include_vocabulary: false
@@ -89,6 +87,16 @@ audio:
     prefix: articles
   website:
     enabled: true
+    highlighting_enabled: true
+    highlight_context: sentence
+  providers:
+    openai:
+      model: gpt-4o-mini-tts-2025-12-15
+      voice: marin
+    elevenlabs:
+      model: eleven_multilingual_v2
+      voice: OYTbf65OHHFELVut7v2H # Hope: bright, upbeat, multilingual
+      output_format: mp3_44100_128
 
 # LLM configuration
 llm:

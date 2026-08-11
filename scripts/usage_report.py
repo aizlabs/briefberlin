@@ -30,7 +30,7 @@ class ModelUsageRecord:
     cache_write_tokens: int = 0
     output_tokens: int = 0
     usage_complete: bool = True
-    source: Literal["langchain", "openai_speech"] = "langchain"
+    source: Literal["langchain", "openai_speech", "elevenlabs_speech"] = "langchain"
 
     @property
     def total_tokens(self) -> int:
@@ -150,7 +150,7 @@ class RunUsageReport:
         provider: Any,
         model: Any,
         modality: Literal["text", "audio"],
-        source: Literal["langchain", "openai_speech"],
+        source: Literal["langchain", "openai_speech", "elevenlabs_speech"],
         note: str,
     ) -> None:
         normalized = ModelUsageRecord(

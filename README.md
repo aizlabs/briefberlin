@@ -49,9 +49,15 @@ manual pipeline:
 AUDIO_ENABLED=true uv run briefberlin-manual --level A2 --level B1 private-input/source-1.source.txt
 ```
 
-This requires `OPENAI_API_KEY`. Local audio files are written under `output/audio/` and must remain
+The default ElevenLabs provider requires `ELEVENLABS_API_KEY`; select OpenAI with
+`AUDIO_PROVIDER=openai` to use `OPENAI_API_KEY` instead. Local audio files are written under
+`output/audio/` and must remain
 uncommitted. To publish playable website audio in post front matter, also enable upload and configure
 the audio delivery variables documented in `docs/website-audio-checklist.md`.
+
+ElevenLabs publishes native word timings beside the audio. The player highlights the active word
+and, by default, its sentence. Set `AUDIO_HIGHLIGHT_CONTEXT=paragraph` to evaluate the softer
+paragraph treatment. Providers without timings still produce the ordinary audio player.
 
 Model-calling commands print a run-level ASCII table with token usage by model and estimated USD
 cost. The table combines LangChain text usage with exact OpenAI speech usage when the configured

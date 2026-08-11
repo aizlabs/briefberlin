@@ -373,6 +373,9 @@ def test_publisher_includes_audio_frontmatter_when_public_url_exists(
                 voice='newsreader',
                 format='mp3',
                 mime_type='audio/mpeg',
+                timings_url='https://media.briefberlin.de/articles/2024/01/test/article.timings.json',
+                timing_granularity='word',
+                highlight_context='sentence',
             )
         }
     )
@@ -385,6 +388,9 @@ def test_publisher_includes_audio_frontmatter_when_public_url_exists(
     assert 'url: "https://media.briefberlin.de/articles/2024/01/test/article.mp3"' in markdown
     assert 'provider: "elevenlabs"' in markdown
     assert 'voice: "newsreader"' in markdown
+    assert 'timings_url: "https://media.briefberlin.de/articles/2024/01/test/article.timings.json"' in markdown
+    assert 'timing_granularity: "word"' in markdown
+    assert 'highlight_context: "sentence"' in markdown
 
 
 def test_publisher_omits_audio_frontmatter_when_website_audio_disabled(

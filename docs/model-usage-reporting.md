@@ -18,6 +18,10 @@ Usage collection is best-effort. Malformed provider or LangChain usage metadata 
 row and diagnostic note; it does not fail an otherwise successful model call or discard generated
 audio.
 
+ElevenLabs reports speech consumption in characters rather than OpenAI-style input/output tokens.
+The run report records a note with the processed character count but leaves it out of the token cost
+table until character pricing is configured.
+
 ## Pricing
 
 Rates live under `llm.usage_reporting.prices` in `config/base.yaml`. They are decimal USD prices per

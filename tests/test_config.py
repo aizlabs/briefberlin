@@ -196,6 +196,34 @@ def test_audio_model_env_override(monkeypatch):
         monkeypatch.delenv("AUDIO_MODEL", raising=False)
 
 
+def test_elevenlabs_and_highlight_env_overrides(monkeypatch):
+    monkeypatch.setenv("ELEVENLABS_API_KEY", "secret-key")
+    monkeypatch.setenv("ELEVENLABS_TTS_MODEL", "custom-eleven-model")
+    monkeypatch.setenv("ELEVENLABS_VOICE_ID", "voice-id")
+    monkeypatch.setenv("AUDIO_HIGHLIGHTING_ENABLED", "true")
+    monkeypatch.setenv("AUDIO_HIGHLIGHT_CONTEXT", "paragraph")
+    try:
+        config = {}
+        apply_env_overrides(config)
+        elevenlabs = config["audio"]["providers"]["elevenlabs"]
+        assert elevenlabs["api_key"] == "secret-key"
+        assert elevenlabs["model"] == "custom-eleven-model"
+        assert elevenlabs["voice"] == "voice-id"
+        assert config["audio"]["website"] == {
+            "highlighting_enabled": True,
+            "highlight_context": "paragraph",
+        }
+    finally:
+        for key in (
+            "ELEVENLABS_API_KEY",
+            "ELEVENLABS_TTS_MODEL",
+            "ELEVENLABS_VOICE_ID",
+            "AUDIO_HIGHLIGHTING_ENABLED",
+            "AUDIO_HIGHLIGHT_CONTEXT",
+        ):
+            monkeypatch.delenv(key, raising=False)
+
+
 def test_usage_reporting_enabled_env_override(monkeypatch):
     monkeypatch.setenv("USAGE_REPORTING_ENABLED", "false")
     try:
