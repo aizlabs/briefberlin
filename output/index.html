@@ -49,9 +49,11 @@ organization_schema: true
 
 <div class="articles-grid">
   {% for post in paginator.posts %}
-    <a class="article-card" href="{{ post.url | relative_url }}" data-level="{{ post.level }}">
+    <a class="article-card" href="{{ post.url | relative_url }}"{% if post.level %} data-level="{{ post.level }}"{% endif %}>
       <div class="article-header">
-        <span class="level-badge level-{{ post.level | downcase }}">{{ post.level }}</span>
+        {% if post.level %}
+          <span class="level-badge level-{{ post.level | downcase }}">{{ post.level }}</span>
+        {% endif %}
         <span class="article-date">{{ post.date | date: "%d.%m.%Y" }}</span>
       </div>
 

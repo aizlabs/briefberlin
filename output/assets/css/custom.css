@@ -741,6 +741,25 @@
   margin-bottom: 1.35em;
 }
 
+.article-figure {
+  margin: 1.75em 0 2em;
+}
+
+.article-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0.65em;
+}
+
+.article-figure figcaption {
+  margin-top: 0.65em;
+  color: #6c757d;
+  font-size: 0.82em;
+  line-height: 1.4;
+  text-align: center;
+}
+
 .page__inner-wrap > header .article-meta {
   display: flex;
   gap: 1.5em;
