@@ -418,7 +418,7 @@ class LLMModelsConfig(BaseModel):
 
 
 class ModelPricingConfig(BaseModel):
-    """Per-million-token rates and reporting capabilities for one provider model."""
+    """Per-million billable-unit rates and reporting capabilities for one provider model."""
 
     aliases: List[str] = Field(
         default_factory=list,
@@ -427,6 +427,10 @@ class ModelPricingConfig(BaseModel):
     modality: Literal["text", "audio"] = Field(
         default="text",
         description="Output modality used to label the usage report",
+    )
+    billing_unit: Literal["tokens", "characters"] = Field(
+        default="tokens",
+        description="Unit priced by input_per_million and output_per_million",
     )
     supports_sse_usage: bool = Field(
         default=False,
@@ -545,6 +549,7 @@ class ElevenLabsTTSConfig(BaseModel):
     model: str = "eleven_multilingual_v2"
     voice: str = "OYTbf65OHHFELVut7v2H"
     output_format: str = "mp3_44100_128"
+    speed_by_level: Dict[str, float] = Field(default_factory=dict)
 
 
 class AudioProvidersConfig(BaseModel):

@@ -31,7 +31,15 @@ def _usage_config() -> UsageReportingConfig:
                     "input_per_million": "0.60",
                     "output_per_million": "12.00",
                 },
-            }
+            },
+            "elevenlabs": {
+                "eleven_multilingual_v2": {
+                    "modality": "audio",
+                    "billing_unit": "characters",
+                    "input_per_million": "200.00",
+                    "output_per_million": "0",
+                }
+            },
         },
     )
 
@@ -67,6 +75,24 @@ def test_report_aggregates_snapshots_and_applies_cached_input_pricing():
     assert row.input_cost == Decimal("0.00092")
     assert row.output_cost == Decimal("0.001")
     assert row.total_cost == Decimal("0.00192")
+
+
+def test_report_prices_elevenlabs_characters():
+    report = RunUsageReport(_usage_config(), "openai")
+    report.record(
+        ModelUsageRecord(
+            provider="elevenlabs",
+            model="eleven_multilingual_v2",
+            modality="audio",
+            input_tokens=1_558,
+            source="elevenlabs_speech",
+        )
+    )
+
+    [row] = report.costed_rows()
+    assert row.input_cost == Decimal("0.311600")
+    assert row.total_cost == Decimal("0.311600")
+    assert "$0.311600" in report.render_ascii()
 
 
 def test_report_preserves_explicit_zero_cache_rates():

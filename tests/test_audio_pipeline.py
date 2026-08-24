@@ -317,7 +317,7 @@ def test_audio_pipeline_publishes_word_timing_sidecar(
     mock_s3_client = MagicMock()
     provider = MagicMock()
 
-    def synthesize(narration, destination, _audio_format):
+    def synthesize(narration, destination, _audio_format, *, level=None):
         Path(destination).write_bytes(b"audio")
         title_end = len(sample_a2_article.title)
         return TTSResult(

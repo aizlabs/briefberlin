@@ -97,7 +97,7 @@ class AudioPipeline:
             self.audio_config.format,
         )
         try:
-            speech_result = self._synthesize_audio(script.narration, audio_path)
+            speech_result = self._synthesize_audio(script.narration, audio_path, article.level)
         except Exception:
             usage_source: Literal["openai_speech", "elevenlabs_speech"] = (
                 "elevenlabs_speech"
@@ -129,17 +129,18 @@ class AudioPipeline:
                     provider=self.audio_config.provider or "unknown",
                     model=self.audio_config.resolved_model(),
                     modality="audio",
-                    input_tokens=speech_result.usage.input_tokens,
+                    input_tokens=(
+                        speech_result.usage.input_characters
+                        or speech_result.usage.input_tokens
+                    ),
                     output_tokens=speech_result.usage.output_tokens,
-                    usage_complete=speech_result.usage.input_characters == 0,
                     source=usage_source,
                 )
             )
             if speech_result.usage.input_characters:
                 add_usage_report_note(
                     f"{self.audio_config.resolved_model()}: ElevenLabs processed "
-                    f"{speech_result.usage.input_characters} input characters; character-based "
-                    "pricing is not included in the token cost table."
+                    f"{speech_result.usage.input_characters} input characters."
                 )
         else:
             record_direct_model_usage(
@@ -279,6 +280,7 @@ class AudioPipeline:
         self,
         narration: str,
         audio_path: Path,
+        level: str,
     ) -> TTSResult:
         if self.tts_provider is None:
             self.tts_provider = build_tts_provider(
@@ -290,6 +292,7 @@ class AudioPipeline:
             narration,
             audio_path,
             self.audio_config.format,
+            level=level,
         )
 
     def _upload_audio_file(

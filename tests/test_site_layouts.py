@@ -31,6 +31,9 @@ def test_audio_player_supports_optional_synchronized_highlighting():
     assert "root.dataset.timingsUrl" in script
     assert 'root.dataset.highlightContext === "paragraph"' in script
     assert "article-audio-word" in script
+    assert "activeContextKey" in script
+    assert "clearActiveWord" in script
+    assert "contextCueAt" in script
     assert ".article-audio-word.is-active-context" in styles
     assert ".article-audio-word.is-active-word" in styles
     assert ".is-active-audio-paragraph" in styles

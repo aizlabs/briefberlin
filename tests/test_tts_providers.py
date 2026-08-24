@@ -2,6 +2,9 @@ import base64
 from pathlib import Path
 from unittest.mock import MagicMock
 
+import pytest
+import requests
+
 from scripts.tts_providers import ElevenLabsTTSProvider
 
 
@@ -47,6 +50,23 @@ def test_elevenlabs_writes_audio_and_returns_word_cues(base_config, tmp_path: Pa
     assert request.kwargs["params"] == {"output_format": "mp3_44100_128"}
 
 
+def test_elevenlabs_uses_configured_speed_for_article_level(base_config, tmp_path: Path):
+    base_config.audio.provider = "elevenlabs"
+    base_config.audio.providers.elevenlabs.api_key = "eleven-test-key"
+    base_config.audio.providers.elevenlabs.speed_by_level = {"A1": 0.7, "B1": 0.8}
+    client = MagicMock()
+    client.post.return_value = _response("Hallo Welt.")
+
+    ElevenLabsTTSProvider(base_config, client=client).synthesize(
+        "Hallo Welt.",
+        tmp_path / "article.mp3",
+        "mp3",
+        level="A1",
+    )
+
+    assert client.post.call_args.kwargs["json"]["voice_settings"] == {"speed": 0.7}
+
+
 def test_elevenlabs_keeps_audio_when_alignment_is_missing(base_config, tmp_path: Path):
     text = "Hallo Welt."
     base_config.audio.provider = "elevenlabs"
@@ -84,3 +104,23 @@ def test_elevenlabs_ignores_alignment_for_different_text(base_config, tmp_path: 
     assert result.cues is None
     assert result.timing_note is not None
     assert "does not match" in result.timing_note
+
+
+def test_elevenlabs_includes_provider_error_detail(base_config, tmp_path: Path):
+    base_config.audio.provider = "elevenlabs"
+    base_config.audio.providers.elevenlabs.api_key = "eleven-test-key"
+    client = MagicMock()
+    response = MagicMock()
+    response.status_code = 400
+    response.json.return_value = {
+        "detail": {"message": "The selected voice is not available to this account."}
+    }
+    response.raise_for_status.side_effect = requests.HTTPError("400 Client Error")
+    client.post.return_value = response
+
+    with pytest.raises(ValueError, match="selected voice is not available"):
+        ElevenLabsTTSProvider(base_config, client=client).synthesize(
+            "Hallo Berlin.",
+            tmp_path / "article.mp3",
+            "mp3",
+        )

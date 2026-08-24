@@ -47,7 +47,9 @@ class TTSProvider(Protocol):
     model: str
     voice: str
 
-    def synthesize(self, text: str, destination: Path, audio_format: str) -> TTSResult:
+    def synthesize(
+        self, text: str, destination: Path, audio_format: str, *, level: str | None = None
+    ) -> TTSResult:
         """Write speech to destination and return optional provider metadata."""
 
 
@@ -68,7 +70,9 @@ class OpenAITTSProvider:
                 raise ValueError("OpenAI TTS requires OPENAI_API_KEY to be configured")
             self.client = OpenAI(api_key=api_key)
 
-    def synthesize(self, text: str, destination: Path, audio_format: str) -> TTSResult:
+    def synthesize(
+        self, text: str, destination: Path, audio_format: str, *, level: str | None = None
+    ) -> TTSResult:
         response_format = _openai_response_format(audio_format)
         if supports_speech_usage_stream(self.model, self._model_configs):
             result = synthesize_speech_sse(
@@ -111,12 +115,18 @@ class ElevenLabsTTSProvider:
         self.model = config.audio.resolved_model()
         self.voice = config.audio.resolved_voice()
         self.output_format = provider_config.output_format
+        self.speed_by_level = {
+            level.strip().lower(): speed
+            for level, speed in provider_config.speed_by_level.items()
+        }
         self.api_key = provider_config.api_key
         if not self.api_key:
             raise ValueError("ElevenLabs TTS requires ELEVENLABS_API_KEY to be configured")
         self.client = client or requests.Session()
 
-    def synthesize(self, text: str, destination: Path, audio_format: str) -> TTSResult:
+    def synthesize(
+        self, text: str, destination: Path, audio_format: str, *, level: str | None = None
+    ) -> TTSResult:
         if audio_format != "mp3" or not self.output_format.startswith("mp3_"):
             raise ValueError(
                 "ElevenLabs currently requires audio.format=mp3 and an mp3 output format"
@@ -130,10 +140,20 @@ class ElevenLabsTTSProvider:
                 "Accept": "application/json",
                 "Content-Type": "application/json",
             },
-            json={"text": text, "model_id": self.model},
+            json={
+                "text": text,
+                "model_id": self.model,
+                **self._voice_settings(level),
+            },
             timeout=120,
         )
-        response.raise_for_status()
+        try:
+            response.raise_for_status()
+        except requests.HTTPError as exc:
+            raise ValueError(
+                "ElevenLabs TTS request failed with "
+                f"HTTP {response.status_code}: {_elevenlabs_error_detail(response)}"
+            ) from exc
         payload = response.json()
         encoded_audio = payload.get("audio_base64") if isinstance(payload, dict) else None
         if not isinstance(encoded_audio, str) or not encoded_audio:
@@ -157,6 +177,12 @@ class ElevenLabsTTSProvider:
             usage_note="ElevenLabs usage is measured in input characters.",
             timing_note=timing_note,
         )
+
+    def _voice_settings(self, level: str | None) -> dict[str, dict[str, float]]:
+        if level is None:
+            return {}
+        speed = self.speed_by_level.get(level.strip().lower())
+        return {"voice_settings": {"speed": speed}} if speed is not None else {}
 
 
 def build_tts_provider(
@@ -223,6 +249,26 @@ def _timestamp(value: Any) -> float:
     if not math.isfinite(number) or number < 0:
         raise ValueError("alignment contains an invalid timestamp")
     return number
+
+
+def _elevenlabs_error_detail(response: Any) -> str:
+    """Extract a concise provider error without exposing request credentials or narration."""
+    try:
+        payload = response.json()
+    except (TypeError, ValueError):
+        payload = None
+
+    detail: Any = None
+    if isinstance(payload, dict):
+        detail = payload.get("detail") or payload.get("error") or payload.get("message")
+        if isinstance(detail, dict):
+            detail = detail.get("message") or detail.get("detail") or detail.get("status")
+
+    if not detail:
+        detail = getattr(response, "text", "")
+
+    normalized = " ".join(str(detail).split())
+    return normalized[:1000] or "ElevenLabs did not return an error detail"
 
 
 def _write_bytes_atomically(destination: Path, data: bytes) -> None:

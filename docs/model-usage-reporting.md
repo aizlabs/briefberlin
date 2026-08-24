@@ -19,18 +19,21 @@ row and diagnostic note; it does not fail an otherwise successful model call or 
 audio.
 
 ElevenLabs reports speech consumption in characters rather than OpenAI-style input/output tokens.
-The run report records a note with the processed character count but leaves it out of the token cost
-table until character pricing is configured.
+The default configuration prices `eleven_multilingual_v2` at $200 per million input characters:
+the effective Starter-plan allocation rate of $6 for 30,000 credits, where Multilingual v2 consumes
+one credit per character.
 
 ## Pricing
 
 Rates live under `llm.usage_reporting.prices` in `config/base.yaml`. They are decimal USD prices per
-one million tokens. A canonical model may declare `aliases` using shell-style patterns so dated model
+one million billable units. Each model's `billing_unit` defaults to `tokens`; set it to
+`characters` for character-billed providers. A canonical model may declare `aliases` using shell-style patterns so dated model
 identifiers returned by providers use the intended price without being relabeled in the report.
 Speech models that support exact SSE usage declare `supports_sse_usage: true` in the same model entry,
 so routing and pricing aliases share one source of truth.
 
-Update both the rates and `pricing_as_of` after checking the provider's official pricing page. Avoid
+Before generating audio, update the selected provider's rate and `pricing_as_of` after checking the
+provider's official pricing page and your subscription plan. Avoid
 broad aliases that could match models with different prices. If a returned model has no matching rate,
 or a request did not return complete usage, the row displays `N/A` and is excluded from the known
 subtotal. Provider invoices remain authoritative.

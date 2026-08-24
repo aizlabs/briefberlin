@@ -320,6 +320,10 @@ class RunUsageReport:
             return CostedUsage(usage, resolved[0], None, None)
 
         pricing_name, pricing = resolved
+        if pricing.billing_unit == "characters":
+            input_cost = Decimal(usage.input_tokens) * pricing.input_per_million / MILLION
+            return CostedUsage(usage, pricing_name, input_cost, Decimal(0))
+
         cached = min(usage.cached_input_tokens, usage.input_tokens)
         cache_write = min(usage.cache_write_tokens, max(usage.input_tokens - cached, 0))
         regular = max(usage.input_tokens - cached - cache_write, 0)

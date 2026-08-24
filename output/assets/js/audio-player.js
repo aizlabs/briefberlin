@@ -195,22 +195,34 @@
 
       const contextMode = root.dataset.highlightContext === "paragraph" ? "paragraph" : "sentence";
       let activeIndex = -1;
+      let activeContextKey = null;
       let animationFrame = null;
 
-      function clearActive() {
-        page.querySelectorAll(".article-audio-word.is-active-word").forEach(function (element) {
-          element.classList.remove("is-active-word");
-        });
+      function clearActiveWord() {
+        if (activeIndex >= 0) {
+          (cueElements.get(activeIndex) || []).forEach(function (element) {
+            element.classList.remove("is-active-word");
+          });
+        }
+        activeIndex = -1;
+      }
+
+      function clearActiveContext() {
         page.querySelectorAll(".article-audio-word.is-active-context").forEach(function (element) {
           element.classList.remove("is-active-context");
         });
         page.querySelectorAll(".is-active-audio-paragraph").forEach(function (element) {
           element.classList.remove("is-active-audio-paragraph");
         });
-        activeIndex = -1;
+        activeContextKey = null;
       }
 
-      function cueAt(time) {
+      function clearActive() {
+        clearActiveWord();
+        clearActiveContext();
+      }
+
+      function cueBeforeOrAt(time) {
         let low = 0;
         let high = indexedCues.length - 1;
         let candidate = -1;
@@ -223,15 +235,75 @@
             high = middle - 1;
           }
         }
+        return candidate;
+      }
+
+      function cueAt(time) {
+        const candidate = cueBeforeOrAt(time);
         return candidate >= 0 && time <= indexedCues[candidate].end ? candidate : -1;
+      }
+
+      function contextKey(cue) {
+        return contextMode === "paragraph"
+          ? `paragraph:${cue.block_id}`
+          : `sentence:${cue.block_id}:${cue.sentence_id}`;
+      }
+
+      function contextCueAt(time, wordIndex) {
+        if (wordIndex >= 0) {
+          return indexedCues[wordIndex];
+        }
+
+        const previousIndex = cueBeforeOrAt(time);
+        const nextIndex = previousIndex + 1;
+        if (previousIndex < 0 || nextIndex >= indexedCues.length) {
+          return null;
+        }
+
+        const previousCue = indexedCues[previousIndex];
+        const nextCue = indexedCues[nextIndex];
+        return contextKey(previousCue) === contextKey(nextCue) ? previousCue : null;
+      }
+
+      function setActiveContext(cue) {
+        const nextContextKey = cue ? contextKey(cue) : null;
+        if (nextContextKey === activeContextKey) {
+          return;
+        }
+
+        clearActiveContext();
+        if (!cue) {
+          return;
+        }
+
+        activeContextKey = nextContextKey;
+        if (contextMode === "paragraph") {
+          const target = cueTargets.get(cue.index);
+          if (target) {
+            target.classList.add("is-active-audio-paragraph");
+          }
+          return;
+        }
+
+        const sentenceKey = `${cue.block_id}:${cue.sentence_id}`;
+        (sentenceElements.get(sentenceKey) || []).forEach(function (element) {
+          element.classList.add("is-active-context");
+        });
       }
 
       function updateHighlight() {
         const nextIndex = cueAt(audio.currentTime);
-        if (nextIndex === activeIndex) {
+        const nextContextCue = contextCueAt(audio.currentTime, nextIndex);
+        const nextContextKey = nextContextCue ? contextKey(nextContextCue) : null;
+        if (nextIndex === activeIndex && nextContextKey === activeContextKey) {
           return;
         }
-        clearActive();
+
+        if (nextIndex !== activeIndex) {
+          clearActiveWord();
+        }
+        setActiveContext(nextContextCue);
+
         if (nextIndex < 0 || !cueElements.has(nextIndex)) {
           return;
         }
@@ -239,18 +311,6 @@
         cueElements.get(nextIndex).forEach(function (element) {
           element.classList.add("is-active-word");
         });
-        const cue = indexedCues[nextIndex];
-        if (contextMode === "paragraph") {
-          const target = cueTargets.get(nextIndex);
-          if (target) {
-            target.classList.add("is-active-audio-paragraph");
-          }
-        } else {
-          const sentenceKey = `${cue.block_id}:${cue.sentence_id}`;
-          (sentenceElements.get(sentenceKey) || []).forEach(function (element) {
-            element.classList.add("is-active-context");
-          });
-        }
       }
 
       function animate() {
