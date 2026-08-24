@@ -114,6 +114,7 @@ class ElevenLabsTTSProvider:
         provider_config = config.audio.providers.elevenlabs
         self.model = config.audio.resolved_model()
         self.voice = config.audio.resolved_voice()
+        self.language_code = config.language.target_language_code
         self.output_format = provider_config.output_format
         self.speed_by_level = {
             level.strip().lower(): speed
@@ -143,6 +144,7 @@ class ElevenLabsTTSProvider:
             json={
                 "text": text,
                 "model_id": self.model,
+                "language_code": self.language_code,
                 **self._voice_settings(level),
             },
             timeout=120,

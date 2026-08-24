@@ -46,8 +46,31 @@ def test_elevenlabs_writes_audio_and_returns_word_cues(base_config, tmp_path: Pa
     assert request.args[0].endswith(
         "/text-to-speech/OYTbf65OHHFELVut7v2H/with-timestamps"
     )
-    assert request.kwargs["json"] == {"text": text, "model_id": "eleven_multilingual_v2"}
+    assert request.kwargs["json"] == {
+        "text": text,
+        "model_id": "eleven_multilingual_v2",
+        "language_code": "de",
+    }
     assert request.kwargs["params"] == {"output_format": "mp3_44100_128"}
+
+
+def test_elevenlabs_uses_target_language_code_from_language_config(
+    base_config,
+    tmp_path: Path,
+):
+    base_config.audio.provider = "elevenlabs"
+    base_config.audio.providers.elevenlabs.api_key = "eleven-test-key"
+    base_config.language.target_language_code = "fr"
+    client = MagicMock()
+    client.post.return_value = _response("Bonjour Berlin.")
+
+    ElevenLabsTTSProvider(base_config, client=client).synthesize(
+        "Bonjour Berlin.",
+        tmp_path / "article.mp3",
+        "mp3",
+    )
+
+    assert client.post.call_args.kwargs["json"]["language_code"] == "fr"
 
 
 def test_elevenlabs_uses_configured_speed_for_article_level(base_config, tmp_path: Path):
