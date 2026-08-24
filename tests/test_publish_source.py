@@ -16,7 +16,7 @@ def test_apply_audio_defaults_forces_audio_upload(monkeypatch):
 
     assert os.environ["AUDIO_ENABLED"] == "true"
     assert os.environ["AUDIO_UPLOAD_ENABLED"] == "true"
-    assert os.environ["AUDIO_PROVIDER"] == "openai"
+    assert os.environ["AUDIO_PROVIDER"] == "elevenlabs"
     assert os.environ["AUDIO_VOICE"] == "custom"
     assert os.environ["AUDIO_PUBLIC_BASE_URL"] == "https://media.briefberlin.de"
     assert os.environ["AUDIO_S3_BUCKET"] == "briefberlin-audio-prod"
@@ -29,6 +29,8 @@ def test_main_delegates_to_manual_pipeline_with_audio_levels(mock_run_manual_pip
         "AUDIO_UPLOAD_ENABLED",
         "AUDIO_PROVIDER",
         "AUDIO_VOICE",
+        "ELEVENLABS_TTS_MODEL",
+        "ELEVENLABS_VOICE_ID",
         "AUDIO_FORMAT",
         "AUDIO_PUBLIC_BASE_URL",
         "AUDIO_S3_BUCKET",
@@ -50,7 +52,8 @@ def test_main_delegates_to_manual_pipeline_with_audio_levels(mock_run_manual_pip
     assert args.publish_timestamp is None
     assert args.author is None
     assert not hasattr(args, "topic")
-    assert os.environ["AUDIO_VOICE"] == "marin"
+    assert os.environ["ELEVENLABS_TTS_MODEL"] == "eleven_multilingual_v2"
+    assert os.environ["ELEVENLABS_VOICE_ID"] == "OYTbf65OHHFELVut7v2H"
 
 
 @patch("scripts.publish_source.run_manual_pipeline")

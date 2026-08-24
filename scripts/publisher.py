@@ -557,6 +557,16 @@ reading_time: {article.reading_time}
             lines.append(f'  provider: "{self._escape_yaml_string(audio.provider)}"')
         if audio.voice:
             lines.append(f'  voice: "{self._escape_yaml_string(audio.voice)}"')
+        if audio.timings_url:
+            lines.append(f'  timings_url: "{self._escape_yaml_string(audio.timings_url)}"')
+            if audio.timing_granularity:
+                lines.append(
+                    f'  timing_granularity: "{self._escape_yaml_string(audio.timing_granularity)}"'
+                )
+            if audio.highlight_context:
+                lines.append(
+                    f'  highlight_context: "{self._escape_yaml_string(audio.highlight_context)}"'
+                )
         if audio.duration_seconds is not None:
             lines.append(f'  duration_seconds: {audio.duration_seconds}')
         return '\n'.join(lines)

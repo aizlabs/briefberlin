@@ -63,6 +63,287 @@
     duration.textContent = formatTime(audioDuration);
   }
 
+  function textNodes(element) {
+    const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    let node = walker.nextNode();
+    while (node) {
+      nodes.push(node);
+      node = walker.nextNode();
+    }
+    return nodes;
+  }
+
+  function wrapCues(target, block, cues) {
+    if (!target || target.textContent !== block.text) {
+      return [];
+    }
+
+    const wrapped = [];
+    let blockOffset = 0;
+    textNodes(target).forEach(function (node) {
+      const nodeStart = blockOffset;
+      const nodeEnd = nodeStart + node.nodeValue.length;
+      blockOffset = nodeEnd;
+      const intersections = cues.filter(function (cue) {
+        return cue.text_start < nodeEnd && cue.text_end > nodeStart;
+      });
+      if (intersections.length === 0) {
+        return;
+      }
+
+      const fragment = document.createDocumentFragment();
+      let cursor = 0;
+      intersections.forEach(function (cue) {
+        const start = Math.max(0, cue.text_start - nodeStart);
+        const end = Math.min(node.nodeValue.length, cue.text_end - nodeStart);
+        if (start > cursor) {
+          fragment.appendChild(document.createTextNode(node.nodeValue.slice(cursor, start)));
+        }
+        const span = document.createElement("span");
+        span.className = "article-audio-word";
+        span.dataset.cueIndex = String(cue.index);
+        span.dataset.blockId = cue.block_id;
+        if (cue.sentence_id !== null && cue.sentence_id !== undefined) {
+          span.dataset.sentenceId = String(cue.sentence_id);
+        }
+        span.textContent = node.nodeValue.slice(start, end);
+        fragment.appendChild(span);
+        wrapped.push({ cue: cue, element: span, target: target });
+        cursor = end;
+      });
+      if (cursor < node.nodeValue.length) {
+        fragment.appendChild(document.createTextNode(node.nodeValue.slice(cursor)));
+      }
+      node.parentNode.replaceChild(fragment, node);
+    });
+    return wrapped;
+  }
+
+  function blockTargets(page, blocks) {
+    const targets = new Map();
+    const title = page.querySelector(".page__title");
+    const paragraphs = Array.from(page.querySelectorAll(".page__content > p"));
+    let paragraphIndex = 0;
+
+    blocks.forEach(function (block) {
+      if (block.kind === "title" && title && title.textContent === block.text) {
+        targets.set(block.id, title);
+      }
+      if (block.kind === "body") {
+        while (paragraphIndex < paragraphs.length) {
+          const candidate = paragraphs[paragraphIndex];
+          paragraphIndex += 1;
+          if (candidate.textContent === block.text) {
+            targets.set(block.id, candidate);
+            break;
+          }
+        }
+      }
+    });
+    return targets;
+  }
+
+  async function initTextHighlighting(root, audio) {
+    const timingsUrl = root.dataset.timingsUrl;
+    if (!timingsUrl) {
+      return;
+    }
+
+    try {
+      const response = await fetch(timingsUrl, { credentials: "omit" });
+      if (!response.ok) {
+        return;
+      }
+      const timings = await response.json();
+      if (timings.version !== 1 || !Array.isArray(timings.blocks) || !Array.isArray(timings.cues)) {
+        return;
+      }
+
+      const page = root.closest(".page");
+      if (!page) {
+        return;
+      }
+      const targets = blockTargets(page, timings.blocks);
+      const indexedCues = timings.cues.map(function (cue, index) {
+        return Object.assign({ index: index }, cue);
+      });
+      const cueElements = new Map();
+      const sentenceElements = new Map();
+      const cueTargets = new Map();
+
+      timings.blocks.forEach(function (block) {
+        const target = targets.get(block.id);
+        const blockCues = indexedCues.filter(function (cue) {
+          return cue.block_id === block.id;
+        });
+        wrapCues(target, block, blockCues).forEach(function (wrapped) {
+          const cueList = cueElements.get(wrapped.cue.index) || [];
+          cueList.push(wrapped.element);
+          cueElements.set(wrapped.cue.index, cueList);
+          cueTargets.set(wrapped.cue.index, wrapped.target);
+          const sentenceKey = `${wrapped.cue.block_id}:${wrapped.cue.sentence_id}`;
+          const sentenceList = sentenceElements.get(sentenceKey) || [];
+          sentenceList.push(wrapped.element);
+          sentenceElements.set(sentenceKey, sentenceList);
+        });
+      });
+
+      if (cueElements.size === 0) {
+        return;
+      }
+
+      const contextMode = root.dataset.highlightContext === "paragraph" ? "paragraph" : "sentence";
+      let activeIndex = -1;
+      let activeContextKey = null;
+      let animationFrame = null;
+
+      function clearActiveWord() {
+        if (activeIndex >= 0) {
+          (cueElements.get(activeIndex) || []).forEach(function (element) {
+            element.classList.remove("is-active-word");
+          });
+        }
+        activeIndex = -1;
+      }
+
+      function clearActiveContext() {
+        page.querySelectorAll(".article-audio-word.is-active-context").forEach(function (element) {
+          element.classList.remove("is-active-context");
+        });
+        page.querySelectorAll(".is-active-audio-paragraph").forEach(function (element) {
+          element.classList.remove("is-active-audio-paragraph");
+        });
+        activeContextKey = null;
+      }
+
+      function clearActive() {
+        clearActiveWord();
+        clearActiveContext();
+      }
+
+      function cueBeforeOrAt(time) {
+        let low = 0;
+        let high = indexedCues.length - 1;
+        let candidate = -1;
+        while (low <= high) {
+          const middle = Math.floor((low + high) / 2);
+          if (indexedCues[middle].start <= time) {
+            candidate = middle;
+            low = middle + 1;
+          } else {
+            high = middle - 1;
+          }
+        }
+        return candidate;
+      }
+
+      function cueAt(time) {
+        const candidate = cueBeforeOrAt(time);
+        return candidate >= 0 && time <= indexedCues[candidate].end ? candidate : -1;
+      }
+
+      function contextKey(cue) {
+        return contextMode === "paragraph"
+          ? `paragraph:${cue.block_id}`
+          : `sentence:${cue.block_id}:${cue.sentence_id}`;
+      }
+
+      function contextCueAt(time, wordIndex) {
+        if (wordIndex >= 0) {
+          return indexedCues[wordIndex];
+        }
+
+        const previousIndex = cueBeforeOrAt(time);
+        const nextIndex = previousIndex + 1;
+        if (previousIndex < 0 || nextIndex >= indexedCues.length) {
+          return null;
+        }
+
+        const previousCue = indexedCues[previousIndex];
+        const nextCue = indexedCues[nextIndex];
+        return contextKey(previousCue) === contextKey(nextCue) ? previousCue : null;
+      }
+
+      function setActiveContext(cue) {
+        const nextContextKey = cue ? contextKey(cue) : null;
+        if (nextContextKey === activeContextKey) {
+          return;
+        }
+
+        clearActiveContext();
+        if (!cue) {
+          return;
+        }
+
+        activeContextKey = nextContextKey;
+        if (contextMode === "paragraph") {
+          const target = cueTargets.get(cue.index);
+          if (target) {
+            target.classList.add("is-active-audio-paragraph");
+          }
+          return;
+        }
+
+        const sentenceKey = `${cue.block_id}:${cue.sentence_id}`;
+        (sentenceElements.get(sentenceKey) || []).forEach(function (element) {
+          element.classList.add("is-active-context");
+        });
+      }
+
+      function updateHighlight() {
+        const nextIndex = cueAt(audio.currentTime);
+        const nextContextCue = contextCueAt(audio.currentTime, nextIndex);
+        const nextContextKey = nextContextCue ? contextKey(nextContextCue) : null;
+        if (nextIndex === activeIndex && nextContextKey === activeContextKey) {
+          return;
+        }
+
+        if (nextIndex !== activeIndex) {
+          clearActiveWord();
+        }
+        setActiveContext(nextContextCue);
+
+        if (nextIndex < 0 || !cueElements.has(nextIndex)) {
+          return;
+        }
+        activeIndex = nextIndex;
+        cueElements.get(nextIndex).forEach(function (element) {
+          element.classList.add("is-active-word");
+        });
+      }
+
+      function animate() {
+        updateHighlight();
+        if (!audio.paused && !audio.ended) {
+          animationFrame = window.requestAnimationFrame(animate);
+        }
+      }
+
+      audio.addEventListener("play", function () {
+        if (animationFrame !== null) {
+          window.cancelAnimationFrame(animationFrame);
+        }
+        animate();
+      });
+      audio.addEventListener("seeked", updateHighlight);
+      audio.addEventListener("pause", function () {
+        if (animationFrame !== null) {
+          window.cancelAnimationFrame(animationFrame);
+          animationFrame = null;
+        }
+        clearActive();
+      });
+      audio.addEventListener("ended", clearActive);
+
+      if (!audio.paused && !audio.ended) {
+        animate();
+      }
+    } catch (_error) {
+      // Audio playback remains fully functional when timing data cannot be loaded or mapped.
+    }
+  }
+
   function initPlayer(root) {
     const audio = root.querySelector(".article-audio__native");
     const player = root.querySelector(".article-audio__player");
@@ -182,6 +463,7 @@
 
     updateProgress(audio, waveform, elapsed, duration);
     setPlayButton(playButton, !audio.paused);
+    initTextHighlighting(root, audio);
   }
 
   document.addEventListener("DOMContentLoaded", function () {

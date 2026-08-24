@@ -75,9 +75,7 @@ language:
 # Audio preparation (website first; Telegram and podcast later)
 audio:
   enabled: false
-  provider: openai
-  model: gpt-4o-mini-tts-2025-12-15
-  voice: marin
+  provider: elevenlabs
   format: mp3
   output_path: ./output/audio
   include_vocabulary: false
@@ -89,6 +87,19 @@ audio:
     prefix: articles
   website:
     enabled: true
+    highlighting_enabled: true
+    highlight_context: sentence
+  providers:
+    openai:
+      model: gpt-4o-mini-tts-2025-12-15
+      voice: marin
+    elevenlabs:
+      model: eleven_multilingual_v2
+      voice: OYTbf65OHHFELVut7v2H # Hope: bright, upbeat, multilingual
+      output_format: mp3_44100_128
+      speed_by_level:
+        A2: 0.7
+        B1: 0.8
 
 # LLM configuration
 llm:
@@ -103,7 +114,7 @@ llm:
   usage_reporting:
     enabled: true
     currency: USD
-    pricing_as_of: 2026-08-02
+    pricing_as_of: 2026-08-24
     prices:
       openai:
         gpt-5.5:
@@ -124,6 +135,14 @@ llm:
           supports_sse_usage: true
           input_per_million: 0.60
           output_per_million: 12.00
+      elevenlabs:
+        eleven_multilingual_v2:
+          # Starter plan: $6 / 30,000 credits. Multilingual v2 uses one credit per character.
+          # Update this rate and pricing_as_of before a generation when the subscription changes.
+          modality: audio
+          billing_unit: characters
+          input_per_million: 200.00
+          output_per_million: 0
 
 # Output settings
 output:

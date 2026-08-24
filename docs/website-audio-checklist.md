@@ -245,6 +245,11 @@ aws cloudfront create-distribution \
 Record the returned distribution ID, ARN, and domain name, for example
 `d123abc.cloudfront.net`.
 
+The synchronized timing JSON is fetched by the browser from the media subdomain. Attach a
+CloudFront response-headers policy that returns `Access-Control-Allow-Origin` for the website origin
+(or `*` for these public, credential-free assets) on `GET`/`HEAD` responses. Audio playback can work
+without this header, but cross-origin timing fetches—and therefore highlighting—will fail closed.
+
 ## 6. Restrictive S3 Bucket Policy
 
 Allow reads only from the CloudFront distribution ARN:
@@ -300,9 +305,13 @@ Use these local `.env` values when audio delivery is ready:
 ```bash
 AUDIO_ENABLED=true
 AUDIO_UPLOAD_ENABLED=true
-AUDIO_PROVIDER=openai
-AUDIO_VOICE=marin
+AUDIO_PROVIDER=elevenlabs
+ELEVENLABS_API_KEY=your-elevenlabs-key
+ELEVENLABS_TTS_MODEL=eleven_multilingual_v2
+ELEVENLABS_VOICE_ID=OYTbf65OHHFELVut7v2H
 AUDIO_FORMAT=mp3
+AUDIO_HIGHLIGHTING_ENABLED=true
+AUDIO_HIGHLIGHT_CONTEXT=sentence
 AUDIO_PUBLIC_BASE_URL=https://media.briefberlin.de
 AUDIO_S3_BUCKET=briefberlin-audio-prod
 AUDIO_S3_REGION=eu-central-1
@@ -318,7 +327,7 @@ For the normal one-source publishing workflow, use the wrapper command:
 uv run briefberlin-publish-source private-input/source-1.source.txt
 ```
 
-It generates A2 and B1 learner posts, enables OpenAI MP3 audio upload, and uses the standard
+It generates A2 and B1 learner posts, enables ElevenLabs MP3 audio upload, and uses the standard
 BriefBerlin media defaults above. It still only reads private source files from approved private
 input paths.
 
@@ -329,7 +338,8 @@ pipeline run:
 AUDIO_ENABLED=true uv run briefberlin-manual --level A2 --level B1 private-input/source-1.source.txt
 ```
 
-Local audio generation requires `OPENAI_API_KEY`. The command above creates local files under
+Local audio generation requires the selected provider key (`ELEVENLABS_API_KEY` by default, or
+`OPENAI_API_KEY` with `AUDIO_PROVIDER=openai`). The command above creates local files under
 `output/audio/`, but generated posts will keep `audio: null` unless upload is enabled and a public
 audio URL can be built. For website-ready audio during the same run, use the `.env` values above,
 including `AUDIO_UPLOAD_ENABLED=true`.

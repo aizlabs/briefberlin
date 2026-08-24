@@ -4,8 +4,9 @@ from unittest.mock import MagicMock, patch
 
 from scripts.audio_pipeline import AudioPipeline
 from scripts.audio_script_builder import build_speech_script
-from scripts.models import ModelPricingConfig
+from scripts.models import AudioWordCue, ModelPricingConfig
 from scripts.openai_speech_stream import SpeechSynthesisResult, SpeechTokenUsage
+from scripts.tts_providers import TTSResult
 from scripts.usage_report import collect_run_usage
 
 
@@ -31,7 +32,7 @@ def _enable_sse_usage_for_default_tts(base_config) -> None:
     }
 
 
-@patch("scripts.audio_pipeline.synthesize_speech_sse")
+@patch("scripts.tts_providers.synthesize_speech_sse")
 def test_audio_pipeline_registers_exact_sse_usage_in_active_run(
     mock_synthesize_speech_sse,
     base_config,
@@ -67,7 +68,7 @@ def test_audio_pipeline_registers_exact_sse_usage_in_active_run(
     assert usage["output_tokens"] == 34
 
 
-@patch("scripts.audio_pipeline.synthesize_speech_sse")
+@patch("scripts.tts_providers.synthesize_speech_sse")
 def test_audio_pipeline_keeps_audio_when_sse_usage_is_incomplete(
     mock_synthesize_speech_sse,
     base_config,
@@ -298,6 +299,58 @@ def test_audio_pipeline_logs_when_audio_disabled(base_config, mock_logger, sampl
         "Skipping audio preparation for '%s' because audio.enabled=false",
         sample_a2_article.title,
     )
+
+
+def test_audio_pipeline_publishes_word_timing_sidecar(
+    base_config,
+    mock_logger,
+    sample_a2_article,
+    tmp_path,
+):
+    base_config.audio.enabled = True
+    base_config.audio.provider = "elevenlabs"
+    base_config.audio.providers.elevenlabs.api_key = "eleven-test-key"
+    base_config.audio.output_path = str(tmp_path / "audio")
+    base_config.audio.upload_enabled = True
+    base_config.audio.public_base_url = "https://media.briefberlin.de"
+    base_config.audio.s3.bucket = "briefberlin-audio-prod"
+    mock_s3_client = MagicMock()
+    provider = MagicMock()
+
+    def synthesize(narration, destination, _audio_format, *, level=None):
+        Path(destination).write_bytes(b"audio")
+        title_end = len(sample_a2_article.title)
+        return TTSResult(
+            cues=[
+                AudioWordCue(
+                    text=sample_a2_article.title,
+                    text_start=0,
+                    text_end=title_end,
+                    start_seconds=0,
+                    end_seconds=1.2,
+                )
+            ]
+        )
+
+    provider.synthesize.side_effect = synthesize
+    pipeline = AudioPipeline(base_config, mock_logger, s3_client=mock_s3_client)
+    pipeline.tts_provider = provider
+
+    prepared = pipeline.prepare_for_publish(
+        sample_a2_article,
+        timestamp=datetime(2024, 1, 2, 12, 0, 0),
+    )
+
+    assert prepared.audio is not None
+    assert prepared.audio.timings_url is not None
+    assert prepared.audio.timings_url.endswith("/article.timings.json")
+    assert prepared.audio.timing_granularity == "word"
+    assert prepared.audio.highlight_context == "sentence"
+    timing_path = Path(prepared.audio.local_timings_path or "")
+    timing_payload = timing_path.read_text(encoding="utf-8")
+    assert '"block_kind": "title"' in timing_payload
+    assert '"granularity": "word"' in timing_payload
+    assert mock_s3_client.upload_file.call_count == 2
 
 
 def test_build_speech_script_marks_vocabulary_false_when_article_has_no_glossary(sample_a2_article):

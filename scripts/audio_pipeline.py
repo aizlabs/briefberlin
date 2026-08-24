@@ -8,21 +8,17 @@ import json
 import logging
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any, Literal, Optional
 
 import boto3
 from botocore.exceptions import BotoCoreError, ClientError
-from openai import OpenAI
 
 from scripts.audio_script_builder import build_speech_script
+from scripts.audio_timings import build_timing_sidecar
 from scripts.config import AppConfig
 from scripts.models import AdaptedArticle, AudioAsset, AudioManifest
-from scripts.openai_speech_stream import (
-    SpeechSynthesisResult,
-    supports_speech_usage_stream,
-    synthesize_speech_sse,
-)
 from scripts.text_utils import slugify_text
+from scripts.tts_providers import TTSProvider, TTSResult, build_tts_provider
 from scripts.usage_report import (
     ModelUsageRecord,
     add_usage_report_note,
@@ -48,6 +44,7 @@ class AudioPipeline:
         self.generated_dir = self.output_dir / "generated"
         self.manifests_dir = self.output_dir / "manifests"
         self.tts_client = tts_client
+        self.tts_provider: TTSProvider | None = None
         self.s3_client = s3_client
 
         if self.audio_config.enabled:
@@ -82,9 +79,11 @@ class AudioPipeline:
         script_rel_path = Path(year_month) / f"{artifact_id}.txt"
         manifest_rel_path = Path(year_month) / f"{artifact_id}.json"
         audio_rel_path = Path(year_month) / artifact_id / f"article.{self.audio_config.format}"
+        timings_rel_path = Path(year_month) / artifact_id / "article.timings.json"
         script_path = self.scripts_dir / script_rel_path
         manifest_path = self.manifests_dir / manifest_rel_path
         audio_path = self.generated_dir / audio_rel_path
+        timings_path = self.generated_dir / timings_rel_path
         script_path.parent.mkdir(parents=True, exist_ok=True)
         manifest_path.parent.mkdir(parents=True, exist_ok=True)
         audio_path.parent.mkdir(parents=True, exist_ok=True)
@@ -94,63 +93,114 @@ class AudioPipeline:
             "Synthesizing audio for '%s' with provider=%s voice=%s format=%s",
             article.title,
             self.audio_config.provider,
-            self.audio_config.voice,
+            self.audio_config.resolved_voice(),
             self.audio_config.format,
         )
         try:
-            speech_result = self._synthesize_audio(article.title, script.narration, audio_path)
+            speech_result = self._synthesize_audio(script.narration, audio_path, article.level)
         except Exception:
+            usage_source: Literal["openai_speech", "elevenlabs_speech"] = (
+                "elevenlabs_speech"
+                if self.audio_config.provider == "elevenlabs"
+                else "openai_speech"
+            )
             record_direct_model_usage(
                 ModelUsageRecord(
                     provider=self.audio_config.provider or "unknown",
-                    model=self.audio_config.model,
+                    model=self.audio_config.resolved_model(),
                     modality="audio",
                     usage_complete=False,
-                    source="openai_speech",
+                    source=usage_source,
                 )
             )
             add_usage_report_note(
-                f"{self.audio_config.model}: speech generation failed before exact usage was returned."
+                f"{self.audio_config.resolved_model()}: speech generation failed before exact usage "
+                "was returned."
             )
             raise
+        usage_source = (
+            "elevenlabs_speech"
+            if self.audio_config.provider == "elevenlabs"
+            else "openai_speech"
+        )
         if speech_result.usage is not None:
             record_direct_model_usage(
                 ModelUsageRecord(
                     provider=self.audio_config.provider or "unknown",
-                    model=self.audio_config.model,
+                    model=self.audio_config.resolved_model(),
                     modality="audio",
-                    input_tokens=speech_result.usage.input_tokens,
+                    input_tokens=(
+                        speech_result.usage.input_characters
+                        or speech_result.usage.input_tokens
+                    ),
                     output_tokens=speech_result.usage.output_tokens,
-                    source="openai_speech",
+                    source=usage_source,
                 )
             )
+            if speech_result.usage.input_characters:
+                add_usage_report_note(
+                    f"{self.audio_config.resolved_model()}: ElevenLabs processed "
+                    f"{speech_result.usage.input_characters} input characters."
+                )
         else:
             record_direct_model_usage(
                 ModelUsageRecord(
                     provider=self.audio_config.provider or "unknown",
-                    model=self.audio_config.model,
+                    model=self.audio_config.resolved_model(),
                     modality="audio",
                     usage_complete=False,
-                    source="openai_speech",
+                    source=usage_source,
                 )
             )
+        if speech_result.usage_note:
             add_usage_report_note(
-                f"{self.audio_config.model}: "
-                f"{speech_result.usage_note or 'exact speech token usage was not returned.'}"
+                f"{self.audio_config.resolved_model()}: {speech_result.usage_note}"
             )
+        if speech_result.timing_note:
+            self.logger.warning("%s", speech_result.timing_note)
         self.logger.info("Synthesized audio for '%s' at %s", article.title, audio_path)
 
         storage_key = self._build_storage_key(timestamp, artifact_id)
+        timings_storage_key = storage_key.rsplit("/", 1)[0] + "/article.timings.json"
+        timings_written = False
+        if speech_result.cues and self.audio_config.website.highlighting_enabled:
+            timings_path.write_text(
+                json.dumps(
+                    build_timing_sidecar(
+                        script,
+                        speech_result.cues,
+                        provider=self.audio_config.provider,
+                        model=self.audio_config.resolved_model(),
+                        voice=self.audio_config.resolved_voice(),
+                    ),
+                    ensure_ascii=False,
+                    indent=2,
+                ),
+                encoding="utf-8",
+            )
+            timings_written = True
+            self.logger.info("Prepared synchronized word timings at %s", timings_path)
+        elif speech_result.cues:
+            self.logger.info("Skipping timing sidecar because audio website highlighting is disabled")
+        else:
+            self.logger.info("No word timings returned; publishing ordinary audio playback")
+
         asset = AudioAsset(
             url=None,
             storage_key=storage_key,
             provider=self.audio_config.provider,
-            voice=self.audio_config.voice,
+            voice=self.audio_config.resolved_voice(),
             format=self.audio_config.format,
             mime_type=self._mime_type_for_format(self.audio_config.format),
             local_script_path=str(script_path),
             local_audio_path=str(audio_path),
+            local_timings_path=str(timings_path) if timings_written else None,
             manifest_path=str(manifest_path),
+            timings_storage_key=timings_storage_key if timings_written else None,
+            timing_granularity="word" if timings_written else None,
+            highlight_context=(
+                self.audio_config.website.highlight_context if timings_written else None
+            ),
         )
 
         if self.audio_config.upload_enabled:
@@ -163,6 +213,22 @@ class AudioPipeline:
             self._upload_audio_file(article.title, audio_path, storage_key, asset.mime_type)
             asset.url = self._build_public_url(storage_key)
             self.logger.info("Uploaded audio for '%s' to %s", article.title, asset.url)
+            if timings_written:
+                try:
+                    self._upload_timing_file(
+                        article.title,
+                        timings_path,
+                        timings_storage_key,
+                    )
+                except Exception as exc:
+                    self.logger.warning(
+                        "Audio is available but synchronized timings could not be uploaded for "
+                        "'%s': %s",
+                        article.title,
+                        exc,
+                    )
+                else:
+                    asset.timings_url = self._build_public_url(timings_storage_key)
         else:
             self.logger.info(
                 "Skipping audio upload for '%s' because audio.upload_enabled=false; "
@@ -212,42 +278,21 @@ class AudioPipeline:
 
     def _synthesize_audio(
         self,
-        article_title: str,
         narration: str,
         audio_path: Path,
-    ) -> SpeechSynthesisResult:
-        provider = (self.audio_config.provider or "").strip().lower()
-        if provider != "openai":
-            self.logger.error(
-                "Audio synthesis cannot start for '%s': unsupported audio provider '%s'",
-                article_title,
-                self.audio_config.provider,
+        level: str,
+    ) -> TTSResult:
+        if self.tts_provider is None:
+            self.tts_provider = build_tts_provider(
+                self.config,
+                client=self.tts_client,
+                logger=self.logger,
             )
-            raise ValueError(f"Unsupported audio provider: {self.audio_config.provider}")
-
-        tts_client = self._get_tts_client()
-        response_format = self._openai_response_format(self.audio_config.format)
-        openai_model_configs = self.config.llm.usage_reporting.prices.get("openai", {})
-        if supports_speech_usage_stream(self.audio_config.model, openai_model_configs):
-            return synthesize_speech_sse(
-                tts_client,
-                input_text=narration,
-                model=self.audio_config.model,
-                voice=self.audio_config.voice,
-                response_format=response_format,
-                destination=audio_path,
-            )
-
-        response = tts_client.audio.speech.create(
-            input=narration,
-            model=self.audio_config.model,
-            voice=self.audio_config.voice,
-            response_format=response_format,
-        )
-        response.write_to_file(audio_path)
-        return SpeechSynthesisResult(
-            usage=None,
-            usage_note="the configured speech model does not expose exact usage through SSE.",
+        return self.tts_provider.synthesize(
+            narration,
+            audio_path,
+            self.audio_config.format,
+            level=level,
         )
 
     def _upload_audio_file(
@@ -293,22 +338,35 @@ class AudioPipeline:
             )
             raise RuntimeError(f"Failed to upload audio to s3://{bucket}/{storage_key}") from exc
 
+    def _upload_timing_file(
+        self,
+        article_title: str,
+        timings_path: Path,
+        storage_key: str,
+    ) -> None:
+        bucket = self.audio_config.s3.bucket
+        if not bucket:
+            raise ValueError("Audio upload is enabled but audio.s3.bucket is not configured")
+        try:
+            self._get_s3_client().upload_file(
+                str(timings_path),
+                bucket,
+                storage_key,
+                ExtraArgs={
+                    "ContentType": "application/json; charset=utf-8",
+                    "CacheControl": "public, max-age=31536000, immutable",
+                },
+            )
+        except (BotoCoreError, ClientError) as exc:
+            raise RuntimeError(
+                f"Failed to upload synchronized timings for '{article_title}'"
+            ) from exc
+
     def _build_public_url(self, storage_key: str) -> str:
         if not self.audio_config.public_base_url:
             raise ValueError("Audio public base URL is required to build a published audio URL")
         base_url = self.audio_config.public_base_url.rstrip("/")
         return f"{base_url}/{storage_key}"
-
-    def _get_tts_client(self) -> Any:
-        if self.tts_client is None:
-            openai_api_key = self.config.llm.openai_api_key
-            if not openai_api_key:
-                self.logger.error(
-                    "Audio synthesis cannot start because OPENAI_API_KEY is not configured"
-                )
-                raise ValueError("OpenAI TTS requires OPENAI_API_KEY to be configured")
-            self.tts_client = OpenAI(api_key=openai_api_key)
-        return self.tts_client
 
     def _get_s3_client(self) -> Any:
         if self.s3_client is None:
@@ -326,16 +384,3 @@ class AudioPipeline:
             return mime_types[format_name]
         except KeyError as exc:
             raise ValueError(f"Unsupported audio format for MIME type mapping: {format_name}") from exc
-
-    def _openai_response_format(self, format_name: str) -> str:
-        response_formats = {
-            "mp3": "mp3",
-            "m4a": "aac",
-            "wav": "wav",
-        }
-        try:
-            return response_formats[format_name]
-        except KeyError as exc:
-            raise ValueError(
-                f"Unsupported audio format for OpenAI TTS response mapping: {format_name}"
-            ) from exc

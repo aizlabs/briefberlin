@@ -280,6 +280,39 @@ def apply_env_overrides(config_dict: Dict) -> Dict:
         config_dict.setdefault('audio', {})
         config_dict['audio']['voice'] = audio_voice
 
+    elevenlabs_key = os.getenv('ELEVENLABS_API_KEY')
+    provider_audio_env_vars = {
+        'OPENAI_TTS_MODEL': ('openai', 'model'),
+        'OPENAI_TTS_VOICE': ('openai', 'voice'),
+        'ELEVENLABS_TTS_MODEL': ('elevenlabs', 'model'),
+        'ELEVENLABS_VOICE_ID': ('elevenlabs', 'voice'),
+        'ELEVENLABS_OUTPUT_FORMAT': ('elevenlabs', 'output_format'),
+    }
+    if elevenlabs_key:
+        config_dict.setdefault('audio', {})
+        config_dict['audio'].setdefault('providers', {})
+        config_dict['audio']['providers'].setdefault('elevenlabs', {})
+        config_dict['audio']['providers']['elevenlabs']['api_key'] = elevenlabs_key
+    for env_var, (provider_name, setting_name) in provider_audio_env_vars.items():
+        setting_value = os.getenv(env_var)
+        if setting_value:
+            config_dict.setdefault('audio', {})
+            config_dict['audio'].setdefault('providers', {})
+            config_dict['audio']['providers'].setdefault(provider_name, {})
+            config_dict['audio']['providers'][provider_name][setting_name] = setting_value
+
+    audio_highlighting_enabled = parse_bool(os.getenv('AUDIO_HIGHLIGHTING_ENABLED'))
+    if audio_highlighting_enabled is not None:
+        config_dict.setdefault('audio', {})
+        config_dict['audio'].setdefault('website', {})
+        config_dict['audio']['website']['highlighting_enabled'] = audio_highlighting_enabled
+
+    audio_highlight_context = os.getenv('AUDIO_HIGHLIGHT_CONTEXT')
+    if audio_highlight_context:
+        config_dict.setdefault('audio', {})
+        config_dict['audio'].setdefault('website', {})
+        config_dict['audio']['website']['highlight_context'] = audio_highlight_context
+
     audio_format = os.getenv('AUDIO_FORMAT')
     if audio_format:
         config_dict.setdefault('audio', {})

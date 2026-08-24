@@ -211,13 +211,37 @@ def coerce_vocabulary_items(value: Any) -> List["VocabularyItem"]:
     return items
 
 
+class SpeechBlock(BaseModel):
+    """One semantically-addressable block inside the flattened narration."""
+
+    id: str = Field(..., min_length=1)
+    kind: Literal["title", "summary", "body", "vocabulary", "closing"]
+    text: str = Field(..., min_length=1)
+    text_start: int = Field(..., ge=0)
+    text_end: int = Field(..., ge=0)
+
+
 class SpeechScript(BaseModel):
     """Provider-neutral narration payload derived from an article."""
 
     title: str = Field(..., min_length=1, description="Spoken title for the article")
     sections: List[str] = Field(default_factory=list, description="Ordered narration blocks")
+    blocks: List[SpeechBlock] = Field(
+        default_factory=list,
+        description="Structured narration blocks with stable visible-content identifiers",
+    )
     narration: str = Field(..., min_length=1, description="Flattened narration text")
     includes_vocabulary: bool = Field(default=False, description="Whether glossary terms are narrated")
+
+
+class AudioWordCue(BaseModel):
+    """Provider-neutral timing for one word in the canonical narration."""
+
+    text: str = Field(..., min_length=1)
+    text_start: int = Field(..., ge=0)
+    text_end: int = Field(..., ge=0)
+    start_seconds: float = Field(..., ge=0)
+    end_seconds: float = Field(..., ge=0)
 
 
 class AudioAsset(BaseModel):
@@ -231,7 +255,21 @@ class AudioAsset(BaseModel):
     mime_type: Optional[str] = Field(default=None, description="MIME type for playback")
     local_script_path: Optional[str] = Field(default=None, description="Local narration script path")
     local_audio_path: Optional[str] = Field(default=None, description="Local synthesized audio path")
+    local_timings_path: Optional[str] = Field(default=None, description="Local synchronized cue sidecar")
     manifest_path: Optional[str] = Field(default=None, description="Local audio manifest path")
+    timings_url: Optional[str] = Field(default=None, description="Public synchronized cue sidecar URL")
+    timings_storage_key: Optional[str] = Field(
+        default=None,
+        description="Canonical object key for the synchronized cue sidecar",
+    )
+    timing_granularity: Optional[Literal["word"]] = Field(
+        default=None,
+        description="Finest published timing granularity",
+    )
+    highlight_context: Optional[Literal["sentence", "paragraph"]] = Field(
+        default=None,
+        description="Surrounding context emphasized alongside the active word",
+    )
     duration_seconds: Optional[float] = Field(default=None, ge=0, description="Audio duration")
 
 
@@ -380,7 +418,7 @@ class LLMModelsConfig(BaseModel):
 
 
 class ModelPricingConfig(BaseModel):
-    """Per-million-token rates and reporting capabilities for one provider model."""
+    """Per-million billable-unit rates and reporting capabilities for one provider model."""
 
     aliases: List[str] = Field(
         default_factory=list,
@@ -389,6 +427,10 @@ class ModelPricingConfig(BaseModel):
     modality: Literal["text", "audio"] = Field(
         default="text",
         description="Output modality used to label the usage report",
+    )
+    billing_unit: Literal["tokens", "characters"] = Field(
+        default="tokens",
+        description="Unit priced by input_per_million and output_per_million",
     )
     supports_sse_usage: bool = Field(
         default=False,
@@ -483,18 +525,54 @@ class AudioWebsiteConfig(BaseModel):
     """Website playback feature flags."""
 
     enabled: bool = Field(default=True, description="Render website audio player when audio exists")
+    highlighting_enabled: bool = Field(
+        default=True,
+        description="Publish and render synchronized text highlighting when cues exist",
+    )
+    highlight_context: Literal["sentence", "paragraph"] = Field(
+        default="sentence",
+        description="Context emphasized around the active spoken word",
+    )
+
+
+class OpenAITTSConfig(BaseModel):
+    """OpenAI-specific speech synthesis settings."""
+
+    model: str = "gpt-4o-mini-tts-2025-12-15"
+    voice: str = "marin"
+
+
+class ElevenLabsTTSConfig(BaseModel):
+    """ElevenLabs-specific speech synthesis settings."""
+
+    api_key: Optional[str] = Field(default=None, exclude=True)
+    model: str = "eleven_multilingual_v2"
+    voice: str = "OYTbf65OHHFELVut7v2H"
+    output_format: str = "mp3_44100_128"
+    speed_by_level: Dict[str, float] = Field(default_factory=dict)
+
+
+class AudioProvidersConfig(BaseModel):
+    """Provider-specific settings kept behind the TTS adapter boundary."""
+
+    openai: OpenAITTSConfig = Field(default_factory=OpenAITTSConfig)
+    elevenlabs: ElevenLabsTTSConfig = Field(default_factory=ElevenLabsTTSConfig)
 
 
 class AudioConfig(BaseModel):
     """Configuration for TTS preparation and future upload/delivery."""
 
     enabled: bool = Field(default=False, description="Enable audio preparation for approved articles")
-    provider: Optional[str] = Field(default=None, description="TTS provider identifier")
-    model: str = Field(
-        default="gpt-4o-mini-tts-2025-12-15",
-        description="TTS model identifier",
+    provider: str = Field(default="elevenlabs", pattern="^(openai|elevenlabs)$")
+    model: Optional[str] = Field(
+        default=None,
+        description="Backward-compatible model override for the selected provider",
     )
-    voice: str = Field(default="marin", min_length=1, description="Voice identifier")
+    voice: Optional[str] = Field(
+        default=None,
+        min_length=1,
+        description="Backward-compatible voice override for the selected provider",
+    )
     format: str = Field(default="mp3", pattern="^(mp3|m4a|wav)$", description="Primary output format")
     output_path: str = Field(default="./output/audio", description="Local working directory for audio files")
     include_vocabulary: bool = Field(
@@ -511,6 +589,23 @@ class AudioConfig(BaseModel):
     )
     s3: AudioStorageConfig = Field(default_factory=AudioStorageConfig)
     website: AudioWebsiteConfig = Field(default_factory=AudioWebsiteConfig)
+    providers: AudioProvidersConfig = Field(default_factory=AudioProvidersConfig)
+
+    def resolved_model(self) -> str:
+        """Return the selected provider model after applying legacy overrides."""
+        if self.model:
+            return self.model
+        if self.provider == "openai":
+            return self.providers.openai.model
+        return self.providers.elevenlabs.model
+
+    def resolved_voice(self) -> str:
+        """Return the selected provider voice after applying legacy overrides."""
+        if self.voice:
+            return self.voice
+        if self.provider == "openai":
+            return self.providers.openai.voice
+        return self.providers.elevenlabs.voice
 
 
 class GlossaryConfig(BaseModel):
