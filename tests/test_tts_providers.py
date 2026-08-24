@@ -77,7 +77,6 @@ def test_elevenlabs_uses_configured_speed_for_article_level(base_config, tmp_pat
     base_config.audio.provider = "elevenlabs"
     base_config.audio.providers.elevenlabs.api_key = "eleven-test-key"
     base_config.audio.providers.elevenlabs.speed_by_level = {
-        "A1": 0.7,
         "A2": 0.7,
         "B1": 0.8,
     }
