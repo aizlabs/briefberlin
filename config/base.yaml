@@ -99,6 +99,7 @@ audio:
       output_format: mp3_44100_128
       speed_by_level:
         A1: 0.7
+        A2: 0.7
         B1: 0.8
 
 # LLM configuration

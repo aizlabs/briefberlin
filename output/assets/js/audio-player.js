@@ -335,6 +335,10 @@
         clearActive();
       });
       audio.addEventListener("ended", clearActive);
+
+      if (!audio.paused && !audio.ended) {
+        animate();
+      }
     } catch (_error) {
       // Audio playback remains fully functional when timing data cannot be loaded or mapped.
     }

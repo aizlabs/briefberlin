@@ -53,7 +53,11 @@ def test_elevenlabs_writes_audio_and_returns_word_cues(base_config, tmp_path: Pa
 def test_elevenlabs_uses_configured_speed_for_article_level(base_config, tmp_path: Path):
     base_config.audio.provider = "elevenlabs"
     base_config.audio.providers.elevenlabs.api_key = "eleven-test-key"
-    base_config.audio.providers.elevenlabs.speed_by_level = {"A1": 0.7, "B1": 0.8}
+    base_config.audio.providers.elevenlabs.speed_by_level = {
+        "A1": 0.7,
+        "A2": 0.7,
+        "B1": 0.8,
+    }
     client = MagicMock()
     client.post.return_value = _response("Hallo Welt.")
 
@@ -61,7 +65,7 @@ def test_elevenlabs_uses_configured_speed_for_article_level(base_config, tmp_pat
         "Hallo Welt.",
         tmp_path / "article.mp3",
         "mp3",
-        level="A1",
+        level="A2",
     )
 
     assert client.post.call_args.kwargs["json"]["voice_settings"] == {"speed": 0.7}

@@ -34,6 +34,7 @@ def test_audio_player_supports_optional_synchronized_highlighting():
     assert "activeContextKey" in script
     assert "clearActiveWord" in script
     assert "contextCueAt" in script
+    assert "if (!audio.paused && !audio.ended)" in script
     assert ".article-audio-word.is-active-context" in styles
     assert ".article-audio-word.is-active-word" in styles
     assert ".is-active-audio-paragraph" in styles
