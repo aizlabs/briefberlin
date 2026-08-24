@@ -74,8 +74,15 @@
     return nodes;
   }
 
+  function textMatchesBlock(target, block) {
+    if (!target) {
+      return false;
+    }
+    return target.textContent === block.text || target.textContent.trimEnd() === block.text;
+  }
+
   function wrapCues(target, block, cues) {
-    if (!target || target.textContent !== block.text) {
+    if (!textMatchesBlock(target, block)) {
       return [];
     }
 
@@ -127,7 +134,7 @@
     let paragraphIndex = 0;
 
     blocks.forEach(function (block) {
-      if (block.kind === "title" && title && title.textContent === block.text) {
+      if (block.kind === "title" && textMatchesBlock(title, block)) {
         targets.set(block.id, title);
       }
       if (block.kind === "body") {
