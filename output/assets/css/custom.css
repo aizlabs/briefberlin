@@ -772,6 +772,16 @@
   color: #6c757d;
 }
 
+.article-summary {
+  max-width: 44rem;
+  margin: 0 0 1.75rem;
+  color: #555b61;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
 .page__sources {
   margin-top: 1em;
   padding: 1em;

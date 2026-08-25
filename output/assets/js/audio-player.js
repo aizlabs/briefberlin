@@ -130,12 +130,16 @@
   function blockTargets(page, blocks) {
     const targets = new Map();
     const title = page.querySelector(".page__title");
+    const summary = page.querySelector(".article-summary");
     const paragraphs = Array.from(page.querySelectorAll(".page__content > p"));
     let paragraphIndex = 0;
 
     blocks.forEach(function (block) {
       if (block.kind === "title" && textMatchesBlock(title, block)) {
         targets.set(block.id, title);
+      }
+      if (block.kind === "summary" && textMatchesBlock(summary, block)) {
+        targets.set(block.id, summary);
       }
       if (block.kind === "body") {
         while (paragraphIndex < paragraphs.length) {

@@ -23,6 +23,19 @@ def test_post_layout_does_not_render_audio_voice_label():
     assert "data-highlight-context" in layout
 
 
+def test_post_layout_renders_editorial_summary():
+    layout = Path("output/_layouts/post.html").read_text(encoding="utf-8")
+    styles = Path("output/assets/css/custom.css").read_text(encoding="utf-8")
+
+    assert "{% if page.summary %}" in layout
+    assert 'class="article-summary"' in layout
+    assert 'class="article-summary" itemprop=' not in layout
+    assert "{{ page.summary | escape }}" in layout
+    assert ".article-summary {" in styles
+    assert 'font-family: Georgia, "Times New Roman", serif;' in styles
+    assert "font-size: 1rem;" in styles
+
+
 def test_audio_player_supports_optional_synchronized_highlighting():
     script = Path("output/assets/js/audio-player.js").read_text(encoding="utf-8")
     styles = Path("output/assets/css/custom.css").read_text(encoding="utf-8")
@@ -30,6 +43,8 @@ def test_audio_player_supports_optional_synchronized_highlighting():
     assert "initTextHighlighting" in script
     assert "root.dataset.timingsUrl" in script
     assert "textMatchesBlock" in script
+    assert 'page.querySelector(".article-summary")' in script
+    assert 'block.kind === "summary"' in script
     assert "trimEnd()" in script
     assert 'root.dataset.highlightContext === "paragraph"' in script
     assert "article-audio-word" in script
