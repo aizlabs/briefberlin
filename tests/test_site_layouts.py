@@ -29,6 +29,7 @@ def test_post_layout_renders_editorial_summary():
 
     assert "{% if page.summary %}" in layout
     assert 'class="article-summary"' in layout
+    assert 'class="article-summary" itemprop=' not in layout
     assert "{{ page.summary | escape }}" in layout
     assert ".article-summary {" in styles
     assert 'font-family: Georgia, "Times New Roman", serif;' in styles
