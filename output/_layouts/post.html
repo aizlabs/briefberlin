@@ -43,6 +43,10 @@ layout: default
             </span>
           {% endif %}
         </div>
+
+        {% if page.summary %}
+          <p class="article-summary" itemprop="description">{{ page.summary | escape }}</p>
+        {% endif %}
       </header>
     {% endunless %}
 

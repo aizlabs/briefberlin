@@ -43,7 +43,7 @@ def test_publisher_prefers_article_author_over_configured_default(
 
 
 
-def test_publisher_includes_category_description_and_keywords_in_frontmatter(
+def test_publisher_includes_summary_category_description_and_keywords_in_frontmatter(
     base_config,
     mock_logger,
     sample_a2_article,
@@ -60,6 +60,7 @@ def test_publisher_includes_category_description_and_keywords_in_frontmatter(
 
     markdown = publisher._generate_markdown(article, datetime(2024, 1, 1, 12, 0, 0))
 
+    assert f'summary: "{article.summary}"' in markdown
     assert 'category: "Verkehr"' in markdown
     assert 'description: "Streik bei der BVG in Berlin am Donnerstag."' in markdown
     assert 'keywords:' in markdown
