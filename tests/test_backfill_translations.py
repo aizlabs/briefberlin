@@ -13,6 +13,8 @@ from scripts.backfill_translations import (
     post_ref,
     recover_article,
     recover_vocabulary,
+    rewrite_sibling_maps,
+    sibling_map,
 )
 
 HEADINGS = ["Vokabeln"]
@@ -127,3 +129,57 @@ def test_append_translations_block_replaces_an_existing_map(tmp_path):
 
     assert twice.count("translations:") == 1
     assert "  ar: /a/ar/" in twice
+
+
+def test_sibling_map_is_built_from_disk_not_from_this_runs_subset(tmp_path):
+    """An incremental run must not drop previously generated languages.
+
+    Regression guard: building the map from article.translations (only the
+    languages just generated) silently removed every earlier language from the
+    German post's selector and broke hreflang reciprocity.
+    """
+    ref = "052410-x-b1"
+    (tmp_path / ref).mkdir(parents=True)
+    for code in ("en", "ru"):
+        (tmp_path / ref / f"{code}.md").write_text("---\nlang: x\n---\nbody\n", encoding="utf-8")
+
+    urls = sibling_map(tmp_path, ref, ["en", "tr", "ru", "ar"])
+
+    assert list(urls) == ["de", "en", "ru"]
+    assert urls["de"] == f"/articles/{ref}/"
+    assert urls["ru"] == f"/articles/{ref}/ru/"
+
+
+def test_sibling_map_keeps_languages_no_longer_configured(tmp_path):
+    """A page that exists must stay reachable even if dropped from config."""
+    ref = "052410-x-b1"
+    (tmp_path / ref).mkdir(parents=True)
+    (tmp_path / ref / "vi.md").write_text("---\nlang: vi\n---\nbody\n", encoding="utf-8")
+
+    urls = sibling_map(tmp_path, ref, ["en"])
+
+    assert "vi" in urls
+
+
+def test_rewrite_sibling_maps_makes_every_sibling_agree(tmp_path):
+    """All siblings must advertise an identical set or hreflang stops being
+    reciprocal and Google discards the cluster."""
+    ref = "052410-x-b1"
+    (tmp_path / ref).mkdir(parents=True)
+    # en.md carries a stale, smaller map from an earlier run
+    (tmp_path / ref / "en.md").write_text(
+        "---\nlang: en\ntranslations:\n  de: /articles/x/\n  en: /articles/x/en/\n---\nbody\n",
+        encoding="utf-8",
+    )
+    (tmp_path / ref / "ar.md").write_text("---\nlang: ar\n---\nbody\n", encoding="utf-8")
+
+    urls = sibling_map(tmp_path, ref, ["en", "ar"])
+    count = rewrite_sibling_maps(tmp_path, ref, urls)
+
+    assert count == 2
+    for code in ("en", "ar"):
+        text = (tmp_path / ref / f"{code}.md").read_text(encoding="utf-8")
+        assert text.count("translations:") == 1
+        for sibling in ("de", "en", "ar"):
+            assert f"  {sibling}: /articles/{ref}/{sibling}/".replace("/de/", "/") in text
+        assert "lang: " + code in text

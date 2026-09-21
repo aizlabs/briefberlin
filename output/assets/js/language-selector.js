@@ -79,27 +79,41 @@
       if (audio.currentSrc !== state.src) {
         return;
       }
+      // Everything below is best-effort. A throw here previously aborted the
+      // function before audio.play(), silently killing the whole resume feature.
+      try {
+        applyState();
+      } catch (error) {
+        /* position/rate restore is a nicety; never block playback */
+      }
+      resumePlayback();
+    }
+
+    function applyState() {
       if (state.time > 0 && state.time < (audio.duration || Infinity)) {
         audio.currentTime = state.time;
       }
       if (state.rate) {
         audio.playbackRate = state.rate;
-        var button = document.querySelector(
-          '.article-audio__speed button[data-speed= + state.rate + ]'
-        );
-        if (button) {
-          document.querySelectorAll(".article-audio__speed button").forEach(function (other) {
-            other.classList.toggle("is-active", other === button);
-          });
-        }
+        // Compare data-speed numerically rather than building an attribute
+        // selector: the stored rate is a Number, so "1" vs "1.0" string
+        // mismatches would silently fail to highlight the right pill.
+        document.querySelectorAll(".article-audio__speed button").forEach(function (other) {
+          var rate = parseFloat(other.getAttribute("data-speed"));
+          other.classList.toggle("is-active", rate === state.rate);
+        });
       }
-      if (state.playing) {
-        var attempt = audio.play();
-        // Autoplay policy can refuse on a fresh document. Staying paused at the
-        // right position is the correct degradation - not an error.
-        if (attempt && typeof attempt.catch === "function") {
-          attempt.catch(function () {});
-        }
+    }
+
+    function resumePlayback() {
+      if (!state.playing) {
+        return;
+      }
+      var attempt = audio.play();
+      // Autoplay policy can refuse on a fresh document. Staying paused at the
+      // right position is the correct degradation - not an error.
+      if (attempt && typeof attempt.catch === "function") {
+        attempt.catch(function () {});
       }
     }
 

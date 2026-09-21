@@ -134,6 +134,41 @@ def append_translations_block(frontmatter_str: str, urls: Dict[str, str]) -> str
     return f"{without}\n{block}"
 
 
+def sibling_map(translations_dir: Path, ref: str, order: Sequence[str]) -> Dict[str, str]:
+    """Full `code -> url` map for a ref, read from what is actually on disk.
+
+    An incremental run only translates the MISSING languages, so the article's
+    own `translations` list covers just those. Building the map from it would
+    drop every previously generated language out of the German post's selector
+    and leave the pre-existing sibling documents advertising a stale, smaller
+    set - breaking hreflang reciprocity with no error anywhere.
+    """
+    present = {path.stem for path in (translations_dir / ref).glob("*.md")}
+    urls = {"de": f"/articles/{ref}/"}
+    for code in order:
+        if code in present:
+            urls[code] = f"/articles/{ref}/{code}/"
+    # Any language on disk that is no longer configured still exists as a page,
+    # so it must stay reachable.
+    for code in sorted(present - set(order)):
+        urls[code] = f"/articles/{ref}/{code}/"
+    return urls
+
+
+def rewrite_sibling_maps(translations_dir: Path, ref: str, urls: Dict[str, str]) -> int:
+    """Rewrite the translations block in every sibling doc so all 8 agree."""
+    rewritten = 0
+    for path in sorted((translations_dir / ref).glob("*.md")):
+        match = FRONTMATTER_RE.match(path.read_text(encoding="utf-8"))
+        if not match:
+            continue
+        frontmatter_str, body = match.groups()
+        updated = append_translations_block(frontmatter_str, urls)
+        path.write_text(f"---\n{updated}\n---\n{body}", encoding="utf-8")
+        rewritten += 1
+    return rewritten
+
+
 def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--posts-dir", default="output/_posts")
@@ -224,9 +259,14 @@ def main(argv: Sequence[str] | None = None) -> int:
                 encoding="utf-8",
             )
 
-        urls = publisher._translations_map(article, ref)
+        # Derive the map from what is on disk, not from this run's subset, so an
+        # incremental backfill keeps previously generated languages reachable.
+        urls = sibling_map(translations_dir, ref, [lang.code for lang in original])
         new_frontmatter = append_translations_block(frontmatter_str, urls)
         path.write_text(f"---\n{new_frontmatter}\n---\n{body}", encoding="utf-8")
+        # All siblings must advertise the identical set or hreflang stops being
+        # reciprocal and Google discards the cluster.
+        rewrite_sibling_maps(translations_dir, ref, urls)
 
     logger.info("Backfill complete: %d posts processed", processed)
     return 0

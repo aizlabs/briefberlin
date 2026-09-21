@@ -22,7 +22,7 @@
 {%- endfor -%}
 {%- if sibling_count > 0 -%}
 <details class="language-selector" data-language-selector>
-  <summary class="language-selector__toggle" aria-haspopup="listbox" aria-expanded="false">
+  <summary class="language-selector__toggle" aria-expanded="false">
     <span class="language-selector__icon" aria-hidden="true">文<sub>A</sub></span>
     <span class="language-selector__count">{{ include.t.languages_count | replace: "%d", sibling_count }}</span>
     <i class="fas fa-chevron-down language-selector__chevron" aria-hidden="true"></i>
@@ -35,7 +35,7 @@
              placeholder="{{ include.t.languages_search }}"
              aria-label="{{ include.t.languages_search }}" autocomplete="off">
     </div>
-    <ul class="language-selector__list" role="listbox">
+    <ul class="language-selector__list">
       {%- for l in site.data.languages -%}
       {%- assign href = page.translations[l.code] -%}
       {%- if href %}
@@ -50,11 +50,17 @@
           direction should follow the PAGE (mirroring the whole panel on an RTL
           page), and only the endonym needs its own script direction.
         {%- endcomment -%}
+        {%- comment -%}
+          No tabindex="-1" and no listbox/option roles: these are plain links and
+          must stay in the natural tab order, or a keyboard user with JavaScript
+          unavailable can open the selector but never reach a language. The
+          arrow-key handling in language-selector.js is an enhancement layered on
+          top of working tab navigation, not a replacement for it.
+        {%- endcomment -%}
         <a class="language-selector__link{% if l.code == current_lang %} language-selector__link--current{% endif %}"
            href="{{ href | relative_url }}"
            hreflang="{{ l.code }}" lang="{{ l.code }}"
-           role="option" aria-selected="{% if l.code == current_lang %}true{% else %}false{% endif %}"
-           tabindex="-1">
+           {% if l.code == current_lang %}aria-current="true"{% endif %}>
           <span class="language-selector__endonym" lang="{{ l.code }}" dir="{{ l.dir }}">{{ l.endonym }}</span>
           <span class="language-selector__english" lang="en" dir="ltr">{{ l.english }}</span>
         </a>

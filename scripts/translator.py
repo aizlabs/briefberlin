@@ -111,15 +111,24 @@ class ArticleTranslator:
         )
 
         # LangChain's usage accounting (scripts/usage_report.collect_run_usage)
-        # lives in a context var, and worker threads do NOT inherit context vars.
-        # Submitting through a copied context is what keeps the translation spend
-        # in the run cost report.
-        def run(language: TranslationLanguageConfig) -> Optional[ArticleTranslation]:
-            ctx = contextvars.copy_context()
+        # lives in a context var, and worker threads do NOT inherit context vars,
+        # so each task has to run inside a copy of the SUBMITTING thread's
+        # context or its tokens vanish from the run cost report.
+        #
+        # The copies must be made HERE, in the calling thread. Calling
+        # copy_context() inside the worker would snapshot the worker's own empty
+        # context and silently defeat the whole mechanism. One copy per task,
+        # because a Context cannot be entered twice concurrently.
+        tasks = [(language, contextvars.copy_context()) for language in languages]
+
+        def run(
+            task: Tuple[TranslationLanguageConfig, contextvars.Context],
+        ) -> Optional[ArticleTranslation]:
+            language, ctx = task
             return ctx.run(self._translate_one_safely, article, language, glossary)
 
         with ThreadPoolExecutor(max_workers=self.settings.max_workers) as pool:
-            results = list(pool.map(run, languages))
+            results = list(pool.map(run, tasks))
 
         translations = [item for item in results if item is not None]
         self.last_run_stats["translated_languages"] = [item.lang for item in translations]

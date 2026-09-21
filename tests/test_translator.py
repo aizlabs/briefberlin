@@ -5,6 +5,8 @@ never cost the other languages, and must never stop the German article from
 publishing.
 """
 
+import contextvars
+from concurrent.futures import ThreadPoolExecutor
 from unittest.mock import MagicMock, patch
 
 import pytest
@@ -223,3 +225,62 @@ def test_retries_before_giving_up_on_a_language(mock_chain, base_config, mock_lo
 
     assert [t.lang for t in result.translations] == ["en"]
     assert chain.invoke.call_count == 2
+
+
+# Regression guard for the usage-accounting context bug: copy_context() must be
+# evaluated in the SUBMITTING thread. Evaluated inside the worker it snapshots
+# the worker's own empty context, and every translation call silently vanishes
+# from the run cost report.
+_usage_probe = contextvars.ContextVar("usage_probe", default="MISSING")
+
+
+@patch("scripts.translator.build_structured_prompt_chain")
+def test_usage_context_reaches_worker_threads(mock_chain, base_config, mock_logger, article):
+    seen = []
+    chain = MagicMock()
+
+    def invoke(_payload):
+        seen.append(_usage_probe.get())
+        return _response()
+
+    chain.invoke.side_effect = invoke
+    mock_chain.return_value = chain
+
+    token = _usage_probe.set("ACTIVE")
+    try:
+        ArticleTranslator(base_config, mock_logger).translate_article(article)
+    finally:
+        _usage_probe.reset(token)
+
+    assert seen and all(value == "ACTIVE" for value in seen), (
+        "translation calls ran without the caller's context; token usage would be "
+        "dropped from the cost report"
+    )
+
+
+@patch("scripts.translator.build_structured_prompt_chain")
+def test_usage_context_reaches_workers_when_caller_is_itself_a_worker(
+    mock_chain, base_config, mock_logger, article
+):
+    """The pipeline can invoke this from inside another pool worker."""
+    seen = []
+    chain = MagicMock()
+
+    def invoke(_payload):
+        seen.append(_usage_probe.get())
+        return _response()
+
+    chain.invoke.side_effect = invoke
+    mock_chain.return_value = chain
+
+    translator = ArticleTranslator(base_config, mock_logger)
+
+    token = _usage_probe.set("ACTIVE")
+    try:
+        ctx = contextvars.copy_context()
+        with ThreadPoolExecutor(1) as pool:
+            pool.submit(ctx.run, translator.translate_article, article).result()
+    finally:
+        _usage_probe.reset(token)
+
+    assert seen and all(value == "ACTIVE" for value in seen)
