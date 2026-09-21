@@ -1,0 +1,74 @@
+{%- comment -%}
+  Wikipedia-style language selector.
+
+  Rendered on the German post AND on every translation, from the same loop:
+  `page.translations` is a map that always contains `de` plus every emitted
+  language INCLUDING the page's own, so the current language simply picks up the
+  `--current` modifier. No branching per layout.
+
+  Progressive enhancement: <details>/<summary> opens, closes and reports expanded
+  state to assistive tech with zero JavaScript. The search field ships `hidden`
+  and is revealed by language-selector.js on init - a search box that cannot
+  filter is worse than no search box.
+
+  Params: t = the site.data.ui-briefberlin block for this page's language.
+{%- endcomment -%}
+{%- assign current_lang = page.lang | default: "de" -%}
+{%- assign sibling_count = 0 -%}
+{%- for l in site.data.languages -%}
+  {%- if page.translations[l.code] and l.code != current_lang -%}
+    {%- assign sibling_count = sibling_count | plus: 1 -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- if sibling_count > 0 -%}
+<details class="language-selector" data-language-selector>
+  <summary class="language-selector__toggle" aria-expanded="false">
+    <span class="language-selector__icon" aria-hidden="true">文<sub>A</sub></span>
+    <span class="language-selector__count">{{ include.t.languages_count | replace: "%d", sibling_count }}</span>
+    <i class="fas fa-chevron-down language-selector__chevron" aria-hidden="true"></i>
+  </summary>
+
+  <div class="language-selector__panel" role="group" aria-label="{{ include.t.languages_aria }}">
+    <div class="language-selector__search" hidden>
+      <i class="fas fa-search language-selector__search-icon" aria-hidden="true"></i>
+      <input type="search" class="language-selector__search-input"
+             placeholder="{{ include.t.languages_search }}"
+             aria-label="{{ include.t.languages_search }}" autocomplete="off">
+    </div>
+    <ul class="language-selector__list">
+      {%- for l in site.data.languages -%}
+      {%- assign href = page.translations[l.code] -%}
+      {%- if href %}
+      <li class="language-selector__item"
+          data-endonym="{{ l.endonym | downcase }}"
+          data-english="{{ l.english | downcase }}"
+          data-code="{{ l.code }}">
+        {%- comment -%}
+          `dir` belongs on the endonym TEXT, never on the row: putting it on the
+          <a> reverses the flex row, so the Arabic entry rendered endonym-right /
+          English-left while every other row was endonym-left. The row's
+          direction should follow the PAGE (mirroring the whole panel on an RTL
+          page), and only the endonym needs its own script direction.
+        {%- endcomment -%}
+        {%- comment -%}
+          No tabindex="-1" and no listbox/option roles: these are plain links and
+          must stay in the natural tab order, or a keyboard user with JavaScript
+          unavailable can open the selector but never reach a language. The
+          arrow-key handling in language-selector.js is an enhancement layered on
+          top of working tab navigation, not a replacement for it.
+        {%- endcomment -%}
+        <a class="language-selector__link{% if l.code == current_lang %} language-selector__link--current{% endif %}"
+           href="{{ href | relative_url }}"
+           hreflang="{{ l.code }}" lang="{{ l.code }}"
+           {% if l.code == current_lang %}aria-current="true"{% endif %}>
+          <span class="language-selector__endonym" lang="{{ l.code }}" dir="{{ l.dir }}">{{ l.endonym }}</span>
+          <span class="language-selector__english" lang="en" dir="ltr">{{ l.english }}</span>
+        </a>
+      </li>
+      {%- endif -%}
+      {%- endfor %}
+    </ul>
+    <p class="language-selector__empty" hidden>{{ include.t.languages_no_match }}</p>
+  </div>
+</details>
+{%- endif -%}

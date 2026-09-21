@@ -405,3 +405,154 @@ def test_run_manual_pipeline_dry_run_skips_audio_preparation(
     mock_publisher.save_article.assert_called_once()
     saved_article = mock_publisher.save_article.call_args.args[0]
     assert saved_article == sample_a2_text_article
+
+
+def _pipeline_mocks(
+    base_config,
+    mock_logger,
+    article,
+    mock_load_config,
+    mock_setup_logger,
+    mock_topic_metadata_extractor_class,
+    mock_generator_class,
+    mock_quality_gate_class,
+    mock_glossary_class,
+    mock_publisher_class,
+):
+    """Wire the happy path so a test can focus on the translation step."""
+    base_config.generation.levels = ["A2"]
+    base_config.audio.enabled = False
+    mock_load_config.return_value = base_config
+    mock_setup_logger.return_value = mock_logger
+
+    extractor = MagicMock()
+    extractor.extract.return_value = TopicMetadataResponse(title="T", keywords=["a"])
+    mock_topic_metadata_extractor_class.return_value = extractor
+
+    generator = MagicMock()
+    generator.generate_article.return_value = article
+    mock_generator_class.return_value = generator
+
+    gate = MagicMock()
+    gate.check_and_improve.return_value = (
+        article,
+        QualityResult(
+            passed=True, score=8.3, issues=[], strengths=["klar"], attempts=1,
+            grammar_score=3.0, educational_score=2.5, content_score=1.8, level_score=1.0,
+        ),
+    )
+    mock_quality_gate_class.return_value = gate
+
+    glossary = MagicMock()
+    glossary.enrich_article.return_value = article
+    mock_glossary_class.return_value = glossary
+
+    publisher = MagicMock()
+    publisher.save_article.return_value = True
+    mock_publisher_class.return_value = publisher
+    return glossary, publisher
+
+
+@patch("scripts.manual_pipeline.ArticleTranslator")
+@patch("scripts.manual_pipeline.Publisher")
+@patch("scripts.manual_pipeline.AudioPipeline")
+@patch("scripts.manual_pipeline.GlossaryGenerator")
+@patch("scripts.manual_pipeline.QualityGate")
+@patch("scripts.manual_pipeline.ContentGenerator")
+@patch("scripts.manual_pipeline.TopicMetadataExtractor")
+@patch("scripts.manual_pipeline.setup_logger")
+@patch("scripts.manual_pipeline.load_config")
+def test_translation_runs_after_glossary_and_before_publish(
+    mock_load_config, mock_setup_logger, mock_extractor_class, mock_generator_class,
+    mock_gate_class, mock_glossary_class, mock_audio_class, mock_publisher_class,
+    mock_translator_class, base_config, mock_logger, sample_a2_text_article, tmp_path,
+):
+    source_path = _write_source(tmp_path / "private-input" / "article.source.txt")
+    glossary, publisher = _pipeline_mocks(
+        base_config, mock_logger, sample_a2_text_article, mock_load_config,
+        mock_setup_logger, mock_extractor_class, mock_generator_class,
+        mock_gate_class, mock_glossary_class, mock_publisher_class,
+    )
+
+    translated = sample_a2_text_article.model_copy(update={"title": "translated-marker"})
+    translator = MagicMock()
+    translator.translate_article.return_value = translated
+    mock_translator_class.return_value = translator
+
+    calls = []
+    glossary.enrich_article.side_effect = lambda a: (calls.append("glossary"), sample_a2_text_article)[1]
+    translator.translate_article.side_effect = lambda a: (calls.append("translate"), translated)[1]
+    publisher.save_article.side_effect = lambda a, **kw: (calls.append("publish"), True)[1]
+
+    args = Namespace(
+        sources=[str(source_path)], level=["A2"], environment="local", dry_run=False,
+    )
+    assert run_manual_pipeline(args) == 0
+
+    # Order matters: translating before the gate would translate rejected drafts,
+    # and translating before the glossary would have nothing to translate.
+    assert calls == ["glossary", "translate", "publish"]
+    # The article handed to the publisher is the translated one.
+    assert publisher.save_article.call_args.args[0] is translated
+
+
+@patch("scripts.manual_pipeline.ArticleTranslator")
+@patch("scripts.manual_pipeline.Publisher")
+@patch("scripts.manual_pipeline.AudioPipeline")
+@patch("scripts.manual_pipeline.GlossaryGenerator")
+@patch("scripts.manual_pipeline.QualityGate")
+@patch("scripts.manual_pipeline.ContentGenerator")
+@patch("scripts.manual_pipeline.TopicMetadataExtractor")
+@patch("scripts.manual_pipeline.setup_logger")
+@patch("scripts.manual_pipeline.load_config")
+def test_no_translate_flag_skips_translation(
+    mock_load_config, mock_setup_logger, mock_extractor_class, mock_generator_class,
+    mock_gate_class, mock_glossary_class, mock_audio_class, mock_publisher_class,
+    mock_translator_class, base_config, mock_logger, sample_a2_text_article, tmp_path,
+):
+    source_path = _write_source(tmp_path / "private-input" / "article.source.txt")
+    _pipeline_mocks(
+        base_config, mock_logger, sample_a2_text_article, mock_load_config,
+        mock_setup_logger, mock_extractor_class, mock_generator_class,
+        mock_gate_class, mock_glossary_class, mock_publisher_class,
+    )
+    translator = MagicMock()
+    mock_translator_class.return_value = translator
+
+    args = Namespace(
+        sources=[str(source_path)], level=["A2"], environment="local",
+        dry_run=False, no_translate=True,
+    )
+    assert run_manual_pipeline(args) == 0
+    translator.translate_article.assert_not_called()
+
+
+@patch("scripts.manual_pipeline.ArticleTranslator")
+@patch("scripts.manual_pipeline.Publisher")
+@patch("scripts.manual_pipeline.AudioPipeline")
+@patch("scripts.manual_pipeline.GlossaryGenerator")
+@patch("scripts.manual_pipeline.QualityGate")
+@patch("scripts.manual_pipeline.ContentGenerator")
+@patch("scripts.manual_pipeline.TopicMetadataExtractor")
+@patch("scripts.manual_pipeline.setup_logger")
+@patch("scripts.manual_pipeline.load_config")
+def test_translations_disabled_in_config_skips_translation(
+    mock_load_config, mock_setup_logger, mock_extractor_class, mock_generator_class,
+    mock_gate_class, mock_glossary_class, mock_audio_class, mock_publisher_class,
+    mock_translator_class, base_config, mock_logger, sample_a2_text_article, tmp_path,
+):
+    source_path = _write_source(tmp_path / "private-input" / "article.source.txt")
+    _pipeline_mocks(
+        base_config, mock_logger, sample_a2_text_article, mock_load_config,
+        mock_setup_logger, mock_extractor_class, mock_generator_class,
+        mock_gate_class, mock_glossary_class, mock_publisher_class,
+    )
+    base_config.translations.enabled = False
+    translator = MagicMock()
+    mock_translator_class.return_value = translator
+
+    args = Namespace(
+        sources=[str(source_path)], level=["A2"], environment="local", dry_run=False,
+    )
+    assert run_manual_pipeline(args) == 0
+    translator.translate_article.assert_not_called()

@@ -73,6 +73,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                 dry_run=False,
                 publish_timestamp=args.publish_timestamp,
                 author=args.author,
+                no_translate=False,
             )
         )
     except Exception as exc:

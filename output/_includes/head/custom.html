@@ -7,6 +7,10 @@
 <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
 <script src="{{ '/assets/js/audio-player.js' | relative_url }}" defer></script>
 <script src="{{ '/assets/js/glossary-popup.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/language-selector.js' | relative_url }}" defer></script>
+
+<!-- hreflang alternates for translated articles -->
+{% include head/alternates.html %}
 
 <!-- Font Awesome for icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -112,7 +116,7 @@
   "name": {{ page.title | jsonify }},
   "description": {{ page.excerpt | strip_html | strip_newlines | jsonify }},
   "educationalLevel": {{ page.level | jsonify }},
-  "inLanguage": "de",
+  "inLanguage": {{ page.lang | default: "de" | jsonify }},
   "learningResourceType": "Article",
   "datePublished": "{{ page.date | date_to_xmlschema }}",
   "author": {
@@ -146,7 +150,10 @@
   "description": {{ page.description | default: page.excerpt | strip_html | strip_newlines | jsonify }},
   "datePublished": "{{ page.date | date_to_xmlschema }}",
   "dateModified": "{{ page.last_modified_at | default: page.date | date_to_xmlschema }}",
-  "inLanguage": "de",
+  "inLanguage": {{ page.lang | default: "de" | jsonify }},
+  {% if page.lang and page.lang != "de" and page.translations.de %}
+  "translationOfWork": { "@id": {{ page.translations.de | absolute_url | append: "#article" | jsonify }} },
+  {% endif %}
   "articleSection": {{ page.category | default: "Nachrichten" | jsonify }},
   "isAccessibleForFree": true,
   {% assign json_keywords = page.keywords | default: page.topics %}

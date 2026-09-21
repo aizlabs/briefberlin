@@ -14,9 +14,15 @@ from typing import Any, Dict, List, Optional, Tuple
 from urllib.parse import urlparse
 
 from scripts.config import AppConfig
-from scripts.models import AdaptedArticle, VocabularyItem, coerce_vocabulary_items
+from scripts.models import (
+    AdaptedArticle,
+    ArticleTranslation,
+    VocabularyItem,
+    coerce_vocabulary_items,
+)
 from scripts.text_utils import normalize_vocabulary_term, slugify_text
 from scripts.topic_utils import sanitize_topic_keywords
+from scripts.translation_hints import hint_id, publishable_translation_hints
 
 
 class Publisher:
@@ -32,6 +38,15 @@ class Publisher:
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
         self.source_url_map = self._build_source_url_map()
+
+        # Reader-language translations live in their own Jekyll collection, NOT in
+        # _posts: collection documents are structurally absent from site.posts, so
+        # they cannot leak into pagination, jekyll-feed, the Telegram broadcaster,
+        # the SEO backfill glob or the audio post-processor.
+        self.translations_dir: Optional[Path] = None
+        if config.translations.enabled:
+            self.translations_dir = Path(config.translations.output_path)
+            self.translations_dir.mkdir(parents=True, exist_ok=True)
 
         self.logger.info(f"Publisher initialized (dry_run={dry_run}, output={self.output_dir})")
 
@@ -66,6 +81,15 @@ class Publisher:
                 f.write(markdown)
 
             self.logger.info(f"✅ Saved: {filename}")
+
+            # A translation write failure must NOT flip this return value: False
+            # here triggers alert_manager.send_error("Publishing failed") upstream,
+            # even though the German article was written successfully.
+            try:
+                self.save_translations(article, timestamp)
+            except Exception as exc:
+                self.logger.error(f"Failed to save translations for {filename}: {exc}")
+
             return True
 
         except Exception as e:
@@ -86,15 +110,29 @@ class Publisher:
             article: Article dict with title and level
             timestamp: datetime object for consistent timestamping
         """
-        timestamp_str = timestamp.strftime("%Y-%m-%d-%H%M%S")
+        return f"{timestamp.strftime('%Y-%m-%d')}-{self._post_ref(article, timestamp)}.md"
 
-        # Create slug from title
-        title = article.title
-        slug = slugify_text(title)[:50]  # Max 50 chars
+    @staticmethod
+    def _jekyll_slugify(value: str) -> str:
+        """Reproduce Jekyll's default slugify, which derives a post's `:title`.
 
-        level = article.level.lower()
+        Jekyll collapses each run of non-alphanumeric characters into a single
+        hyphen. That matters: `slugify_text(title)[:50]` can end on a hyphen, and
+        appending `-b1` then yields `...unter--b1` in the FILENAME while Jekyll
+        publishes `...unter-b1` in the URL. Deriving the ref with the same rule is
+        what keeps every translation URL and back-link from 404ing.
+        """
+        return re.sub(r"[^a-z0-9]+", "-", value.lower()).strip("-")
 
-        return f"{timestamp_str}-{slug}-{level}.md"
+    def _post_ref(self, article: AdaptedArticle, timestamp: datetime) -> str:
+        """The post's Jekyll `:title` - its filename stem minus the date prefix.
+
+        This is the shared key between the German post's URL
+        (/articles/<ref>/) and its translations (/articles/<ref>/<lang>/).
+        """
+        slug = slugify_text(article.title)[:50]
+        stem = f"{timestamp.strftime('%H%M%S')}-{slug}-{article.level.lower()}"
+        return self._jekyll_slugify(stem)
 
     def _escape_yaml_string(self, text: str) -> str:
         """
@@ -286,7 +324,7 @@ keywords: {keywords_json}
 {self._format_sources(article.sources)}
 {self._format_audio(article)}
 reading_time: {article.reading_time}
----
+{self._format_translations_map(article, self._post_ref(article, timestamp))}---
 
 """
 
@@ -374,40 +412,12 @@ reading_time: {article.reading_time}
         return '\n'.join(vocab_lines)
 
     def _translation_hints_for_publish(self, article: AdaptedArticle) -> List[VocabularyItem]:
-        """Return the broad clickable hint set, falling back to visible vocabulary."""
-        hints = coerce_vocabulary_items(article.translation_hints)
-        visible_terms = {
-            item.term.casefold()
-            for item in coerce_vocabulary_items(article.vocabulary)
-        }
-        if not hints:
-            hints = [
-                item.model_copy(update={"default_glossary": True})
-                for item in coerce_vocabulary_items(article.vocabulary)
-            ]
+        """Return the broad clickable hint set, falling back to visible vocabulary.
 
-        deduped: List[VocabularyItem] = []
-        seen = set()
-        for item in hints:
-            normalized_term = normalize_vocabulary_term(item.term)
-            if not normalized_term:
-                continue
-            key = normalized_term.casefold()
-            if key in seen:
-                continue
-            definition = item.english or item.explanation
-            if not definition:
-                continue
-            seen.add(key)
-            deduped.append(
-                item.model_copy(
-                    update={
-                        "term": normalized_term,
-                        "default_glossary": item.default_glossary or key in visible_terms,
-                    }
-                )
-            )
-        return deduped
+        Delegates to scripts.translation_hints so the translator numbers terms
+        identically - see that module's docstring.
+        """
+        return publishable_translation_hints(article)
 
     def _format_translation_hints_data(self, translation_hints: List[VocabularyItem]) -> str:
         """Embed precomputed translation hints as static JSON for article JavaScript."""
@@ -434,6 +444,137 @@ reading_time: {article.reading_time}
             f"{encoded}"
             "</script>\n\n"
         )
+
+    # -- reader-language translations --------------------------------------
+
+    def save_translations(self, article: AdaptedArticle, timestamp: datetime) -> List[str]:
+        """Write one Jekyll document per completed translation.
+
+        Path is ``<output>/<ref>/<lang>.md``, where ``ref`` is the German post's
+        Jekyll `:title`. With the collection permalink ``/articles/:path/`` that
+        yields ``/articles/<ref>/<lang>/`` by construction, so no ``permalink:``
+        key is written and the URL has exactly one source of truth.
+
+        Filenames are NEVER derived from the translated title: slugify_text is
+        ASCII-only, so every Arabic/Russian/Ukrainian title collapses to "" and
+        the files would collide.
+        """
+        if not article.translations or self.translations_dir is None:
+            return []
+
+        ref = self._post_ref(article, timestamp)
+        target_dir = self.translations_dir / ref
+        written: List[str] = []
+
+        if self.dry_run:
+            self.logger.info(
+                "[DRY RUN] Would save %d translations under %s",
+                len(article.translations),
+                target_dir,
+            )
+            return []
+
+        target_dir.mkdir(parents=True, exist_ok=True)
+        for translation in article.translations:
+            path = target_dir / f"{translation.lang}.md"
+            path.write_text(
+                self._generate_translation_markdown(article, translation, timestamp, ref),
+                encoding="utf-8",
+            )
+            written.append(str(path))
+
+        self.logger.info("✅ Saved %d translations: %s", len(written), ref)
+        return written
+
+    def _translations_map(self, article: AdaptedArticle, ref: str) -> Dict[str, str]:
+        """Bare language code -> root-relative URL.
+
+        Includes ``de`` AND every translated language, and is written IDENTICALLY
+        into the German post and all of its translations. That is what makes the
+        rendered hreflang set self-referential and reciprocal with no branching
+        in the templates.
+        """
+        urls = {"de": f"/articles/{ref}/"}
+        for translation in article.translations:
+            urls[translation.lang] = f"/articles/{ref}/{translation.lang}/"
+        return urls
+
+    def _format_translations_map(self, article: AdaptedArticle, ref: str) -> str:
+        """YAML block for the frontmatter, or "" when nothing was translated."""
+        if not article.translations:
+            return ""
+        lines = ["translations:"]
+        lines.extend(
+            f"  {code}: {url}" for code, url in self._translations_map(article, ref).items()
+        )
+        return "\n".join(lines) + "\n"
+
+    def _format_translated_vocabulary(self, translation: ArticleTranslation) -> str:
+        """Static glossary list for a translated page.
+
+        The German headword is wrapped in ``lang="de" dir="ltr"`` so it stays
+        readable inside a right-to-left page.
+
+        No JSON payload and no clickable spans: the translated body contains no
+        German words for them to attach to.
+        """
+        rows = []
+        for item in translation.vocabulary:
+            definition = " - ".join(p for p in (item.translation, item.explanation) if p)
+            if not definition:
+                continue
+            rows.append(
+                f'- <strong lang="de" dir="ltr">{item.term}</strong> - {definition}'
+            )
+        if not rows:
+            return ""
+        return "\n".join(["", f"## {translation.glossary_heading}", "", *rows]) + "\n"
+
+    def _generate_translation_markdown(
+        self,
+        article: AdaptedArticle,
+        translation: ArticleTranslation,
+        timestamp: datetime,
+        ref: str,
+    ) -> str:
+        esc = self._escape_yaml_string
+        category = (
+            getattr(article, "category", None)
+            or (getattr(article.topic, "category", None) if article.topic else None)
+            or "Nachrichten"
+        )
+        author = str(
+            article.author or self.config.output.get("default_author") or ""
+        ).strip()
+        author_line = f'author: "{esc(author)}"\n' if author else ""
+        summary_line = f'summary: "{esc(translation.summary)}"\n' if translation.summary else ""
+        description = translation.summary or translation.title
+
+        frontmatter = (
+            "---\n"
+            f"lang: {translation.lang}\n"
+            f"ref: {ref}\n"
+            f'title: "{esc(translation.title)}"\n'
+            f"date: {timestamp.strftime('%Y-%m-%d %H:%M:%S')}\n"
+            f"{author_line}"
+            f"level: {article.level}\n"
+            f'category: "{esc(category)}"\n'
+            f"{summary_line}"
+            f'description: "{esc(description)}"\n'
+            f'source_title: "{esc(article.title)}"\n'
+            f"reading_time: {translation.reading_time}\n"
+            f'glossary_heading: "{esc(translation.glossary_heading)}"\n'
+            # Audio is deliberately the GERMAN track: the reader listens in German
+            # while reading their own language.
+            f"{self._format_audio(article)}\n"
+            f"{self._format_translations_map(article, ref)}"
+            "---\n\n"
+        )
+
+        # NOTE: never _render_content_with_translation_hints here. It scans for
+        # German terms case-insensitively; over English text it wraps incidental
+        # matches, and its _is_word_char check is meaningless for Arabic.
+        return frontmatter + translation.content + "\n" + self._format_translated_vocabulary(translation)
 
     def _render_content_with_translation_hints(
         self,
@@ -503,7 +644,7 @@ reading_time: {article.reading_time}
         return len(char) == 1 and (char.isalnum() or char == "_")
 
     def _translation_hint_id(self, index: int) -> str:
-        return f"term-{index + 1}"
+        return hint_id(index)
 
     def _deduplicate_sources(self, sources) -> List[Any]:
         """Deduplicate sources using normalized keys, preserving order and first occurrence."""

@@ -39,6 +39,7 @@ briefberlin-audio-post = "scripts.post_audio:main"
 briefberlin-publish-source = "scripts.publish_source:main"
 briefberlin-publish-and-push = "scripts.publish_and_push:main"
 briefberlin-eval-glossary = "scripts.eval_glossary_llm:main"
+briefberlin-backfill-translations = "scripts.backfill_translations:main"
 
 [build-system]
 requires = ["hatchling"]

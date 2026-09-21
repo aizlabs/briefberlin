@@ -890,3 +890,112 @@ Level: {article.level}
 Content:
 {article.content}
 """
+
+
+# =============================================================================
+# Reader-Language Translation (see config `translations:`)
+# =============================================================================
+
+TRANSLATION_REGISTER_RULES = {
+    "A2": (
+        "The German source is CEFR A2. Translate into equally plain, everyday "
+        "language: short sentences, common words, no academic or bureaucratic "
+        "register, nothing a beginner would need a dictionary for. Keep one "
+        "target sentence per German sentence."
+    ),
+    "B1": (
+        "The German source is CEFR B1. Translate into clear, plain news prose: "
+        "natural sentence variety, ordinary journalistic vocabulary, no academic "
+        "or legalistic register."
+    ),
+}
+
+
+def get_translation_prompt(article, language, glossary) -> str:
+    """Build the prompt that renders one finished German article in one language.
+
+    Args:
+        article: the published AdaptedArticle (German, post-quality-gate)
+        language: a TranslationLanguageConfig (code, name, glossary_heading)
+        glossary: list of (hint_id, VocabularyItem) - the VISIBLE glossary rows
+
+    The article body is plain text at this point: LevelAdapter strips ``**`` and
+    the A2/B1 prompts forbid emphasis. All interactive markup is injected later,
+    at publish time. So the model both receives and must return plain text.
+    """
+    validate_level(article.level)
+
+    register_rule = TRANSLATION_REGISTER_RULES[article.level]
+    glossary_lines = "\n".join(
+        f"- {item.term} :: {item.english} :: {item.explanation}"
+        for _, item in glossary
+    ) or "(none)"
+
+    return f"""You are translating a finished German news article for language learners
+into {language.name}. The German article stays on the site; your translation is
+published next to it as parallel text, so a learner can read both.
+
+TARGET LANGUAGE: {language.name}
+
+RULES
+
+1. PARALLEL TEXT IS THE PRODUCT.
+   Return exactly the same number of paragraphs as the German, in the same order,
+   separated by one blank line, with one-to-one correspondence. Never merge, split,
+   reorder, summarize, expand, or add an explanatory sentence of your own.
+
+2. PLAIN TEXT ONLY.
+   No markdown (no **, #, -, []()), no HTML, no buttons, no footnotes.
+
+3. PROPER NAMES ONLY STAY GERMAN - COMMON WORDS MUST BE TRANSLATED.
+   Keep in German form: organisation and institution names (Senat, BVG, Bundestag),
+   party names and abbreviations (CDU, SPD, AfD, Die Linke, BSW), personal names,
+   and street/park names.
+
+   Everything else is ordinary vocabulary and MUST be translated, even if it is a
+   long German compound. For example Wohnungskrise, Wohnungsmarkt, Genossenschaften,
+   Grundstücke, Sozialwohnungen, Vergesellschaftung, Bündnisse, entlasten and
+   enteignen are common words, NOT names: translate them.
+
+   For a target language written in Cyrillic or Arabic script, use the standard
+   native-script form of well-known places and of Bund/Länder-style civic terms
+   (Berlin -> Берлин / برلين, Hamburg -> Гамбург / هامبورغ). Do NOT leave a
+   Latin-script word sitting inside Cyrillic or Arabic text unless it is an
+   organisation's official name or an abbreviation (CDU, SPD, BVG). A reader of
+   {language.name} should be able to read the whole body without knowing German.
+
+4. FACTS ARE FROZEN.
+   Numbers, percentages, dates, election results and quantities must match the
+   German exactly.
+
+5. REGISTER.
+   {register_rule}
+
+6. GLOSSARY - AND THIS RULE APPLIES TO THE GLOSSARY LIST ONLY.
+   In the `vocabulary` rows, echo every `term` back BYTE-IDENTICAL IN GERMAN: it is
+   the headword the learner is studying and the word they hear in the German audio.
+   Put the {language.name} rendering in `translation`, and rewrite the explanation in
+   {language.name} at the same simple register and roughly the same length. Return
+   one row per input row, in the same order.
+
+   CRITICAL: this does NOT apply to the body. In `content`, those same words must be
+   fully translated like any other word. Keeping a glossary headword in German inside
+   the translated body is a mistake - the reader reads the body in {language.name}
+   and studies the German headword in the glossary list underneath.
+
+7. SCRIPT AND DIRECTION.
+   Write natural {language.name}. Do not insert directional control characters and do
+   not mirror punctuation by hand; page direction is handled by the template.
+
+GERMAN TITLE:
+{article.title}
+
+GERMAN SUMMARY:
+{article.summary}
+
+GERMAN BODY:
+{article.content}
+
+GLOSSARY ROWS (german_term :: current english gloss :: german explanation):
+{glossary_lines}
+"""

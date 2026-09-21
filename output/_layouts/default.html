@@ -1,0 +1,50 @@
+---
+---
+
+{%- comment -%} BriefBerlin shadow of minimal-mistakes-jekyll 4.27.3 _layouts/default.html.
+     Changes vs the gem:
+       1. <html lang/dir> are page-aware (the gem hardcodes site.locale and puts
+          dir on <body> only - while its own assets/js/_main.js reads it from
+          <html>). Needed for the Arabic translation pages.
+       2. ui_locale= is passed to every include_cached call. jekyll-include-cache
+          keys the cache on include name + PARAMETERS, so without an explicit
+          parameter the first page built would fix the chrome language for the
+          entire site.
+     Re-diff against the gem on any theme bump. {%- endcomment -%}
+<!doctype html>
+{% include copyright.html %}
+{%- assign page_lang = page.lang | default: site.lang | default: "en" -%}
+{%- assign page_langdef = site.data.languages | where: "code", page_lang | first -%}
+{%- assign page_dir = page_langdef.dir | default: "ltr" -%}
+{%- assign page_html_lang = page_langdef.html_lang | default: site.locale | default: "en" -%}
+<html lang="{{ page_html_lang }}" dir="{{ page_dir }}" class="no-js">
+  <head>
+    {% include head.html %}
+    {% include head/custom.html %}
+  </head>
+
+  <body class="layout--{{ page.layout | default: layout.layout }}{% if page.classes or layout.classes %}{{ page.classes | default: layout.classes | join: ' ' | prepend: ' ' }}{% endif %}" dir="{{ page_dir }}">
+    {% include_cached skip-links.html ui_locale=page_lang %}
+    {% include_cached masthead.html ui_locale=page_lang %}
+
+    <div class="initial-content">
+      {{ content }}
+      {% include after-content.html %}
+    </div>
+
+    {% if site.search == true %}
+      <div class="search-content">
+        {% include_cached search/search_form.html %}
+      </div>
+    {% endif %}
+
+    <div id="footer" class="page__footer">
+      <footer>
+        {% include footer/custom.html %}
+        {% include_cached footer.html ui_locale=page_lang %}
+      </footer>
+    </div>
+
+    {% include scripts.html %}
+  </body>
+</html>

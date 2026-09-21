@@ -75,7 +75,7 @@ def test_successful_publish_with_no_post_changes_skips_commit_and_push(monkeypat
     assert runner.commands == [
         ["git", "status", "--porcelain"],
         ["uv", "run", "briefberlin-publish-source", "private-input/source-18.txt"],
-        ["git", "status", "--porcelain", "--", "output/_posts"],
+        ["git", "status", "--porcelain", "--", "output/_posts", "output/_translations"],
     ]
     assert runner.capture_output == [True, False, True]
     assert "nothing to commit" in capsys.readouterr().out
@@ -117,8 +117,10 @@ def test_successful_publish_stages_posts_commits_and_pushes(monkeypatch):
             "briefberlin-publish-source",
             "private-input/source-19.txt",
         ],
-        ["git", "status", "--porcelain", "--", "output/_posts"],
-        ["git", "add", "output/_posts"],
+        # Translations are written on every run; staging only _posts would mean
+        # regenerating them forever and never pushing them.
+        ["git", "status", "--porcelain", "--", "output/_posts", "output/_translations"],
+        ["git", "add", "output/_posts", "output/_translations"],
     ]
     assert runner.commands[5][:3] == ["git", "commit", "-m"]
     assert runner.commands[5][3].startswith("Generate articles - ")

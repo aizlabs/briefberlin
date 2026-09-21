@@ -1,0 +1,56 @@
+{%- comment -%}
+  Article audio player. Extracted verbatim from _layouts/post.html so the German
+  post layout and the translation layout share one source of truth.
+
+  Translation pages keep the GERMAN audio on purpose: the reader listens to the
+  German original while reading their own language. Only the labels are localized.
+
+  Params:
+    t       = the site.data.ui-briefberlin block for this page's language
+    caption = optional small note rendered directly under the player card
+{%- endcomment -%}
+{% if page.audio and page.audio.url %}
+        <section
+          class="article-audio"
+          aria-label="{{ include.t.audio_aria }}"
+          {% if page.audio.timings_url %}data-timings-url="{{ page.audio.timings_url | escape }}"{% endif %}
+          data-highlight-context="{{ page.audio.highlight_context | default: 'sentence' | escape }}"
+        >
+          <audio controls preload="metadata" class="article-audio__native">
+            <source src="{{ page.audio.url }}" type="{{ page.audio.mime_type | default: 'audio/mpeg' }}">
+            {{ include.t.audio_fallback }}
+          </audio>
+          <div class="article-audio__player" aria-hidden="true">
+            <div class="article-audio__timeline">
+              <div class="article-audio__time">
+                <span class="article-audio__elapsed" dir="ltr">0:00</span>
+                <span class="article-audio__duration" dir="ltr">0:00</span>
+              </div>
+              <div class="article-audio__waveform" role="slider" tabindex="0" aria-label="{{ include.t.audio_progress }}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+            </div>
+
+            <div class="article-audio__transport" aria-label="{{ include.t.audio_transport }}">
+              <button class="article-audio__button article-audio__skip-back" type="button" aria-label="{{ include.t.audio_back10 }}">
+                <i class="fas fa-rotate-left" aria-hidden="true"></i>
+                <span>10</span>
+              </button>
+              <button class="article-audio__button article-audio__play" type="button" aria-label="{{ include.t.audio_play }}">
+                <i class="fas fa-play" aria-hidden="true"></i>
+              </button>
+              <button class="article-audio__button article-audio__skip-forward" type="button" aria-label="{{ include.t.audio_forward10 }}">
+                <i class="fas fa-rotate-right" aria-hidden="true"></i>
+                <span>10</span>
+              </button>
+            </div>
+
+            <div class="article-audio__speed" aria-label="{{ include.t.audio_speed }}" dir="ltr">
+              <button type="button" data-speed="0.5" aria-label="{{ include.t.audio_speed_050 }}">0.5x</button>
+              <button type="button" data-speed="0.75" aria-label="{{ include.t.audio_speed_075 }}">0.75x</button>
+              <button class="is-active" type="button" data-speed="1" aria-label="{{ include.t.audio_speed_100 }}">1x</button>
+            </div>
+          </div>
+          {%- if include.caption %}
+          <p class="article-audio__caption">{{ include.caption }}</p>
+          {%- endif %}
+        </section>
+{% endif %}
