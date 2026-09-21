@@ -947,12 +947,22 @@ RULES
 2. PLAIN TEXT ONLY.
    No markdown (no **, #, -, []()), no HTML, no buttons, no footnotes.
 
-3. NAMED ENTITIES STAY GERMAN.
-   Keep German place, street and park names, institutions (Senat, BVG, Bundestag),
-   party names and abbreviations (CDU, SPD, AfD, Die Linke, BSW) and personal names
-   in their German form. Only use a native-script exonym where one is genuinely
-   established (for example Берлин, برلين). Never invent a native-script form for an
-   organisation or a person, and never transliterate anything else.
+3. PROPER NAMES ONLY STAY GERMAN - COMMON WORDS MUST BE TRANSLATED.
+   Keep in German form: organisation and institution names (Senat, BVG, Bundestag),
+   party names and abbreviations (CDU, SPD, AfD, Die Linke, BSW), personal names,
+   and street/park names.
+
+   Everything else is ordinary vocabulary and MUST be translated, even if it is a
+   long German compound. For example Wohnungskrise, Wohnungsmarkt, Genossenschaften,
+   Grundstücke, Sozialwohnungen, Vergesellschaftung, Bündnisse, entlasten and
+   enteignen are common words, NOT names: translate them.
+
+   For a target language written in Cyrillic or Arabic script, use the standard
+   native-script form of well-known places and of Bund/Länder-style civic terms
+   (Berlin -> Берлин / برلين, Hamburg -> Гамбург / هامبورغ). Do NOT leave a
+   Latin-script word sitting inside Cyrillic or Arabic text unless it is an
+   organisation's official name or an abbreviation (CDU, SPD, BVG). A reader of
+   {language.name} should be able to read the whole body without knowing German.
 
 4. FACTS ARE FROZEN.
    Numbers, percentages, dates, election results and quantities must match the
@@ -961,12 +971,17 @@ RULES
 5. REGISTER.
    {register_rule}
 
-6. GLOSSARY.
-   Echo every `term` back BYTE-IDENTICAL IN GERMAN - it is the headword the learner
-   is studying and the word they hear in the German audio. Put the {language.name}
-   rendering in `translation`, and rewrite the explanation in {language.name} at the
-   same simple register and roughly the same length. Return one row per input row,
-   in the same order.
+6. GLOSSARY - AND THIS RULE APPLIES TO THE GLOSSARY LIST ONLY.
+   In the `vocabulary` rows, echo every `term` back BYTE-IDENTICAL IN GERMAN: it is
+   the headword the learner is studying and the word they hear in the German audio.
+   Put the {language.name} rendering in `translation`, and rewrite the explanation in
+   {language.name} at the same simple register and roughly the same length. Return
+   one row per input row, in the same order.
+
+   CRITICAL: this does NOT apply to the body. In `content`, those same words must be
+   fully translated like any other word. Keeping a glossary headword in German inside
+   the translated body is a mistake - the reader reads the body in {language.name}
+   and studies the German headword in the glossary list underneath.
 
 7. SCRIPT AND DIRECTION.
    Write natural {language.name}. Do not insert directional control characters and do

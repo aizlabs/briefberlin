@@ -108,6 +108,11 @@ def recover_article(data: Dict[str, Any], body: str, glossary_headings: Sequence
         author=data.get("author"),
         category=data.get("category"),
         description=data.get("description"),
+        # Audio MUST be carried over: translated pages deliberately keep the German
+        # track so the reader can listen in German while reading their own
+        # language. Dropping it here silently removes the player from every
+        # backfilled translation.
+        audio=data.get("audio") or None,
     )
 
 

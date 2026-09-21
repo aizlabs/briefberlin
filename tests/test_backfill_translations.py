@@ -183,3 +183,17 @@ def test_rewrite_sibling_maps_makes_every_sibling_agree(tmp_path):
         for sibling in ("de", "en", "ar"):
             assert f"  {sibling}: /articles/{ref}/{sibling}/".replace("/de/", "/") in text
         assert "lang: " + code in text
+
+
+def test_recover_article_carries_the_german_audio(tmp_path):
+    """Translated pages deliberately keep the German track so the reader can
+    listen in German while reading their own language. Dropping audio here
+    silently removed the player from every backfilled translation."""
+    path = _write(tmp_path)
+    _, data, body = load_post(path)
+
+    article = recover_article(data, body, HEADINGS)
+
+    assert article.audio is not None
+    assert article.audio.url == "https://media.example/a.mp3"
+    assert article.audio.mime_type == "audio/mpeg"

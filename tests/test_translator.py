@@ -90,7 +90,10 @@ def test_one_failing_language_does_not_lose_the_others(mock_chain, base_config, 
     chain = MagicMock()
 
     def invoke(payload):
-        if "Arabic" in payload["prompt"]:
+        # Key on the TARGET LANGUAGE header, not a bare substring: the prompt body
+        # mentions "Arabic script" for every language, so "Arabic" in prompt would
+        # match all of them.
+        if "TARGET LANGUAGE: Arabic" in payload["prompt"]:
             raise RuntimeError("upstream 500")
         return _response()
 
