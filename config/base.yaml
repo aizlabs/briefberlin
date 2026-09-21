@@ -59,6 +59,40 @@ glossary:
   retry_on_empty: true
   debug_dump: false
 
+# Reader-language translations of the published German posts.
+#
+# NOTE: this is a DIFFERENT AXIS from `language:` below, and the two never interact.
+#   `language:`     the SITE-FORK axis - the one language the pipeline *teaches*.
+#                   Drives the prompt pack, the spaCy model, the glossary rules and
+#                   the learner-facing labels. See docs/language-profile-fork-guide.md.
+#   `translations:` the COMPREHENSION-SUPPORT axis - the languages the finished
+#                   German text is *rendered into* so a learner can read along.
+# A Spanish fork of the site would change `language:` and keep its own, different,
+# `translations:` list (probably dropping `es`).
+#
+# The translator reads none of language.prompt_pack / glossary_rules / spacy_model /
+# glossary_heading. Translated pages use the per-language glossary_heading below.
+#
+# Presentation metadata (endonym, text direction, og:locale) is NOT here - it lives
+# in output/_data/languages.yml, which the Jekyll templates own.
+translations:
+  enabled: true
+  model: null              # null -> llm.models.translation
+  temperature: 0.2
+  max_workers: 4
+  max_attempts: 2
+  output_path: ./output/_translations
+  # Applies to every level in generation.levels. Add `levels: [A2]` to an entry to
+  # pilot a language on a single level.
+  languages:
+    - { code: en, name: English,   glossary_heading: "Vocabulary" }
+    - { code: tr, name: Turkish,   glossary_heading: "Kelimeler" }
+    - { code: ru, name: Russian,   glossary_heading: "Словарь" }
+    - { code: ar, name: Arabic,    glossary_heading: "المفردات" }
+    - { code: uk, name: Ukrainian, glossary_heading: "Словник" }
+    - { code: pl, name: Polish,    glossary_heading: "Słowniczek" }
+    - { code: es, name: Spanish,   glossary_heading: "Vocabulario" }
+
 language:
   target_language: German
   target_language_code: de
@@ -107,6 +141,7 @@ llm:
   models:
     generation: gpt-5.5       # For synthesis (Step 1)
     adaptation: gpt-5.5       # For level adaptation (Step 2) - can use cheaper model
+    translation: gpt-5.5      # For reader-language translation (see `translations:`)
     quality_check: gpt-4o-mini
   temperature: 0.3
   quality_temperature: 0.1

@@ -9,7 +9,7 @@ from datetime import date
 from decimal import Decimal
 from typing import Any, Dict, List, Literal, Optional, Union
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 from scripts.glossary_sections import normalize_glossary_headings
 from scripts.language_profiles import (
@@ -285,6 +285,53 @@ class AudioManifest(BaseModel):
     asset: AudioAsset
 
 
+class TranslatedVocabularyItem(BaseModel):
+    """One glossary row rendered for a non-German reader.
+
+    `term` stays the GERMAN headword: it is the word the learner is studying and
+    the word they hear in the (German) article audio. Only the gloss and the
+    explanation are rendered in the reader's language.
+    """
+
+    term: str = Field(..., min_length=1, description="German headword, unchanged")
+    translation: str = Field(default="", description="Term rendered in the reader's language")
+    explanation: str = Field(default="", description="Explanation in the reader's language")
+
+    @field_validator("term", "translation", "explanation", mode="before")
+    @classmethod
+    def coerce_string_fields(cls, v: Any) -> str:
+        if v is None:
+            return ""
+        return str(v).strip()
+
+
+class ArticleTranslation(BaseModel):
+    """One reader-language rendering of one published AdaptedArticle.
+
+    Presentation metadata (endonym, text direction, og:locale) deliberately does
+    NOT live here - it belongs to output/_data/languages.yml, which is the single
+    source of truth for how a language is displayed.
+    """
+
+    lang: str = Field(..., pattern=r"^[a-z]{2}$", description="Bare ISO 639-1 code")
+    glossary_heading: str = Field(..., min_length=1, description="Localized glossary heading")
+    # No max_length: Russian and Arabic renderings of a 150-char German headline
+    # routinely exceed the German cap, and a validation error would kill the
+    # whole language for that article.
+    title: str = Field(..., min_length=1, description="Translated title")
+    summary: str = Field(default="", description="Translated summary")
+    content: str = Field(..., min_length=20, description="Translated body, plain text")
+    vocabulary: List[TranslatedVocabularyItem] = Field(default_factory=list)
+    reading_time: int = Field(
+        ...,
+        ge=1,
+        le=30,
+        description="Copied from the German article, never re-estimated: a parallel "
+                    "text must advertise the same effort as its source",
+    )
+    model: Optional[str] = Field(default=None, description="Model that produced this translation")
+
+
 class AdaptedArticle(BaseModel):
     """Level-adapted article from LevelAdapter (Step 2)"""
     title: str = Field(..., min_length=1, max_length=150, description="Adapted title")
@@ -318,6 +365,10 @@ class AdaptedArticle(BaseModel):
 
     base_article: Optional[BaseArticle] = Field(default=None, description="Base article for regeneration")
     audio: Optional[AudioAsset] = Field(default=None, description="Audio metadata for delivery surfaces")
+    translations: List[ArticleTranslation] = Field(
+        default_factory=list,
+        description="Completed reader-language translations of this exact published text",
+    )
 
     @field_validator('reading_time', mode='before')
     @classmethod
@@ -414,6 +465,10 @@ class LLMModelsConfig(BaseModel):
     topic_extraction: Optional[str] = Field(
         default=None,
         description="Optional model for source topic metadata extraction",
+    )
+    translation: Optional[str] = Field(
+        default=None,
+        description="Optional model for reader-language article translation",
     )
 
 
@@ -621,6 +676,58 @@ class GlossaryConfig(BaseModel):
     )
 
 
+class TranslationLanguageConfig(BaseModel):
+    """One target language for reader-facing article translations."""
+
+    code: str = Field(..., pattern=r"^[a-z]{2}$", description="Bare ISO 639-1 code")
+    name: str = Field(..., min_length=1, description="English language name, used in the prompt")
+    glossary_heading: str = Field(..., min_length=1, description="Localized glossary heading")
+    levels: Optional[List[str]] = Field(
+        default=None,
+        description="Restrict this language to these CEFR levels; None means all levels",
+    )
+
+
+class TranslationsConfig(BaseModel):
+    """Reader-language translations of the finished articles.
+
+    NOTE: this is a DIFFERENT AXIS from LanguageConfig below.
+
+    `language:` is the site-fork axis - the one language the pipeline *teaches*
+    (prompt pack, spaCy model, glossary rules; see
+    docs/language-profile-fork-guide.md). `translations:` is the
+    comprehension-support axis - the languages the finished text is *rendered
+    into* so a learner can read along. They never interact.
+    """
+
+    # Defaults to False so every existing config and test fixture keeps today's
+    # behaviour; config/base.yaml opts in explicitly.
+    enabled: bool = Field(default=False)
+    model: Optional[str] = Field(default=None, description="Overrides llm.models.translation")
+    temperature: float = Field(default=0.2, ge=0, le=1)
+    max_workers: int = Field(default=4, ge=1, le=8)
+    max_attempts: int = Field(default=2, ge=1, le=5)
+    output_path: str = Field(default="./output/_translations")
+    languages: List[TranslationLanguageConfig] = Field(default_factory=list)
+
+    @model_validator(mode="after")
+    def reject_duplicate_codes(self) -> "TranslationsConfig":
+        seen = set()
+        for language in self.languages:
+            if language.code in seen:
+                raise ValueError(f"Duplicate translation language code: {language.code}")
+            seen.add(language.code)
+        return self
+
+    def for_level(self, level: str) -> List[TranslationLanguageConfig]:
+        """Languages configured for this CEFR level."""
+        return [
+            language
+            for language in self.languages
+            if not language.levels or level in language.levels
+        ]
+
+
 class LanguageConfig(BaseModel):
     """Language-specific defaults for generation, NLP, and presentation labels."""
 
@@ -673,4 +780,9 @@ def dict_to_adapted_article(data: Dict) -> AdaptedArticle:
         data['base_article'] = BaseArticle(**data['base_article'])
     if 'audio' in data and data['audio'] and isinstance(data['audio'], dict):
         data['audio'] = AudioAsset(**data['audio'])
+    if 'translations' in data and data['translations']:
+        data['translations'] = [
+            ArticleTranslation(**item) if isinstance(item, dict) else item
+            for item in data['translations']
+        ]
     return AdaptedArticle(**data)

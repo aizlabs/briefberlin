@@ -1,0 +1,23 @@
+{%- comment -%}
+  hreflang alternates for translated articles.
+
+  `page.translations` is a map of bare language code -> root-relative URL, written
+  identically into the German post AND every translation of it. Because the map
+  includes `de` and the page's own language, the emitted set is automatically
+  self-referential and reciprocal, which is what Google requires - with no
+  branching here and no per-layout special cases.
+
+  x-default points at the German original: it is the canonical entry point for a
+  German-learner site.
+{%- endcomment -%}
+{%- if page.translations -%}
+{%- for l in site.data.languages -%}
+{%- assign href = page.translations[l.code] -%}
+{%- if href %}
+<link rel="alternate" hreflang="{{ l.code }}" href="{{ href | absolute_url }}">
+{%- endif -%}
+{%- endfor -%}
+{%- if page.translations.de %}
+<link rel="alternate" hreflang="x-default" href="{{ page.translations.de | absolute_url }}">
+{%- endif -%}
+{%- endif -%}

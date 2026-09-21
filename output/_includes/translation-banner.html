@@ -1,0 +1,17 @@
+{%- comment -%}
+  "This is a translation" attribution line, shown on translation pages only.
+
+  Deliberately a single quiet line of text, not a filled callout: it is
+  attribution, not a warning, and it sits between the summary and the article
+  body where a box would break the reading flow. The audio note lives with the
+  player instead - see article-audio.html's `caption` parameter.
+
+  Params: t = ui-briefberlin block for this page's language.
+{%- endcomment -%}
+{%- if page.translations.de -%}
+<p class="translation-note">
+  <i class="fas fa-language translation-note__icon" aria-hidden="true"></i>
+  {{ include.t.translation_notice }}
+  <a class="translation-note__link" href="{{ page.translations.de | relative_url }}" lang="de" dir="ltr">{{ page.source_title }}</a>
+</p>
+{%- endif -%}

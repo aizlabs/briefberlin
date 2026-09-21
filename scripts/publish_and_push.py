@@ -9,6 +9,10 @@ from datetime import datetime, timezone
 from typing import Sequence
 
 POSTS_PATH = "output/_posts"
+TRANSLATIONS_PATH = "output/_translations"
+# Both must be staged: translations are written on every run and would otherwise
+# be regenerated forever and never pushed.
+PUBLISH_PATHS = [POSTS_PATH, TRANSLATIONS_PATH]
 
 
 def parse_publish_timestamp(value: str | None) -> datetime | None:
@@ -63,10 +67,11 @@ def run_command(
     return subprocess.run(command, check=False, text=True, capture_output=capture_output)
 
 
-def git_status(pathspec: str | None = None) -> str:
+def git_status(pathspec: str | Sequence[str] | None = None) -> str:
     command = ["git", "status", "--porcelain"]
     if pathspec:
-        command.extend(["--", pathspec])
+        paths = [pathspec] if isinstance(pathspec, str) else list(pathspec)
+        command.extend(["--", *paths])
     result = run_command(command)
     if result.returncode != 0:
         raise RuntimeError(result.stderr.strip() or "git status failed")
@@ -103,12 +108,15 @@ def main(argv: Sequence[str] | None = None) -> int:
         if publish_result.returncode != 0:
             return publish_result.returncode
 
-    posts_status = git_status(POSTS_PATH)
+    posts_status = git_status(PUBLISH_PATHS)
     if not posts_status:
-        print(f"No generated post changes found under {POSTS_PATH}; nothing to commit.")
+        print(
+            "No generated post changes found under "
+            f"{' or '.join(PUBLISH_PATHS)}; nothing to commit."
+        )
         return 0
 
-    add_result = run_command(["git", "add", POSTS_PATH])
+    add_result = run_command(["git", "add", *PUBLISH_PATHS])
     print_command_output(add_result)
     if add_result.returncode != 0:
         return add_result.returncode

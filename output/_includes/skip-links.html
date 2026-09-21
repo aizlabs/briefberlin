@@ -1,0 +1,21 @@
+{%- comment -%} BriefBerlin shadow of minimal-mistakes-jekyll 4.27.3 _includes/skip-links.html.
+     Change vs the gem: strings are keyed on include.ui_locale (the page's bare
+     language code) and read from _data/ui-briefberlin.yml rather than
+     site.data.ui-text[site.locale].
+
+     site.data.ui-text does NOT exist on this site: Jekyll 3 does not load _data
+     from theme gems, so every one of the theme's ui-text lookups has silently
+     been falling through to its English default. Our own _data file is the only
+     working source.
+
+     ui_locale is an include PARAMETER because this renders through
+     include_cached, which keys its cache on include name + parameters. {%- endcomment -%}
+{%- assign ui_locale = include.ui_locale | default: site.lang | default: "en" -%}
+{%- assign ui = site.data.ui-briefberlin[ui_locale] | default: site.data.ui-briefberlin.en -%}
+<nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">{{ ui.skip_primary_nav | default: 'Skip to primary navigation' }}</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">{{ ui.skip_content | default: 'Skip to content' }}</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">{{ ui.skip_footer | default: 'Skip to footer' }}</a></li>
+  </ul>
+</nav>

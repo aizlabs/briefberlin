@@ -2,15 +2,24 @@ from pathlib import Path
 
 
 def test_post_layout_does_not_render_audio_voice_label():
-    layout = Path("output/_layouts/post.html").read_text(encoding="utf-8")
+    # The player markup now lives in a shared include so the German post layout
+    # and the translation layout cannot drift. post.html must still pull it in,
+    # and the rendered markup is asserted against the include.
+    post_layout = Path("output/_layouts/post.html").read_text(encoding="utf-8")
+    assert "{% include article-audio.html t=t %}" in post_layout
+
+    layout = Path("output/_includes/article-audio.html").read_text(encoding="utf-8")
 
     assert "<audio controls preload=\"metadata\"" in layout
     assert "article-audio__player" in layout
     assert "article-audio__waveform" in layout
     assert "article-audio__skip-back" in layout
-    assert "10 Sekunden zurück" in layout
     assert "article-audio__skip-forward" in layout
-    assert "10 Sekunden vor" in layout
+    # The German strings themselves now live in _data/ui-briefberlin.yml so the
+    # translation layout can localize them; the de block must keep them verbatim.
+    ui_text = Path("output/_data/ui-briefberlin.yml").read_text(encoding="utf-8")
+    assert "10 Sekunden zurück" in ui_text
+    assert "10 Sekunden vor" in ui_text
     assert 'data-speed="0.5"' in layout
     assert 'data-speed="0.75"' in layout
     assert 'data-speed="1"' in layout

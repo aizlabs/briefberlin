@@ -5,6 +5,7 @@ import pytest
 from pydantic import ValidationError
 
 from scripts.config import AppConfig, apply_env_overrides, load_config, load_language_config
+from scripts.models import TranslationsConfig
 
 
 def _base_alerts_dict():
@@ -473,3 +474,60 @@ def test_telegram_env_respects_explicit_alerts_disabled(monkeypatch):
         monkeypatch.delenv("ALERTS_ENABLED", raising=False)
         monkeypatch.delenv("ALERT_TELEGRAM_BOT_TOKEN", raising=False)
         monkeypatch.delenv("ALERT_TELEGRAM_CHAT_ID", raising=False)
+
+
+class TestTranslationsConfig:
+    """Reader-language translation settings (config `translations:`)."""
+
+    def test_base_yaml_defines_the_seven_launch_languages(self):
+        import yaml
+
+        with open("config/base.yaml", encoding="utf-8") as handle:
+            raw = yaml.safe_load(handle)
+
+        config = TranslationsConfig(**raw["translations"])
+        assert config.enabled is True
+        assert [lang.code for lang in config.languages] == ["en", "tr", "ru", "ar", "uk", "pl", "es"]
+        # Headings are per-language, never language.glossary_heading.
+        assert {lang.glossary_heading for lang in config.languages} != {"Vokabeln"}
+
+    def test_defaults_are_off_so_existing_environments_are_unaffected(self):
+        assert TranslationsConfig().enabled is False
+        assert TranslationsConfig().languages == []
+
+    def test_duplicate_codes_are_rejected(self):
+        with pytest.raises(ValidationError):
+            TranslationsConfig(languages=[
+                {"code": "en", "name": "English", "glossary_heading": "Vocabulary"},
+                {"code": "en", "name": "English", "glossary_heading": "Vocabulary"},
+            ])
+
+    def test_for_level_applies_the_optional_level_restriction(self):
+        config = TranslationsConfig(languages=[
+            {"code": "en", "name": "English", "glossary_heading": "Vocabulary"},
+            {"code": "ru", "name": "Russian", "glossary_heading": "Словарь", "levels": ["A2"]},
+        ])
+        assert [lang.code for lang in config.for_level("A2")] == ["en", "ru"]
+        assert [lang.code for lang in config.for_level("B1")] == ["en"]
+
+    def test_env_languages_filters_but_never_invents_entries(self, monkeypatch):
+        config_dict = {
+            "translations": {
+                "enabled": True,
+                "languages": [
+                    {"code": "en", "name": "English", "glossary_heading": "Vocabulary"},
+                    {"code": "ar", "name": "Arabic", "glossary_heading": "المفردات"},
+                ],
+            }
+        }
+        monkeypatch.setenv("TRANSLATIONS_LANGUAGES", "ar,zz")
+        result = apply_env_overrides(config_dict)
+
+        # 'zz' is not configured, so it must not appear: headings and level
+        # restrictions stay authoritative in YAML.
+        assert [lang["code"] for lang in result["translations"]["languages"]] == ["ar"]
+
+    def test_env_can_disable_translations(self, monkeypatch):
+        monkeypatch.setenv("TRANSLATIONS_ENABLED", "false")
+        result = apply_env_overrides({"translations": {"enabled": True}})
+        assert result["translations"]["enabled"] is False

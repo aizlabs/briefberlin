@@ -1,10 +1,18 @@
+{%- comment -%}
+  ui_locale is passed as an include PARAMETER because this is rendered through
+  include_cached in _layouts/default.html - jekyll-include-cache keys the cache
+  on include name + parameters, so reading page.lang directly here would fix the
+  footer language to whichever page Jekyll happened to build first.
+{%- endcomment -%}
+{%- assign ui_locale = include.ui_locale | default: site.lang | default: "en" -%}
+{%- assign ui = site.data.ui-briefberlin[ui_locale] | default: site.data.ui-briefberlin.en -%}
 {% unless site.atom_feed.hide %}
   {% assign show_atom = true %}
 {% endunless %}
 {% if show_atom %}
 <div class="page__footer-follow">
   <ul class="social-icons">
-    <li><a href="{% if site.atom_feed.path %}{{ site.atom_feed.path }}{% else %}{{ '/feed.xml' | relative_url }}{% endif %}"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].feed_label | default: "Feed" }}</a></li>
+    <li><a href="{% if site.atom_feed.path %}{{ site.atom_feed.path }}{% else %}{{ '/feed.xml' | relative_url }}{% endif %}"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> {{ ui.feed_label | default: "Feed" }}</a></li>
   </ul>
 </div>
 {% endif %}

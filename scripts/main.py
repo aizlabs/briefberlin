@@ -29,6 +29,7 @@ from audio_pipeline import AudioPipeline
 from content_fetcher import ContentFetcher
 from content_generator import ContentGenerator
 from glossary_generator import GlossaryGenerator
+from translator import ArticleTranslator
 from logger import setup_logger
 from models import AdaptedArticle, QualityResult
 from publisher import Publisher
@@ -104,6 +105,7 @@ def main():
         generator = ContentGenerator(config, logger)
         quality_gate = QualityGate(config, logger)
         glossary_generator = GlossaryGenerator(config, logger)
+        translator = ArticleTranslator(config, logger)
         audio_pipeline = AudioPipeline(config, logger)
         publisher = Publisher(config, logger, dry_run=dry_run)
 
@@ -241,6 +243,20 @@ def main():
                             "Phase 6: Skipping website audio preparation because "
                             "audio.enabled=false"
                         )
+                        logger.info("")
+
+                    # Phase 6.5: Reader-language translations.
+                    # Runs after the quality gate and the glossary, so only the
+                    # final German text is translated, and exactly once.
+                    if config.translations.enabled:
+                        current_stage = f"translating:{level}"
+                        logger.info("Phase 6.5: Translating...")
+                        final_article = translator.translate_article(final_article)
+                        if translator.last_run_stats["failed_languages"]:
+                            logger.warning(
+                                "Translation failed for: %s",
+                                ", ".join(translator.last_run_stats["failed_languages"]),
+                            )
                         logger.info("")
 
                     # Phase 7: Publish

@@ -15,6 +15,7 @@ from scripts.audio_pipeline import AudioPipeline
 from scripts.config import AppConfig, load_config
 from scripts.content_generator import ContentGenerator
 from scripts.glossary_generator import GlossaryGenerator
+from scripts.translator import ArticleTranslator
 from scripts.logger import setup_logger
 from scripts.models import AdaptedArticle, QualityResult, SourceArticle, Topic
 from scripts.publisher import Publisher
@@ -179,6 +180,7 @@ def _execute_manual_pipeline(
     generator = ContentGenerator(config, logger)
     quality_gate = QualityGate(config, logger)
     glossary_generator = GlossaryGenerator(config, logger)
+    translator = ArticleTranslator(config, logger)
     audio_pipeline = AudioPipeline(config, logger)
     publisher = Publisher(config, logger, dry_run=dry_run)
 
@@ -222,6 +224,12 @@ def _execute_manual_pipeline(
                 final_article,
                 timestamp=publish_timestamp,
             )
+
+        # Translate only once the German article is final: after the quality gate
+        # (so rejected drafts are never translated) and after the glossary exists
+        # (because the glossary is part of what gets translated).
+        if config.translations.enabled and not getattr(args, "no_translate", False):
+            final_article = translator.translate_article(final_article)
 
         if publisher.save_article(final_article, timestamp=publish_timestamp):
             published.append((final_article.title, level, quality_result.score))
@@ -280,6 +288,11 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         type=parse_author_slug,
         default=None,
         help="Author key from output/_data/authors.yml. Defaults to output.default_author.",
+    )
+    parser.add_argument(
+        "--no-translate",
+        action="store_true",
+        help="Skip reader-language translations even when translations.enabled is true.",
     )
     return parser.parse_args(argv)
 

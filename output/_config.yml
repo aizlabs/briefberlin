@@ -53,6 +53,15 @@ collections:
   posts:
     output: true
     permalink: /articles/:title/
+  # Reader-language translations of the German posts.
+  # Files live at _translations/<ref>/<lang>.md, so `:path` yields
+  # /articles/<ref>/<lang>/ by construction - no per-file `permalink:` key.
+  # Deliberately NOT registered under `feed.collections`, which is what keeps
+  # translations out of feed.xml (jekyll-feed reads site.posts internally and
+  # cannot be filtered from Liquid).
+  translations:
+    output: true
+    permalink: /articles/:path/
 
 # Defaults
 defaults:
@@ -68,6 +77,21 @@ defaults:
       comments: false
       share: true
       related: true
+      show_date: true
+      sidebar:
+        nav: "levels"
+  # _translations
+  - scope:
+      path: ""
+      type: translations
+    values:
+      layout: translation
+      author: clara-becker
+      author_profile: false
+      read_time: false
+      comments: false
+      share: false
+      related: false
       show_date: true
       sidebar:
         nav: "levels"

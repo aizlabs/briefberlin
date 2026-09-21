@@ -1,0 +1,67 @@
+# Article translation languages.
+#
+# This file is the SINGLE SOURCE OF TRUTH for how a language is *presented*:
+# display order, endonym, text direction, Open Graph locale. The Python publisher
+# never writes any of these - it only writes a `translations:` map of code -> url.
+#
+# `code` must match the two-letter codes emitted by `translations.languages` in
+# config/base.yaml, plus `de` for the original.
+#
+# No flags: flags encode countries, not languages (ar/en/es have no single flag).
+
+- code: de
+  html_lang: "de-DE"
+  endonym: "Deutsch"
+  english: "German"
+  dir: ltr
+  og_locale: de_DE
+  original: true
+
+- code: en
+  html_lang: "en"
+  endonym: "English"
+  english: "English"
+  dir: ltr
+  og_locale: en_US
+
+- code: es
+  html_lang: "es"
+  endonym: "Español"
+  english: "Spanish"
+  dir: ltr
+  og_locale: es_ES
+
+- code: pl
+  html_lang: "pl"
+  endonym: "Polski"
+  english: "Polish"
+  dir: ltr
+  og_locale: pl_PL
+
+- code: tr
+  html_lang: "tr"
+  endonym: "Türkçe"
+  english: "Turkish"
+  dir: ltr
+  og_locale: tr_TR
+
+- code: uk
+  html_lang: "uk"
+  endonym: "Українська"
+  english: "Ukrainian"
+  dir: ltr
+  og_locale: uk_UA
+
+- code: ru
+  html_lang: "ru"
+  endonym: "Русский"
+  english: "Russian"
+  dir: ltr
+  og_locale: ru_RU
+
+- code: ar
+  html_lang: "ar"
+  endonym: "العربية"
+  english: "Arabic"
+  dir: rtl
+  og_locale: ar_AR

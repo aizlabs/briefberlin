@@ -22,6 +22,7 @@ from scripts.models import (
     GlossaryConfig,
     LanguageConfig,
     LLMConfig,
+    TranslationsConfig,
     TwoStepSynthesisConfig,
 )
 
@@ -55,6 +56,7 @@ class AppConfig(BaseModel):
     llm: LLMConfig
     quality_gate: QualityGateConfig
     glossary: GlossaryConfig = Field(default_factory=GlossaryConfig)
+    translations: TranslationsConfig = Field(default_factory=TranslationsConfig)
     language: LanguageConfig = Field(default_factory=LanguageConfig)
     sources: SourceConfig
     audio: AudioConfig = Field(default_factory=AudioConfig)
@@ -237,6 +239,27 @@ def apply_env_overrides(config_dict: Dict) -> Dict:
     if glossary_debug_dump is not None:
         config_dict.setdefault('glossary', {})
         config_dict['glossary']['debug_dump'] = glossary_debug_dump
+
+    translations_enabled = parse_bool(os.getenv('TRANSLATIONS_ENABLED'))
+    if translations_enabled is not None:
+        config_dict.setdefault('translations', {})
+        config_dict['translations']['enabled'] = translations_enabled
+
+    translations_model = os.getenv('TRANSLATIONS_MODEL')
+    if translations_model:
+        config_dict.setdefault('translations', {})
+        config_dict['translations']['model'] = translations_model
+
+    # A FILTER over the configured languages, never a source of new entries:
+    # glossary headings and level restrictions must stay authoritative in YAML.
+    translations_languages = os.getenv('TRANSLATIONS_LANGUAGES')
+    if translations_languages is not None:
+        wanted = {code.strip() for code in translations_languages.split(',') if code.strip()}
+        config_dict.setdefault('translations', {})
+        configured = config_dict['translations'].get('languages') or []
+        config_dict['translations']['languages'] = [
+            language for language in configured if language.get('code') in wanted
+        ]
 
     language_env_vars = {
         'LANGUAGE_TARGET': 'target_language',

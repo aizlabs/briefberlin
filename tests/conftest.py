@@ -62,6 +62,18 @@ def base_config() -> AppConfig:
             'retry_on_empty': True,
             'debug_dump': False,
         },
+        'translations': {
+            'enabled': True,
+            'max_workers': 2,
+            'max_attempts': 2,
+            'output_path': 'output/_translations',
+            'languages': [
+                {'code': 'en', 'name': 'English', 'glossary_heading': 'Vocabulary'},
+                {'code': 'ar', 'name': 'Arabic', 'glossary_heading': 'المفردات'},
+                {'code': 'ru', 'name': 'Russian', 'glossary_heading': 'Словарь',
+                 'levels': ['A2']},
+            ],
+        },
         'language': {
             'target_language': 'German',
             'target_language_code': 'de',

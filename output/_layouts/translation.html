@@ -1,0 +1,77 @@
+---
+layout: default
+---
+
+{%- comment -%}
+  Reader-language translation of a German article.
+
+  Kept as a separate layout rather than a branch inside post.html so the German
+  pages render byte-for-byte as before: post.html is on 200+ live URLs and its
+  regression surface should stay at zero.
+
+  Deliberately omitted vs post.html: page__taxonomy.html (it links to
+  /categories/ and /tags/ archives that do not exist), social-share.html,
+  comments.html and page.link.
+{%- endcomment -%}
+{% assign langdef = site.data.languages | where: "code", page.lang | first %}
+{% assign t = site.data.ui-briefberlin[page.lang] | default: site.data.ui-briefberlin.en %}
+{% assign article_author = site.data.authors[page.author] %}
+<article class="page page--translation" lang="{{ page.lang }}" dir="{{ langdef.dir | default: 'ltr' }}" itemscope itemtype="https://schema.org/NewsArticle">
+  {% if page.title %}<meta itemprop="headline" content="{{ page.title | strip_html | strip_newlines | escape_once }}">{% endif %}
+  <meta itemprop="inLanguage" content="{{ page.lang }}">
+  {% if page.date %}<meta itemprop="datePublished" content="{{ page.date | date_to_xmlschema }}">{% endif %}
+  {% if page.last_modified_at %}
+    <meta itemprop="dateModified" content="{{ page.last_modified_at | date_to_xmlschema }}">
+  {% elsif page.date %}
+    <meta itemprop="dateModified" content="{{ page.date | date_to_xmlschema }}">
+  {% endif %}
+
+  <div class="page__inner-wrap">
+    <header>
+      {% if page.title %}<h1 id="page-title" class="page__title" itemprop="headline">{{ page.title }}</h1>{% endif %}
+      {% include language-selector.html t=t %}
+
+      <div class="article-meta">
+        {% if page.level %}
+          <span class="level-badge level-{{ page.level | downcase }}" dir="ltr">{{ page.level }}</span>
+        {% endif %}
+
+        {% if page.date %}
+          <span class="article-date">
+            <i class="far fa-calendar-alt" aria-hidden="true"></i>
+            <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: t.date_format }}</time>
+          </span>
+        {% endif %}
+
+        {% if article_author %}
+          <span class="article-author" itemprop="author" itemscope itemtype="https://schema.org/Person">
+            <i class="far fa-user" aria-hidden="true"></i>
+            {{ t.by_label }} <a href="{{ article_author.url | relative_url }}" itemprop="url"><span itemprop="name">{{ article_author.name }}</span></a>
+          </span>
+        {% endif %}
+
+        {% if page.reading_time %}
+          <span class="article-reading-time">
+            <i class="far fa-clock" aria-hidden="true"></i>
+            {{ t.reading_time_label | replace: "%d", page.reading_time }}
+          </span>
+        {% endif %}
+      </div>
+
+      {% if page.summary %}
+        <p class="article-summary">{{ page.summary | escape }}</p>
+      {% endif %}
+    </header>
+
+    <section class="page__content" itemprop="text">
+      {% include translation-banner.html t=t %}
+      {% include article-audio.html t=t caption=t.translation_hint %}
+      {{ content }}
+    </section>
+
+    <footer class="page__meta">
+      {% assign displayed_update_date = page.last_modified_at | default: page.date %}
+      <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> {{ t.date_label | default: "Updated:" }}</strong> <time datetime="{{ displayed_update_date | date_to_xmlschema }}">{{ displayed_update_date | date: t.date_format }}</time></p>
+    </footer>
+  </div>
+</article>
