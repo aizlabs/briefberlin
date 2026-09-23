@@ -1,6 +1,9 @@
 # Site Settings
 title: "BriefBerlin"
 name: "BriefBerlin"
+# Rendered by the masthead as real markup. It used to be a CSS ::after on
+# .site-title, which meant the tagline existed for sighted users only.
+subtitle: "Deutsch lernen mit Berliner Nachrichten"
 description: "Aktuelle Berlin Nachrichten in einfacher Sprache für Deutschlerner (Niveau A2 und B1)."
 url: "https://briefberlin.de"
 baseurl: ""

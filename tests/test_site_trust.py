@@ -105,7 +105,9 @@ def test_author_pages_use_reusable_layout_and_directory():
     assert "site.data.authors[page.author_key]" in author_layout
     assert 'where: "author", page.author_key' in author_layout
     assert "site.data.authors" in directory
-    assert {item["title"] for item in navigation["main"]} >= {"Authors"}
+    # Site chrome is German; what matters for trust is that the authors page is
+    # reachable from the main navigation, not what the link is called.
+    assert "/authors/" in {item["url"] for item in navigation["main"]}
 
 
 def test_author_and_news_article_schema_use_stable_entity_ids():

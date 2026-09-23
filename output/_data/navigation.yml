@@ -1,29 +1,29 @@
 main:
-  - title: "Articles"
+  - title: "Artikel"
     url: /
-  - title: "Levels"
+  - title: "Niveaus"
     url: /levels/
-  - title: "About"
+  - title: "Über uns"
     url: /about/
-  - title: "Authors"
+  - title: "Redaktion"
     url: /authors/
   - title: "Standards"
     url: /editorial-standards/
-  - title: "Contact"
+  - title: "Kontakt"
     url: /contact/
 
 levels:
   - title: "BriefBerlin"
     children:
-      - title: "All articles"
+      - title: "Alle Artikel"
         url: /
-      - title: "About"
+      - title: "Über uns"
         url: /about/
-      - title: "Authors"
+      - title: "Redaktion"
         url: /authors/
-      - title: "Editorial Standards"
+      - title: "Redaktionelle Standards"
         url: /editorial-standards/
-      - title: "Corrections"
+      - title: "Korrekturen"
         url: /corrections/
-      - title: "Contact"
+      - title: "Kontakt"
         url: /contact/

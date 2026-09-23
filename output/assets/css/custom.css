@@ -204,510 +204,658 @@
   }
 }
 
-/* Center content with reasonable max-width for readability */
-.home-overview,
-.filter-section,
-.articles-grid,
-.pagination {
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%;
+/* ==========================================================================
+   Design tokens
+   ==========================================================================
+
+   The site is set like a newspaper: one ink, one accent, hairline rules instead
+   of boxes, and a news serif for anything editorial. UI chrome - kickers, meta,
+   nav, buttons - stays in the system sans so it reads as furniture rather than
+   as copy.
+
+   Sizes on the front page are in px, not rem, on purpose: the theme hardcodes
+   `html { font-size }` at 16/18/20/22px across its breakpoints, so a rem-based
+   display scale would silently grow 37% on a large monitor and blow the column
+   measure apart. Article body copy keeps rem and keeps that scaling. */
+
+:root {
+  --paper: #fbfaf7;
+  --ink: #16150f;
+  --ink-soft: #464236;
+  --ink-mute: #76726a;
+  --paper-sunk: #f3f1ea;
+  --rule: #d8d4c8;
+  --rule-firm: #16150f;
+  --accent: #a4161a;
+  --accent-soft: rgba(164, 22, 26, 0.26);
+  --level-beginner: #2f6b4f;
+  --level-intermediate: #1d4e89;
+  --serif: "Newsreader", "Iowan Old Style", Charter, Georgia, "Times New Roman", serif;
+  --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+  --page-width: 1180px;
+}
+
+body {
+  background-color: var(--paper);
+  color: var(--ink);
+}
+
+/* Stories are display:block/grid; the attribute alone would lose to that. */
+[hidden] {
+  display: none !important;
 }
 
 /* ==========================================================================
-   Site Title
-   ========================================================================== */
+   Masthead bar (all pages)
+   ==========================================================================
+   A thin section index above the fold, the way a paper runs its sections above
+   the wordmark. On the front page the wordmark below it carries the identity,
+   so the bar's own logo and title step out of the way. */
 
-.site-title::before {
-  content: "🐻 ";
-  font-size: 1.2em;
-  margin-right: 0.3em;
+.masthead {
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
 }
 
-.site-title::after {
-  content: " – Deutsch lernen mit aktuellen Artikeln";
-  font-size: 0.85em;
-  font-weight: 500;
-  color: #6c757d;
-  margin-left: 0.5em;
+.masthead__inner-wrap {
+  max-width: var(--page-width);
+  padding: 0.35rem 1.5rem;
 }
 
-/* ==========================================================================
-   Level Badges
-   ========================================================================== */
+.greedy-nav {
+  min-height: 0;
+  background: transparent;
+}
 
-.level-badge {
-  display: inline-block;
-  padding: 0.25em 0.75em;
-  font-size: 0.875em;
+.greedy-nav .site-title {
+  font-family: var(--serif);
+  font-size: 1.35rem;
   font-weight: 700;
-  line-height: 1;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: baseline;
-  border-radius: 0.375em;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.greedy-nav .site-title .site-subtitle {
+  font-family: var(--serif);
+  font-size: 0.72rem;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--ink-mute);
+}
+
+.greedy-nav .visible-links a,
+.greedy-nav .hidden-links a {
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.13em;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-right: 0.5em;
+  color: var(--ink-soft);
 }
 
-.level-badge.level-a2 {
-  background-color: #28a745;
-  color: #ffffff;
+.greedy-nav .visible-links a:hover,
+.greedy-nav .hidden-links a:hover {
+  color: var(--ink);
 }
 
-.level-badge.level-b1 {
-  background-color: #007bff;
-  color: #ffffff;
+.greedy-nav .visible-links a::before {
+  height: 2px;
+  background: var(--accent);
+}
+
+.layout--home .masthead .site-logo,
+.layout--home .masthead .site-title {
+  display: none;
+}
+
+.layout--home .greedy-nav .visible-links {
+  justify-content: center;
 }
 
 /* ==========================================================================
-   Homepage Sections
+   Footer
+   ==========================================================================
+   Same paper, closed with the same double rule the briefs section opens with,
+   so the page ends the way a printed page does rather than dropping into the
+   theme's grey panel. */
+
+.page__footer {
+  margin-top: 3rem;
+  background: var(--paper);
+  border-top: 3px double var(--rule-firm);
+  color: var(--ink-soft);
+  font-family: var(--sans);
+}
+
+.page__footer footer {
+  max-width: var(--page-width);
+  padding: 1.3rem 1.5rem 2.2rem;
+}
+
+.page__footer a {
+  color: var(--ink-soft);
+}
+
+.page__footer a:hover {
+  color: var(--accent);
+}
+
+.page__footer-links a {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.page__footer-follow .social-icons a,
+.page__footer-copyright {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+.page__footer-follow .social-icons .fa-rss-square {
+  color: var(--ink-mute);
+}
+
+/* ==========================================================================
+   Front page: masthead, dateline, level chooser
    ========================================================================== */
 
-.home-overview {
-  display: grid;
-  grid-template-columns: minmax(280px, 0.95fr) minmax(520px, 1.35fr);
-  align-items: center;
-  gap: 1.4rem;
-  margin-top: 0.85rem;
-  margin-bottom: 1.15rem;
-  padding: 1.15rem 1.25rem;
-  background:
-    radial-gradient(circle at 12% 0%, rgba(255, 255, 255, 0.18), transparent 28%),
-    linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 1em;
-  box-shadow: 0 16px 42px rgba(102, 126, 234, 0.18);
-  color: #ffffff;
+.paper-masthead {
+  max-width: var(--page-width);
+  margin: 0 auto;
+  padding: 2.1rem 0 0;
+  text-align: center;
 }
 
-.home-overview__intro h1 {
-  margin: 0 0 0.45rem;
-  color: #ffffff;
-  font-size: 1.9rem;
-  line-height: 1.12;
+.paper-masthead__mark {
+  display: block;
+  width: 40px;
+  height: 40px;
+  margin: 0 auto 0.55rem;
 }
 
-.home-overview__intro p {
+.paper-masthead__wordmark {
   margin: 0;
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 1.05rem;
+  font-family: var(--serif);
+  font-size: clamp(44px, 6.4vw, 84px);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+
+.paper-masthead__wordmark a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.paper-masthead__tagline {
+  margin: 0.5rem 0 0;
+  font-family: var(--serif);
+  font-size: 17px;
+  font-style: italic;
+  line-height: 1.35;
+  color: var(--ink-soft);
+}
+
+.paper-masthead__dateline {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 1.2rem 0 0;
+  padding: 0.42rem 0;
+  border-top: 1px solid var(--rule-firm);
+  border-bottom: 1px solid var(--rule-firm);
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.levelbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 1.2rem;
+  max-width: var(--page-width);
+  margin: 0 auto;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--rule-firm);
+}
+
+.levelbar__label {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+.levelbar__options {
+  display: flex;
+  gap: 0.2rem;
+}
+
+.levelbar__option {
+  padding: 0.3rem 0.7rem;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.levelbar__option:hover {
+  color: var(--ink);
+}
+
+.levelbar__option:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.levelbar__option.is-active {
+  color: var(--ink);
+  border-bottom-color: var(--accent);
+}
+
+.levelbar__intro {
+  margin-inline-start: auto;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.levelbar__intro:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+/* Reserves its own line height so switching level never reflows the front. */
+.levelbar__note {
+  max-width: var(--page-width);
+  min-height: 1.5em;
+  margin: 0.55rem auto 0;
+  font-family: var(--serif);
+  font-size: 15px;
+  font-style: italic;
+  color: var(--ink-mute);
+}
+
+@media (pointer: coarse) {
+  .levelbar__option {
+    min-height: 44px;
+  }
+}
+
+/* ==========================================================================
+   Front page grid
+   ========================================================================== */
+
+.frontpage {
+  max-width: var(--page-width);
+  margin: 1.5rem auto 0;
+}
+
+.frontpage__top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 2.6rem;
+  padding-bottom: 1.7rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+/* flex-basis, not grid columns: when a level filter empties the rail, the lead
+   grows into the full measure instead of leaving a dead column. */
+.frontpage__slot--lead {
+  flex: 1 1 58%;
+  min-width: 0;
+}
+
+.frontpage__slot--rail {
+  flex: 1 1 26%;
+  min-width: 0;
+  padding-inline-start: 2.6rem;
+  border-inline-start: 1px solid var(--rule);
+}
+
+.frontpage__slot--rail .story + .story {
+  margin-top: 1.15rem;
+  padding-top: 1.15rem;
+  border-top: 1px solid var(--rule);
+}
+
+.frontpage__slot--secondary {
+  margin-top: 1.7rem;
+}
+
+.frontpage__slot--secondary .frontpage__slot-body {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 1.7rem;
+}
+
+.frontpage__slot--secondary .story {
+  padding-inline-end: 1.7rem;
+  border-inline-end: 1px solid var(--rule);
+}
+
+.frontpage__slot--secondary .story:last-child {
+  padding-inline-end: 0;
+  border-inline-end: 0;
+}
+
+.frontpage__slot--briefs {
+  margin-top: 2.3rem;
+  padding-top: 0.8rem;
+  border-top: 3px double var(--rule-firm);
+}
+
+.frontpage__slot-title {
+  margin: 0 0 0.9rem;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.frontpage__slot--briefs .frontpage__slot-body {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 3.4rem;
+}
+
+.frontpage__slot--briefs .story {
+  padding: 0.8rem 0;
+  border-top: 1px solid var(--rule);
+}
+
+/* Filtered-out stories are parked here so that sibling selectors inside the
+   slots (first/last child rules, the rail's divider rule) only ever see the
+   stories that are actually on the page - display:none does not stop `+` from
+   matching. */
+.frontpage__pool {
+  display: none;
+}
+
+.frontpage__empty {
+  margin: 2rem 0 0;
+  font-family: var(--serif);
+  font-size: 17px;
+  font-style: italic;
+  color: var(--ink-mute);
+}
+
+/* ==========================================================================
+   Story
+   ========================================================================== */
+
+.story__link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.story__link:hover,
+.story__link:focus-visible {
+  color: inherit;
+  text-decoration: none;
+}
+
+.story__link:hover .story__headline {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.story__link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 5px;
+}
+
+/* Section kickers are ink by default: with five Politik stories on one front,
+   five red kickers read as an alarm rather than as an index. The accent is
+   spent on the lead alone, where it marks the entry point. */
+.story__kicker {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+.story--lead .story__kicker {
+  color: var(--accent);
+}
+
+.story__excerpt {
+  display: none;
+  max-width: 33em;
+  margin: 0.7rem 0 0;
+  font-family: var(--serif);
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+.story--lead .story__excerpt {
+  display: block;
+}
+
+.story__headline {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+}
+
+.story__deck {
+  margin: 0.55rem 0 0;
+  font-family: var(--serif);
+  color: var(--ink-soft);
+}
+
+.story__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0.65rem 0 0;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  font-variant-numeric: tabular-nums;
+}
+
+.story__level {
+  padding: 0.15em 0.45em;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.story__level--a2 {
+  color: var(--level-beginner);
+}
+
+.story__level--b1 {
+  color: var(--level-intermediate);
+}
+
+.story--lead .story__headline {
+  font-size: clamp(32px, 1.3vw + 26px, 48px);
+  line-height: 1.04;
+}
+
+.story--lead .story__deck {
+  max-width: 33em;
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.story--rail .story__headline {
+  font-size: 21px;
+  line-height: 1.16;
+}
+
+/* Clamped, not truncated in Liquid: the same story can be dealt into the rail
+   or into the seconds depending on the level filter, so the deck length has to
+   be a property of the slot, not of the markup. */
+.story--rail .story__deck,
+.story--secondary .story__deck {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+.story--rail .story__deck {
+  font-size: 15px;
   line-height: 1.45;
 }
 
-.home-overview__learning {
-  display: grid;
-  gap: 0.85rem;
-  min-width: 0;
+.story--secondary .story__headline {
+  font-size: 24px;
+  line-height: 1.14;
 }
 
-.level-info {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.85rem;
+.story--secondary .story__deck {
+  font-size: 16px;
+  line-height: 1.5;
 }
 
-.level-box {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.7rem;
-  min-height: 5.1rem;
-  padding: 0.85rem 0.95rem;
-  background: rgba(255, 255, 255, 0.14);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 0.85rem;
-  backdrop-filter: blur(12px);
-  cursor: pointer;
-  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+.story--brief .story__headline {
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.22;
 }
 
-.level-box:hover,
-.level-box:focus-visible {
-  background: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 12px 28px rgba(39, 24, 92, 0.18);
-  outline: none;
-  transform: translateY(-2px);
-}
-
-.level-box .level-badge {
-  flex: 0 0 auto;
-  margin-top: 0.2rem;
-  margin-right: 0;
-}
-
-.level-box__text {
-  display: grid;
-  gap: 0.12rem;
-  min-width: 0;
-}
-
-.level-box__text strong {
-  color: #ffffff;
-  font-size: 1.05rem;
-  line-height: 1.2;
-}
-
-.level-box__text span {
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 0.9rem;
-  line-height: 1.35;
-}
-
-.welcome-link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  min-height: 3rem;
-  padding: 0.7rem 1rem;
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  border: 1px solid rgba(255, 255, 255, 0.32);
-  border-radius: 999px;
-  color: #ffffff;
-  text-decoration: none;
-  white-space: nowrap;
-  box-shadow: 0 12px 28px rgba(245, 87, 108, 0.28);
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
-}
-
-.welcome-link:hover,
-.welcome-link:focus-visible {
-  box-shadow: 0 16px 36px rgba(245, 87, 108, 0.36);
-  color: #ffffff;
-  outline: none;
-  transform: translateY(-2px);
-}
-
-.welcome-link span {
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 0.9rem;
-}
-
-.welcome-link strong {
-  color: #ffffff;
-  font-size: 0.95rem;
-}
-
-.welcome-link i {
-  color: #ffffff;
-  transition: transform 0.2s ease;
-}
-
-.welcome-link:hover i,
-.welcome-link:focus-visible i {
-  transform: translateX(3px);
-}
-
-@media (max-width: 1100px) {
-  .home-overview {
-    grid-template-columns: 1fr;
-    align-items: stretch;
-  }
-}
-
-@media (max-width: 768px) {
-  .site-title::after {
-    content: "";
-  }
-
-  .home-overview {
-    grid-template-columns: 1fr;
-    gap: 0.85rem;
-    padding: 1rem;
-  }
-
-  .home-overview__intro h1 {
-    font-size: 1.45rem;
-  }
-
-  .level-info {
-    grid-template-columns: 1fr;
-  }
-
-  .level-box {
-    min-height: 0;
-  }
-
-  .welcome-link {
-    justify-self: stretch;
-    justify-content: space-between;
-    white-space: normal;
-  }
+.story--brief .story__meta {
+  margin-top: 0.4rem;
+  font-size: 10px;
 }
 
 /* ==========================================================================
-   Featured Section
+   Article page chrome that has to match the front page
    ========================================================================== */
 
-.featured-section {
-  margin: 3em auto;
-  max-width: 1400px;
+.page__title {
+  font-family: var(--serif);
+  font-size: clamp(30px, 1.6vw + 20px, 42px);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.018em;
+  color: var(--ink);
 }
 
-.featured-badge {
+.level-badge {
   display: inline-block;
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  color: #ffffff;
-  padding: 0.5em 1.5em;
-  border-radius: 2em 2em 0 0;
+  padding: 0.15em 0.45em;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  font-family: var(--sans);
+  font-size: 10px;
   font-weight: 700;
-  font-size: 0.875em;
+  letter-spacing: 0.1em;
+  line-height: 1.4;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: -1px;
-}
-
-.featured-badge i {
-  margin-right: 0.5em;
-}
-
-.featured-card {
-  background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-  border: 3px solid #f5576c;
-  border-radius: 0 1em 1em 1em;
-  padding: 2em;
-  box-shadow: 0 10px 40px rgba(245, 87, 108, 0.2);
-  transition: all 0.3s ease;
-}
-
-.featured-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 50px rgba(245, 87, 108, 0.3);
-}
-
-.featured-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 2em;
-}
-
-.featured-text h2 {
-  color: #2c3e50;
-  margin: 0 0 0.5em 0;
-  font-size: 1.75em;
-}
-
-.featured-text p {
-  color: #34495e;
-  margin: 0;
-  font-size: 1.1em;
-  line-height: 1.6;
-}
-
-.featured-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: #ffffff;
-  padding: 1em 2em;
-  border-radius: 2em;
-  text-decoration: none;
-  font-weight: 700;
   white-space: nowrap;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  margin-inline-end: 0.5em;
 }
 
-.featured-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
-  color: #ffffff;
+.level-badge.level-a2 {
+  background: transparent;
+  color: var(--level-beginner);
 }
 
-.featured-btn i {
-  margin-left: 0.5em;
-  transition: transform 0.3s ease;
+.level-badge.level-b1 {
+  background: transparent;
+  color: var(--level-intermediate);
 }
 
-.featured-btn:hover i {
-  transform: translateX(5px);
-}
-
-@media (max-width: 768px) {
-  .featured-content {
-    flex-direction: column;
-    align-items: stretch;
+@media (max-width: 900px) {
+  .frontpage__top {
+    gap: 0;
   }
 
-  .featured-btn {
+  .frontpage__slot--lead,
+  .frontpage__slot--rail {
+    flex: 1 1 100%;
+  }
+
+  .frontpage__slot--rail {
+    margin-top: 1.4rem;
+    padding-top: 1.4rem;
+    padding-inline-start: 0;
+    border-inline-start: 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .frontpage__slot--secondary .frontpage__slot-body,
+  .frontpage__slot--briefs .frontpage__slot-body {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .paper-masthead {
+    padding-top: 1.4rem;
+  }
+
+  .paper-masthead__dateline {
+    flex-direction: column;
+    gap: 0.15rem;
     text-align: center;
   }
 
-  .featured-text h2 {
-    font-size: 1.5em;
+  .levelbar__intro {
+    margin-inline-start: 0;
+    flex-basis: 100%;
   }
-}
 
-/* ==========================================================================
-   Filter Section
-   ========================================================================== */
-
-.filter-section {
-  margin-bottom: 2em;
-}
-
-.filter-section h2 {
-  margin-bottom: 1em;
-}
-
-.filter-buttons {
-  display: flex;
-  gap: 1em;
-  flex-wrap: wrap;
-}
-
-.filter-btn {
-  padding: 0.5em 1.5em;
-  border: 2px solid #dee2e6;
-  background: #ffffff;
-  color: #495057;
-  border-radius: 2em;
-  cursor: pointer;
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
-
-.filter-btn:hover {
-  border-color: #007bff;
-  color: #007bff;
-}
-
-.filter-btn.active {
-  background: #007bff;
-  border-color: #007bff;
-  color: #ffffff;
-}
-
-.level-explainer {
-  margin-top: 1em;
-  font-weight: 600;
-  color: #495057;
-  opacity: 0;
-  transform: translateY(-6px);
-  transition: opacity 0.2s ease, transform 0.2s ease;
-}
-
-.level-explainer.active {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ==========================================================================
-   Articles Grid
-   ========================================================================== */
-
-.articles-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 2em;
-  margin-bottom: 3em;
-  max-width: 100%;
-}
-
-/* Force grid to show multiple columns on larger screens */
-@media (min-width: 768px) {
-  .articles-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .frontpage__slot--secondary .frontpage__slot-body,
+  .frontpage__slot--briefs .frontpage__slot-body {
+    grid-template-columns: minmax(0, 1fr);
   }
-}
 
-@media (min-width: 1200px) {
-  .articles-grid {
-    grid-template-columns: repeat(3, 1fr);
+  /* One column: the rules that divided columns now divide rows. */
+  .frontpage__slot--secondary .story {
+    padding-inline-end: 0;
+    border-inline-end: 0;
   }
-}
 
-.article-card {
-  background: #ffffff;
-  border: 1px solid #dee2e6;
-  border-radius: 1em;
-  padding: 1.25em 1.25em 1.1em;
-  transition: all 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  cursor: pointer;
-  color: inherit;
-  text-decoration: none;
-}
-
-.article-card:hover,
-.article-card:focus-visible {
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  transform: translateY(-5px);
-  border-color: #007bff;
-  color: inherit;
-  text-decoration: none;
-}
-
-.article-card:focus-visible {
-  outline: 3px solid rgba(0, 123, 255, 0.35);
-  outline-offset: 3px;
-}
-
-.article-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1em;
-}
-
-.article-date {
-  color: #6c757d;
-  font-size: 0.875em;
-}
-
-.article-title {
-  margin: 0 0 0.75em 0;
-  font-size: 1.25em;
-  color: #212529;
-}
-
-.article-card:hover .article-title,
-.article-card:focus-visible .article-title {
-  color: #007bff;
-}
-
-.article-excerpt {
-  color: #6c757d;
-  line-height: 1.6;
-  margin-bottom: 0.75em;
-}
-
-.article-card .article-meta {
-  display: flex;
-  gap: 1em;
-  flex-wrap: wrap;
-  margin-bottom: 1em;
-  font-size: 0.875em;
-  color: #6c757d;
-}
-
-.article-meta i {
-  margin-right: 0.25em;
-}
-
-.topics {
-  display: flex;
-  gap: 0.5em;
-}
-
-.topic-tag {
-  background: #e9ecef;
-  padding: 0.25em 0.5em;
-  border-radius: 0.25em;
-  font-size: 0.875em;
-}
-
-.read-more {
-  color: #007bff;
-  text-decoration: none;
-  font-weight: 600;
-  align-self: flex-start;
-}
-
-.read-more:hover {
-  color: #0056b3;
-  text-decoration: underline;
+  .frontpage__slot--secondary .story + .story {
+    margin-top: 1.2rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--rule);
+  }
 }
 
 /* ==========================================================================
@@ -743,10 +891,15 @@
   box-sizing: border-box;
 }
 
+/* Body copy is set in the same news serif as the front page. Newsreader ships
+   no Arabic or Cyrillic, so translations fall through the stack to the system
+   serif - which is why --serif keeps Georgia and a generic serif at the end. */
 .layout--post .page__content,
 .layout--translation .page__content {
-  font-size: 1.05rem;
-  line-height: 1.65;
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--ink);
 }
 
 .layout--post .page__content p,
@@ -773,47 +926,106 @@
   text-align: center;
 }
 
+/* A dateline, not a panel: hairline rules above and below, small caps, no fill
+   and no rounded corners - the same furniture the front page runs under every
+   headline. */
 .page__inner-wrap > header .article-meta {
   display: flex;
-  gap: 1.5em;
+  gap: 1.2em;
   flex-wrap: wrap;
-  margin: 1.5em 0;
-  padding: 1em;
-  background: #f8f9fa;
-  border-radius: 0.5em;
-  font-size: 0.875em;
-  color: #6c757d;
+  align-items: center;
+  margin: 1.4em 0;
+  padding: 0.55em 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  background: transparent;
+  border-radius: 0;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  font-variant-numeric: tabular-nums;
 }
 
+.page__inner-wrap > header .article-meta i {
+  color: var(--ink-mute);
+}
+
+.page__inner-wrap > header .article-meta a {
+  color: var(--ink);
+}
+
+/* The article's deck - same role, same voice as .story__deck on the front. */
 .article-summary {
-  max-width: 44rem;
+  max-width: 40rem;
   margin: 0 0 1.75rem;
-  color: #555b61;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1.45;
 }
 
 .page__sources {
   margin-top: 1em;
-  padding: 1em;
-  background: #f8f9fa;
-  border-left: 4px solid #007bff;
-  border-radius: 0.25em;
+  padding: 0.9em 1.1em;
+  background: transparent;
+  border-inline-start: 2px solid var(--rule-firm);
+  border-radius: 0;
 }
 
-/* Vocabulary Section Styling */
+/* Section break inside an article ("Vokabeln"): a rule and a small-caps label,
+   matching the "Kurz gemeldet" break on the front page. */
 .page__content h2 {
-  color: #007bff;
-  border-bottom: 2px solid #007bff;
-  padding-bottom: 0.5em;
-  margin-top: 2em;
+  margin-top: 2.2em;
+  padding-top: 0.7em;
+  border-top: 1px solid var(--rule-firm);
+  border-bottom: 0;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
 }
 
 .page__content ul li strong {
   color: #212529;
   font-weight: 700;
+}
+
+/* Share row: outline buttons in the site's sans, not five brand colours. */
+.page__share {
+  border-top: 1px solid var(--rule);
+}
+
+.page__share-title {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+.page__share .btn {
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.page__share .btn:hover {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--paper);
 }
 
 /* ==========================================================================
@@ -892,11 +1104,11 @@
   column-gap: 1.25rem;
   row-gap: 0.7rem;
   padding: 0.85rem;
-  background: rgba(248, 248, 250, 0.92);
-  border: 1px solid rgba(60, 60, 67, 0.14);
-  border-radius: 18px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-  color: #1d1d1f;
+  background: var(--paper-sunk);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  box-shadow: none;
+  color: var(--ink);
 }
 
 .article-audio__transport {
@@ -929,8 +1141,8 @@
 
 .article-audio__button:hover,
 .article-audio__button:focus-visible {
-  background: #f2f2f7;
-  color: #007bff;
+  background: var(--paper-sunk);
+  color: var(--accent);
   outline: none;
   transform: translateY(-1px);
 }
@@ -950,15 +1162,15 @@
 .article-audio__play {
   width: 56px;
   height: 56px;
-  background: #111111;
-  color: #ffffff;
+  background: var(--ink);
+  color: var(--paper);
   box-shadow: none;
 }
 
 .article-audio__play:hover,
 .article-audio__play:focus-visible {
-  background: #007bff;
-  color: #ffffff;
+  background: var(--accent);
+  color: var(--paper);
 }
 
 .article-audio__timeline {
@@ -995,7 +1207,7 @@
 }
 
 .article-audio__waveform:focus-visible {
-  outline: 3px solid rgba(0, 123, 255, 0.25);
+  outline: 3px solid var(--accent-soft);
   outline-offset: 3px;
 }
 
@@ -1008,8 +1220,10 @@
   transition: background 0.12s ease;
 }
 
+/* Played portion in the accent: the one place on an article page where a red
+   mark is doing work rather than decorating. */
 .article-audio__waveform-bar.is-played {
-  background: #007bff;
+  background: var(--accent);
 }
 
 .article-audio__speed {
@@ -1044,13 +1258,13 @@
 
 .article-audio__speed button:hover,
 .article-audio__speed button:focus-visible {
-  color: #007bff;
+  color: var(--accent);
   outline: none;
 }
 
 .article-audio__speed button.is-active {
-  background: #ffffff;
-  color: #007bff;
+  background: var(--paper);
+  color: var(--ink);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.14);
 }
 
@@ -1166,7 +1380,7 @@
   display: inline;
   padding: 0;
   border: 0;
-  border-bottom: 1px dotted #4b6fb8;
+  border-bottom: 1px dotted var(--ink-mute);
   background: transparent;
   color: inherit;
   font: inherit;
@@ -1177,7 +1391,8 @@
 
 .article-term:hover,
 .article-term:focus-visible {
-  color: #244f9e;
+  color: var(--accent);
+  border-bottom-color: var(--accent);
   border-bottom-style: solid;
   outline: none;
 }
@@ -1205,10 +1420,10 @@
 .article-glossary-popup__inner {
   position: relative;
   padding: 0.85rem 0.95rem 0.95rem;
-  background: #ffffff;
-  border: 1px solid #d7deea;
-  border-radius: 8px;
-  box-shadow: 0 16px 42px rgba(23, 37, 84, 0.2);
+  background: var(--paper);
+  border: 1px solid var(--rule-firm);
+  border-radius: 4px;
+  box-shadow: 0 16px 42px rgba(22, 21, 15, 0.16);
 }
 
 .article-glossary-popup__close {
@@ -1235,24 +1450,28 @@
 
 .article-glossary-popup__term {
   padding-inline-end: 2rem;
-  color: #172554;
-  font-size: 1.05rem;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 1.1rem;
   font-weight: 700;
   line-height: 1.3;
 }
 
 .article-glossary-popup__english {
   margin-top: 0.35rem;
-  color: #244f9e;
+  color: var(--accent);
+  font-family: var(--sans);
+  font-size: 0.85rem;
   font-weight: 600;
   line-height: 1.35;
 }
 
 .article-glossary-popup__explanation {
   margin-top: 0.35rem;
-  color: #374151;
+  color: var(--ink-soft);
+  font-family: var(--serif);
   font-size: 0.95rem;
-  line-height: 1.4;
+  line-height: 1.45;
 }
 
 .article-glossary-popup__add {
@@ -1263,26 +1482,29 @@
   min-height: 2.35rem;
   margin-top: 0.8rem;
   padding: 0.5rem 0.7rem;
-  border: 1px solid #244f9e;
-  border-radius: 6px;
-  background: #244f9e;
-  color: #ffffff;
-  font-size: 0.9rem;
+  border: 1px solid var(--ink);
+  border-radius: 3px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--sans);
+  font-size: 0.75rem;
   font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   cursor: pointer;
 }
 
 .article-glossary-popup__add:hover,
 .article-glossary-popup__add:focus-visible {
-  background: #173a78;
-  border-color: #173a78;
+  background: var(--accent);
+  border-color: var(--accent);
   outline: none;
 }
 
 .article-glossary-popup__add:disabled {
-  background: #eef2f7;
-  border-color: #d7deea;
-  color: #5f6f86;
+  background: var(--paper-sunk);
+  border-color: var(--rule);
+  color: var(--ink-mute);
   cursor: default;
 }
 
@@ -1290,59 +1512,58 @@
    Pagination
    ========================================================================== */
 
+/* The theme's .pagination carries a clearfix; inside a flex container that
+   ::after becomes a third flex item and parks the "older articles" link in the
+   middle of the row. */
+.pagination::after {
+  content: none;
+}
+
 .pagination {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 2em;
-  padding: 2em 0;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1.5rem;
+  max-width: var(--page-width);
+  margin: 2.4rem auto 3rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--rule-firm);
+  font-family: var(--sans);
 }
 
 .pagination-btn {
-  padding: 0.75em 1.5em;
-  background: #007bff;
-  color: #ffffff;
+  padding: 0;
+  border-bottom: 2px solid var(--accent);
+  border-radius: 0;
+  background: transparent;
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   text-decoration: none;
-  border-radius: 0.5em;
-  font-weight: 600;
-  transition: all 0.3s ease;
+  transition: color 0.15s ease;
 }
 
 .pagination-btn:hover {
-  background: #0056b3;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+  background: transparent;
+  color: var(--accent);
+  transform: none;
+  box-shadow: none;
 }
 
 .pagination-info {
-  color: #6c757d;
+  font-size: 11px;
   font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
 }
 
-/* ==========================================================================
-   Responsive Design
-   ========================================================================== */
-
-@media (max-width: 768px) {
-  .site-title::after {
-    content: "";
-  }
-
-  .level-info {
-    grid-template-columns: 1fr;
-  }
-
-  .articles-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .filter-buttons {
-    justify-content: center;
-  }
-
+@media (max-width: 640px) {
   .pagination {
-    flex-direction: column;
-    gap: 1em;
+    flex-wrap: wrap;
+    gap: 0.8rem;
   }
 }
 
@@ -1356,14 +1577,19 @@
   margin: 0.15rem 0 0.6rem;
 }
 
+/* Sits directly above the article dateline, so it is set as the same kind of
+   furniture: system sans, small caps, ink - not a blue link. */
 .language-selector__toggle {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
   padding: 0.3rem 0.1rem;
-  color: #244f9e;
-  font-size: 0.95rem;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 0.72rem;
   font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   cursor: pointer;
   list-style: none;
   user-select: none;
@@ -1380,7 +1606,7 @@
 
 .language-selector__toggle:hover,
 .language-selector__toggle:focus-visible {
-  color: #172554;
+  color: var(--accent);
   outline: none;
   text-decoration: underline;
 }
@@ -1413,10 +1639,10 @@
   max-height: 60vh;
   overflow-y: auto;
   padding: 0.6rem;
-  background: #ffffff;
-  border: 1px solid #d7deea;
-  border-radius: 8px;
-  box-shadow: 0 16px 42px rgba(23, 37, 84, 0.2);
+  background: var(--paper);
+  border: 1px solid var(--rule-firm);
+  border-radius: 4px;
+  box-shadow: 0 16px 42px rgba(22, 21, 15, 0.16);
 }
 
 .language-selector--flip-up .language-selector__panel {
@@ -1443,14 +1669,15 @@
   width: 100%;
   padding: 0.45rem 0.6rem;
   padding-inline-start: 2rem;
-  border: 1px solid #d7deea;
-  border-radius: 6px;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  font-family: var(--sans);
   font-size: 0.95rem;
 }
 
 .language-selector__search-input:focus-visible {
-  border-color: #244f9e;
-  outline: 2px solid rgba(36, 79, 158, 0.25);
+  border-color: var(--accent);
+  outline: 2px solid var(--accent-soft);
   outline-offset: 1px;
 }
 
@@ -1470,22 +1697,22 @@
   justify-content: space-between;
   gap: 0.75rem;
   padding: 0.4rem 0.5rem;
-  border-radius: 6px;
-  color: #244f9e;
+  border-radius: 3px;
+  color: var(--ink);
   text-decoration: none;
 }
 
 .language-selector__link:hover,
 .language-selector__link:focus-visible {
-  background: #eef3fb;
-  color: #172554;
+  background: var(--paper-sunk);
+  color: var(--accent);
   outline: none;
 }
 
 .language-selector__link--current {
   font-weight: 700;
-  color: #172554;
-  background: #f4f7fc;
+  color: var(--ink);
+  background: var(--paper-sunk);
 }
 
 .language-selector__english {
@@ -1527,7 +1754,7 @@
 }
 
 .translation-note__link {
-  color: #244f9e;
+  color: var(--accent);
   font-weight: 500;
 }
 
@@ -1582,17 +1809,16 @@
 
 @media print {
   .language-selector,
-  .filter-section,
+  .levelbar,
+  .levelbar__note,
   .pagination,
   .article-meta,
-  .article-card .article-meta,
   .page__inner-wrap > header .article-meta,
   .page__share {
     display: none;
   }
 
-  .article-card {
-    border: 1px solid #000;
+  .story {
     page-break-inside: avoid;
   }
 }

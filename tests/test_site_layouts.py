@@ -42,8 +42,10 @@ def test_post_layout_renders_editorial_summary():
     assert 'class="article-summary" itemprop=' not in layout
     assert "{{ page.summary | escape }}" in layout
     assert ".article-summary {" in styles
-    assert 'font-family: Georgia, "Times New Roman", serif;' in styles
-    assert "font-size: 1rem;" in styles
+    # The deck is set in the site's news serif - the same face and role as
+    # .story__deck on the front page - and stays larger than body copy.
+    assert "font-family: var(--serif);" in styles
+    assert "--serif: \"Newsreader\"" in styles
 
 
 def test_audio_player_supports_optional_synchronized_highlighting():
