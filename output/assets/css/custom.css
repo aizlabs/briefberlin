@@ -757,6 +757,10 @@ body {
   line-height: 1.22;
 }
 
+.story--brief .story__deck {
+  display: none;
+}
+
 .story--brief .story__meta {
   margin-top: 0.4rem;
   font-size: 10px;

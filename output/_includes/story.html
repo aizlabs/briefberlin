@@ -19,9 +19,11 @@
     <span class="story__kicker">{{ story.category }}</span>
     {%- endif %}
     <h2 class="story__headline">{{ story.title }}</h2>
-    {%- unless variant == "brief" %}
+    {%- comment -%} Rendered for every story and hidden by CSS in the brief slot,
+    for the same reason as the excerpt below: a story rendered as a brief is
+    promoted to a bigger slot the moment the reader picks a level, and the
+    script re-deals elements rather than re-rendering them. {%- endcomment -%}
     <p class="story__deck">{{ story.summary | default: story.description | default: story.content | strip_html | truncatewords: 26 }}</p>
-    {%- endunless %}
     {%- comment -%} The lead runs a column of its own next to the rail; a
     one-sentence deck leaves it hanging half-empty, so it also carries the
     article's opening. Rendered for EVERY story and revealed by CSS only in the
