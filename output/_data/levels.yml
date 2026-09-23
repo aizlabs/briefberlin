@@ -1,0 +1,14 @@
+# Reader-facing labels for the CEFR levels stored in post front matter.
+#
+# The data layer keeps the codes (`level: A2`) - they drive article slugs, the
+# generator, and the Telegram publisher. The SITE never shows them: readers see
+# the German words, because a learner knows "Anfaenger" before they know "A2".
+# Map order is the order the level chooser renders in.
+A2:
+  slug: a2
+  label: "Anfänger"
+  description: "Kurze Sätze, häufige Wörter und ein klarer Aufbau."
+B1:
+  slug: b1
+  label: "Mittelstufe"
+  description: "Mehr Kontext, gemischte Zeiten und längere Texte."

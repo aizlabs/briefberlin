@@ -1,0 +1,47 @@
+# Theme chrome strings for minimal-mistakes, keyed by site.locale ("de-DE").
+#
+# Jekyll 3 does not load _data from a theme gem, so the theme's own ui-text.yml
+# never reaches this site and every string it looks up fell back to the English
+# default baked into the include ("Categories:", "Share on", "You May Also
+# Enjoy"). This file is that lookup table, in German.
+#
+# BriefBerlin's own strings - the ones our shadowed layouts and includes use -
+# live in ui-briefberlin.yml and are keyed by BARE language code, because those
+# templates also render the reader-language translation pages.
+de-DE:
+  page: "Seite"
+  pagination_previous: "Zurück"
+  pagination_next: "Weiter"
+  breadcrumb_home_label: "Start"
+  breadcrumb_separator: "/"
+  menu_label: "Menü ein-/ausschalten"
+  toc_label: "Auf dieser Seite"
+  ext_link_label: "Externer Link"
+  less_than: "weniger als"
+  minute_read: "Min. Lesezeit"
+  share_on_label: "Teilen auf"
+  meta_label: ""
+  tags_label: "Themen:"
+  categories_label: "Ressort:"
+  date_label: "Aktualisiert:"
+  comments_label: "Kommentar schreiben"
+  comments_title: "Kommentare"
+  more_label: "Mehr lesen"
+  related_label: "Passend dazu"
+  follow_label: "Folgen:"
+  feed_label: "Feed"
+  powered_by: "Erstellt mit"
+  website_label: "Website"
+  email_label: "E-Mail"
+  recent_posts: "Neueste Artikel"
+  undefined_wpm: "Wörter pro Minute nicht definiert"
+  search_label_text: "Suchbegriff eingeben"
+  search_placeholder_text: "Suchen …"
+  search_algolia_no_results: "Keine Ergebnisse"
+  results_found: "Ergebnis(se) gefunden"
+  back_to_top: "Nach oben"
+  loading_label: "Wird geladen …"
+  skip_links: "Links überspringen"
+  skip_primary_nav: "Zur Hauptnavigation springen"
+  skip_content: "Zum Inhalt springen"
+  skip_footer: "Zur Fußzeile springen"

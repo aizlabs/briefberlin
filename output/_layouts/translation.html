@@ -33,7 +33,11 @@ layout: default
 
       <div class="article-meta">
         {% if page.level %}
-          <span class="level-badge level-{{ page.level | downcase }}" dir="ltr">{{ page.level }}</span>
+          {%- comment -%} The reader sees the level as a word in THEIR language,
+          not as a CEFR code, so it is localized like the rest of the chrome and
+          - unlike the code - must not be forced to ltr. {%- endcomment -%}
+          {%- assign level_key = page.level | downcase | prepend: "level_" -%}
+          <span class="level-badge level-{{ page.level | downcase }}">{{ t[level_key] | default: page.level }}</span>
         {% endif %}
 
         {% if page.date %}

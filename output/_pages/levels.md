@@ -1,24 +1,28 @@
 ---
 permalink: /levels/
-title: "CEFR Levels"
-excerpt: "A2 and B1 German learner levels"
+title: "Die Niveaus"
+excerpt: "Anfänger und Mittelstufe: die beiden Niveaus, in denen jeder Artikel erscheint"
 layout: single
 ---
 
-## A2
+Jede Meldung erscheint bei BriefBerlin in zwei Fassungen. Der Inhalt ist derselbe, die Sprache nicht.
 
-A2 articles use short sentences, common words, and direct explanations. They are meant for learners who can understand simple everyday German and want structured reading practice.
+## Anfänger
 
-Example:
-> "Die Stadt plant neue Busse. Viele Menschen fahren jeden Tag zur Arbeit."
+Artikel für Anfänger nutzen kurze Sätze, häufige Wörter und direkte Erklärungen. Sie sind für Lernende gedacht, die einfaches Alltagsdeutsch verstehen und regelmäßig lesen möchten.
 
-## B1
+Beispiel:
+> „Die Stadt plant neue Busse. Viele Menschen fahren jeden Tag zur Arbeit.“
 
-B1 articles add more context and more varied grammar while staying clear. They are meant for learners who can follow familiar topics and understand well-structured reporting.
+## Mittelstufe
 
-Example:
-> "Die Stadt plant neue Busse, weil viele Menschen jeden Tag zur Arbeit fahren und bessere Verbindungen brauchen."
+Artikel für die Mittelstufe geben mehr Kontext und nutzen mehr Grammatik, bleiben aber klar. Sie sind für Lernende gedacht, die bekannten Themen folgen und gut strukturierte Berichte verstehen können.
 
-## Reading Strategy
+Beispiel:
+> „Die Stadt plant neue Busse, weil viele Menschen jeden Tag zur Arbeit fahren und bessere Verbindungen brauchen.“
 
-Start with A2 when the topic is new. Read B1 when you want more detail and more natural German phrasing.
+## So liest du am besten
+
+Beginne mit **Anfänger**, wenn das Thema neu für dich ist. Lies die **Mittelstufe**, wenn du mehr Details und natürlicheres Deutsch möchtest.
+
+Dein Niveau kannst du auf der Startseite oben auswählen. BriefBerlin merkt sich die Wahl für deinen nächsten Besuch.

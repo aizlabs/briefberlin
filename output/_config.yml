@@ -1,6 +1,9 @@
 # Site Settings
 title: "BriefBerlin"
 name: "BriefBerlin"
+# Rendered by the masthead as real markup. It used to be a CSS ::after on
+# .site-title, which meant the tagline existed for sighted users only.
+subtitle: "Deutsch lernen mit Berliner Nachrichten"
 description: "Aktuelle Berlin Nachrichten in einfacher Sprache für Deutschlerner (Niveau A2 und B1)."
 url: "https://briefberlin.de"
 baseurl: ""
@@ -43,6 +46,10 @@ footer:
 # Build settings
 markdown: kramdown
 highlighter: rouge
+# Without this, Jekyll uses the build machine's zone: Europe/Berlin locally but
+# UTC on the Pages runner, so the masthead dateline under "Ausgabe Berlin"
+# rendered the previous day for any build between midnight and 02:00 CEST.
+timezone: Europe/Berlin
 permalink: /articles/:title/
 paginate: 12
 paginate_path: /page:num/

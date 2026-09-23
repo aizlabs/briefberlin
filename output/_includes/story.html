@@ -1,0 +1,43 @@
+{%- comment -%}
+  A single front-page story.
+
+  Parameters:
+    post    - the post object
+    variant - lead | rail | secondary | brief
+
+  `variant` is only the DEFAULT role. When the reader picks a level, the
+  homepage script re-deals the surviving stories across the same four slots and
+  rewrites this class, so `.story--<variant>` on the element - not the Liquid
+  parameter - is the single source of truth for how an item is typeset.
+{%- endcomment -%}
+{%- assign story = include.post -%}
+{%- assign variant = include.variant | default: "brief" -%}
+{%- assign level = site.data.levels[story.level] -%}
+<article class="story story--{{ variant }}"{% if story.level %} data-level="{{ story.level }}"{% endif %}>
+  <a class="story__link" href="{{ story.url | relative_url }}">
+    {%- if story.category %}
+    <span class="story__kicker">{{ story.category }}</span>
+    {%- endif %}
+    <h2 class="story__headline">{{ story.title }}</h2>
+    {%- comment -%} Rendered for every story and hidden by CSS in the brief slot,
+    for the same reason as the excerpt below: a story rendered as a brief is
+    promoted to a bigger slot the moment the reader picks a level, and the
+    script re-deals elements rather than re-rendering them. {%- endcomment -%}
+    <p class="story__deck">{{ story.summary | default: story.description | default: story.content | strip_html | truncatewords: 26 }}</p>
+    {%- comment -%} The lead runs a column of its own next to the rail; a
+    one-sentence deck leaves it hanging half-empty, so it also carries the
+    article's opening. Rendered for EVERY story and revealed by CSS only in the
+    lead slot: any story can be promoted to lead when the reader picks a level,
+    and the script re-deals elements rather than re-rendering them. {%- endcomment -%}
+    <p class="story__excerpt">{{ story.content | strip_html | truncatewords: 62 }}</p>
+    <p class="story__meta">
+      {%- if level %}
+      <span class="story__level story__level--{{ level.slug }}">{{ level.label }}</span>
+      {%- endif %}
+      <time datetime="{{ story.date | date_to_xmlschema }}">{{ story.date | date: "%d.%m.%Y" }}</time>
+      {%- if story.reading_time %}
+      <span class="story__reading-time">{{ story.reading_time }} Min.</span>
+      {%- endif %}
+    </p>
+  </a>
+</article>

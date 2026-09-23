@@ -1,148 +1,184 @@
 ---
 layout: home
 title: "BriefBerlin | Berlin Nachrichten aktuell & vereinfacht"
-excerpt: "Lerne Deutsch mit aktuellen Berlin Nachrichten. Einfache Texte und Nachrichten aus Berlin auf A2- und B1-Niveau."
+excerpt: "Lerne Deutsch mit aktuellen Berlin Nachrichten. Einfache Texte aus Berlin für Anfänger und Mittelstufe."
 organization_schema: true
 ---
 
-<section class="home-overview" aria-labelledby="home-overview-title">
-  <div class="home-overview__intro">
-    <h1 id="home-overview-title">Berlin Nachrichten: Aktuell & Vereinfacht</h1>
-    <p>Lerne Deutsch mit aktuellen Nachrichten aus Berlin, passend für dein A2- oder B1-Niveau.</p>
+{%- comment -%}
+  Liquid cannot localize month or weekday NAMES, so the dateline maps them by
+  index. site.time is the build time: the site rebuilds on every article run,
+  so the edition line is always the day the page was published.
+{%- endcomment -%}
+{%- assign weekdays = "Sonntag,Montag,Dienstag,Mittwoch,Donnerstag,Freitag,Samstag" | split: "," -%}
+{%- assign months = "Januar,Februar,März,April,Mai,Juni,Juli,August,September,Oktober,November,Dezember" | split: "," -%}
+{%- assign weekday_index = site.time | date: "%w" | plus: 0 -%}
+{%- assign month_index = site.time | date: "%-m" | minus: 1 -%}
+
+<header class="paper-masthead">
+  <img class="paper-masthead__mark" src="{{ '/assets/images/logo.svg' | relative_url }}" alt="" width="44" height="44">
+  <h1 class="paper-masthead__wordmark"><a href="{{ '/' | relative_url }}">BriefBerlin</a></h1>
+  <p class="paper-masthead__tagline">Deutsch lernen mit aktuellen Nachrichten aus Berlin</p>
+  <p class="paper-masthead__dateline">
+    <span>{{ weekdays[weekday_index] }}, {{ site.time | date: "%-d" }}. {{ months[month_index] }} {{ site.time | date: "%Y" }}</span>
+    <span class="paper-masthead__edition">Ausgabe Berlin</span>
+  </p>
+</header>
+
+<nav class="levelbar" aria-label="Sprachniveau wählen" data-levelbar>
+  <p class="levelbar__label" id="levelbar-label">Dein Niveau</p>
+  <div class="levelbar__options" role="group" aria-labelledby="levelbar-label">
+    <button type="button" class="levelbar__option is-active" data-level="all" aria-pressed="true"
+            data-note="Alle Artikel – von kurzen, einfachen Meldungen bis zu längeren Berichten.">Alle</button>
+    {%- for entry in site.data.levels %}
+    {%- assign code = entry[0] %}{% assign level = entry[1] %}
+    <button type="button" class="levelbar__option" data-level="{{ code }}" aria-pressed="false"
+            data-note="{{ level.label }}: {{ level.description }}">{{ level.label }}</button>
+    {%- endfor %}
+  </div>
+  <a class="levelbar__intro" href="{{ '/articles/willkommen-bei-briefberlin/' | relative_url }}">Neu hier? Willkommen lesen</a>
+</nav>
+<p class="levelbar__note" data-level-note aria-live="polite"></p>
+
+{%- comment -%}
+  Server-rendered default arrangement: lead, two rail stories, three seconds,
+  the rest as briefs. The script re-deals the same elements when a level is
+  chosen, so this markup is what a reader without JavaScript gets.
+{%- endcomment -%}
+{%- assign lead_posts = paginator.posts | slice: 0, 1 -%}
+{%- assign rail_posts = paginator.posts | slice: 1, 2 -%}
+{%- assign secondary_posts = paginator.posts | slice: 3, 3 -%}
+{%- assign brief_posts = paginator.posts | slice: 6, 6 -%}
+
+<div class="frontpage" data-frontpage>
+  <div class="frontpage__top">
+    <section class="frontpage__slot frontpage__slot--lead" data-slot="lead" aria-label="Aufmacher">
+      <div class="frontpage__slot-body" data-slot-body>
+        {%- for post in lead_posts %}{% include story.html post=post variant="lead" %}{% endfor %}
+      </div>
+    </section>
+
+    <section class="frontpage__slot frontpage__slot--rail" data-slot="rail" aria-label="Ebenfalls aktuell">
+      <div class="frontpage__slot-body" data-slot-body>
+        {%- for post in rail_posts %}{% include story.html post=post variant="rail" %}{% endfor %}
+      </div>
+    </section>
   </div>
 
-  <div class="home-overview__learning">
-    <div class="level-info" aria-label="Wähle ein Niveau">
-      <div class="level-box" data-level="A2" role="button" tabindex="0" aria-label="A2-Artikel für Anfänger filtern">
-        <span class="level-badge level-a2">A2</span>
-        <span class="level-box__text">
-          <strong>Anfänger</strong>
-          <span>Kurze Sätze, häufige Wörter und klare Struktur.</span>
-        </span>
-      </div>
-      <div class="level-box" data-level="B1" role="button" tabindex="0" aria-label="B1-Artikel für Mittelstufe filtern">
-        <span class="level-badge level-b1">B1</span>
-        <span class="level-box__text">
-          <strong>Mittelstufe</strong>
-          <span>Mehr Kontext, gemischte Zeiten und längere Texte.</span>
-        </span>
-      </div>
+  <section class="frontpage__slot frontpage__slot--secondary" data-slot="secondary" aria-label="Weitere Artikel">
+    <div class="frontpage__slot-body" data-slot-body>
+      {%- for post in secondary_posts %}{% include story.html post=post variant="secondary" %}{% endfor %}
     </div>
+  </section>
 
-    <a class="welcome-link" href="{{ '/articles/willkommen-bei-briefberlin/' | relative_url }}">
-      <span>Neu bei BriefBerlin?</span>
-      <strong>Willkommen lesen</strong>
-      <i class="fas fa-arrow-right" aria-hidden="true"></i>
-    </a>
-  </div>
-</section>
+  <section class="frontpage__slot frontpage__slot--briefs" data-slot="briefs" aria-labelledby="briefs-title">
+    <h2 class="frontpage__slot-title" id="briefs-title">Kurz gemeldet</h2>
+    <div class="frontpage__slot-body" data-slot-body>
+      {%- for post in brief_posts %}{% include story.html post=post variant="brief" %}{% endfor %}
+    </div>
+  </section>
 
-<div class="filter-section">
-  <h2>Neueste Artikel</h2>
-  <div class="filter-buttons">
-    <button class="filter-btn active" data-level="all">Alle</button>
-    <button class="filter-btn" data-level="A2">A2</button>
-    <button class="filter-btn" data-level="B1">B1</button>
-  </div>
-  <p class="level-explainer" aria-live="polite"></p>
-</div>
+  <p class="frontpage__empty" data-frontpage-empty hidden>
+    Auf dieser Seite gibt es gerade keine Artikel für dieses Niveau.
+  </p>
 
-<div class="articles-grid">
-  {% for post in paginator.posts %}
-    <a class="article-card" href="{{ post.url | relative_url }}"{% if post.level %} data-level="{{ post.level }}"{% endif %}>
-      <div class="article-header">
-        {% if post.level %}
-          <span class="level-badge level-{{ post.level | downcase }}">{{ post.level }}</span>
-        {% endif %}
-        <span class="article-date">{{ post.date | date: "%d.%m.%Y" }}</span>
-      </div>
-
-      <h2 class="article-title">{{ post.title }}</h2>
-
-      <div class="article-excerpt">
-        {{ post.summary | default: post.content | strip_html | truncatewords: 30 }}
-      </div>
-
-      <div class="article-meta">
-        {% if post.reading_time %}
-          <span><i class="far fa-clock"></i> {{ post.reading_time }} min</span>
-        {% endif %}
-        {% if post.topics %}
-          <span class="topics">
-            {% for topic in post.topics limit:2 %}
-              <span class="topic-tag">{{ topic }}</span>
-            {% endfor %}
-          </span>
-        {% endif %}
-      </div>
-
-      <span class="read-more">Artikel lesen →</span>
-    </a>
-  {% endfor %}
+  <div class="frontpage__pool" data-story-pool hidden></div>
 </div>
 
 {% if paginator.total_pages > 1 %}
-<nav class="pagination">
+<nav class="pagination" aria-label="Seitennavigation">
   {% if paginator.previous_page %}
-    <a href="{{ paginator.previous_page_path | relative_url }}" class="pagination-btn">← Zurück</a>
+    <a href="{{ paginator.previous_page_path | relative_url }}" class="pagination-btn" rel="prev">&larr; Neuere Artikel</a>
   {% endif %}
 
   <span class="pagination-info">Seite {{ paginator.page }} von {{ paginator.total_pages }}</span>
 
   {% if paginator.next_page %}
-    <a href="{{ paginator.next_page_path | relative_url }}" class="pagination-btn">Weiter →</a>
+    <a href="{{ paginator.next_page_path | relative_url }}" class="pagination-btn" rel="next">Ältere Artikel &rarr;</a>
   {% endif %}
 </nav>
 {% endif %}
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  const articles = document.querySelectorAll('.article-card');
-  const levelBoxes = document.querySelectorAll('.level-box');
-  const levelExplainer = document.querySelector('.level-explainer');
-  const filterSection = document.querySelector('.filter-section');
-  const levelDescriptions = {
-    A2: 'A2: kurze Texte mit einfachem Satzbau und häufigen Wörtern.',
-    B1: 'B1: längere Texte mit mehr Kontext, Nebensätzen und erweitertem Wortschatz.'
-  };
+(function () {
+  var root = document.querySelector('[data-frontpage]');
+  if (!root) return;
 
-  const applyFilter = level => {
-    filterBtns.forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.level === level);
+  // Four layout slots, in reading order, with how many stories each one holds.
+  var SLOTS = [['lead', 1], ['rail', 2], ['secondary', 3], ['briefs', Infinity]];
+  var STORAGE_KEY = 'briefberlin:level';
+  var VALID = ['all', 'A2', 'B1'];
+
+  var stories = Array.prototype.slice.call(root.querySelectorAll('.story'));
+  var buttons = Array.prototype.slice.call(document.querySelectorAll('[data-levelbar] .levelbar__option'));
+  var note = document.querySelector('[data-level-note]');
+  var empty = root.querySelector('[data-frontpage-empty]');
+  var pool = root.querySelector('[data-story-pool]');
+  var sections = {};
+  var bodies = {};
+
+  SLOTS.forEach(function (slot) {
+    var section = root.querySelector('[data-slot="' + slot[0] + '"]');
+    sections[slot[0]] = section;
+    bodies[slot[0]] = section.querySelector('[data-slot-body]');
+  });
+
+  // Filtering changes how many stories survive, so the lead/rail/seconds/briefs
+  // roles are re-dealt from scratch every time rather than being baked into the
+  // markup - otherwise picking a level would leave the page with, say, four
+  // lead-sized headlines and an empty front.
+  function deal(level) {
+    var visible = stories.filter(function (story) {
+      return level === 'all' || story.getAttribute('data-level') === level;
     });
 
-    articles.forEach(article => {
-      article.style.display = level === 'all' || article.dataset.level === level ? 'flex' : 'none';
+    stories.forEach(function (story) {
+      if (visible.indexOf(story) === -1) pool.appendChild(story);
     });
 
-    if (levelDescriptions[level]) {
-      levelExplainer.textContent = levelDescriptions[level];
-      levelExplainer.classList.add('active');
-    } else {
-      levelExplainer.textContent = '';
-      levelExplainer.classList.remove('active');
+    var cursor = 0;
+    SLOTS.forEach(function (slot) {
+      var name = slot[0];
+      var take = slot[1] === Infinity
+        ? visible.slice(cursor)
+        : visible.slice(cursor, cursor + slot[1]);
+      cursor += take.length;
+
+      take.forEach(function (story) {
+        story.className = 'story story--' + name;
+        bodies[name].appendChild(story);
+      });
+      sections[name].hidden = take.length === 0;
+    });
+
+    if (empty) empty.hidden = visible.length > 0;
+  }
+
+  function apply(level, persist) {
+    deal(level);
+
+    var active = null;
+    buttons.forEach(function (button) {
+      var on = button.getAttribute('data-level') === level;
+      button.classList.toggle('is-active', on);
+      button.setAttribute('aria-pressed', on ? 'true' : 'false');
+      if (on) active = button;
+    });
+
+    if (note) note.textContent = active ? (active.getAttribute('data-note') || '') : '';
+    if (persist) {
+      try { window.localStorage.setItem(STORAGE_KEY, level); } catch (error) { /* private mode */ }
     }
-  };
+  }
 
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', function() {
-      applyFilter(this.dataset.level);
+  buttons.forEach(function (button) {
+    button.addEventListener('click', function () {
+      apply(button.getAttribute('data-level'), true);
     });
   });
 
-  levelBoxes.forEach(box => {
-    box.addEventListener('click', function() {
-      const level = this.dataset.level;
-      applyFilter(level);
-      filterSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-    box.addEventListener('keydown', function(event) {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        this.click();
-      }
-    });
-  });
-});
+  var stored = null;
+  try { stored = window.localStorage.getItem(STORAGE_KEY); } catch (error) { /* private mode */ }
+  apply(VALID.indexOf(stored) === -1 ? 'all' : stored, false);
+})();
 </script>

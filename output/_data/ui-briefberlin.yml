@@ -12,6 +12,10 @@
 de:
   by_label: "Von"
   reading_time_label: "%d Min. Lesezeit"
+  # Level words, never CEFR codes: a learner recognizes "Anfänger" long before
+  # "A2". The codes stay in the data layer (`level:` front matter) only.
+  level_a2: "Anfänger"
+  level_b1: "Mittelstufe"
   date_format: "%d.%m.%Y"
   correction_label: "Correction"
   correction_aria: "Correction notice"
@@ -47,6 +51,8 @@ de:
 en:
   by_label: "By"
   reading_time_label: "%d min read"
+  level_a2: "Beginner"
+  level_b1: "Intermediate"
   # Abbreviated month: "September 21, 2026" wraps the meta row onto a second
   # line, where every other locale's numeric date fits on one.
   date_format: "%b %-d, %Y"
@@ -84,6 +90,8 @@ en:
 es:
   by_label: "Por"
   reading_time_label: "%d min de lectura"
+  level_a2: "Principiante"
+  level_b1: "Intermedio"
   date_format: "%-d/%-m/%Y"
   correction_label: "Corrección"
   correction_aria: "Aviso de corrección"
@@ -119,6 +127,8 @@ es:
 pl:
   by_label: "Autor"
   reading_time_label: "%d min czytania"
+  level_a2: "Początkujący"
+  level_b1: "Średnio zaawansowany"
   date_format: "%d.%m.%Y"
   correction_label: "Sprostowanie"
   correction_aria: "Informacja o sprostowaniu"
@@ -154,6 +164,8 @@ pl:
 tr:
   by_label: "Yazan"
   reading_time_label: "%d dk okuma"
+  level_a2: "Başlangıç"
+  level_b1: "Orta seviye"
   date_format: "%d.%m.%Y"
   correction_label: "Düzeltme"
   correction_aria: "Düzeltme notu"
@@ -189,6 +201,8 @@ tr:
 uk:
   by_label: "Автор"
   reading_time_label: "%d хв читання"
+  level_a2: "Початковий"
+  level_b1: "Середній"
   date_format: "%d.%m.%Y"
   correction_label: "Виправлення"
   correction_aria: "Повідомлення про виправлення"
@@ -224,6 +238,8 @@ uk:
 ru:
   by_label: "Автор"
   reading_time_label: "%d мин чтения"
+  level_a2: "Начальный"
+  level_b1: "Средний"
   date_format: "%d.%m.%Y"
   correction_label: "Исправление"
   correction_aria: "Уведомление об исправлении"
@@ -259,6 +275,8 @@ ru:
 ar:
   by_label: "بقلم"
   reading_time_label: "%d دقيقة قراءة"
+  level_a2: "مبتدئ"
+  level_b1: "متوسط"
   date_format: "%-d/%-m/%Y"
   correction_label: "تصحيح"
   correction_aria: "إشعار تصحيح"
