@@ -29,12 +29,12 @@ from audio_pipeline import AudioPipeline
 from content_fetcher import ContentFetcher
 from content_generator import ContentGenerator
 from glossary_generator import GlossaryGenerator
-from translator import ArticleTranslator
 from logger import setup_logger
 from models import AdaptedArticle, QualityResult
 from publisher import Publisher
 from quality_gate import QualityGate
 from topic_discovery import TopicDiscoverer
+from translator import ArticleTranslator
 
 from config import load_config  # type: ignore[attr-defined]
 
