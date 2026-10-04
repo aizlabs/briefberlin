@@ -9,6 +9,7 @@ import re
 import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
+from decimal import Decimal
 from unittest.mock import Mock
 
 import pytest
@@ -16,13 +17,19 @@ import requests
 from pydantic import ValidationError
 
 from scripts.config import AppConfig, load_config
-from scripts.models import AdaptedArticle, TranslationsConfig, VocabularyItem
+from scripts.models import AdaptedArticle, TranslationsConfig, UsageReportingConfig, VocabularyItem
 from scripts.translator import ArticleTranslator
 from scripts.usage_report import collect_run_usage
 
 MODEL = "synthetic-local:tag"
 REAL_SESSION_REQUEST = requests.sessions.Session.request
-SECRET = "PRIVATE_BODY https://private.invalid/secret?key=credential"
+SENSITIVE_FRAGMENTS = (
+    "PRIVATE_BODY",
+    "https://private.invalid/secret?key=credential",
+    "credential",
+    "PRIVATE_RESPONSE_FRAGMENT",
+)
+SECRET = " ".join(SENSITIVE_FRAGMENTS)
 
 
 @pytest.fixture(autouse=True)
@@ -299,7 +306,8 @@ def test_bad_completion_fails_promptly_and_safely(local_config, article, wire, p
             article, local_config.translations.languages[0]
         )
     assert len(calls) == 1
-    assert SECRET not in str(caught.value) + caplog.text
+    for sensitive in SENSITIVE_FRAGMENTS:
+        assert sensitive not in str(caught.value) + caplog.text
     cloud.assert_not_called()
 
 
@@ -317,7 +325,8 @@ def test_http_retry_budget_and_redaction(local_config, article, wire, status, re
             article, local_config.translations.languages[0]
         )
     assert len(calls) == (2 if retry else 1)
-    assert SECRET not in str(caught.value) + caplog.text
+    for sensitive in SENSITIVE_FRAGMENTS:
+        assert sensitive not in str(caught.value) + caplog.text
     cloud.assert_not_called()
 
 
@@ -475,7 +484,14 @@ def test_worker_bound_sequential_units_and_context(local_config, article, wire, 
         ({"prompt_eval_count": "bad", "eval_count": -2}, False),
     ],
 )
-def test_local_usage_attribution_and_unknown_cost(local_config, article, wire, metadata, complete):
+@pytest.mark.parametrize("cloud_price", [False, True])
+def test_local_usage_attribution_and_unknown_cost(
+    local_config, article, wire, metadata, complete, cloud_price
+):
+    if cloud_price:
+        local_config.llm.usage_reporting = UsageReportingConfig(
+            prices={"openai": {MODEL: {"input_per_million": "1", "output_per_million": "2"}}}
+        )
     calls, handler, _ = wire
     handler.side_effect = lambda _: response(**metadata)
     with collect_run_usage(local_config.llm.usage_reporting, "openai") as report:
@@ -492,6 +508,9 @@ def test_local_usage_attribution_and_unknown_cost(local_config, article, wire, m
         assert row["input_tokens"] == len(calls) * 11
         assert row["output_tokens"] == len(calls) * 7
     assert row["total_cost"] is None
+    assert row["pricing_model"] is None
+    assert report.as_dict()["complete"] is False
+    assert Decimal(report.as_dict()["known_cost"]) == 0
     assert "N/A" in report.render_ascii() and "KNOWN SUBTOTAL" in report.render_ascii()
 
 
@@ -920,7 +939,7 @@ def test_local_diagnostics_safe_and_useful(local_config, article, wire, caplog):
     for record in caplog.records:
         records.extend(diagnostic_records({**record.__dict__, "message": record.getMessage()}))
     diagnostics = "\n".join(records)
-    for sensitive in (SECRET, article.title, article.content, "test-key-123"):
+    for sensitive in (*SENSITIVE_FRAGMENTS, article.title, article.content, "test-key-123"):
         assert sensitive not in diagnostics
 
     def numeric(text, field, value):
@@ -989,12 +1008,15 @@ def test_requests_transport_has_no_implicit_retries(local_config, article, monke
 def test_cloud_usage_accumulates_alongside_local_without_pricing_it(local_config, article, wire):
     from scripts.usage_report import ModelUsageRecord, record_direct_model_usage
 
+    local_config.llm.usage_reporting = UsageReportingConfig(
+        prices={"openai": {MODEL: {"input_per_million": "1", "output_per_million": "2"}}}
+    )
     wire[1].side_effect = lambda _: response(prompt_eval_count=2, eval_count=3)
     with collect_run_usage(local_config.llm.usage_reporting, "openai") as report:
         record_direct_model_usage(
             ModelUsageRecord(
                 provider="openai",
-                model="cloud-synthetic",
+                model=MODEL,
                 modality="text",
                 input_tokens=17,
                 output_tokens=19,
@@ -1007,6 +1029,11 @@ def test_cloud_usage_accumulates_alongside_local_without_pricing_it(local_config
     assert rows["openai"]["output_tokens"] == 19
     assert rows["ollama"]["input_tokens"] == 2 * len(wire[0])
     assert rows["ollama"]["total_cost"] is None
+    assert rows["ollama"]["pricing_model"] is None
+    assert Decimal(rows["openai"]["total_cost"]) == Decimal("0.000055")
+    assert Decimal(report.as_dict()["known_cost"]) == Decimal("0.000055")
+    assert report.as_dict()["complete"] is False
+    assert "N/A" in report.render_ascii() and "KNOWN SUBTOTAL" in report.render_ascii()
 
 
 @pytest.mark.parametrize(
@@ -1054,7 +1081,8 @@ def test_safe_error_categories_are_distinguishable(
     assert len(wire[0]) == 1
     diagnostic = str(caught.value) + " " + str(getattr(caught.value, "category", ""))
     assert re.search(category, diagnostic, re.I)
-    assert SECRET not in diagnostic + caplog.text
+    for sensitive in SENSITIVE_FRAGMENTS:
+        assert sensitive not in diagnostic + caplog.text
     wire[2].assert_not_called()
 
 
@@ -1111,7 +1139,8 @@ def test_api_error_envelope_overrides_otherwise_valid_completion(local_config, a
             article, local_config.translations.languages[0]
         )
     assert len(wire[0]) == 1
-    assert SECRET not in str(caught.value)
+    for sensitive in SENSITIVE_FRAGMENTS:
+        assert sensitive not in str(caught.value)
     wire[2].assert_not_called()
 
 
