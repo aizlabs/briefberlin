@@ -4,6 +4,7 @@ import contextvars
 import copy
 import json
 import logging
+import math
 import os
 import re
 import threading
@@ -904,18 +905,185 @@ def test_transient_http_recovers_without_repeating_source_units(
     assert len(wire[0]) == 8
 
 
-def diagnostic_records(value, context=""):
-    """Read stats/log observations without prescribing their container schema."""
+LANGUAGE_FIELDS = {"language", "lang", "target_language", "target_lang", "language_code"}
+LANGUAGE_CODES = {"en", "ar", "ru"}
+
+
+def explicit_language(value):
+    """Only labelled target-language fields confer scope; code mentions do not."""
     if isinstance(value, dict):
-        scalars = {k: v for k, v in value.items() if not isinstance(v, (dict, list, tuple))}
-        current = context + " " + json.dumps(scalars, default=str)
-        yield current
+        labels = [str(v) for k, v in value.items() if k in LANGUAGE_FIELDS]
+    elif isinstance(value, str):
+        labels = re.findall(
+            r"\b(?:target_language|target_lang|language_code|language|lang)\s*[:=]\s*[\"']?([\w-]+)",
+            value,
+            re.I,
+        )
+    else:
+        labels = []
+    if not labels:
+        return None
+    if len(set(labels)) != 1 or labels[0] not in LANGUAGE_CODES:
+        return "CONFLICT"
+    return labels[0]
+
+
+def diagnostic_records(value, scope=None):
+    """Read coherent observations; inherit language scope, never ancestor scalars.
+
+    Separate log lines/list entries are never joined. Nested field dictionaries
+    belong to an observation unless they introduce another language boundary.
+    """
+    declared = explicit_language(value)
+    if declared == "CONFLICT" or (declared and scope and declared != scope):
+        return
+    scope = declared or scope
+    if isinstance(value, dict):
+        text_scopes = {
+            explicit_language(child)
+            for child in value.values()
+            if isinstance(child, str) and explicit_language(child)
+        }
+        if "CONFLICT" in text_scopes or (scope and text_scopes - {scope}):
+            return
+        fields = {}
         for key, child in value.items():
-            if isinstance(child, (dict, list, tuple)):
-                yield from diagnostic_records(child, current + " " + str(key))
+            if key in LANGUAGE_CODES or isinstance(child, (list, tuple)):
+                continue
+            if isinstance(child, dict):
+                nested = json.dumps(child, default=str)
+                if any(
+                    re.search(rf'"{label}"\s*:', nested)
+                    for label in LANGUAGE_FIELDS | LANGUAGE_CODES
+                ):
+                    continue
+            fields[key] = child
+        if scope:
+            yield scope, json.dumps(fields, default=str)
+        for key, child in value.items():
+            if isinstance(child, (dict, list, tuple, str)):
+                child_scope = key if key in LANGUAGE_CODES else scope
+                if scope and child_scope != scope:
+                    continue
+                yield from diagnostic_records(child, child_scope)
     elif isinstance(value, (list, tuple)):
         for child in value:
-            yield from diagnostic_records(child, context)
+            yield from diagnostic_records(child, scope)
+    elif isinstance(value, str) and scope:
+        yield scope, value
+
+
+def assert_language_diagnostics(observations, duration):
+    """Require a complete explicitly attributed observation for each language."""
+    records = list(diagnostic_records(observations))
+
+    def numeric(text, field, value):
+        return re.search(rf"(?i)\b(?:{field})[\"'\s:=]+(?:{value})(?![\w.])", text)
+
+    def complete(text, code, count, retries):
+        if not all(required in text for required in ("ollama", MODEL, "B1")):
+            return False
+        if not numeric(text, r"requests|request_count|requests_count|total_requests", count):
+            return False
+        if not numeric(text, r"retries|retry_count", retries):
+            return False
+        elapsed = re.findall(
+            r"(?i)\b(elapsed(?:_seconds|_ms)?|duration_seconds|duration_ms)[\"'\s:=]+([0-9.eE+-]+)",
+            text,
+        )
+        if not elapsed:
+            return False
+        seconds = [
+            float(value) / (1000 if field.lower().endswith("_ms") else 1)
+            for field, value in elapsed
+        ]
+        if not all(math.isfinite(value) and 0 < value <= duration for value in seconds):
+            return False
+        if code == "en":
+            return bool(
+                re.search(r"paragraph|body", text, re.I)
+                and numeric(text, r"(?:(?:failed_)?unit_|paragraph_)?index", "2|3")
+                and re.search(r"timeout|timed.out", text, re.I)
+            )
+        return True
+
+    for code, count, retries in (("en", 6, 1), ("ar", 9, 0)):
+        assert any(
+            language == code and complete(text, code, count, retries) for language, text in records
+        ), f"missing coherent explicitly attributed diagnostics for {code}"
+
+
+@pytest.fixture
+def diagnostic_observations():
+    common = {"provider": "ollama", "model": MODEL, "level": "B1", "elapsed_ms": 20}
+    return {
+        "en": dict(common, requests=6, retries=1, unit="body", index=2, category="timeout"),
+        "ar": dict(common, requests=9, retries=0),
+    }
+
+
+@pytest.mark.parametrize("representation", ["keyed", "fields", "text", "nested", "seconds"])
+def test_diagnostic_attribution_accepts_explicit_scopes(diagnostic_observations, representation):
+    observations = diagnostic_observations
+    if representation == "fields":
+        observations = [dict(value, target_language=code) for code, value in observations.items()]
+    elif representation == "text":
+        observations = [
+            "language=" + code + " " + " ".join(f"{k}={v}" for k, v in value.items())
+            for code, value in observations.items()
+        ]
+    elif representation == "nested":
+        observations = {code: {"details": value} for code, value in observations.items()}
+    elif representation == "seconds":
+        for value in observations.values():
+            value["elapsed_seconds"] = value.pop("elapsed_ms") / 1000
+        observations["en"]["index"] = 3
+    assert_language_diagnostics(observations, 1)
+
+
+@pytest.mark.parametrize(
+    "corruption",
+    [
+        "swapped",
+        "unlabelled",
+        "mentions",
+        "split_languages",
+        "split_records",
+        "conflict",
+        "text_conflict",
+        "nonfinite",
+        "too_slow",
+    ],
+)
+def test_diagnostic_attribution_rejects_misleading_observations(
+    diagnostic_observations, corruption
+):
+    observations = diagnostic_observations
+    if corruption == "swapped":
+        observations = {"en": observations["ar"], "ar": observations["en"]}
+    elif corruption == "unlabelled":
+        observations = {"languages": "en ar", "children": list(observations.values())}
+    elif corruption == "mentions":
+        observations = [
+            dict(value, note="unrelated en ar codes") for value in observations.values()
+        ]
+    elif corruption == "split_languages":
+        observations["ar"]["retries"] = observations["en"].pop("retries")
+    elif corruption == "split_records":
+        observations["en"] = [
+            {k: v for k, v in observations["en"].items() if k != "retries"},
+            {"retries": 1},
+        ]
+    elif corruption == "conflict":
+        observations["en"]["target_language"] = "ar"
+    elif corruption == "text_conflict":
+        observations["en"]["message"] = "target_language=ar"
+    elif corruption == "nonfinite":
+        observations["en"]["elapsed_ms"] = float("inf")
+    elif corruption == "too_slow":
+        observations["en"]["elapsed_ms"] = 2000
+    with pytest.raises(AssertionError, match="coherent explicitly attributed diagnostics"):
+        assert_language_diagnostics(observations, 1)
 
 
 def test_local_diagnostics_safe_and_useful(local_config, article, wire, caplog):
@@ -935,40 +1103,21 @@ def test_local_diagnostics_safe_and_useful(local_config, article, wire, caplog):
     result = translator.translate_article(article)
     duration = time.monotonic() - started
     assert [t.lang for t in result.translations] == ["ar"]
-    records = list(diagnostic_records(translator.last_run_stats))
+    observations = [translator.last_run_stats]
     for record in caplog.records:
-        records.extend(diagnostic_records({**record.__dict__, "message": record.getMessage()}))
-    diagnostics = "\n".join(records)
-    for sensitive in (*SENSITIVE_FRAGMENTS, article.title, article.content, "test-key-123"):
+        observations.append({**record.__dict__, "message": record.getMessage()})
+    # Safety includes unscoped logs, independently of attribution.
+    diagnostics = json.dumps(observations, default=str, ensure_ascii=False)
+    for sensitive in (
+        *SENSITIVE_FRAGMENTS,
+        article.title,
+        article.content,
+        "First synthetic paragraph.",
+        "Second paragraph.",
+        "test-key-123",
+    ):
         assert sensitive not in diagnostics
-
-    def numeric(text, field, value):
-        return re.search(rf"(?i)\b(?:{field})[\"'\s:=]+(?:{value})(?![\w.])", text)
-
-    # Counts differ by language so aggregate or cross-attributed counts cannot
-    # satisfy both observations. Field aliases allow structured or text logging.
-    for code, requests_count, retries in (("en", 6, 1), ("ar", 9, 0)):
-        scoped = "\n".join(r for r in records if re.search(rf"\b{code}\b", r))
-        for required in ("ollama", MODEL, "B1"):
-            assert required in scoped
-        assert numeric(
-            scoped, r"requests|request_count|requests_count|total_requests", requests_count
-        )
-        assert numeric(scoped, r"retries|retry_count", retries)
-        elapsed = re.findall(
-            r"(?i)\b(elapsed(?:_seconds|_ms)?|duration_seconds)[\"'\s:=]+([0-9.eE+-]+)",
-            scoped,
-        )
-        assert elapsed
-        assert all(
-            0 < float(value) / (1000 if field.lower().endswith("_ms") else 1) <= duration
-            for field, value in elapsed
-        )
-        if code == "en":
-            assert re.search(r"paragraph|body", scoped, re.I)
-            # Either zero- or one-based indexing is allowed by the plan.
-            assert numeric(scoped, r"(?:unit_|paragraph_)?index", "2|3")
-            assert re.search(r"timeout|timed.out", scoped, re.I)
+    assert_language_diagnostics(observations, duration)
     assert "123456789" in diagnostics
     assert re.search(r"nanosecond|_ns\b", diagnostics, re.I)
 
