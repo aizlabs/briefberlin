@@ -7,6 +7,7 @@ import logging
 import os
 import re
 import threading
+import time
 from concurrent.futures import ThreadPoolExecutor
 from unittest.mock import Mock
 
@@ -20,6 +21,7 @@ from scripts.translator import ArticleTranslator
 from scripts.usage_report import collect_run_usage
 
 MODEL = "synthetic-local:tag"
+REAL_SESSION_REQUEST = requests.sessions.Session.request
 SECRET = "PRIVATE_BODY https://private.invalid/secret?key=credential"
 
 
@@ -155,7 +157,18 @@ def test_exact_native_protocol_and_glossary_assembly(local_config, article, wire
     calls, handler, cloud = wire
     article.level = level
     lang = next(x for x in local_config.translations.languages if x.code == "en")
-    handler.side_effect = lambda payload: response("Zeile eins\nZeile zwei")
+    handler.side_effect = [
+        response(text)
+        for text in (
+            "Translated title",
+            "Translated summary",
+            "Zeile eins\nZeile zwei",
+            "Zeile eins\nZeile zwei",
+            "A vote.",
+            "street",
+            "A public road.",
+        )
+    ]
     result = ArticleTranslator(local_config, logging.getLogger("contract")).translate_to_language(
         article, lang
     )
@@ -182,21 +195,39 @@ def test_exact_native_protocol_and_glossary_assembly(local_config, article, wire
     assert all(method.upper() == "POST" for method, _, _ in calls)
     assert result.content == "Zeile eins Zeile zwei\n\nZeile eins Zeile zwei"
     assert [v.term for v in result.vocabulary] == ["Wahl", "Straße"]
-    assert result.vocabulary[0].translation == "election"
+    assert result.title == "Translated title"
+    assert result.summary == "Translated summary"
+    assert [v.translation for v in result.vocabulary] == ["election", "street"]
+    assert [v.explanation for v in result.vocabulary] == ["A vote.", "A public road."]
     assert result.reading_time == 3 and result.model == MODEL
     cloud.assert_not_called()
 
 
 def test_non_english_glossary_pivots_only_label(local_config, article, wire):
-    calls, _, cloud = wire
+    calls, handler, cloud = wire
     lang = next(x for x in local_config.translations.languages if x.code == "ar")
-    ArticleTranslator(local_config, logging.getLogger("contract")).translate_to_language(
-        article, lang
-    )
+    handler.side_effect = [
+        response(text)
+        for text in (
+            "العنوان",
+            "الملخص",
+            "الفقرة الأولى",
+            "الفقرة الثانية",
+            "انتخابات",
+            "تصويت",
+            "شارع",
+            "طريق عام",
+        )
+    ]
+    translated = ArticleTranslator(
+        local_config, logging.getLogger("contract")
+    ).translate_to_language(article, lang)
     prompts = [c[2]["json"]["messages"][0]["content"] for c in calls]
     assert prompt("English", "en", lang.name, "ar", "election") in prompts
     assert prompt("German", "de", lang.name, "ar", "Eine Abstimmung.") in prompts
     assert not any(p.endswith("today") for p in prompts)
+    assert [v.translation for v in translated.vocabulary] == ["انتخابات", "شارع"]
+    assert [v.explanation for v in translated.vocabulary] == ["تصويت", "طريق عام"]
     cloud.assert_not_called()
 
 
@@ -810,34 +841,105 @@ def test_transient_http_recovers_without_repeating_source_units(
     assert len(wire[0]) == 8
 
 
+def diagnostic_records(value, context=""):
+    """Read stats/log observations without prescribing their container schema."""
+    if isinstance(value, dict):
+        scalars = {k: v for k, v in value.items() if not isinstance(v, (dict, list, tuple))}
+        current = context + " " + json.dumps(scalars, default=str)
+        yield current
+        for key, child in value.items():
+            if isinstance(child, (dict, list, tuple)):
+                yield from diagnostic_records(child, current + " " + str(key))
+    elif isinstance(value, (list, tuple)):
+        for child in value:
+            yield from diagnostic_records(child, context)
+
+
 def test_local_diagnostics_safe_and_useful(local_config, article, wire, caplog):
     caplog.set_level(logging.DEBUG, logger="contract")
-    local_config.translations.languages = local_config.translations.languages[:1]
     article.title = "SENSITIVE_TITLE_SENTINEL"
-    article.content = SECRET + " More synthetic text to meet the minimum length."
-    wire[1].side_effect = [
-        response(prompt_eval_count=2, eval_count=3, total_duration=123456789),
-        requests.Timeout(SECRET),
-        requests.Timeout(SECRET),
-    ]
+    article.content = "First synthetic paragraph.\n\nSecond paragraph.\n\n" + SECRET
+
+    def reply(payload):
+        message = payload["messages"][0]["content"]
+        if "to English (en) translator" in message and message.endswith(SECRET):
+            raise requests.Timeout(SECRET)
+        return response(prompt_eval_count=2, eval_count=3, total_duration=123456789)
+
+    wire[1].side_effect = reply
     translator = ArticleTranslator(local_config, logging.getLogger("contract"))
+    started = time.monotonic()
     result = translator.translate_article(article)
-    assert not result.translations and len(wire[0]) == 3
-    # Permit diagnostics in structured stats, structured logging extras, or log text;
-    # their schema is deliberately not prescribed by the plan.
-    diagnostics = json.dumps(translator.last_run_stats, default=str) + caplog.text
-    diagnostics += json.dumps([r.__dict__ for r in caplog.records], default=str)
+    duration = time.monotonic() - started
+    assert [t.lang for t in result.translations] == ["ar"]
+    records = list(diagnostic_records(translator.last_run_stats))
+    for record in caplog.records:
+        records.extend(diagnostic_records({**record.__dict__, "message": record.getMessage()}))
+    diagnostics = "\n".join(records)
     for sensitive in (SECRET, article.title, article.content, "test-key-123"):
         assert sensitive not in diagnostics
-    for required in ("ollama", MODEL, "en", "B1", "summary"):
-        assert required in diagnostics
-    assert re.search(r"request", diagnostics, re.I)
-    assert re.search(r"retr", diagnostics, re.I)
-    assert re.search(r"elapsed|duration", diagnostics, re.I)
-    assert re.search(r"index", diagnostics, re.I)
-    assert re.search(r"timeout|timed.out", diagnostics, re.I)
+
+    def numeric(text, field, value):
+        return re.search(rf"(?i)\b(?:{field})[\"'\s:=]+(?:{value})(?![\w.])", text)
+
+    # Counts differ by language so aggregate or cross-attributed counts cannot
+    # satisfy both observations. Field aliases allow structured or text logging.
+    for code, requests_count, retries in (("en", 6, 1), ("ar", 9, 0)):
+        scoped = "\n".join(r for r in records if re.search(rf"\b{code}\b", r))
+        for required in ("ollama", MODEL, "B1"):
+            assert required in scoped
+        assert numeric(
+            scoped, r"requests|request_count|requests_count|total_requests", requests_count
+        )
+        assert numeric(scoped, r"retries|retry_count", retries)
+        elapsed = re.findall(
+            r"(?i)\b(elapsed(?:_seconds|_ms)?|duration_seconds)[\"'\s:=]+([0-9.eE+-]+)",
+            scoped,
+        )
+        assert elapsed
+        assert all(
+            0 < float(value) / (1000 if field.lower().endswith("_ms") else 1) <= duration
+            for field, value in elapsed
+        )
+        if code == "en":
+            assert re.search(r"paragraph|body", scoped, re.I)
+            # Either zero- or one-based indexing is allowed by the plan.
+            assert numeric(scoped, r"(?:unit_|paragraph_)?index", "2|3")
+            assert re.search(r"timeout|timed.out", scoped, re.I)
     assert "123456789" in diagnostics
     assert re.search(r"nanosecond|_ns\b", diagnostics, re.I)
+
+
+@pytest.mark.parametrize("recover", [False, True])
+def test_requests_transport_has_no_implicit_retries(local_config, article, monkeypatch, recover):
+    # Exercise real Requests preparation and dispatch; stop at adapter.send so
+    # retry configuration is observable without opening a socket.
+    monkeypatch.setattr("requests.sessions.Session.request", REAL_SESSION_REQUEST)
+    cloud = Mock(side_effect=AssertionError("Ollama must not initialize cloud"))
+    monkeypatch.setattr("scripts.translator.build_structured_prompt_chain", cloud)
+    sent = []
+
+    def send(adapter, request, **kwargs):
+        assert adapter.max_retries.total == 0, "native transport must disable implicit retries"
+        sent.append(request)
+        if len(sent) == 1 or not recover:
+            raise requests.ConnectionError(SECRET)
+        result = response()
+        result.request = request
+        return result
+
+    monkeypatch.setattr("requests.adapters.HTTPAdapter.send", send)
+    translator = ArticleTranslator(local_config, logging.getLogger("contract"))
+    if recover:
+        result = translator.translate_to_language(article, local_config.translations.languages[0])
+        assert result.title == "translated"
+        assert len(sent) == 8
+    else:
+        with pytest.raises(Exception):
+            translator.translate_to_language(article, local_config.translations.languages[0])
+        assert len(sent) == 2
+    assert sent[0].body == sent[1].body
+    cloud.assert_not_called()
 
 
 def test_cloud_usage_accumulates_alongside_local_without_pricing_it(local_config, article, wire):
