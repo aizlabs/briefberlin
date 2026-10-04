@@ -372,6 +372,49 @@ def test_bulk_failure_preserves_german_and_success_order(
     cloud.assert_not_called()
 
 
+@pytest.mark.parametrize("partial", [False, True])
+@pytest.mark.parametrize("workers", [1, 3])
+def test_multiple_successes_retain_configured_order(local_config, wire, partial, workers):
+    _, handler, cloud = wire
+    local_config.translations.max_workers = workers
+    # Deliberately use neither alphabetic nor reverse-alphabetic order.
+    by_code = {lang.code: lang for lang in local_config.translations.languages}
+    local_config.translations.languages = [by_code[code] for code in ("ru", "en", "ar")]
+    body = "Heute findet eine Wahl statt. Die Menschen gehen zur Wahl."
+    article = AdaptedArticle(
+        title="Titel", summary="Eine Wahl findet statt.", content=body, level="A2", reading_time=1
+    )
+    later_body_returned = threading.Event()
+    observed = []
+    lock = threading.Lock()
+
+    def answer(payload):
+        text = payload["messages"][0]["content"]
+        code = text.split(" to ", 1)[1].split(" (", 1)[1].split(")", 1)[0]
+        if code == "ru" and workers > 1 and text.endswith("Titel"):
+            assert later_body_returned.wait(30), "later language must progress independently"
+        if code == "en" and partial:
+            return response(done_reason="length")
+        if text.endswith(body):
+            with lock:
+                observed.append(code)
+            if code == "ar":
+                later_body_returned.set()
+        return response(f"A complete translated sentence for {code}.")
+
+    handler.side_effect = answer
+    translator = ArticleTranslator(local_config, logging.getLogger("contract"))
+    result = translator.translate_article(article)
+    expected = ["ru", "ar"] if partial else ["ru", "en", "ar"]
+    assert [item.lang for item in result.translations] == expected
+    assert translator.last_run_stats["translated_languages"] == expected
+    assert translator.last_run_stats["failed_languages"] == (["en"] if partial else [])
+    if workers > 1:
+        assert observed.index("ar") < observed.index("ru")
+    assert result.content == article.content
+    cloud.assert_not_called()
+
+
 @pytest.mark.parametrize("nested", [False, True])
 def test_worker_bound_sequential_units_and_context(local_config, article, wire, nested):
     _, handler, _ = wire
@@ -419,7 +462,8 @@ def test_worker_bound_sequential_units_and_context(local_config, article, wire, 
             result = translator.translate_article(article)
     finally:
         probe.reset(token)
-    assert len(result.translations) == 3
+    assert [item.lang for item in result.translations] == ["en", "ar", "ru"]
+    assert translator.last_run_stats["translated_languages"] == ["en", "ar", "ru"]
     assert peak == 2 and seen and set(seen) == {"caller"}
 
 

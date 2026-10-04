@@ -60,6 +60,43 @@ def _response(lang: str = "en") -> TranslationResponse:
     )
 
 
+@pytest.mark.parametrize("direct", [False, True])
+@pytest.mark.parametrize(
+    "explicit,translation,adaptation,expected",
+    [
+        ("reader-model", "translation-model", "adaptation-model", "reader-model"),
+        (None, "translation-model", "adaptation-model", "translation-model"),
+        (None, None, "adaptation-model", "adaptation-model"),
+        (None, None, None, "generation-model"),
+    ],
+)
+@patch("scripts.translator.build_structured_prompt_chain")
+def test_cloud_model_fallback_precedence(
+    mock_chain, base_config, mock_logger, article,
+    explicit, translation, adaptation, expected, direct,
+):
+    base_config.translations.model = explicit
+    base_config.llm.models = type(base_config.llm.models)(
+        generation="generation-model",
+        translation=translation,
+        adaptation=adaptation or "",
+        quality_check="quality-model",
+    )
+    mock_chain.return_value.invoke.return_value = _response()
+    translator = ArticleTranslator(base_config, mock_logger)
+    mock_chain.assert_not_called()
+
+    if direct:
+        result = translator.translate_to_language(article, base_config.translations.languages[0])
+        assert result.model == expected
+    else:
+        translated = translator.translate_article(article)
+        assert translated.translations
+        assert all(item.model == expected for item in translated.translations)
+    mock_chain.assert_called_once()
+    assert mock_chain.call_args.args[1] == expected
+
+
 @patch("scripts.translator.build_structured_prompt_chain")
 def test_translates_every_configured_language_for_the_level(mock_chain, base_config, mock_logger, article):
     chain = MagicMock()
