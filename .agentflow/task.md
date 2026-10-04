@@ -1,5 +1,18 @@
 # Configurable local reader-language translation with Ollama
 
+## Corrective campaign af2
+This branch is seeded from prior-art checkpoint 96306a4e2406b6878e9a4490bee3536c29c3bbb2. No feature implementation exists yet. Retain the complete product contract below and exactly the two criterion IDs below; do not expand scope or weaken existing tests. Strengthen existing authored tests before implementing.
+
+The final oracle identified these exact defects:
+1. oracle-diagnostic-attribution: diagnostic_records carries parent scalar context into descendant records, and test_local_diagnostics_safe_and_useful concatenates records selected by any language-code occurrence. An ancestor languages='en ar' can make unlabelled/swapped child measurements pass for both languages. Associate each observation with an explicit target-language field or an enclosing language key, and assert each language's request count, retries, elapsed time and failure details together. Swapped and unlabelled observations must not satisfy the assertion. Allow reasonable diagnostic representations without imposing an unnecessary production schema.
+2. oracle-cloud-prompt-coverage: canned cloud TranslationResponse results and model fallback assertions do not prove submitted prompt/schema compatibility. Through both public translation methods, inspect the cloud factory schema and submitted prompt. Assert source title, summary, body, visible glossary inclusion, hidden-hint exclusion and existing cloud translation instructions, retaining paragraph-mismatch and all model-fallback regression tests.
+
+Keep the earlier corrections: independent sensitive-fragment exclusion, same-name cloud/local price isolation, configured language success ordering, native transport retry bounds, and isolated backfill main tests.
+The ignored logging configuration in backfill is a pre-existing out-of-scope product bug; do not fix it here. Isolate tests instead.
+Operational correction: the previous operator ran independent pytest during read-only oracle review, changing ignored .pytest_cache files and triggering the integrity guard. The operator will now run authoring, independent checks, and oracle sequentially. This is not a production-code requirement. No AgentFlow changes are authorized.
+Static-analysis is an always-passing check criterion. Do not manufacture a type error or require intended-red behavior for it. Its authoritative gate is in ../ollama-translation-evidence/agentflow-execution.json; mypy.ini is available in this worktree. The oracle must complete its source review.
+Operational evidence for this new campaign belongs in ../ollama-translation-af2-evidence; retain the same external af.sh, configuration, execution document, private environment and state home from the original campaign. Never modify old approved PLAN.md or CRITERIA.json.
+
 Implement an optional Ollama backend for finished German A2/B1 reader-language translations, independently of synthesis, adaptation, quality checks and audio. Existing configs retain cloud behavior. Finish clean under every gate in the execution document.
 
 ## Fixed acceptance criterion IDs
