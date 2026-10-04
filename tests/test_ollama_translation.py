@@ -918,6 +918,46 @@ def test_constructor_is_network_free(local_config, wire):
     wire[2].assert_not_called()
 
 
+def test_local_initialization_failure_marks_all_selected_languages(local_config, article, wire):
+    # A configuration can be modified after validation; bulk remains fail-open,
+    # whereas the explicit single-language request above must raise.
+    local_config.translations.model = None
+    translator = ArticleTranslator(local_config, logging.getLogger("contract"))
+    result = translator.translate_article(article)
+    assert result is article
+    assert translator.last_run_stats["failed_languages"] == ["en", "ar"]
+    assert translator.last_run_stats["translated_languages"] == []
+    assert not wire[0]
+    wire[2].assert_not_called()
+
+
+@pytest.mark.parametrize("done", [False, True])
+def test_rejected_completion_retains_tokens_and_timing(local_config, article, wire, caplog, done):
+    caplog.set_level(logging.DEBUG, logger="contract")
+    local_config.translations.languages = local_config.translations.languages[:1]
+    wire[1].side_effect = lambda _: response(
+        done=done,
+        done_reason="length" if done else "stop",
+        prompt_eval_count=13,
+        eval_count=5,
+        total_duration=987654321,
+    )
+    translator = ArticleTranslator(local_config, logging.getLogger("contract"))
+    with collect_run_usage(local_config.llm.usage_reporting, "openai") as report:
+        result = translator.translate_article(article)
+    assert not result.translations
+    assert len(wire[0]) == 1
+    [row] = report.as_dict()["models"]
+    assert (row["provider"], row["model"]) == ("ollama", MODEL)
+    assert (row["input_tokens"], row["output_tokens"]) == (13, 5)
+    observations = json.dumps(translator.last_run_stats, default=str)
+    observations += json.dumps([r.__dict__ for r in caplog.records], default=str)
+    observations += json.dumps(report.as_dict(), default=str)
+    assert "987654321" in observations
+    assert re.search(r"nanosecond|_ns\b", observations, re.I)
+    wire[2].assert_not_called()
+
+
 def test_api_error_envelope_overrides_otherwise_valid_completion(local_config, article, wire):
     wire[1].side_effect = lambda _: response(error=SECRET)
     with pytest.raises(Exception) as caught:
@@ -938,4 +978,46 @@ def test_level_filter_can_leave_no_eligible_local_languages(local_config, articl
         is article
     )
     assert not wire[0]
+    wire[2].assert_not_called()
+
+
+def test_glossary_rows_keep_published_identity_despite_model_text(local_config, article, wire):
+    from scripts.translation_hints import publishable_translation_hints, visible_glossary_items
+
+    article.translation_hints = [
+        VocabularyItem(term="heute", english="today", default_glossary=False),
+        VocabularyItem(term="ÖPNV", english="public transport", default_glossary=True),
+        VocabularyItem(term="Straße", english="street", default_glossary=True),
+        VocabularyItem(term="straße", english="duplicate", default_glossary=True),
+    ]
+    visible = visible_glossary_items(publishable_translation_hints(article))
+    assert [(identity, item.term) for identity, item in visible] == [
+        ("term-2", "ÖPNV"),
+        ("term-3", "Straße"),
+    ]
+    wire[1].side_effect = [
+        response(text)
+        for text in [
+            "Translated title",
+            "Translated summary",
+            "First paragraph",
+            "Second paragraph",
+            "Invented headword A",
+            "Invented headword B",
+        ]
+    ]
+    language = next(x for x in local_config.translations.languages if x.code == "ar")
+    translated = ArticleTranslator(
+        local_config, logging.getLogger("contract")
+    ).translate_to_language(article, language)
+    assert translated.title == "Translated title"
+    assert translated.summary == "Translated summary"
+    assert translated.content == "First paragraph\n\nSecond paragraph"
+    assert [row.term for row in translated.vocabulary] == [item.term for _, item in visible]
+    assert [row.translation for row in translated.vocabulary] == [
+        "Invented headword A",
+        "Invented headword B",
+    ]
+    assert all(row.explanation == "" for row in translated.vocabulary)
+    assert len(wire[0]) == 6
     wire[2].assert_not_called()
