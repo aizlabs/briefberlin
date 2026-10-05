@@ -800,6 +800,190 @@ def test_manual_finalized_article_boundary(
     cloud.assert_not_called()
 
 
+@pytest.fixture
+def isolated_main(monkeypatch, tmp_path):
+    """Load main with restored legacy aliases and without import-path leakage."""
+    import importlib
+    import importlib.util
+    import sys
+    from pathlib import Path
+
+    # main inserts scripts/ itself; syspath_prepend snapshots the original path.
+    monkeypatch.syspath_prepend(str(Path(__file__).resolve().parents[1]))
+    for name in (
+        "alerts",
+        "audio_pipeline",
+        "content_fetcher",
+        "content_generator",
+        "glossary_generator",
+        "logger",
+        "models",
+        "publisher",
+        "quality_gate",
+        "topic_discovery",
+        "translator",
+        "config",
+    ):
+        monkeypatch.setitem(sys.modules, name, importlib.import_module(f"scripts.{name}"))
+    spec = importlib.util.spec_from_file_location(
+        "scripts.main", Path(__file__).resolve().parents[1] / "scripts" / "main.py"
+    )
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    monkeypatch.setitem(sys.modules, "scripts.main", module)
+    spec.loader.exec_module(module)
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setenv("DRY_RUN", "false")
+    monkeypatch.setenv("ENVIRONMENT", "test")
+    monkeypatch.delenv("GITHUB_ACTIONS", raising=False)
+    monkeypatch.setattr(module, "create_run_id", lambda: "synthetic-main-run")
+    # Replace main's clock reference without changing logging/transport clocks.
+    monkeypatch.setattr(module, "time", Mock(time=Mock(side_effect=[100.0, 101.0])))
+    monkeypatch.setattr(module, "setup_logger", Mock(return_value=logging.Logger("main-contract")))
+    return module
+
+
+@pytest.mark.parametrize("outcome", ["accepted", "rejected", "total_failure"])
+def test_main_finalized_article_boundary(
+    isolated_main, local_config, article, wire, monkeypatch, tmp_path, outcome
+):
+    from types import SimpleNamespace
+
+    from scripts.models import QualityResult
+    from scripts.publisher import Publisher
+
+    main = isolated_main
+    local_config.generation.levels = ["B1"]
+    local_config.generation.articles_per_run = 1
+    local_config.audio.enabled = False
+    local_config.output["path"] = str(tmp_path / "posts")
+    local_config.translations.output_path = str(tmp_path / "translations")
+    monkeypatch.setattr(main, "load_config", Mock(return_value=local_config))
+
+    def stage_article(prefix):
+        return article.model_copy(
+            update={
+                "title": f"{prefix}_TITLE",
+                "summary": f"{prefix}_SUMMARY",
+                "content": f"{prefix}_BODY",
+                "translation_hints": [
+                    VocabularyItem(
+                        term=f"{prefix}_HEADWORD",
+                        english=f"{prefix}_GLOSS",
+                        explanation=f"{prefix}_EXPLANATION",
+                        default_glossary=True,
+                    )
+                ],
+            },
+            deep=True,
+        )
+
+    draft = stage_article("DRAFT")
+    approved = stage_article("APPROVED")
+    enriched = stage_article("ENRICHED")
+    topic = SimpleNamespace(title="Synthetic topic", sources=["a", "b", "c"], mentions=3)
+    sources = [SimpleNamespace(source=f"synthetic-{n}", word_count=100) for n in range(3)]
+    discoverer = Mock()
+    discoverer.discover.return_value = [topic]
+    fetcher = Mock()
+    fetcher.fetch_topic_sources.return_value = sources
+    generator = Mock()
+    generator.generate_article.return_value = draft
+    gate = Mock()
+    gate.check_and_improve.return_value = (
+        None if outcome == "rejected" else approved,
+        QualityResult(passed=outcome != "rejected", score=8, issues=[], strengths=[], attempts=1),
+    )
+    glossary = Mock()
+    glossary.enrich_article.return_value = enriched
+    glossary.last_run_stats = dict(
+        glossary_candidates_initial=1,
+        glossary_candidates_retry=0,
+        glossary_accepted=1,
+        glossary_empty_after_retry=False,
+        retry_used=False,
+    )
+    alerts, audio = Mock(), Mock()
+    for name, component in (
+        ("TopicDiscoverer", discoverer),
+        ("ContentFetcher", fetcher),
+        ("ContentGenerator", generator),
+        ("QualityGate", gate),
+        ("GlossaryGenerator", glossary),
+        ("AudioPipeline", audio),
+        ("AlertManager", alerts),
+    ):
+        monkeypatch.setattr(main, name, Mock(return_value=component))
+
+    translator = ArticleTranslator(local_config, logging.Logger("main-translation-contract"))
+    boundary = Mock(wraps=translator.translate_article)
+    monkeypatch.setattr(translator, "translate_article", boundary)
+    monkeypatch.setattr(main, "ArticleTranslator", Mock(return_value=translator))
+    publisher = Publisher(local_config, logging.Logger("main-publication-contract"))
+    publication = Mock(wraps=publisher.save_article)
+    monkeypatch.setattr(publisher, "save_article", publication)
+    monkeypatch.setattr(main, "Publisher", Mock(return_value=publisher))
+    if outcome == "total_failure":
+        wire[1].side_effect = lambda _: response(done_reason="length")
+
+    assert main.main() == 0
+    gate.check_and_improve.assert_called_once_with(draft, generator, topic, sources)
+    assert gate.check_and_improve.call_args.args[0] is draft
+    audio.prepare_for_publish.assert_not_called()
+    alerts.send_failure_alert.assert_not_called()
+    wire[2].assert_not_called()
+    posts = list((tmp_path / "posts").glob("*.md"))
+    if outcome == "rejected":
+        glossary.enrich_article.assert_not_called()
+        boundary.assert_not_called()
+        publication.assert_not_called()
+        assert not wire[0]
+        assert not posts
+        return
+
+    glossary.enrich_article.assert_called_once_with(approved)
+    assert glossary.enrich_article.call_args.args[0] is approved
+    boundary.assert_called_once_with(enriched)
+    assert boundary.call_args.args[0] is enriched
+    prompts = [call[2]["json"]["messages"][0]["content"] for call in wire[0]]
+    assert prompts
+    for intermediate in (draft, approved):
+        for sentinel in (
+            intermediate.title,
+            intermediate.summary,
+            intermediate.content,
+            intermediate.translation_hints[0].term,
+            intermediate.translation_hints[0].english,
+            intermediate.translation_hints[0].explanation,
+        ):
+            assert all(sentinel not in prompt_text for prompt_text in prompts)
+    publication.assert_called_once()
+    published = publication.call_args.args[0]
+    assert (published.title, published.summary, published.content, published.translation_hints) == (
+        enriched.title,
+        enriched.summary,
+        enriched.content,
+        enriched.translation_hints,
+    )
+    assert len(posts) == 1
+    assert enriched.title in posts[0].read_text(encoding="utf-8")
+    if outcome == "total_failure":
+        assert not published.translations
+        assert translator.last_run_stats["failed_languages"] == ["en", "ar"]
+        assert not list((tmp_path / "translations").rglob("*.md"))
+    else:
+        assert [translation.lang for translation in published.translations] == ["en", "ar"]
+        for value in (
+            enriched.title,
+            enriched.summary,
+            enriched.content,
+            enriched.translation_hints[0].english,
+            enriched.translation_hints[0].explanation,
+        ):
+            assert any(prompt_text.endswith(value) for prompt_text in prompts)
+        assert len(list((tmp_path / "translations").rglob("*.md"))) == 2
+
+
 def test_visible_headwords_and_full_hint_ids_survive_publication(
     local_config, article, wire, tmp_path
 ):
@@ -928,47 +1112,67 @@ def explicit_language(value):
     return labels[0]
 
 
-def diagnostic_records(value, scope=None):
-    """Read coherent observations; inherit language scope, never ancestor scalars.
+def explicit_runs(value):
+    if isinstance(value, dict):
+        return {str(v) for k, v in value.items() if k in {"run_id", "run"}}
+    if isinstance(value, str):
+        return set(re.findall(r"\b(?:run_id|run)\s*[:=]\s*[\"']?([\w-]+)", value))
+    return set()
 
-    Separate log lines/list entries are never joined. Nested field dictionaries
-    belong to an observation unless they introduce another language boundary.
+
+def observation_scopes(value):
+    """Inspect the entire subtree before any parent can become evidence."""
+    language = explicit_language(value)
+    languages = {language} if language else set()
+    runs = explicit_runs(value)
+    if isinstance(value, dict):
+        languages.update(k for k in value if k in LANGUAGE_CODES)
+        children = value.values()
+    elif isinstance(value, (list, tuple)):
+        children = value
+    else:
+        children = ()
+    for child in children:
+        child_languages, child_runs = observation_scopes(child)
+        languages.update(child_languages)
+        runs.update(child_runs)
+    return languages, runs
+
+
+def diagnostic_records(value, scope=None, run=None):
+    """Accept complete observations, joining fragments only within an explicit run.
+
+    Lists are separate observations. Language keys and explicit labels supply
+    scope; ancestor measurements never do. Validate descendants before yielding.
     """
     declared = explicit_language(value)
     if declared == "CONFLICT" or (declared and scope and declared != scope):
         return
     scope = declared or scope
-    if isinstance(value, dict):
-        text_scopes = {
-            explicit_language(child)
-            for child in value.values()
-            if isinstance(child, str) and explicit_language(child)
-        }
-        if "CONFLICT" in text_scopes or (scope and text_scopes - {scope}):
+    own_runs = explicit_runs(value)
+    if len(own_runs) > 1 or (run and own_runs - {run}):
+        return
+    run = next(iter(own_runs), run)
+    if scope and not isinstance(value, (list, tuple)):
+        languages, runs = observation_scopes(value)
+        if languages - {scope} or len(runs) > 1 or (run and runs - {run}):
             return
-        fields = {}
-        for key, child in value.items():
-            if key in LANGUAGE_CODES or isinstance(child, (list, tuple)):
-                continue
-            if isinstance(child, dict):
-                nested = json.dumps(child, default=str)
-                if any(
-                    re.search(rf'"{label}"\s*:', nested)
-                    for label in LANGUAGE_FIELDS | LANGUAGE_CODES
-                ):
-                    continue
-            fields[key] = child
+    if isinstance(value, dict):
+        fields = {
+            key: child
+            for key, child in value.items()
+            if key not in LANGUAGE_CODES and not isinstance(child, (dict, list, tuple))
+        }
         if scope:
             yield scope, json.dumps(fields, default=str)
+            if run and not any(isinstance(child, (list, tuple)) for child in value.values()):
+                yield scope, json.dumps(value, default=str)
         for key, child in value.items():
             if isinstance(child, (dict, list, tuple, str)):
-                child_scope = key if key in LANGUAGE_CODES else scope
-                if scope and child_scope != scope:
-                    continue
-                yield from diagnostic_records(child, child_scope)
+                yield from diagnostic_records(child, key if key in LANGUAGE_CODES else scope, run)
     elif isinstance(value, (list, tuple)):
         for child in value:
-            yield from diagnostic_records(child, scope)
+            yield from diagnostic_records(child, scope, run)
     elif isinstance(value, str) and scope:
         yield scope, value
 
@@ -1022,7 +1226,9 @@ def diagnostic_observations():
     }
 
 
-@pytest.mark.parametrize("representation", ["keyed", "fields", "text", "nested", "seconds"])
+@pytest.mark.parametrize(
+    "representation", ["keyed", "fields", "text", "nested", "seconds", "common_run"]
+)
 def test_diagnostic_attribution_accepts_explicit_scopes(diagnostic_observations, representation):
     observations = diagnostic_observations
     if representation == "fields":
@@ -1034,6 +1240,15 @@ def test_diagnostic_attribution_accepts_explicit_scopes(diagnostic_observations,
         ]
     elif representation == "nested":
         observations = {code: {"details": value} for code, value in observations.items()}
+    elif representation == "common_run":
+        observations = {
+            code: {
+                "run_id": "same-run",
+                "metrics": {k: v for k, v in value.items() if k != "retries"},
+                "counts": {"retries": value["retries"]},
+            }
+            for code, value in observations.items()
+        }
     elif representation == "seconds":
         for value in observations.values():
             value["elapsed_seconds"] = value.pop("elapsed_ms") / 1000
@@ -1053,6 +1268,14 @@ def test_diagnostic_attribution_accepts_explicit_scopes(diagnostic_observations,
         "text_conflict",
         "nonfinite",
         "too_slow",
+        "nested_text_conflict",
+        "nested_field_conflict",
+        "nested_key_conflict",
+        "split_runs",
+        "nested_run_conflict",
+        "nested_text_run_conflict",
+        "missing_run_fragments",
+        "ancestor_measurements",
     ],
 )
 def test_diagnostic_attribution_rejects_misleading_observations(
@@ -1078,6 +1301,30 @@ def test_diagnostic_attribution_rejects_misleading_observations(
         observations["en"]["target_language"] = "ar"
     elif corruption == "text_conflict":
         observations["en"]["message"] = "target_language=ar"
+    elif corruption.startswith("nested_"):
+        nested = {
+            "nested_text_conflict": {"details": {"message": "target_language=ar"}},
+            "nested_field_conflict": {"details": {"target_language": "ar"}},
+            "nested_key_conflict": {"details": {"ar": {"retries": 1}}},
+            "nested_run_conflict": {"run_id": "first", "details": {"run_id": "second"}},
+            "nested_text_run_conflict": {
+                "run_id": "first",
+                "details": {"message": "run_id=second"},
+            },
+        }
+        observations["en"].update(nested[corruption])
+    elif corruption in {"split_runs", "missing_run_fragments"}:
+        value = observations["en"]
+        observations["en"] = {
+            "first": {k: v for k, v in value.items() if k != "retries"},
+            "second": {"retries": 1},
+        }
+        if corruption == "split_runs":
+            observations["en"]["first"]["run_id"] = "first"
+            observations["en"]["second"]["run_id"] = "second"
+    elif corruption == "ancestor_measurements":
+        observations = {"retries": 1, "children": observations}
+        observations["children"]["en"].pop("retries")
     elif corruption == "nonfinite":
         observations["en"]["elapsed_ms"] = float("inf")
     elif corruption == "too_slow":
