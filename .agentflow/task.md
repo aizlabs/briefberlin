@@ -2,6 +2,12 @@
 
 ## Oracle findings to address
 
+### Final authorized correction after oracle run run-72db58322a024514ab50a863414e8c37
+Retain the accepted scripts.main finalized-article tests, coherent nested-language and cross-run diagnostics coverage, cloud prompt/schema corrections and passing static analysis. Starting checkpoint d467361a20b87385d7dbe485f3fbee114c3e4287. Address these two remaining test defects without expanding product scope:
+- oracle-null-run-association: null and empty/blank run identifiers represent a missing association; never turn None into the string 'None' and use it to combine fragments. Validate identifier values before string conversion or aggregation. Add negative fixtures for split measurements carrying null, empty and blank run IDs; retain complete observations without run IDs and valid explicit same-run/language fragments.
+- oracle-exact-backoff-coupling: the approved behavior requires bounded finite backoff and the per-unit max_attempts budget, not an exact 0.5-second delay or the linear list [0.5, 1.0, 1.5, 2.0]. Replace exact-schedule expectations with behavioral assertions that retry waits are finite and bounded and attempts do not exceed the configured unit budget. Keep proof that completed units are not repeated and there are no multiplying whole-language/transport retries. Do not introduce a new arbitrary exact schedule into the plan or criterion.
+This is the single additional corrective re-plan authorized by the user. A further oracle rejection ends this correction sequence; report it without another re-plan.
+
 This corrective re-plan starts from aeb176147f153b03ee1abd456313e556df4f108d and carries the findings from oracle run run-781741ae625d4815a136d5e0a295ebf8. Preserve the accepted cloud prompt/schema correction, all existing regression coverage, and passing static analysis. Keep exactly ollama-translation/test and static-analysis/check.
 
 - oracle-diagnostic-coherence: The diagnostics assertion must reject nested conflicting language scopes and must not combine measurements from different run IDs. Validate nested explicit fields, enclosing language keys, and labelled text scopes before emitting a record. Combining fragments requires an explicit common language/run association. Add negative fixtures for an English enclosing record whose nested text says target_language=ar, and for required measurements split across different run IDs. Use the same assertion exercised against production diagnostics; retain valid keyed, field-labelled, and explicitly labelled text cases.
