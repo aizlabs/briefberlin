@@ -158,7 +158,22 @@ class ArticleTranslator:
             if self.adapter is None:
                 self._init_backend()
             glossary = visible_glossary_items(publishable_translation_hints(article))
-            translation, _stats = self._translate_language_local(article, language, glossary)
+            translation, stats = self._translate_language_local(article, language, glossary)
+            # Per-call semantics: one complete, coherent observation per
+            # successful direct translation (the bulk path records the same
+            # fields in last_run_stats instead). Labelled fields keep the
+            # record parseable as a scoped diagnostic observation.
+            self.logger.info(
+                "Direct translation completed: target_language=%s provider=%s "
+                "model=%s level=%s requests=%s retries=%s elapsed_seconds=%s",
+                stats["language"],
+                stats["provider"],
+                stats["model"],
+                stats["level"],
+                stats["requests"],
+                stats["retries"],
+                stats["elapsed_seconds"],
+            )
             return translation
 
         if self.chain is None:

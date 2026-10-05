@@ -14,7 +14,10 @@ deadline.
 Failure handling distinguishes unreachable connections, timeouts, missing
 models, HTTP/API failures, malformed payloads, empty translations, incomplete
 ``done`` status and explicit token-limit termination. Raw response bodies are
-never surfaced through errors or logs. Transient failures (connection errors
+never surfaced through errors or logs, and original transport exceptions never
+enter the public exception chain: their ``__cause__``/``__context__`` is
+dropped so fully formatted tracebacks expose only sanitized categorized
+messages. Transient failures (connection errors
 and timeouts, plus HTTP 408/429/5xx) are retried per unit;
 retries wait with backoff bounded by a hard ceiling of 4.0 seconds per wait,
 and there is never a sleep after the final attempt. Permanent configuration
@@ -187,22 +190,21 @@ class OllamaChatAdapter:
                 if status_error is not None:
                     raise status_error
                 content, attempt_durations = self._decode_completion(response)
-            except requests.Timeout as exc:
+            except requests.Timeout:
                 failure = self._transport_error(
-                    exc, "Ollama request timed out", "timeout", retryable=True
+                    "Ollama request timed out", "timeout", retryable=True
                 )
                 attempt_durations = ()
-            except requests.ConnectionError as exc:
+            except requests.ConnectionError:
                 failure = self._transport_error(
-                    exc,
                     "Could not connect to the Ollama endpoint",
                     "connection",
                     retryable=True,
                 )
                 attempt_durations = ()
-            except requests.RequestException as exc:
+            except requests.RequestException:
                 failure = self._transport_error(
-                    exc, "Ollama request failed at the transport layer", "connection"
+                    "Ollama request failed at the transport layer", "connection"
                 )
                 attempt_durations = ()
             except OllamaTranslationError as exc:
@@ -231,15 +233,17 @@ class OllamaChatAdapter:
 
     @staticmethod
     def _transport_error(
-        exc: Exception,
         message: str,
         category: str,
         retryable: bool = False,
     ) -> OllamaTranslationError:
-        # The original exception text may quote request/response content, so it
-        # is chained (visible in tracebacks) but never rendered into messages.
+        # The original transport exception may quote URLs, credentials or raw
+        # request/response content in its repr, so it must never enter the
+        # public exception chain: no __cause__ is attached and any implicit
+        # __context__ is suppressed. The rendered traceback then shows only
+        # these sanitized categorized messages.
         error = OllamaTranslationError(message, category=category, retryable=retryable)
-        error.__cause__ = exc
+        error.__suppress_context__ = True
         return error
 
     @staticmethod

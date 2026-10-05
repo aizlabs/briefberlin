@@ -9,6 +9,7 @@ import os
 import re
 import threading
 import time
+import traceback
 from concurrent.futures import ThreadPoolExecutor
 from decimal import Decimal
 from unittest.mock import Mock
@@ -352,6 +353,43 @@ def test_unit_retry_keeps_completed_title(local_config, article, wire, monkeypat
     assert sum(p.endswith(article.title) for p in texts) == 1
     assert sum(p.endswith(article.summary) for p in texts) == 2
     assert_retry_waits(waits, retry_request_numbers=[3])
+    cloud.assert_not_called()
+
+
+@pytest.mark.parametrize(
+    "error,public_marker",
+    [
+        (requests.ConnectionError, "Could not connect to the Ollama endpoint"),
+        (requests.Timeout, "Ollama request timed out"),
+    ],
+)
+def test_transport_error_traceback_chain_is_redacted(
+    local_config, article, wire, error, public_marker
+):
+    # Independent sentinels (distinct from SENSITIVE_FRAGMENTS) so this
+    # regression cannot pass by reusing an already-checked string.
+    sentinel_url = "https://private-transport.invalid/hidden?key=traceback-key-31337"
+    sentinel_body = "TRACEBACK_PRIVATE_RESPONSE_FRAGMENT"
+    detail = f"{sentinel_url} {sentinel_body}"
+    calls, handler, cloud = wire
+    handler.side_effect = error(detail)
+    translator = ArticleTranslator(local_config, logging.getLogger("contract"))
+    with pytest.raises(Exception) as caught:
+        translator.translate_to_language(article, local_config.translations.languages[0])
+    assert len(calls) == 2, "one retry before the unit budget is exhausted"
+    # The fully formatted traceback renders every __cause__/__context__ node.
+    formatted = "".join(traceback.format_exception(caught.value))
+    assert public_marker in formatted, "sanitized public message must remain visible"
+    for sentinel in (sentinel_url, sentinel_body, "traceback-key-31337"):
+        assert sentinel not in formatted
+    # Structural guarantee: no transport exception object enters the chain.
+    seen = set()
+    node = caught.value
+    while node is not None and id(node) not in seen:
+        seen.add(id(node))
+        assert not type(node).__module__.startswith("requests.")
+        assert sentinel_url not in str(node) and sentinel_body not in str(node)
+        node = node.__cause__ or node.__context__
     cloud.assert_not_called()
 
 
@@ -1505,6 +1543,35 @@ def test_local_diagnostics_safe_and_useful(local_config, article, wire, caplog):
     assert_language_diagnostics(observations, duration)
     assert "123456789" in diagnostics
     assert re.search(r"nanosecond|_ns\b", diagnostics, re.I)
+
+
+def test_direct_language_success_emits_coherent_observation(local_config, article, wire, caplog):
+    caplog.set_level(logging.INFO, logger="contract")
+    calls, handler, _ = wire
+    # One recovered transient retry, then success for every remaining unit.
+    handler.side_effect = [requests.Timeout(SECRET)] + [response()] * 7
+    language = local_config.translations.languages[0]
+    translator = ArticleTranslator(local_config, logging.getLogger("contract"))
+    result = translator.translate_to_language(article, language)
+    assert result.title == "translated"
+    assert len(calls) == 8
+    messages = [record.getMessage() for record in caplog.records]
+    observations = [m for m in messages if "target_language=en" in m and "Direct" in m]
+    assert observations, "successful direct translations must emit their observation"
+    text = observations[-1]
+    for required in (
+        "Direct translation completed:",
+        "target_language=en",
+        "provider=ollama",
+        f"model={MODEL}",
+        "level=B1",
+        "requests=8",
+        "retries=1",
+    ):
+        assert required in text
+    assert re.search(r"elapsed_seconds=[0-9.]+", text)
+    for sensitive in (*SENSITIVE_FRAGMENTS, article.title, article.summary, article.content):
+        assert sensitive not in text
 
 
 @pytest.mark.parametrize("recover", [False, True])
