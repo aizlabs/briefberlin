@@ -64,6 +64,16 @@ cost. The table combines LangChain text usage with exact OpenAI speech usage whe
 audio model supports SSE usage events. See [model usage reporting](docs/model-usage-reporting.md) for
 pricing configuration, limitations, and how to disable the report.
 
+## Reader-Language Translations
+
+Finished German articles are translated into the configured reader languages (English, Turkish,
+Russian, Arabic, Ukrainian, Polish, Spanish by default) and published next to the German post as
+parallel text. Set `translations.provider: ollama` to run translations on a local Ollama server
+(explicit model tag required, e.g. `translategemma`) while generation, quality checks and audio
+keep using the cloud provider. See [docs/ollama-translations.md](docs/ollama-translations.md) for
+selection, precedence, endpoint/connectivity notes, tuning, failure policy and dry-run behavior.
+Existing archives can be translated later with `uv run briefberlin-backfill-translations`.
+
 ## Manual Evaluation
 
 Run the live glossary-hint eval when tuning glossary prompts or comparing models:

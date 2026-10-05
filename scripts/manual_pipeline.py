@@ -15,12 +15,12 @@ from scripts.audio_pipeline import AudioPipeline
 from scripts.config import AppConfig, load_config
 from scripts.content_generator import ContentGenerator
 from scripts.glossary_generator import GlossaryGenerator
-from scripts.translator import ArticleTranslator
 from scripts.logger import setup_logger
 from scripts.models import AdaptedArticle, QualityResult, SourceArticle, Topic
 from scripts.publisher import Publisher
 from scripts.quality_gate import QualityGate
 from scripts.topic_metadata_extractor import TopicMetadataExtractor, TopicMetadataResponse
+from scripts.translator import ArticleTranslator
 from scripts.usage_report import RunUsageReport, collect_run_usage
 
 MIN_SOURCE_WORDS = 20

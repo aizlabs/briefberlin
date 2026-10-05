@@ -77,11 +77,30 @@ glossary:
 # in output/_data/languages.yml, which the Jekyll templates own.
 translations:
   enabled: true
-  model: null              # null -> llm.models.translation
+  # Translation backend: null inherits the global cloud provider (llm.provider);
+  # 'ollama' routes reader-language translations to the local Ollama server
+  # configured under `ollama:` below. The global llm.provider / llm.base_url are
+  # never mutated by this switch. See docs/ollama-translations.md.
+  provider: null
+  model: null              # null -> llm.models.translation (cloud only!)
+                           # provider 'ollama' + enabled requires an explicit
+                           # non-blank model tag here (or via env/CLI); a cloud
+                           # model name is never inherited for local translation.
   temperature: 0.2
-  max_workers: 4
-  max_attempts: 2
+  max_workers: 4           # Concurrent language workers. For local Ollama a
+                           # max_workers: 1 override in local.yaml is the
+                           # recommended starting point.
+  max_attempts: 2          # Attempts per translated unit (title/summary/
+                           # paragraph/glossary field), not per language.
   output_path: ./output/_translations
+  # Native local Ollama endpoint. base_url must be the server root (a path
+  # prefix like /prefix is fine), never an OpenAI-compatible /v1 route: the
+  # adapter always calls POST {base_url}/api/chat. timeout_seconds bounds one
+  # unit request (connect timeout is capped at 10s); it is not an
+  # article-wide deadline.
+  ollama:
+    base_url: http://localhost:11434
+    timeout_seconds: 120
   # Applies to every level in generation.levels. Add `levels: [A2]` to an entry to
   # pilot a language on a single level.
   languages:

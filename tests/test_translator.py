@@ -60,6 +60,125 @@ def _response(lang: str = "en") -> TranslationResponse:
     )
 
 
+@pytest.mark.parametrize("level", ["A2", "B1"])
+@pytest.mark.parametrize("direct", [False, True])
+@pytest.mark.parametrize(
+    "explicit,translation,adaptation,expected",
+    [
+        ("reader-model", "translation-model", "adaptation-model", "reader-model"),
+        (None, "translation-model", "adaptation-model", "translation-model"),
+        (None, None, "adaptation-model", "adaptation-model"),
+        (None, None, None, "generation-model"),
+    ],
+)
+@patch("scripts.translator.build_structured_prompt_chain")
+def test_cloud_model_fallback_precedence(
+    mock_chain, base_config, mock_logger, article,
+    explicit, translation, adaptation, expected, direct, level,
+):
+    article.level = level
+    base_config.translations.temperature = 0.37
+    base_config.translations.model = explicit
+    base_config.llm.models = type(base_config.llm.models)(
+        generation="generation-model",
+        translation=translation,
+        adaptation=adaptation or "",
+        quality_check="quality-model",
+    )
+    mock_chain.return_value.invoke.return_value = _response()
+    translator = ArticleTranslator(base_config, mock_logger)
+    mock_chain.assert_not_called()
+
+    if direct:
+        result = translator.translate_to_language(article, base_config.translations.languages[0])
+        assert result.model == expected
+    else:
+        translated = translator.translate_article(article)
+        assert translated.translations
+        assert all(item.model == expected for item in translated.translations)
+    mock_chain.assert_called_once()
+    assert mock_chain.call_args.args[1] == expected
+    config, model, temperature, schema = mock_chain.call_args.args
+    assert config == base_config.llm.model_dump()
+    assert model == expected
+    assert temperature == 0.37
+    assert schema is TranslationResponse
+    response_schema = schema.model_json_schema()
+    fields = response_schema["properties"]
+    for field in ("title", "summary", "content"):
+        assert fields[field]["type"] == "string"
+        assert field in response_schema["required"]
+    assert fields["vocabulary"]["type"] == "array"
+    row_ref = fields["vocabulary"]["items"]["$ref"].split("/")[-1]
+    row_schema = response_schema["$defs"][row_ref]
+    for field in ("term", "translation", "explanation"):
+        assert row_schema["properties"][field]["type"] == "string"
+        assert field in row_schema["required"]
+
+    languages = (
+        [base_config.translations.languages[0]]
+        if direct else base_config.translations.for_level(level)
+    )
+    submitted = mock_chain.return_value.invoke.call_args_list
+    assert len(submitted) == len(languages)
+    prompts = [call.args[0]["prompt"] for call in submitted]
+    for language in languages:
+        matching = [p for p in prompts if f"TARGET LANGUAGE: {language.name}" in p]
+        assert len(matching) == 1
+        prompt = matching[0]
+        for source in (article.title, article.summary, article.content):
+            assert source in prompt
+        for hint in article.translation_hints:
+            for value in (hint.term, hint.english, hint.explanation):
+                if hint.default_glossary:
+                    assert value in prompt
+                else:
+                    assert value not in prompt
+        # Independent clauses, never an expected prompt from the production helper.
+        text = " ".join(prompt.split())
+        for clause in (
+            "exactly the same number of paragraphs",
+            "in the same order",
+            "separated by one blank line",
+            "one-to-one correspondence",
+            "Never merge, split, reorder, summarize, expand",
+            "No markdown",
+            "no HTML",
+            "no buttons, no footnotes",
+            "Keep in German form: organisation and institution names",
+            "party names and abbreviations",
+            "personal names",
+            "street/park names",
+            "Everything else is ordinary vocabulary and MUST be translated",
+            "long German compound",
+            "Numbers, percentages, dates, election results and quantities must match the German exactly",
+            "echo every `term` back BYTE-IDENTICAL IN GERMAN",
+            f"Put the {language.name} rendering in `translation`",
+            "rewrite the explanation",
+            "one row per input row, in the same order",
+            "this does NOT apply to the body",
+            "Cyrillic or Arabic script",
+            "native-script form",
+            "Do NOT leave a Latin-script word sitting inside Cyrillic or Arabic text",
+            "Do not insert directional control characters",
+            "not mirror punctuation by hand",
+        ):
+            assert clause in text
+        if level == "A2":
+            for clause in (
+                "CEFR A2", "short sentences, common words",
+                "no academic or bureaucratic register",
+                "one target sentence per German sentence",
+            ):
+                assert clause in text
+        else:
+            for clause in (
+                "CEFR B1", "clear, plain news prose", "natural sentence variety",
+                "ordinary journalistic vocabulary", "no academic or legalistic register",
+            ):
+                assert clause in text
+
+
 @patch("scripts.translator.build_structured_prompt_chain")
 def test_translates_every_configured_language_for_the_level(mock_chain, base_config, mock_logger, article):
     chain = MagicMock()
