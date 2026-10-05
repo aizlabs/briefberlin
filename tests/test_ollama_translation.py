@@ -1545,16 +1545,22 @@ def test_local_diagnostics_safe_and_useful(local_config, article, wire, caplog):
     assert re.search(r"nanosecond|_ns\b", diagnostics, re.I)
 
 
-def test_direct_language_success_emits_coherent_observation(local_config, article, wire, caplog):
+@pytest.mark.parametrize("recover", [False, True])
+def test_direct_language_success_emits_coherent_observation(
+    local_config, article, wire, caplog, recover
+):
     caplog.set_level(logging.INFO, logger="contract")
     calls, handler, _ = wire
     # One recovered transient retry, then success for every remaining unit.
-    handler.side_effect = [requests.Timeout(SECRET)] + [response()] * 7
+    durations = [123456789 + index for index in range(7)]
+    handler.side_effect = ([requests.Timeout(SECRET)] if recover else []) + [
+        response(total_duration=duration) for duration in durations
+    ]
     language = local_config.translations.languages[0]
     translator = ArticleTranslator(local_config, logging.getLogger("contract"))
     result = translator.translate_to_language(article, language)
     assert result.title == "translated"
-    assert len(calls) == 8
+    assert len(calls) == 7 + int(recover)
     messages = [record.getMessage() for record in caplog.records]
     observations = [m for m in messages if "target_language=en" in m and "Direct" in m]
     assert observations, "successful direct translations must emit their observation"
@@ -1565,13 +1571,59 @@ def test_direct_language_success_emits_coherent_observation(local_config, articl
         "provider=ollama",
         f"model={MODEL}",
         "level=B1",
-        "requests=8",
-        "retries=1",
+        f"requests={7 + int(recover)}",
+        f"retries={int(recover)}",
     ):
         assert required in text
     assert re.search(r"elapsed_seconds=[0-9.]+", text)
+    assert f"request_durations_ns={durations}" in text
     for sensitive in (*SENSITIVE_FRAGMENTS, article.title, article.summary, article.content):
         assert sensitive not in text
+
+
+@pytest.mark.parametrize("direct", [False, True])
+@pytest.mark.parametrize("body_length", [1, 19, 20])
+def test_cloud_body_minimum_after_cleaning(base_config, article, monkeypatch, direct, body_length):
+    from scripts.translator import TranslationResponse
+
+    base_config.translations.languages = base_config.translations.languages[:1]
+    chain = Mock()
+    chain.invoke.return_value = TranslationResponse(
+        title="Translated title", summary="", content=" **" + "x" * body_length + "** "
+    )
+    monkeypatch.setattr(
+        "scripts.translator.build_structured_prompt_chain", Mock(return_value=chain)
+    )
+    translator = ArticleTranslator(base_config, logging.getLogger("contract"))
+    if direct:
+        if body_length < 20:
+            with pytest.raises(ValueError, match="at least 20 characters"):
+                translator.translate_to_language(article, base_config.translations.languages[0])
+        else:
+            result = translator.translate_to_language(
+                article, base_config.translations.languages[0]
+            )
+            assert result.content == "x" * body_length
+        assert chain.invoke.call_count == 1
+    else:
+        result = translator.translate_article(article)
+        assert result.content == article.content
+        if body_length < 20:
+            assert result.translations == []
+            assert translator.last_run_stats["failed_languages"] == ["en"]
+            assert chain.invoke.call_count == base_config.translations.max_attempts
+        else:
+            assert [item.content for item in result.translations] == ["x" * body_length]
+            assert chain.invoke.call_count == 1
+
+
+def test_local_short_body_remains_valid(local_config, article, wire):
+    article.content = "Ein kurzer Absatz."
+    wire[1].side_effect = lambda _: response("短")
+    result = ArticleTranslator(local_config, logging.getLogger("contract")).translate_to_language(
+        article, local_config.translations.languages[0]
+    )
+    assert result.content == "短"
 
 
 @pytest.mark.parametrize("recover", [False, True])

@@ -328,10 +328,8 @@ class ArticleTranslation(BaseModel):
     # whole language for that article.
     title: str = Field(..., min_length=1, description="Translated title")
     summary: str = Field(default="", description="Translated summary")
-    # No content length floor: a legitimately short source paragraph (or a very
-    # short article) must still produce a parallel translation; dropping the
-    # whole language over a translated-length cap would contradict the
-    # fail-open publication policy. Structure is enforced by assembly, not here.
+    # Local unit assembly allows short, nonempty bodies. The cloud assembly
+    # path retains its historical 20-character minimum after cleaning.
     content: str = Field(..., min_length=1, description="Translated body, plain text")
     vocabulary: List[TranslatedVocabularyItem] = Field(default_factory=list)
     reading_time: int = Field(

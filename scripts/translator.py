@@ -165,7 +165,8 @@ class ArticleTranslator:
             # record parseable as a scoped diagnostic observation.
             self.logger.info(
                 "Direct translation completed: target_language=%s provider=%s "
-                "model=%s level=%s requests=%s retries=%s elapsed_seconds=%s",
+                "model=%s level=%s requests=%s retries=%s elapsed_seconds=%s "
+                "request_durations_ns=%s",
                 stats["language"],
                 stats["provider"],
                 stats["model"],
@@ -173,6 +174,7 @@ class ArticleTranslator:
                 stats["requests"],
                 stats["retries"],
                 stats["elapsed_seconds"],
+                stats["request_durations_ns"],
             )
             return translation
 
@@ -534,6 +536,10 @@ class ArticleTranslator:
         glossary: Sequence[Tuple[str, VocabularyItem]],
     ) -> ArticleTranslation:
         content = self._clean_body(response.content)
+        # Preserve the cloud body's historical minimum after cleaning. Local
+        # unit assembly only requires nonempty results and bypasses this path.
+        if len(content) < 20:
+            raise ValueError("Cloud translated body must contain at least 20 characters")
 
         expected = len([p for p in article.content.split("\n\n") if p.strip()])
         actual = len([p for p in content.split("\n\n") if p.strip()])
