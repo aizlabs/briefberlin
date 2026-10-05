@@ -1,5 +1,14 @@
 # Configurable local reader-language translation with Ollama
 
+## Oracle findings to address
+
+This corrective re-plan starts from aeb176147f153b03ee1abd456313e556df4f108d and carries the findings from oracle run run-781741ae625d4815a136d5e0a295ebf8. Preserve the accepted cloud prompt/schema correction, all existing regression coverage, and passing static analysis. Keep exactly ollama-translation/test and static-analysis/check.
+
+- oracle-diagnostic-coherence: The diagnostics assertion must reject nested conflicting language scopes and must not combine measurements from different run IDs. Validate nested explicit fields, enclosing language keys, and labelled text scopes before emitting a record. Combining fragments requires an explicit common language/run association. Add negative fixtures for an English enclosing record whose nested text says target_language=ar, and for required measurements split across different run IDs. Use the same assertion exercised against production diagnostics; retain valid keyed, field-labelled, and explicitly labelled text cases.
+- oracle-main-translation-boundary: Add hermetic scripts.main cases with distinct draft, quality-approved, and glossary-enriched article values. Assert that translation receives only approved/glossary-enriched content, rejected articles never reach translation, and a translation failure still permits German publication. Mock external services, isolate filesystem/environment/logger effects, and preserve existing manual-pipeline cases.
+
+The outer operator must run test authoring, independent checks, and oracle review as separate sequential steps. Run no independent commands in the worktree during an active step. Independent pytest uses PYTHONDONTWRITEBYTECODE=1 and -p no:cacheprovider. Do not modify AgentFlow, its internal prompts/ledger, config/execution documents, or previously approved artifacts. The new plan is a new approval; old approvals remain immutable.
+
 ## Corrective campaign af2
 This branch is seeded from prior-art checkpoint 96306a4e2406b6878e9a4490bee3536c29c3bbb2. No feature implementation exists yet. Retain the complete product contract below and exactly the two criterion IDs below; do not expand scope or weaken existing tests. Strengthen existing authored tests before implementing.
 
