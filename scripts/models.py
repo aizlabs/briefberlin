@@ -5,11 +5,19 @@ These models ensure data integrity throughout the pipeline and provide
 automatic validation, serialization, and clear type hints.
 """
 
+import math
 from datetime import date
 from decimal import Decimal
 from typing import Any, Dict, List, Literal, Optional, Union
+from urllib.parse import urlparse
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    field_validator,
+    model_validator,
+)
 
 from scripts.glossary_sections import normalize_glossary_headings
 from scripts.language_profiles import (
@@ -320,7 +328,11 @@ class ArticleTranslation(BaseModel):
     # whole language for that article.
     title: str = Field(..., min_length=1, description="Translated title")
     summary: str = Field(default="", description="Translated summary")
-    content: str = Field(..., min_length=20, description="Translated body, plain text")
+    # No content length floor: a legitimately short source paragraph (or a very
+    # short article) must still produce a parallel translation; dropping the
+    # whole language over a translated-length cap would contradict the
+    # fail-open publication policy. Structure is enforced by assembly, not here.
+    content: str = Field(..., min_length=1, description="Translated body, plain text")
     vocabulary: List[TranslatedVocabularyItem] = Field(default_factory=list)
     reading_time: int = Field(
         ...,
@@ -688,6 +700,50 @@ class TranslationLanguageConfig(BaseModel):
     )
 
 
+class OllamaEndpointConfig(BaseModel):
+    """Connection settings for the optional local Ollama translation backend.
+
+    The base URL must point at the server root (or a path prefix), never at an
+    OpenAI-compatible ``/v1`` route: the native ``POST /api/chat`` endpoint is
+    appended verbatim.
+    """
+
+    base_url: str = Field(
+        default="http://localhost:11434",
+        description="Root URL of the local Ollama server",
+    )
+    timeout_seconds: float = Field(
+        default=120,
+        gt=0,
+        description="Read timeout in seconds for one unit request (not an article deadline)",
+    )
+
+    @field_validator("base_url")
+    @classmethod
+    def validate_base_url(cls, value: str) -> str:
+        candidate = value.strip()
+        parsed = urlparse(candidate)
+        if parsed.scheme not in {"http", "https"} or not parsed.netloc:
+            raise ValueError(
+                "translations.ollama.base_url must be an absolute http(s) URL "
+                "with a host, for example http://localhost:11434"
+            )
+        normalized = candidate.rstrip("/")
+        if normalized.endswith("/v1"):
+            raise ValueError(
+                "translations.ollama.base_url must not point at an OpenAI-compatible "
+                "/v1 route; configure the Ollama server root instead"
+            )
+        return normalized
+
+    @field_validator("timeout_seconds")
+    @classmethod
+    def validate_timeout_seconds(cls, value: float) -> float:
+        if not math.isfinite(value) or value <= 0:
+            raise ValueError("translations.ollama.timeout_seconds must be finite and positive")
+        return value
+
+
 class TranslationsConfig(BaseModel):
     """Reader-language translations of the finished articles.
 
@@ -698,16 +754,26 @@ class TranslationsConfig(BaseModel):
     docs/language-profile-fork-guide.md). `translations:` is the
     comprehension-support axis - the languages the finished text is *rendered
     into* so a learner can read along. They never interact.
+
+    `provider` selects the translation backend: null inherits the global cloud
+    provider, `ollama` routes translations to the local Ollama server configured
+    under `ollama`. The global `llm.provider`/`llm.base_url` are never mutated
+    for local translation.
     """
 
     # Defaults to False so every existing config and test fixture keeps today's
     # behaviour; config/base.yaml opts in explicitly.
     enabled: bool = Field(default=False)
+    provider: Optional[Literal["ollama"]] = Field(
+        default=None,
+        description="Translation backend: null inherits the cloud provider, 'ollama' goes local",
+    )
     model: Optional[str] = Field(default=None, description="Overrides llm.models.translation")
     temperature: float = Field(default=0.2, ge=0, le=1)
     max_workers: int = Field(default=4, ge=1, le=8)
     max_attempts: int = Field(default=2, ge=1, le=5)
     output_path: str = Field(default="./output/_translations")
+    ollama: OllamaEndpointConfig = Field(default_factory=OllamaEndpointConfig)
     languages: List[TranslationLanguageConfig] = Field(default_factory=list)
 
     @model_validator(mode="after")
@@ -717,6 +783,18 @@ class TranslationsConfig(BaseModel):
             if language.code in seen:
                 raise ValueError(f"Duplicate translation language code: {language.code}")
             seen.add(language.code)
+        return self
+
+    @model_validator(mode="after")
+    def require_explicit_local_model(self) -> "TranslationsConfig":
+        """Active local translation never inherits a cloud model name."""
+        if self.provider == "ollama" and self.enabled:
+            if not (self.model or "").strip():
+                raise ValueError(
+                    "translations.provider='ollama' requires an explicit non-blank "
+                    "translations.model while translations are enabled; a cloud model "
+                    "name is never inherited for local translation"
+                )
         return self
 
     def for_level(self, level: str) -> List[TranslationLanguageConfig]:

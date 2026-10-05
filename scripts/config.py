@@ -9,11 +9,11 @@ Hierarchical configuration loading:
 
 import os
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 import yaml
 from dotenv import load_dotenv
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, Field, ValidationInfo, model_validator
 
 from scripts.language_profiles import SUPPORTED_GLOSSARY_RULES, SUPPORTED_PROMPT_PACKS
 from scripts.models import (
@@ -67,19 +67,28 @@ class AppConfig(BaseModel):
     ranking: Dict[str, Any] = Field(default_factory=dict)
 
     @model_validator(mode='after')
-    def validate_llm_keys(self) -> 'AppConfig':
-        if self.llm.provider == 'openai' and not self.llm.openai_api_key and not self.llm.base_url:
-            if self.llm.anthropic_api_key:
-                self.llm.provider = 'anthropic'
-                print("⚠️  Switched provider to 'anthropic' (OPENAI_API_KEY not found but ANTHROPIC_API_KEY is set)")
-            else:
-                raise ValueError("OPENAI_API_KEY or LLM_BASE_URL is required for OpenAI provider")
-        elif self.llm.provider == 'anthropic' and not self.llm.anthropic_api_key:
-            if self.llm.openai_api_key:
-                self.llm.provider = 'openai'
-                print("⚠️  Switched provider to 'openai' (ANTHROPIC_API_KEY not found but OPENAI_API_KEY is set)")
-            else:
-                raise ValueError("ANTHROPIC_API_KEY is required for Anthropic provider")
+    def validate_llm_keys(self, info: ValidationInfo) -> 'AppConfig':
+        context = info.context or {}
+        # Narrow translation-only boundary: an Ollama-only backfill run must not
+        # require unrelated cloud credentials, while every other check (structure,
+        # prompt packs, glossary rules and cloud-backfill credentials) stays
+        # enforced exactly as for a full run.
+        translation_only = bool(context.get('translation_only'))
+        skip_cloud_credentials = translation_only and self.translations.provider == 'ollama'
+
+        if not skip_cloud_credentials:
+            if self.llm.provider == 'openai' and not self.llm.openai_api_key and not self.llm.base_url:
+                if self.llm.anthropic_api_key:
+                    self.llm.provider = 'anthropic'
+                    print("⚠️  Switched provider to 'anthropic' (OPENAI_API_KEY not found but ANTHROPIC_API_KEY is set)")
+                else:
+                    raise ValueError("OPENAI_API_KEY or LLM_BASE_URL is required for OpenAI provider")
+            elif self.llm.provider == 'anthropic' and not self.llm.anthropic_api_key:
+                if self.llm.openai_api_key:
+                    self.llm.provider = 'openai'
+                    print("⚠️  Switched provider to 'openai' (ANTHROPIC_API_KEY not found but OPENAI_API_KEY is set)")
+                else:
+                    raise ValueError("ANTHROPIC_API_KEY is required for Anthropic provider")
 
         if self.language.prompt_pack not in SUPPORTED_PROMPT_PACKS:
             supported = ", ".join(sorted(SUPPORTED_PROMPT_PACKS))
@@ -131,6 +140,11 @@ def load_config(environment: str = 'local') -> AppConfig:
     Returns:
         AppConfig instance
     """
+    return AppConfig(**_merged_config_dict(environment))
+
+
+def _merged_config_dict(environment: str = 'local') -> Dict[str, Any]:
+    """Base YAML + sources + environment YAML + environment variables."""
     config_dir = Path(__file__).parent.parent / 'config'
 
     # Load base config
@@ -148,10 +162,27 @@ def load_config(environment: str = 'local') -> AppConfig:
     merged_config_dict = deep_merge(base_config_dict, env_config_dict)
 
     # Override with environment variables
-    final_config_dict = apply_env_overrides(merged_config_dict)
+    return apply_env_overrides(merged_config_dict)
 
-    # Instantiate Pydantic model for validation and type-safe access
-    return AppConfig(**final_config_dict)
+
+def load_translation_config(
+    environment: str = 'local',
+    cli_model: Optional[str] = None,
+) -> AppConfig:
+    """Narrow translation-only loading boundary for the backfill entry point.
+
+    Applies the same YAML/env layering as :func:`load_config`, then the explicit
+    backfill overrides (``--model`` last), and validates with a context that
+    waives only the unrelated cloud-credential requirement when the effective
+    translation provider is Ollama. Effective cloud backfill still validates its
+    cloud credentials; structural and language-profile checks stay enforced.
+    """
+    final_config_dict = _merged_config_dict(environment)
+    translations = final_config_dict.setdefault('translations', {})
+    if cli_model is not None:
+        translations['model'] = cli_model
+    translations['enabled'] = True
+    return AppConfig.model_validate(final_config_dict, context={'translation_only': True})
 
 
 def load_language_config(environment: str = 'local') -> LanguageConfig:
@@ -249,6 +280,45 @@ def apply_env_overrides(config_dict: Dict) -> Dict:
     if translations_model:
         config_dict.setdefault('translations', {})
         config_dict['translations']['model'] = translations_model
+
+    # Backend selection: 'ollama' goes local, 'inherit' resets to the cloud default.
+    translations_provider = os.getenv('TRANSLATIONS_PROVIDER')
+    if translations_provider:
+        normalized_provider = translations_provider.strip().lower()
+        config_dict.setdefault('translations', {})
+        if normalized_provider == 'inherit':
+            config_dict['translations']['provider'] = None
+        elif normalized_provider == 'ollama':
+            config_dict['translations']['provider'] = 'ollama'
+        else:
+            raise ValueError(
+                "TRANSLATIONS_PROVIDER must be 'ollama' or 'inherit', "
+                f"got: {translations_provider!r}"
+            )
+
+    translations_max_workers = os.getenv('TRANSLATIONS_MAX_WORKERS')
+    if translations_max_workers:
+        config_dict.setdefault('translations', {})
+        config_dict['translations']['max_workers'] = int(translations_max_workers)
+
+    translations_max_attempts = os.getenv('TRANSLATIONS_MAX_ATTEMPTS')
+    if translations_max_attempts:
+        config_dict.setdefault('translations', {})
+        config_dict['translations']['max_attempts'] = int(translations_max_attempts)
+
+    translations_ollama_base_url = os.getenv('TRANSLATIONS_OLLAMA_BASE_URL')
+    if translations_ollama_base_url:
+        config_dict.setdefault('translations', {})
+        config_dict['translations'].setdefault('ollama', {})
+        config_dict['translations']['ollama']['base_url'] = translations_ollama_base_url
+
+    translations_ollama_timeout = os.getenv('TRANSLATIONS_OLLAMA_TIMEOUT_SECONDS')
+    if translations_ollama_timeout:
+        config_dict.setdefault('translations', {})
+        config_dict['translations'].setdefault('ollama', {})
+        config_dict['translations']['ollama']['timeout_seconds'] = float(
+            translations_ollama_timeout
+        )
 
     # A FILTER over the configured languages, never a source of new entries:
     # glossary headings and level restrictions must stay authoritative in YAML.
