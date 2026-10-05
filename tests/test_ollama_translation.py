@@ -333,8 +333,10 @@ def test_http_retry_budget_and_redaction(local_config, article, wire, status, re
 
 @pytest.mark.parametrize("error", [requests.ConnectionError, requests.Timeout])
 @pytest.mark.parametrize("recover", [True, False])
-def test_unit_retry_keeps_completed_title(local_config, article, wire, error, recover):
+def test_unit_retry_keeps_completed_title(local_config, article, wire, monkeypatch, error, recover):
     calls, handler, cloud = wire
+    waits = []
+    monkeypatch.setattr("time.sleep", lambda delay: waits.append((len(calls), delay)))
     handler.side_effect = [response("title"), error(SECRET)] + (
         [response("summary")] + [response()] * 10 if recover else [error(SECRET)]
     )
@@ -349,9 +351,7 @@ def test_unit_retry_keeps_completed_title(local_config, article, wire, error, re
     texts = [c[2]["json"]["messages"][0]["content"] for c in calls]
     assert sum(p.endswith(article.title) for p in texts) == 1
     assert sum(p.endswith(article.summary) for p in texts) == 2
-    import time
-
-    assert time.sleep.call_args_list == [((0.5,), {})]
+    assert_retry_waits(waits, retry_request_numbers=[3])
     cloud.assert_not_called()
 
 
@@ -697,19 +697,86 @@ def test_custom_endpoint_and_finite_timeout(local_config, article, wire, timeout
     assert all(c[2]["timeout"] == (min(10.0, timeout), timeout) for c in wire[0])
 
 
-def test_exhaustion_has_no_outer_language_retry(local_config, article, wire):
-    import time
+def documented_backoff_ceiling():
+    """Read the documented bound without prescribing a value or retry schedule.
 
-    local_config.translations.max_attempts = 5
+    The adapter module documents its backoff cap/ceiling/maximum in seconds.
+    No implementation retry helper supplies the expected waits.
+    """
+    from scripts import ollama_translation
+
+    bounds = re.findall(
+        r"(?i)backoff[^\n]*?(?:cap|ceiling|maximum|bounded|at most|max)"
+        r"[^\d\n]*([0-9]+(?:\.[0-9]+)?)[ \t]*(?:seconds|secs|s)\b",
+        ollama_translation.__doc__ or "",
+    )
+    assert bounds, "document the finite backoff ceiling in seconds in the adapter module"
+    assert len(set(bounds)) == 1, "backoff ceiling documentation must be unambiguous"
+    ceiling = float(bounds[0])
+    assert math.isfinite(ceiling) and ceiling > 0
+    return ceiling
+
+
+def assert_retry_waits(waits, retry_request_numbers):
+    ceiling = documented_backoff_ceiling()
+    # Counts are captured before the next request; final exhaustion has no wait.
+    assert [count + 1 for count, _ in waits] == retry_request_numbers
+    for _, delay in waits:
+        assert isinstance(delay, (int, float)) and not isinstance(delay, bool)
+        assert math.isfinite(delay) and 0 < delay <= ceiling
+
+
+@pytest.mark.parametrize("delays", [[0.1, 0.1], [1.5, 3.0], [4.0, 0.25]])
+def test_retry_wait_assertion_accepts_bounded_schedules(monkeypatch, delays):
+    monkeypatch.setitem(globals(), "documented_backoff_ceiling", lambda: 4.0)
+    assert_retry_waits(list(enumerate(delays, start=1)), [2, 3])
+
+
+@pytest.mark.parametrize(
+    "waits",
+    [
+        [],
+        [(1, 0.5)],
+        [(1, 0.5), (2, 0.5), (3, 0.5)],
+        [(0, 0.5), (2, 0.5)],
+        [(1, float("nan")), (2, 0.5)],
+        [(1, float("inf")), (2, 0.5)],
+        [(1, 0), (2, 0.5)],
+        [(1, -1), (2, 0.5)],
+        [(1, 4.01), (2, 0.5)],
+        [(1, "0.5"), (2, 0.5)],
+        [(1, True), (2, 0.5)],
+    ],
+)
+def test_retry_wait_assertion_rejects_unbounded_or_misplaced_waits(monkeypatch, waits):
+    monkeypatch.setitem(globals(), "documented_backoff_ceiling", lambda: 4.0)
+    with pytest.raises(AssertionError):
+        assert_retry_waits(waits, [2, 3])
+
+
+@pytest.mark.parametrize("budget", [1, 3, 5])
+@pytest.mark.parametrize("public_path", ["article", "language"])
+@pytest.mark.parametrize("error", [requests.Timeout, requests.ConnectionError])
+def test_exhaustion_has_no_outer_language_retry(
+    local_config, article, wire, monkeypatch, budget, public_path, error
+):
+    local_config.translations.max_attempts = budget
     local_config.translations.languages = local_config.translations.languages[:1]
     calls, handler, cloud = wire
-    handler.side_effect = requests.Timeout(SECRET)
-    result = ArticleTranslator(local_config, logging.getLogger("contract")).translate_article(
-        article
-    )
-    assert not result.translations
-    assert len(calls) == 5
-    assert time.sleep.call_args_list == [((x,), {}) for x in (0.5, 1.0, 1.5, 2.0)]
+    waits = []
+    monkeypatch.setattr("time.sleep", lambda delay: waits.append((len(calls), delay)))
+    handler.side_effect = error(SECRET)
+    translator = ArticleTranslator(local_config, logging.getLogger("contract"))
+    if public_path == "article":
+        result = translator.translate_article(article)
+        assert not result.translations
+    else:
+        with pytest.raises(Exception):
+            translator.translate_to_language(article, local_config.translations.languages[0])
+    assert len(calls) == budget
+    texts = [c[2]["json"]["messages"][0]["content"] for c in calls]
+    assert all(text.endswith(article.title) for text in texts)
+    assert_retry_waits(waits, retry_request_numbers=list(range(2, budget + 1)))
     cloud.assert_not_called()
 
 
@@ -1113,11 +1180,27 @@ def explicit_language(value):
 
 
 def explicit_runs(value):
+    """Missing identifiers cannot authorize joining incomplete records."""
     if isinstance(value, dict):
-        return {str(v) for k, v in value.items() if k in {"run_id", "run"}}
-    if isinstance(value, str):
-        return set(re.findall(r"\b(?:run_id|run)\s*[:=]\s*[\"']?([\w-]+)", value))
-    return set()
+        identifiers = [v for k, v in value.items() if k in {"run_id", "run"}]
+    elif isinstance(value, str):
+        # Empty labels must not consume the next line or a following field label.
+        identifiers = [
+            next((part for part in match if part), "")
+            for match in re.findall(
+                r"\b(?:run_id|run)[ \t]*[:=][ \t]*(?:\"([^\"]*)\"|'([^']*)'|([\w-]+)(?![\w-]|[ \t]*[:=]))",
+                value,
+            )
+        ]
+    else:
+        identifiers = []
+    return {
+        str(identifier).strip()
+        for identifier in identifiers
+        if identifier is not None
+        and str(identifier).strip()
+        and str(identifier).strip().lower() not in {"null", "none"}
+    }
 
 
 def observation_scopes(value):
@@ -1331,6 +1414,61 @@ def test_diagnostic_attribution_rejects_misleading_observations(
         observations["en"]["elapsed_ms"] = 2000
     with pytest.raises(AssertionError, match="coherent explicitly attributed diagnostics"):
         assert_language_diagnostics(observations, 1)
+
+
+@pytest.mark.parametrize("field", ["run_id", "run"])
+@pytest.mark.parametrize("identifier", [None, "", " ", "\t\n"])
+@pytest.mark.parametrize("representation", ["fields", "text"])
+def test_complete_diagnostics_need_no_run(
+    diagnostic_observations, field, identifier, representation
+):
+    observations = {
+        code: dict(value, **{field: identifier}) for code, value in diagnostic_observations.items()
+    }
+    if representation == "text":
+        observations = {
+            code: " ".join(f"{k}={json.dumps(v)}" for k, v in value.items())
+            for code, value in observations.items()
+        }
+    assert_language_diagnostics(observations, 1)
+
+
+@pytest.mark.parametrize("field", ["run_id", "run"])
+@pytest.mark.parametrize("identifier", [None, "", " ", "\t\n"])
+@pytest.mark.parametrize("placement", ["parent", "children", "both", "text"])
+def test_missing_run_cannot_join_diagnostic_fragments(
+    diagnostic_observations, field, identifier, placement
+):
+    value = diagnostic_observations["en"]
+    first = {k: v for k, v in value.items() if k != "retries"}
+    second = {"retries": value["retries"]}
+    parent = {"first": first, "second": second}
+    if placement in {"parent", "both"}:
+        parent[field] = identifier
+    if placement in {"children", "both"}:
+        first[field] = second[field] = identifier
+    if placement == "text":
+        rendered = "null" if identifier is None else '"' + identifier + '"'
+        parent["message"] = f"{field}={rendered}"
+        first["message"] = second["message"] = f"{field}={rendered}"
+    for incomplete in (first, second, parent):
+        observations = {"en": incomplete, "ar": diagnostic_observations["ar"]}
+        with pytest.raises(AssertionError, match="coherent explicitly attributed diagnostics"):
+            assert_language_diagnostics(observations, 1)
+
+
+@pytest.mark.parametrize("field", ["run_id", "run"])
+@pytest.mark.parametrize("identifier", ["same-run", "another_run-2"])
+def test_valid_run_can_join_diagnostic_fragments(diagnostic_observations, field, identifier):
+    observations = {
+        code: {
+            field: identifier,
+            "first": {k: v for k, v in value.items() if k != "retries"},
+            "second": {field: identifier, "retries": value["retries"]},
+        }
+        for code, value in diagnostic_observations.items()
+    }
+    assert_language_diagnostics(observations, 1)
 
 
 def test_local_diagnostics_safe_and_useful(local_config, article, wire, caplog):
