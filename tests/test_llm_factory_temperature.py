@@ -31,9 +31,10 @@ def test_reasoning_effort_from_config_is_sent():
     assert payload.get("reasoning_effort") == "low" or payload.get("reasoning", {}).get("effort") == "low"
 
 
-def test_base_config_declares_options_for_the_models_it_uses():
+def test_base_config_declares_options_for_the_models_it_uses(monkeypatch):
     from scripts.config import load_config
 
+    monkeypatch.setenv("OPENAI_API_KEY", "dummy")
     cfg = load_config("production")
     used = {cfg.llm.models.generation, cfg.llm.models.adaptation, cfg.llm.models.translation}
     for model in used:
