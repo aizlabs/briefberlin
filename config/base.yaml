@@ -52,7 +52,8 @@ generation:
 
 # Quality gate settings
 quality_gate:
-  min_score: 7.5
+  # Calibrated for gpt-6.1-terra as grader: it scores ~0.5-1 lower than gpt-4o-mini did.
+  min_score: 7.0
   max_attempts: 3
 
 glossary:
