@@ -1,43 +1,56 @@
 {%- comment -%}
-  A single front-page story.
+  A single front-page story: one news item, in every level it was written at.
 
   Parameters:
-    post    - the post object
+    group   - a group from `group_by_exp` on the page's posts (keyed on the
+              shared topic description), so .items holds the A2 and B1 versions
     variant - lead | rail | secondary | brief
 
-  `variant` is only the DEFAULT role. When the reader picks a level, the
-  homepage script re-deals the surviving stories across the same four slots and
-  rewrites this class, so `.story--<variant>` on the element - not the Liquid
-  parameter - is the single source of truth for how an item is typeset.
+  Both versions are rendered. The front page's `data-active-level` decides which
+  one is visible, so switching level is a CSS change, works without a reload,
+  and a reader without JavaScript still gets the A2 version and a link to B1.
+  A story that only exists at one level always shows that version.
 {%- endcomment -%}
-{%- assign story = include.post -%}
+{%- assign items = include.group.items -%}
+{%- assign a2 = items | where: "level", "A2" | first -%}
+{%- assign b1 = items | where: "level", "B1" | first -%}
 {%- assign variant = include.variant | default: "brief" -%}
-{%- assign level = site.data.levels[story.level] -%}
-<article class="story story--{{ variant }}"{% if story.level %} data-level="{{ story.level }}"{% endif %}>
-  <a class="story__link" href="{{ story.url | relative_url }}">
-    {%- if story.category %}
-    <span class="story__kicker">{{ story.category }}</span>
-    {%- endif %}
-    <h2 class="story__headline">{{ story.title }}</h2>
-    {%- comment -%} Rendered for every story and hidden by CSS in the brief slot,
-    for the same reason as the excerpt below: a story rendered as a brief is
-    promoted to a bigger slot the moment the reader picks a level, and the
-    script re-deals elements rather than re-rendering them. {%- endcomment -%}
-    <p class="story__deck">{{ story.summary | default: story.description | default: story.content | strip_html | truncatewords: 26 }}</p>
-    {%- comment -%} The lead runs a column of its own next to the rail; a
-    one-sentence deck leaves it hanging half-empty, so it also carries the
-    article's opening. Rendered for EVERY story and revealed by CSS only in the
-    lead slot: any story can be promoted to lead when the reader picks a level,
-    and the script re-deals elements rather than re-rendering them. {%- endcomment -%}
-    <p class="story__excerpt">{{ story.content | strip_html | truncatewords: 62 }}</p>
+{%- assign versions = "" | split: "" -%}
+{%- if a2 %}{% assign versions = versions | push: a2 %}{% endif -%}
+{%- if b1 %}{% assign versions = versions | push: b1 %}{% endif -%}
+{%- if versions.size == 0 %}{% assign versions = items | slice: 0, 1 %}{% endif -%}
+<article class="story story--{{ variant }}{% if a2 and b1 %} story--paired{% endif %}">
+  {%- for story in versions %}
+  {%- assign level = site.data.levels[story.level] -%}
+  <div class="story__version"{% if story.level %} data-version="{{ story.level }}"{% endif %}>
+    <a class="story__link" href="{{ story.url | relative_url }}"{% if story.level %} data-level="{{ story.level }}"{% endif %}>
+      {%- if story.category %}
+      <span class="story__kicker">{{ story.category }}</span>
+      {%- endif %}
+      <h2 class="story__headline">{{ story.title }}</h2>
+      <p class="story__deck">{{ story.summary | default: story.description | default: story.content | strip_html | truncatewords: 26 }}</p>
+      <p class="story__excerpt">{{ story.content | strip_html | truncatewords: 62 }}</p>
+    </a>
     <p class="story__meta">
-      {%- if level %}
+      {%- if a2 and b1 %}
+      <span class="story__levels" role="group" aria-label="Niveau">
+        {%- for other in versions %}{% assign other_level = site.data.levels[other.level] %}
+        <a class="story__level story__level--{{ other_level.slug }}{% if other.url == story.url %} is-current{% endif %}"
+           href="{{ other.url | relative_url }}"{% if other.url == story.url %} aria-current="true"{% endif %}>{{ other_level.label }}</a>
+        {%- endfor %}
+      </span>
+      {%- elsif level %}
       <span class="story__level story__level--{{ level.slug }}">{{ level.label }}</span>
       {%- endif %}
       <time datetime="{{ story.date | date_to_xmlschema }}">{{ story.date | date: "%d.%m.%Y" }}</time>
       {%- if story.reading_time %}
       <span class="story__reading-time">{{ story.reading_time }} Min.</span>
       {%- endif %}
+      {%- for l in site.data.languages %}{% unless l.original %}{% if story.translations[l.code] %}
+      <a class="story__translation" data-lang="{{ l.code }}" href="{{ story.translations[l.code] | relative_url }}"
+         hreflang="{{ l.code }}" lang="{{ l.code }}" dir="{{ l.dir }}"><span aria-hidden="true">文A</span> {{ l.endonym }}</a>
+      {%- endif %}{% endunless %}{% endfor %}
     </p>
-  </a>
+  </div>
+  {%- endfor %}
 </article>

@@ -25,14 +25,33 @@ organization_schema: true
   </p>
 </header>
 
+{%- comment -%}
+  The translations are the feature a newcomer from Kyiv or Istanbul needs to see
+  first, so each language pitches itself in its own script. Picking one shows a
+  link to that translation under every story; picking it again hides them.
+{%- endcomment -%}
+<section class="langband" aria-labelledby="langband-title" data-langband>
+  <h2 class="langband__title" id="langband-title">Jeder Artikel auch in deiner Sprache</h2>
+  <ul class="langband__list">
+    {%- for l in site.data.languages %}{% unless l.original %}
+    <li>
+      <button type="button" class="langband__option" data-reader-lang-option="{{ l.code }}" aria-pressed="false"
+              lang="{{ l.code }}" dir="{{ l.dir }}">
+        <span class="langband__endonym">{{ l.endonym }}</span>
+        <span class="langband__pitch">{{ l.homepage_pitch }}</span>
+      </button>
+    </li>
+    {%- endunless %}{% endfor %}
+  </ul>
+</section>
+
 <nav class="levelbar" aria-label="Sprachniveau wählen" data-levelbar>
   <p class="levelbar__label" id="levelbar-label">Dein Niveau</p>
   <div class="levelbar__options" role="group" aria-labelledby="levelbar-label">
-    <button type="button" class="levelbar__option is-active" data-level="all" aria-pressed="true"
-            data-note="Alle Artikel – von kurzen, einfachen Meldungen bis zu längeren Berichten.">Alle</button>
     {%- for entry in site.data.levels %}
     {%- assign code = entry[0] %}{% assign level = entry[1] %}
-    <button type="button" class="levelbar__option" data-level="{{ code }}" aria-pressed="false"
+    <button type="button" class="levelbar__option{% if forloop.first %} is-active{% endif %}" data-level="{{ code }}"
+            aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}"
             data-note="{{ level.label }}: {{ level.description }}">{{ level.label }}</button>
     {%- endfor %}
   </div>
@@ -41,48 +60,52 @@ organization_schema: true
 <p class="levelbar__note" data-level-note aria-live="polite"></p>
 
 {%- comment -%}
-  Server-rendered default arrangement: lead, two rail stories, three seconds,
-  the rest as briefs. The script re-deals the same elements when a level is
-  chosen, so this markup is what a reader without JavaScript gets.
+  Each news item is published as an A2 and a B1 post. They share the topic
+  `description`, so grouping on it gives one story per item; posts without a
+  description stand alone. The level bar picks which version every story shows.
 {%- endcomment -%}
-{%- assign lead_posts = paginator.posts | slice: 0, 1 -%}
-{%- assign rail_posts = paginator.posts | slice: 1, 2 -%}
-{%- assign secondary_posts = paginator.posts | slice: 3, 3 -%}
-{%- assign brief_posts = paginator.posts | slice: 6, 6 -%}
+{%- assign story_groups = paginator.posts | group_by_exp: "post", "post.description | default: post.url" -%}
+{%- assign lead_groups = story_groups | slice: 0, 1 -%}
+{%- assign rail_groups = story_groups | slice: 1, 2 -%}
+{%- assign secondary_groups = story_groups | slice: 3, 3 -%}
+{%- assign brief_groups = story_groups | slice: 6, 18 -%}
+{%- assign first_level = site.data.levels | first | first -%}
 
-<div class="frontpage" data-frontpage>
+<style>
+  {%- for l in site.data.languages %}{% unless l.original %}
+  .frontpage[data-reader-lang="{{ l.code }}"] .story__translation[data-lang="{{ l.code }}"] { display: inline-flex; }
+  {%- endunless %}{% endfor %}
+</style>
+
+<div class="frontpage" data-frontpage data-active-level="{{ first_level }}">
   <div class="frontpage__top">
-    <section class="frontpage__slot frontpage__slot--lead" data-slot="lead" aria-label="Aufmacher">
-      <div class="frontpage__slot-body" data-slot-body>
-        {%- for post in lead_posts %}{% include story.html post=post variant="lead" %}{% endfor %}
-      </div>
+    <section class="frontpage__slot frontpage__slot--lead" aria-label="Aufmacher">
+      {%- for group in lead_groups %}{% include story.html group=group variant="lead" %}{% endfor %}
     </section>
 
-    <section class="frontpage__slot frontpage__slot--rail" data-slot="rail" aria-label="Ebenfalls aktuell">
-      <div class="frontpage__slot-body" data-slot-body>
-        {%- for post in rail_posts %}{% include story.html post=post variant="rail" %}{% endfor %}
-      </div>
+    {%- if rail_groups.size > 0 %}
+    <section class="frontpage__slot frontpage__slot--rail" aria-label="Ebenfalls aktuell">
+      {%- for group in rail_groups %}{% include story.html group=group variant="rail" %}{% endfor %}
     </section>
+    {%- endif %}
   </div>
 
-  <section class="frontpage__slot frontpage__slot--secondary" data-slot="secondary" aria-label="Weitere Artikel">
-    <div class="frontpage__slot-body" data-slot-body>
-      {%- for post in secondary_posts %}{% include story.html post=post variant="secondary" %}{% endfor %}
+  {%- if secondary_groups.size > 0 %}
+  <section class="frontpage__slot frontpage__slot--secondary" aria-label="Weitere Artikel">
+    <div class="frontpage__slot-body">
+      {%- for group in secondary_groups %}{% include story.html group=group variant="secondary" %}{% endfor %}
     </div>
   </section>
+  {%- endif %}
 
-  <section class="frontpage__slot frontpage__slot--briefs" data-slot="briefs" aria-labelledby="briefs-title">
+  {%- if brief_groups.size > 0 %}
+  <section class="frontpage__slot frontpage__slot--briefs" aria-labelledby="briefs-title">
     <h2 class="frontpage__slot-title" id="briefs-title">Kurz gemeldet</h2>
-    <div class="frontpage__slot-body" data-slot-body>
-      {%- for post in brief_posts %}{% include story.html post=post variant="brief" %}{% endfor %}
+    <div class="frontpage__slot-body">
+      {%- for group in brief_groups %}{% include story.html group=group variant="brief" %}{% endfor %}
     </div>
   </section>
-
-  <p class="frontpage__empty" data-frontpage-empty hidden>
-    Auf dieser Seite gibt es gerade keine Artikel für dieses Niveau.
-  </p>
-
-  <div class="frontpage__pool" data-story-pool hidden></div>
+  {%- endif %}
 </div>
 
 {% if paginator.total_pages > 1 %}
@@ -104,81 +127,63 @@ organization_schema: true
   var root = document.querySelector('[data-frontpage]');
   if (!root) return;
 
-  // Four layout slots, in reading order, with how many stories each one holds.
-  var SLOTS = [['lead', 1], ['rail', 2], ['secondary', 3], ['briefs', Infinity]];
-  var STORAGE_KEY = 'briefberlin:level';
-  var VALID = ['all', 'A2', 'B1'];
-
-  var stories = Array.prototype.slice.call(root.querySelectorAll('.story'));
-  var buttons = Array.prototype.slice.call(document.querySelectorAll('[data-levelbar] .levelbar__option'));
-  var note = document.querySelector('[data-level-note]');
-  var empty = root.querySelector('[data-frontpage-empty]');
-  var pool = root.querySelector('[data-story-pool]');
-  var sections = {};
-  var bodies = {};
-
-  SLOTS.forEach(function (slot) {
-    var section = root.querySelector('[data-slot="' + slot[0] + '"]');
-    sections[slot[0]] = section;
-    bodies[slot[0]] = section.querySelector('[data-slot-body]');
-  });
-
-  // Filtering changes how many stories survive, so the lead/rail/seconds/briefs
-  // roles are re-dealt from scratch every time rather than being baked into the
-  // markup - otherwise picking a level would leave the page with, say, four
-  // lead-sized headlines and an empty front.
-  function deal(level) {
-    var visible = stories.filter(function (story) {
-      return level === 'all' || story.getAttribute('data-level') === level;
-    });
-
-    stories.forEach(function (story) {
-      if (visible.indexOf(story) === -1) pool.appendChild(story);
-    });
-
-    var cursor = 0;
-    SLOTS.forEach(function (slot) {
-      var name = slot[0];
-      var take = slot[1] === Infinity
-        ? visible.slice(cursor)
-        : visible.slice(cursor, cursor + slot[1]);
-      cursor += take.length;
-
-      take.forEach(function (story) {
-        story.className = 'story story--' + name;
-        bodies[name].appendChild(story);
-      });
-      sections[name].hidden = take.length === 0;
-    });
-
-    if (empty) empty.hidden = visible.length > 0;
+  function load(key) {
+    try { return window.localStorage.getItem(key); } catch (error) { return null; }
+  }
+  function save(key, value) {
+    try {
+      if (value) window.localStorage.setItem(key, value);
+      else window.localStorage.removeItem(key);
+    } catch (error) { /* private mode */ }
   }
 
-  function apply(level, persist) {
-    deal(level);
+  // Level: every story stays on the page; only which version it shows changes.
+  var LEVEL_KEY = 'briefberlin:level';
+  var levelButtons = Array.prototype.slice.call(document.querySelectorAll('[data-levelbar] .levelbar__option'));
+  var levels = levelButtons.map(function (button) { return button.getAttribute('data-level'); });
+  var note = document.querySelector('[data-level-note]');
 
-    var active = null;
-    buttons.forEach(function (button) {
+  function applyLevel(level, persist) {
+    root.setAttribute('data-active-level', level);
+    levelButtons.forEach(function (button) {
       var on = button.getAttribute('data-level') === level;
       button.classList.toggle('is-active', on);
       button.setAttribute('aria-pressed', on ? 'true' : 'false');
-      if (on) active = button;
+      if (on && note) note.textContent = button.getAttribute('data-note') || '';
     });
-
-    if (note) note.textContent = active ? (active.getAttribute('data-note') || '') : '';
-    if (persist) {
-      try { window.localStorage.setItem(STORAGE_KEY, level); } catch (error) { /* private mode */ }
-    }
+    if (persist) save(LEVEL_KEY, level);
   }
 
-  buttons.forEach(function (button) {
+  levelButtons.forEach(function (button) {
+    button.addEventListener('click', function () { applyLevel(button.getAttribute('data-level'), true); });
+  });
+  // The old "all" choice no longer exists, so it falls back to the first level.
+  var storedLevel = load(LEVEL_KEY);
+  applyLevel(levels.indexOf(storedLevel) === -1 ? levels[0] : storedLevel, false);
+
+  // Reading language: shows a link to that translation under every story.
+  var LANG_KEY = 'briefberlin:reader-lang';
+  var langButtons = Array.prototype.slice.call(document.querySelectorAll('[data-reader-lang-option]'));
+  var codes = langButtons.map(function (button) { return button.getAttribute('data-reader-lang-option'); });
+
+  function applyLang(code, persist) {
+    if (code) root.setAttribute('data-reader-lang', code);
+    else root.removeAttribute('data-reader-lang');
+    langButtons.forEach(function (button) {
+      var on = button.getAttribute('data-reader-lang-option') === code;
+      button.classList.toggle('is-active', on);
+      button.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    if (persist) save(LANG_KEY, code);
+  }
+
+  langButtons.forEach(function (button) {
     button.addEventListener('click', function () {
-      apply(button.getAttribute('data-level'), true);
+      var code = button.getAttribute('data-reader-lang-option');
+      applyLang(root.getAttribute('data-reader-lang') === code ? null : code, true);
     });
   });
-
-  var stored = null;
-  try { stored = window.localStorage.getItem(STORAGE_KEY); } catch (error) { /* private mode */ }
-  apply(VALID.indexOf(stored) === -1 ? 'all' : stored, false);
+  var storedLang = load(LANG_KEY);
+  applyLang(codes.indexOf(storedLang) === -1 ? null : storedLang, false);
 })();
 </script>

@@ -51,7 +51,7 @@ highlighter: rouge
 # rendered the previous day for any build between midnight and 02:00 CEST.
 timezone: Europe/Berlin
 permalink: /articles/:title/
-paginate: 12
+paginate: 24  # 12 stories: every news item has an A2 and a B1 post
 paginate_path: /page:num/
 future: true  # Show future-dated posts (safeguard for timezone issues)
 

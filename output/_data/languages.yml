@@ -7,6 +7,8 @@
 # `code` must match the two-letter codes emitted by `translations.languages` in
 # config/base.yaml, plus `de` for the original.
 #
+# `homepage_pitch` is the one-line pitch on the front page, in the language itself.
+#
 # No flags: flags encode countries, not languages (ar/en/es have no single flag).
 
 - code: de
@@ -23,6 +25,7 @@
   english: "English"
   dir: ltr
   og_locale: en_US
+  homepage_pitch: "Easy German news from Berlin – every article also in English."
 
 - code: es
   html_lang: "es"
@@ -30,6 +33,7 @@
   english: "Spanish"
   dir: ltr
   og_locale: es_ES
+  homepage_pitch: "Noticias de Berlín en alemán fácil, cada artículo también en español."
 
 - code: pl
   html_lang: "pl"
@@ -37,6 +41,7 @@
   english: "Polish"
   dir: ltr
   og_locale: pl_PL
+  homepage_pitch: "Wiadomości z Berlina po prostym niemiecku – każdy artykuł także po polsku."
 
 - code: tr
   html_lang: "tr"
@@ -44,6 +49,7 @@
   english: "Turkish"
   dir: ltr
   og_locale: tr_TR
+  homepage_pitch: "Berlin'den kolay Almanca haberler – her makale Türkçe de var."
 
 - code: uk
   html_lang: "uk"
@@ -51,6 +57,7 @@
   english: "Ukrainian"
   dir: ltr
   og_locale: uk_UA
+  homepage_pitch: "Новини Берліна простою німецькою – кожна стаття також українською."
 
 - code: ru
   html_lang: "ru"
@@ -58,6 +65,7 @@
   english: "Russian"
   dir: ltr
   og_locale: ru_RU
+  homepage_pitch: "Новости Берлина на простом немецком – каждая статья и на русском."
 
 - code: ar
   html_lang: "ar"
@@ -65,3 +73,4 @@
   english: "Arabic"
   dir: rtl
   og_locale: ar_AR
+  homepage_pitch: "أخبار برلين بلغة ألمانية سهلة – وكل مقال متوفر بالعربية أيضًا."
