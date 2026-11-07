@@ -1972,3 +1972,38 @@ a.story__level.is-current {
     display: none;
   }
 }
+
+/* ==========================================================================
+   Article: switch to the same story at the other level
+   ========================================================================== */
+
+.level-switch {
+  display: inline-flex;
+  gap: 0.3rem;
+  margin-inline-end: 0.5em;
+}
+
+.level-switch .level-badge {
+  margin-inline-end: 0;
+}
+
+a.level-switch__other {
+  opacity: 0.55;
+  text-decoration: none;
+}
+
+a.level-switch__other:hover,
+a.level-switch__other:focus-visible {
+  opacity: 1;
+  text-decoration: none;
+}
+
+a.level-switch__other::before {
+  content: "\2192\00a0";
+}
+
+@media (pointer: coarse) {
+  a.level-switch__other {
+    padding-block: 0.45em;
+  }
+}

@@ -36,8 +36,18 @@ layout: default
           {%- comment -%} The reader sees the level as a word in THEIR language,
           not as a CEFR code, so it is localized like the rest of the chrome and
           - unlike the code - must not be forced to ltr. {%- endcomment -%}
+          {%- comment -%} Find the German post this translates, so the badge can
+          switch to the other level's translation in the same language. {%- endcomment -%}
+          {%- assign de_url = "/articles/" | append: page.ref | append: "/" -%}
+          {%- assign source_post = site.posts | where: "url", de_url | first -%}
+          {%- assign level_labels = "" | split: "" -%}
+          {%- if source_post -%}
+            {%- assign a2_label = t.level_a2 | default: "A2" -%}{%- assign b1_label = t.level_b1 | default: "B1" -%}
+            {% include level-switch.html post=source_post lang=page.lang label_a2=a2_label label_b1=b1_label %}
+          {%- else -%}
           {%- assign level_key = page.level | downcase | prepend: "level_" -%}
           <span class="level-badge level-{{ page.level | downcase }}">{{ t[level_key] | default: page.level }}</span>
+          {%- endif -%}
         {% endif %}
 
         {% if page.date %}

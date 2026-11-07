@@ -21,8 +21,7 @@ layout: default
 
         <div class="article-meta">
           {% if page.level %}
-            {%- assign level = site.data.levels[page.level] -%}
-            <span class="level-badge level-{{ page.level | downcase }}">{{ level.label | default: page.level }}</span>
+            {% include level-switch.html post=page %}
           {% endif %}
 
           {% if page.date %}

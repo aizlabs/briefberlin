@@ -1,0 +1,39 @@
+{%- comment -%}
+  Level badge that doubles as a switch to the same news item at the other level.
+
+  Params:
+    post  - the GERMAN post (on a translation page: the post it translates)
+    lang  - optional reader language; links then go to that language's version
+    label - optional map of level code -> label (defaults to site.data.levels)
+
+  The sibling is found by the shared `story` id (new posts), falling back to the
+  shared topic `description` (older pairs). With no sibling, or no translation
+  of it in `lang`, it renders the plain badge as before.
+{%- endcomment -%}
+{%- assign cur = include.post -%}
+{%- assign other = nil -%}
+{%- if cur.story -%}
+  {%- assign other = site.posts | where: "story", cur.story | where_exp: "p", "p.level != cur.level" | first -%}
+{%- elsif cur.description -%}
+  {%- assign other = site.posts | where: "description", cur.description | where_exp: "p", "p.level != cur.level" | first -%}
+{%- endif -%}
+{%- assign other_href = nil -%}
+{%- if other -%}
+  {%- if include.lang -%}{%- assign other_href = other.translations[include.lang] -%}{%- else -%}{%- assign other_href = other.url -%}{%- endif -%}
+{%- endif -%}
+{%- if other_href -%}
+<span class="level-switch" role="group" aria-label="{{ include.aria | default: 'Niveau' }}">
+  {%- for entry in site.data.levels %}
+  {%- assign code = entry[0] -%}
+  {%- assign label_param = "label_" | append: code | downcase -%}{%- assign text = include[label_param] | default: entry[1].label | default: code -%}
+  {%- if code == cur.level %}
+  <span class="level-badge level-{{ code | downcase }} level-switch__current" aria-current="page">{{ text }}</span>
+  {%- elsif code == other.level %}
+  <a class="level-badge level-{{ code | downcase }} level-switch__other" href="{{ other_href | relative_url }}"{% if include.lang %} hreflang="{{ include.lang }}"{% endif %}>{{ text }}</a>
+  {%- endif %}
+  {%- endfor %}
+</span>
+{%- else -%}
+{%- assign label_param = "label_" | append: cur.level | downcase -%}{%- assign text = include[label_param] | default: site.data.levels[cur.level].label | default: cur.level -%}
+<span class="level-badge level-{{ cur.level | downcase }}">{{ text }}</span>
+{%- endif -%}
