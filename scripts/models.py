@@ -511,6 +511,19 @@ class UsageReportingConfig(BaseModel):
     prices: Dict[str, Dict[str, ModelPricingConfig]] = Field(default_factory=dict)
 
 
+class ModelOptions(BaseModel):
+    """Request options for one model, keyed by model name in `llm.model_options`."""
+
+    supports_temperature: bool = Field(
+        default=True,
+        description="False for models that only accept their default temperature; none is sent",
+    )
+    reasoning_effort: Optional[Literal["none", "minimal", "low", "medium", "high", "xhigh"]] = Field(
+        default=None,
+        description="Reasoning effort for reasoning models; unset uses the model's default",
+    )
+
+
 class LLMConfig(BaseModel):
     """LLM configuration"""
     provider: str = Field(
@@ -530,6 +543,10 @@ class LLMConfig(BaseModel):
         default=0.1, ge=0, le=1, description="Temperature for quality checks"
     )
     max_tokens: int = Field(default=4096, ge=100, le=100000, description="Max tokens")
+    model_options: Dict[str, ModelOptions] = Field(
+        default_factory=dict,
+        description="Per-model request options (temperature support, reasoning effort)",
+    )
     usage_reporting: UsageReportingConfig = Field(default_factory=UsageReportingConfig)
 
 

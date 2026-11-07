@@ -7,7 +7,6 @@ level adapter, quality gate) can share configuration and easily support
 multiple providers (OpenAI, Anthropic, etc.).
 """
 
-import re
 from typing import Any, Dict, Mapping, cast
 
 from langchain_anthropic import ChatAnthropic
@@ -16,20 +15,11 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 from pydantic import SecretStr
 
-# OpenAI's GPT-6 family (and later) rejects any temperature except the default.
-# langchain-openai only strips it for gpt-5* names, so newer models need this.
-FIXED_TEMPERATURE_MODELS = re.compile(r"^(gpt-([6-9]|[1-9]\d)(\.|-|$)|o\d)")
-
-
-def uses_default_temperature_only(model_name: str) -> bool:
-    """True for OpenAI models that only accept the default temperature."""
-    return bool(FIXED_TEMPERATURE_MODELS.match(model_name.lower()))
-
 
 def create_chat_model(
     llm_config: Dict[str, Any],
     model_name: str,
-    temperature: float,
+    temperature: float | None,
     *,
     provider_options: Mapping[str, Any] | None = None,
 ) -> BaseChatModel:
@@ -47,6 +37,14 @@ def create_chat_model(
     """
     provider = llm_config["provider"]
     extra_options = dict(provider_options or {})
+    # Per-model request options live in config (llm.model_options), never in code:
+    # some models only accept their default temperature, reasoning models take an
+    # effort level. A model without an entry gets the configured defaults.
+    options = (llm_config.get("model_options") or {}).get(model_name) or {}
+    if options.get("supports_temperature", True) is False:
+        temperature = None
+    if options.get("reasoning_effort"):
+        extra_options.setdefault("reasoning_effort", options["reasoning_effort"])
 
     if provider == "anthropic":
         api_key = llm_config.get("anthropic_api_key")
@@ -75,7 +73,7 @@ def create_chat_model(
             base_url=base_url,
             model=model_name,
             max_completion_tokens=llm_config.get("max_tokens", 4096),
-            temperature=None if uses_default_temperature_only(model_name) else temperature,
+            temperature=temperature,
             **extra_options,
         )
 
