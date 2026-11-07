@@ -7,6 +7,7 @@ level adapter, quality gate) can share configuration and easily support
 multiple providers (OpenAI, Anthropic, etc.).
 """
 
+import re
 from typing import Any, Dict, Mapping, cast
 
 from langchain_anthropic import ChatAnthropic
@@ -14,6 +15,15 @@ from langchain_core.language_models.chat_models import BaseChatModel
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 from pydantic import SecretStr
+
+# OpenAI's GPT-6 family (and later) rejects any temperature except the default.
+# langchain-openai only strips it for gpt-5* names, so newer models need this.
+FIXED_TEMPERATURE_MODELS = re.compile(r"^(gpt-([6-9]|[1-9]\d)(\.|-|$)|o\d)")
+
+
+def uses_default_temperature_only(model_name: str) -> bool:
+    """True for OpenAI models that only accept the default temperature."""
+    return bool(FIXED_TEMPERATURE_MODELS.match(model_name.lower()))
 
 
 def create_chat_model(
@@ -65,7 +75,7 @@ def create_chat_model(
             base_url=base_url,
             model=model_name,
             max_completion_tokens=llm_config.get("max_tokens", 4096),
-            temperature=temperature,
+            temperature=None if uses_default_temperature_only(model_name) else temperature,
             **extra_options,
         )
 
