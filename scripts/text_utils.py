@@ -6,6 +6,7 @@ level adaptation.
 """
 
 import re
+import unicodedata
 from html import unescape
 from typing import Dict
 
@@ -60,8 +61,11 @@ def slugify_text(text: str) -> str:
 
     This preserves the repo's existing language-specific replacements so
     publisher filenames, future media keys, and other derived URLs stay aligned.
+    German umlauts and ß use their standard ASCII spellings (ä -> ae, ß -> ss),
+    so "Schöneberg" becomes "schoeneberg" instead of "sch-neberg". Existing
+    posts keep their old URLs because post refs are read from their filenames.
     """
-    normalized = text.lower()
+    normalized = unicodedata.normalize("NFC", text).lower()
 
     replacements = {
         "á": "a",
@@ -70,7 +74,10 @@ def slugify_text(text: str) -> str:
         "ó": "o",
         "ú": "u",
         "ñ": "n",
-        "ü": "u",
+        "ä": "ae",
+        "ö": "oe",
+        "ü": "ue",
+        "ß": "ss",
         "¿": "",
         "¡": "",
         "?": "",
