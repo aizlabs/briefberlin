@@ -139,10 +139,10 @@ audio:
 llm:
   provider: openai  # or 'anthropic'
   models:
-    generation: gpt-5.5       # For synthesis (Step 1)
-    adaptation: gpt-5.5       # For level adaptation (Step 2) - can use cheaper model
-    translation: gpt-5.5      # For reader-language translation (see `translations:`)
-    quality_check: gpt-4o-mini
+    generation: gpt-6.1-terra # For synthesis (Step 1)
+    adaptation: gpt-6.1-terra # For level adaptation (Step 2) - can use cheaper model
+    translation: gpt-6.1-terra # For reader-language translation (see `translations:`)
+    quality_check: gpt-6.1-terra
   # Temperatures apply only to models that accept them (see model_options).
   temperature: 0.3
   quality_temperature: 0.1
