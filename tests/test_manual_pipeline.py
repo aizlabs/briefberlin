@@ -1,12 +1,17 @@
+import re
 from argparse import Namespace
 from datetime import datetime
 from pathlib import Path
-from unittest.mock import MagicMock, patch
+from unittest.mock import ANY, MagicMock, patch
 
 from scripts.manual_pipeline import load_private_sources, run_manual_pipeline
 from scripts.models import QualityResult
 from scripts.topic_metadata_extractor import TopicMetadataResponse
 
+
+def with_story(article):
+    """The pipeline stamps a shared story id on every level; its value is time-based."""
+    return article.model_copy(update={"story": ANY})
 
 def _write_source(path: Path) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -128,7 +133,7 @@ def test_run_manual_pipeline_generates_and_publishes(
     mock_topic_metadata_extractor.extract.assert_called_once_with(generated_sources)
     mock_publisher_class.assert_called_once_with(base_config, mock_logger, dry_run=False)
     mock_publisher.save_article.assert_called_once_with(
-        sample_a2_text_article,
+        with_story(sample_a2_text_article),
         timestamp=publish_timestamp,
     )
     mock_audio_class.assert_called_once()
@@ -218,11 +223,11 @@ def test_run_manual_pipeline_reuses_publish_timestamp_for_audio(
 
     assert result == 0
     mock_audio.prepare_for_publish.assert_called_once_with(
-        sample_a2_text_article,
+        with_story(sample_a2_text_article),
         timestamp=publish_timestamp,
     )
     mock_publisher.save_article.assert_called_once_with(
-        sample_a2_text_article,
+        with_story(sample_a2_text_article),
         timestamp=publish_timestamp,
     )
 
@@ -313,11 +318,11 @@ def test_run_manual_pipeline_uses_publish_timestamp_override(
 
     assert result == 0
     mock_audio.prepare_for_publish.assert_called_once_with(
-        sample_a2_text_article,
+        with_story(sample_a2_text_article),
         timestamp=override_timestamp,
     )
     mock_publisher.save_article.assert_called_once_with(
-        sample_a2_text_article,
+        with_story(sample_a2_text_article),
         timestamp=override_timestamp,
     )
 
@@ -404,7 +409,8 @@ def test_run_manual_pipeline_dry_run_skips_audio_preparation(
     mock_publisher_class.assert_called_once_with(base_config, mock_logger, dry_run=True)
     mock_publisher.save_article.assert_called_once()
     saved_article = mock_publisher.save_article.call_args.args[0]
-    assert saved_article == sample_a2_text_article
+    assert saved_article == with_story(sample_a2_text_article)
+    assert re.fullmatch(r"\d{8}-\d{6}-[a-z0-9-]+", saved_article.story)
 
 
 def _pipeline_mocks(
