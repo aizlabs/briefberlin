@@ -356,6 +356,11 @@ class AdaptedArticle(BaseModel):
         pattern=r"^[a-z0-9]+(?:-[a-z0-9]+)*$",
         description="Author key matching an entry in the site's authors data",
     )
+    story: Optional[str] = Field(
+        default=None,
+        pattern=r"^[a-z0-9]+(?:-[a-z0-9]+)*$",
+        description="Id shared by every level generated from the same source, so the site can pair them",
+    )
     topic: Optional[Topic] = Field(default=None, description="Source topic")
     sources: List[SourceMetadata] = Field(default_factory=list, description="Source metadata")
     category: Optional[str] = Field(default=None, description="News category/section")

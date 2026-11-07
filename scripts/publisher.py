@@ -312,12 +312,15 @@ class Publisher:
             else ""
         )
         keywords_json = self._format_topics(article)
+        story_frontmatter = (
+            f'story: "{self._escape_yaml_string(article.story)}"\n' if article.story else ""
+        )
 
         frontmatter = f"""---
 title: "{escaped_title}"
 date: {date_str}
 {author_frontmatter}level: {article.level}
-category: "{self._escape_yaml_string(category)}"
+{story_frontmatter}category: "{self._escape_yaml_string(category)}"
 summary: "{self._escape_yaml_string(article.summary)}"
 {description_frontmatter}topics: {keywords_json}
 keywords: {keywords_json}

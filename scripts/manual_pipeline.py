@@ -20,6 +20,7 @@ from scripts.logger import setup_logger
 from scripts.models import AdaptedArticle, QualityResult, SourceArticle, Topic
 from scripts.publisher import Publisher
 from scripts.quality_gate import QualityGate
+from scripts.text_utils import slugify_text
 from scripts.topic_metadata_extractor import TopicMetadataExtractor, TopicMetadataResponse
 from scripts.usage_report import RunUsageReport, collect_run_usage
 
@@ -99,6 +100,16 @@ def load_private_sources(paths: Sequence[Path]) -> list[SourceArticle]:
         )
 
     return sources
+
+
+def make_story_id(topic_title: str, timestamp: datetime) -> str:
+    """Id shared by the A2 and B1 posts of one run, written as `story:` front matter.
+
+    The homepage groups posts on it to show one card per news item. Timestamp
+    first, so two runs on the same topic never collide.
+    """
+    slug = slugify_text(topic_title)[:40].strip("-") or "story"
+    return f"{timestamp.strftime('%Y%m%d-%H%M%S')}-{slug}"
 
 
 def build_manual_topic(metadata: TopicMetadataResponse, sources: Sequence[SourceArticle]) -> Topic:
@@ -186,6 +197,7 @@ def _execute_manual_pipeline(
 
     published: list[tuple[str, str, float]] = []
     failed = 0
+    story_id = make_story_id(topic.title, publish_timestamp_override or datetime.now())
 
     for level in levels:
         logger.info("-" * 60)
@@ -217,6 +229,7 @@ def _execute_manual_pipeline(
         requested_author = getattr(args, "author", None)
         if requested_author:
             final_article = final_article.model_copy(update={"author": requested_author})
+        final_article = final_article.model_copy(update={"story": story_id})
         publish_timestamp = publish_timestamp_override or datetime.now()
 
         if config.audio.enabled and not dry_run:

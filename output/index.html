@@ -60,11 +60,11 @@ organization_schema: true
 <p class="levelbar__note" data-level-note aria-live="polite"></p>
 
 {%- comment -%}
-  Each news item is published as an A2 and a B1 post. They share the topic
-  `description`, so grouping on it gives one story per item; posts without a
-  description stand alone. The level bar picks which version every story shows.
+  Each news item is published as an A2 and a B1 post. New posts share a `story`
+  id; older ones fall back to the shared topic `description`, and anything that
+  matches neither stands alone as its own card. The level bar picks which version every story shows.
 {%- endcomment -%}
-{%- assign story_groups = paginator.posts | group_by_exp: "post", "post.description | default: post.url" -%}
+{%- assign story_groups = paginator.posts | group_by_exp: "post", "post.story | default: post.description | default: post.url" -%}
 {%- assign lead_groups = story_groups | slice: 0, 1 -%}
 {%- assign rail_groups = story_groups | slice: 1, 2 -%}
 {%- assign secondary_groups = story_groups | slice: 3, 3 -%}
