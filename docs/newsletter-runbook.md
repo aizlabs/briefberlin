@@ -67,7 +67,7 @@ acceptance checks below pass.
 - **Tracking failed:** both delivered transactional messages contain `/tr/op/`
   pixels and `/tr/cl/` rewritten links despite consent management Yes and
   unknown-consent tracking No (rechecked in the UI). Do not claim no tracking.
-- **Campaign API failed:** the first two test-list attempts reached
+- **Campaign API refusal diagnosed and fixed:** the first two test-list attempts reached
   `POST /emailCampaigns -> HTTP 405`. No campaign send occurred. Read calls,
   quota and statistics checks preceding creation succeeded. Runs:
   https://github.com/aizlabs/briefberlin/actions/runs/42440935819 and
@@ -75,10 +75,15 @@ acceptance checks below pass.
   Creating a UI-only draft `BB-TEST-UI-20261108` (ID 5, no recipients/send) did
   not resolve the API failure. A later diagnostic run returned HTTP 400:
   https://github.com/aizlabs/briefberlin/actions/runs/42441772149 .
-  The payload now includes `type: classic`, as shown by Brevo’s in-account
-  API example; live validation of this correction is pending.
-  Investigate provider endpoint/account behavior;
-  do not widen the approved key scopes to work around it.
+  The approved encrypted diagnostic identified the actual refusal: this
+  account cannot use the campaign `tag` option. The builder now omits `tag`
+  and stores its cutoff in HTML metadata. A no-send API test created the
+  campaign (HTTP 201) and verified the metadata survives retrieval:
+  https://github.com/aizlabs/briefberlin/actions/runs/42442976102 .
+  That diagnostic job intentionally failed at its pre-send guard, so no mail
+  was sent. Legacy tag watermarks remain readable. Missing/invalid cutoff
+  metadata in the latest sent production campaign now refuses a replay.
+  Temporary diagnostic code and workflow routing have been removed.
 - **Welcome unsubscribe corrected:** native transactional `{{ unsubscribe }}`
   showed an English sender-unsubscribe page and left campaign status Subscribed.
   A separate German Brevo form `BriefBerlin Abmeldung` was created (editor ID
@@ -125,7 +130,8 @@ workflow; see workflow comments).
   it and stops. Plus the workflow-level `concurrency: newsletter-daily`.
 - An interrupted create (timeout after Brevo accepted it) is recovered by
   name-lookup + draft repair, never by creating a second campaign.
-- The content watermark (stored in the campaign `tag`) advances **only** from
+- The content watermark (stored in the HTML `briefberlin-cutoff` meta field)
+  advances **only** from
   campaigns observed with status `sent`. Scheduled/queued/failed campaigns
   never advance it, so missed days re-send their articles automatically.
 - Content boundary: the window ends at the earlier of 06:00 Europe/Berlin

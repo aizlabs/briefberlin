@@ -867,3 +867,13 @@ def test_sent_campaign_with_unreadable_cutoff_refuses_replay(html):
                 "recipients": {"lists": [3]}, "htmlContent": html}
     with pytest.raises(ValueError, match="review required"):
         find_last_sent_watermark([campaign], "BB")
+
+
+def test_campaign_listing_requests_watermark_html():
+    response = requests.Response()
+    response.status_code = 200
+    response._content = b'{"campaigns": []}'
+    session = Mock(spec=requests.Session)
+    session.request.return_value = response
+    assert BrevoClient(make_config(), session=session).list_campaigns() == []
+    assert session.request.call_args.kwargs["params"]["excludeHtmlContent"] == "false"
