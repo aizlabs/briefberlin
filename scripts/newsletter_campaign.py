@@ -415,14 +415,15 @@ def render_issue(
         f'<a href="{html_module.escape(base + "/", quote=True)}">briefberlin.de</a> · '
         f'<a href="{html_module.escape(base + "/contact/", quote=True)}">Kontakt</a> · '
         f'<a href="{html_module.escape(base + "/privacy/", quote=True)}">Datenschutz</a><br>'
-        "Du willst keine E-Mails mehr? Nutze den Abmelde-Link unten in dieser E-Mail.</p>"
+        'Du möchtest den Newsletter abbestellen? <a href="{{ unsubscribe }}">'
+        'Hier abmelden.</a></p>'
     )
     html_parts.append(footer_html)
     text_parts.extend(
         list(PUBLISHER_LINES)
         + [
             f"{base}/  ·  Kontakt: {base}/contact/  ·  Datenschutz: {base}/privacy/",
-            "Du willst keine E-Mails mehr? Nutze den Abmelde-Link unten in dieser E-Mail.",
+            "Newsletter abbestellen: {{ unsubscribe }}",
         ]
     )
 

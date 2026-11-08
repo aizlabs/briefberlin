@@ -359,6 +359,8 @@ def test_rendered_issue_escapes_content_and_filters_links():
     assert "evil.example.com" not in issue.text
     assert "https://briefberlin.de/articles/ok-a2/" in issue.html
     assert "evil" not in issue.text
+    assert 'href="{{ unsubscribe }}">Hier abmelden.</a>' in issue.html
+    assert "Newsletter abbestellen: {{ unsubscribe }}" in issue.text
 
 
 def test_subject_is_german_and_truncated():

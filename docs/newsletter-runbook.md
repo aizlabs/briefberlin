@@ -66,7 +66,9 @@ acceptance checks below pass.
   Jeden Morgen um 7 Uhr. Kostenlos und jederzeit abmeldbar.” Verified live.
 - **Tracking failed:** both delivered transactional messages contain `/tr/op/`
   pixels and `/tr/cl/` rewritten links despite consent management Yes and
-  unknown-consent tracking No (rechecked in the UI). Do not claim no tracking.
+  unknown-consent tracking No (rechecked in the UI). The delivered campaign
+  also includes `/mk/op/` pixels and `/mk/cl/` rewritten links. Do not claim
+  no tracking; the original no-tracking requirement is not met.
 - **Campaign API refusal diagnosed and fixed:** the first two test-list attempts reached
   `POST /emailCampaigns -> HTTP 405`. No campaign send occurred. Read calls,
   quota and statistics checks preceding creation succeeded. Runs:
@@ -83,7 +85,14 @@ acceptance checks below pass.
   That diagnostic job intentionally failed at its pre-send guard, so no mail
   was sent. Legacy tag watermarks remain readable. Missing/invalid cutoff
   metadata in the latest sent production campaign now refuses a replay.
-  Temporary diagnostic code and workflow routing have been removed.
+  Temporary diagnostic code and workflow routing have been removed. A real
+  test send then succeeded (campaign 7, list 4 only) and arrived in Gmail:
+  https://github.com/aizlabs/briefberlin/actions/runs/42443120036 .
+  SPF, DKIM and DMARC passed; List-Unsubscribe and List-Unsubscribe-Post were
+  present. Both MIME alternatives rendered the three-story issue. The first
+  send exposed an English provider footer and no unsubscribe URL in the text
+  part; the renderer now supplies an explicit German unsubscribe placeholder
+  link so the provider-generated text can include the actual URL.
 - **Welcome unsubscribe corrected:** native transactional `{{ unsubscribe }}`
   showed an English sender-unsubscribe page and left campaign status Subscribed.
   A separate German Brevo form `BriefBerlin Abmeldung` was created (editor ID
