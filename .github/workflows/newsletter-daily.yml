@@ -1,17 +1,14 @@
 name: Newsletter Daily Issue
 
 # Daily Brevo newsletter: build the issue from feed.xml and schedule the
-# campaign for 07:00 Europe/Berlin. See docs/newsletter-runbook.md before
-# enabling anything.
-#
-# DISABLED BY DEFAULT - the schedule trigger below stays commented out until
-# the newsletter PR is reviewed and the live acceptance checks pass.
+# campaign for 07:00 Europe/Berlin. Launch evidence and remaining provider
+# verification limits are recorded in docs/newsletter-runbook.md.
 #
 # Enabling for production requires ALL of:
 #   1. Repository secret BREVO_API_KEY (Brevo v3 key, IP allow-listing OFF).
 #   2. Repository variable NEWSLETTER_ENABLED = true (production gate; the
 #      script refuses every production send without it).
-#   3. Uncommenting the `schedule:` block below.
+#   3. The active `schedule:` block below.
 #
 # Cron reasoning (UTC; GitHub cron can fire up to ~30 min late):
 #   03:30 UTC = 05:30 CEST (summer) / 04:30 CET (winter)
@@ -38,9 +35,9 @@ on:
         description: "Dry run (build + preview only, no campaign is created)"
         type: boolean
         default: true
-  # schedule:
-  #   - cron: "30 3 * * *"
-  #   - cron: "15 4 * * *"
+  schedule:
+    - cron: "30 3 * * *"
+    - cron: "15 4 * * *"
 
 # Never two overlapping newsletter runs: campaign-name idempotency plus this
 # concurrency group makes duplicate sends structurally impossible.

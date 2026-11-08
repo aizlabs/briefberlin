@@ -4,9 +4,11 @@ Daily German newsletter: signup via a Brevo double-opt-in form embedded on
 `/newsletter/`, one issue per day at 07:00 Europe/Berlin, built from
 `feed.xml` by `scripts/newsletter_campaign.py` in GitHub Actions.
 
-**Status: implementation complete, NOT launched.** The production schedule is
-disabled and the production gate is off until this PR is reviewed and the live
-acceptance checks below pass.
+**Status: daily sending enabled on November 8, 2026.** Production uses the
+repository variable `NEWSLETTER_ENABLED=true` and the two active daily cron
+slots. The first eligible issue is November 9 at 07:00 Europe/Berlin, provided
+there are new stories and the quota/state guards pass. See the launch evidence
+and the two incomplete provider checks below; these are not reported as passed.
 
 ## Resources (already set up in Brevo / Cloudflare)
 
@@ -34,19 +36,64 @@ acceptance checks below pass.
      `https://briefberlin.de/newsletter/abgemeldet/` after the survey.
    The default footer flow has an intermediate unsubscribe page/survey;
    do not promise a single-click footer unsubscribe until delivered-mail
-   testing confirms the exact experience. Inbox RFC 8058 testing is pending.
+   testing confirms the exact experience. Inbox and RFC 8058 acceptance results are recorded below.
 3. **Secrets / variables** (GitHub repo settings):
    - Secret `BREVO_API_KEY` - Brevo v3 API key; IP allow-listing must be OFF
      (GitHub runner IPs change every run).
-   - Keep `NEWSLETTER_ENABLED` absent or `false` during acceptance testing.
-     Test-list dispatches do not require the production gate.
-4. **Deploy the website and run the live acceptance checks** below. Keep the
-   production gate off and the schedule commented out until all checks pass.
-5. **Enable production after acceptance**: set `NEWSLETTER_ENABLED=true` and
-   uncomment the `schedule:` block in `.github/workflows/newsletter-daily.yml`
-   (03:30 and 04:15 UTC; see the workflow comments for the DST reasoning).
+   - `NEWSLETTER_ENABLED=true` enables production; set it to `false` to stop
+     future builder runs. Test-list dispatches do not require the gate.
+4. **Deploy and verify** using the live acceptance evidence below.
+5. **Production schedule**: 03:30 and 04:15 UTC prepare/retry the same 07:00
+   Berlin issue. Campaign-name idempotency prevents the retry from duplicating
+   an existing issue. GitHub may delay triggers; the builder skips late runs.
 
-## Acceptance evidence — November 8, 2026
+## Launch evidence — November 8, 2026
+
+- The owner explicitly authorized completing checks and enabling daily sending.
+  The existing Brevo tracking markup is an accepted product limitation; keep
+  consent management enabled and unknown-consent tracking disabled.
+- Current test sends both succeeded against the approved one-contact test list:
+  https://github.com/aizlabs/briefberlin/actions/runs/42509344711 (campaign 9) and
+  https://github.com/aizlabs/briefberlin/actions/runs/42509726493 (campaign 10).
+  Campaign 9 arrived in Gmail with SPF, DKIM (`briefberlin.de`), DMARC pass,
+  both List-Unsubscribe headers, German footer and usable HTML/text alternatives.
+  These successful runs supersede the old tag-related failures below.
+- API snapshots: before campaign 9, 292 email credits and 8 transactional
+  requests; after that one-recipient campaign plus a new DOI/welcome pair,
+  289 credits and 10 transactional requests. This verifies all three sends
+  consume credits and form-triggered DOI/welcome traffic reaches the abuse
+  statistic. Campaign 10 then sent successfully. Reserve: 60; audience: 1.
+- Gmail's Unsubscribe control reported success. The delivered RFC 8058 HTTPS
+  endpoint was also POSTed with `List-Unsubscribe=One-Click` and returned 200;
+  Brevo recorded campaign 9's unsubscribe and Email campaigns Blocklisted.
+  These two actions were close together, so their individual propagation
+  latency is not established. A fresh form signup delivered a new DOI; after
+  confirmation it redirected to `/newsletter/bestaetigt/`, delivered welcome,
+  and restored Email campaigns Subscribed. The test contact is left subscribed.
+  Inbox one-click has no website redirect; only the footer flow redirects.
+- Both forwarding checks reached Cloudflare Email Routing and were recorded
+  Forwarded for `newsletter@` and `dmarc@`, to the verified Gmail destination.
+  Gmail retained the original Sent messages without a duplicate inbox copy;
+  forwarding evidence is Cloudflare's delivery outcome, not a duplicate message.
+- Contact campaign statistics showed zero named opens/clicks despite earlier
+  message opens and confirmation/unsubscribe use. Pixel/rewrite markup remains
+  present. This observation does not prove that every event is anonymous.
+- **Incomplete CAPTCHA-specific check:** missing-token and invalid-token POSTs
+  both returned HTTP 403 from the provider's browser-signature protection,
+  before form validation. They caused no new DOI, but do not demonstrate the
+  specific Turnstile validation error. The managed widget remains configured;
+  the normal live signup path succeeds. Do not weaken protection to test it.
+- **Incomplete consent export check:** the filtered Marketing event export
+  completed in Brevo's notification center. The available sample contained
+  campaign delivery/unsubscribe events, not the full form-submission journey.
+  Transactional logs visibly contain `optin` and `final_confirmation` timestamps.
+  CSV download automation failed, so neither the downloaded file nor a complete
+  end-to-end DOI audit export is verified. Contact-row export alone is not proof.
+  For follow-up, export form events plus transactional logs as described in:
+  https://help.brevo.com/hc/en-us/articles/208733449
+  Never put these private exports in the public repository or Actions artifacts.
+
+## Earlier acceptance history — November 8, 2026
 
 - PR #21 merged at `974f44b6e79d431735ae3000fb5f4d9cb676e67c`; website
   deployment passed: https://github.com/aizlabs/briefberlin/actions/runs/42440310719
@@ -64,7 +111,7 @@ acceptance checks below pass.
   do not establish campaign delivery behavior.
 - Signup description shortened in Brevo to: “Neue Nachrichten aus Berlin.
   Jeden Morgen um 7 Uhr. Kostenlos und jederzeit abmeldbar.” Verified live.
-- **Tracking failed:** both delivered transactional messages contain `/tr/op/`
+- **Original no-markup requirement not met (subsequently accepted):** both delivered transactional messages contain `/tr/op/`
   pixels and `/tr/cl/` rewritten links despite consent management Yes and
   unknown-consent tracking No (rechecked in the UI). The delivered campaign
   also includes `/mk/op/` pixels and `/mk/cl/` rewritten links. Do not claim
@@ -116,8 +163,8 @@ acceptance checks below pass.
   test address, a fresh DOI arrived. Campaign status stayed Blocklisted before
   that click and changed to Subscribed after it; a new welcome then arrived.
 - Home usage showed 298/300 credits after the first DOI and welcome sends.
-  Exact API balance deltas, CAPTCHA rejection, forwarding, consent export,
-  abuse-statistics coverage and campaign headers/tracking remain unverified.
+  Later quota, statistics, forwarding and campaign results are in the launch
+  evidence above; CAPTCHA-specific rejection and full consent export remain incomplete.
 
 ## Operating the builder
 
@@ -181,44 +228,51 @@ workflow; see workflow comments).
 3. Investigate via Brevo's form logs; if a production send was already
    scheduled for 07:00, cancel/delete the `BB-<date>` campaign in Brevo.
 
-## Live acceptance checks (partial results recorded below)
+## Live acceptance checks (see evidence and limitations above)
 
-- [ ] `newsletter@briefberlin.de` and `dmarc@briefberlin.de` deliver to the
-      configured Gmail inbox (send mail from an external account).
+- [x] Both inbound aliases accepted and forwarded by Cloudflare to the verified
+      Gmail destination; self-sent Gmail duplicates are not separately visible.
 - [ ] Signup form rejects a missing/invalid Turnstile token (submit with the
       widget blocked; must NOT create a pending signup).
 - [x] Signup does NOT enter list 3 before the DOI click (check list + form
       logs after form submit).
 - [x] DOI email arrives in German from BriefBerlin, confirmation link works.
 - [x] German welcome email (template 2) arrives after confirmation.
-- [ ] Unsubscribe works from the emailed link and from Gmail's one-click
-      button; `/newsletter/abgemeldet/` shows afterwards; resubscription
-      starts a fresh DOI.
-- [ ] Test campaign (list 4): delivered mail shows DKIM pass with
+- [x] Footer unsubscribe, Gmail inbox action and RFC 8058 endpoint exercised;
+      provider suppression verified. Footer survey redirects to `/newsletter/abgemeldet/`;
+      inbox action has no redirect. Fresh DOI resubscription verified.
+- [x] Test campaign (list 4): delivered mail shows DKIM pass with
       `d=briefberlin.de`, DMARC pass, `List-Unsubscribe` AND
       `List-Unsubscribe-Post` headers, visible unsubscribe link, publisher
       footer with `/contact/` and `/privacy/` links.
-- [ ] Verify the delivered campaign's tracking behavior (click/open). See
-      limitations below - verify the account-level consent settings in mail.
-- [ ] Verify the delivered campaign has a usable plain-text part (see
-      limitations below).
-- [ ] Consent-event export works (Brevo contact export includes DOI events).
-- [ ] Quota balance: compare `GET /account` free email credits before and
+- [x] Inspect delivered campaign tracking markup and contact statistics;
+      retain restrictive consent settings. Accepted limitation below.
+- [x] Delivered campaign has a usable plain-text part and German unsubscribe URL.
+- [ ] Full consent-event export: combine form-event and transactional logs;
+      contact export alone does not contain the full DOI journey.
+- [x] Quota balance: compare `GET /account` free email credits before and
       after real DOI, welcome and test sends; verify unknown balances prevent
       scheduling. Confirm remaining credits plus reserve cover the audience.
-- [ ] Abuse statistics: confirm whether form-triggered DOI mails are counted
+- [x] Abuse statistics: confirm whether form-triggered DOI mails are counted
       in `/smtp/statistics/aggregatedReport` (fire 2-3 test signups, compare).
 
 ## Material limitations and unresolved decisions
 
 1. **Plain text part**: Brevo's campaign API has NO `textContent` field
    (verified against the official OpenAPI spec). We render a plain-text
-   version for previews/artifacts, but the delivered mail's text part is
-   whatever Brevo generates from the HTML. Verify in acceptance.
+   version for previews/artifacts; Brevo generates the delivered text part
+   from HTML. A real delivered issue was verified readable, including its
+   German unsubscribe URL.
 2. **Open/click tracking**: account-level per-contact tracking consent is
    enabled, with "Track contacts whose consent is unknown" set to No.
    Both settings were saved and verified after reload. Live DOI/welcome tests
-   still showed pixels and rewritten links; this is an unresolved launch blocker.
+   and campaign tests still showed pixels and rewritten links. The owner chose
+   to retain Brevo with this disclosed behavior and consider a custom flow later.
+   Pixel presence alone does not establish identified open tracking. Brevo's
+   July 21, 2026 transactional API clarification describes unknown/no-consent
+   opens as aggregate-only when unknown-consent tracking is disabled:
+   https://developers.brevo.com/changelog/2026/7/21
+   This statement does not prove identical behavior for every campaign click.
    The signup form does
    not collect tracking consent. Verify DOI, welcome and campaign messages
    in real delivered mail before claiming there are no pixels or rewritten
@@ -244,7 +298,8 @@ workflow; see workflow comments).
    300/day. The builder now reads the free email balance from `GET /account`
    (`plan[].credits`, `creditsType=sendLimit`, `type=free`) and fails closed
    if the response is unknown or unsupported. Before enabling production,
-   verify that this balance decreases after real DOI, welcome and test sends.
+   the balance decrease was verified after real DOI, welcome and test sends
+   (292 to 289 for three deliveries).
    The 60-email reserve is additional headroom, not an atomic provider quota
    reservation; signups after scheduling can still consume it.
    Reference: https://developers.brevo.com/reference/get-account
@@ -259,7 +314,7 @@ workflow; see workflow comments).
   `/newsletter/abgemeldet/` (German, simple language; result pages are
   `sitemap: false`).
 - Closure gate: `newsletter.signup_open` in `output/_config.yml`.
-- Privacy policy updated for Brevo + Turnstile processing (draft, pending
-  review).
+- Privacy policy discloses Brevo + Turnstile processing and observed tracking
+  markup in DOI, welcome and campaign messages.
 - Tests: `tests/test_newsletter_pages.py` (site),
   `tests/test_newsletter_campaign.py` (builder).

@@ -702,6 +702,7 @@ def check_abuse(client: BrevoClient, config: NewsletterConfig) -> Tuple[Optional
     except BrevoApiError as error:
         logger.warning("Abuse-statistics endpoint failed: %s", error)
         return None, False
+    logger.info("Transactional requests in provider's 24h window: %d", count)
     return count, count > config.abuse_threshold_24h
 
 
@@ -821,7 +822,12 @@ def run_issue_builder(
 
         list_stats = client.get_list_stats(list_id)
         subscribers = int(list_stats.get("totalSubscribers") or 0)
-        quota_error = quota_check(subscribers, config, client.remaining_email_credits())
+        remaining_credits = client.remaining_email_credits()
+        logger.info(
+            "Quota snapshot: remaining_email_credits=%s subscribers=%d reserve=%d",
+            remaining_credits, subscribers, config.daily_reserve,
+        )
+        quota_error = quota_check(subscribers, config, remaining_credits)
         if quota_error:
             logger.critical("Quota guard refused the send: %s", quota_error)
             return EXIT_QUOTA, {
