@@ -92,7 +92,16 @@ acceptance checks below pass.
   present. Both MIME alternatives rendered the three-story issue. The first
   send exposed an English provider footer and no unsubscribe URL in the text
   part; the renderer now supplies an explicit German unsubscribe placeholder
-  link so the provider-generated text can include the actual URL.
+  link so the provider-generated text can include the actual URL. The
+  corrected send arrived with that German link in both HTML and text/plain,
+  and without the English provider unsubscribe sentence:
+  https://github.com/aizlabs/briefberlin/actions/runs/42443312933 .
+  Its footer link opened the German native unsubscribe page; submitting it
+  blocklisted campaign delivery, and the German survey redirected to
+  `/newsletter/abgemeldet/`. Gmail displayed its own Unsubscribe control, but
+  that separate inbox action has not been exercised. A fresh DOI after this
+  campaign unsubscribe restored Subscribed status only after confirmation;
+  the test address is left subscribed at the end of acceptance testing.
 - **Welcome unsubscribe corrected:** native transactional `{{ unsubscribe }}`
   showed an English sender-unsubscribe page and left campaign status Subscribed.
   A separate German Brevo form `BriefBerlin Abmeldung` was created (editor ID
