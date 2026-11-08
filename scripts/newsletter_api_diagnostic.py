@@ -17,6 +17,13 @@ class DiagnosticSession(requests.Session):
             raise ValueError('Diagnostic stopped before sendNow; draft only.')
         response = super().request(method, url, **kwargs)
         print(f'{method} {path}: HTTP {response.status_code}')
+        if method == 'POST' and path == '/v3/emailCampaigns' and response.status_code == 201:
+            campaign_id = response.json()['id']
+            report = super().request('GET', url + '/' + str(campaign_id),
+                                     headers=kwargs['headers'], timeout=30)
+            html = report.json().get('htmlContent', '')
+            marker = 'name="briefberlin-cutoff"'
+            print('watermark_round_trip=' + str(marker in html))
         if response.status_code >= 400:
             Path('diagnostic').mkdir(exist_ok=True)
             Path('diagnostic/public.pem').write_text(PUBLIC_KEY)

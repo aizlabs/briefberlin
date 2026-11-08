@@ -428,6 +428,7 @@ def render_issue(
 
     html = (
         '<!DOCTYPE html><html lang="de"><head><meta charset="utf-8">'
+        f'<meta name="briefberlin-cutoff" content="{window_end.isoformat()}">'
         '<meta name="viewport" content="width=device-width, initial-scale=1">'
         "<title>BriefBerlin</title></head>"
         '<body style="margin:0;padding:0;background:#f4f4f4;">'
@@ -509,7 +510,8 @@ class BrevoClient:
         offset = 0
         while True:
             page = self._request(
-                "GET", "/emailCampaigns", params={"limit": limit, "offset": offset}
+                "GET", "/emailCampaigns",
+                params={"limit": limit, "offset": offset, "excludeHtmlContent": "false"},
             )
             batch = page.get("campaigns", []) if isinstance(page, dict) else []
             campaigns.extend(batch)
@@ -615,14 +617,23 @@ def find_last_sent_watermark(
             newest = campaign
     if newest is None:
         return None
-    tag = newest.get("tag") or ""
+    markers = BeautifulSoup(newest.get("htmlContent") or "", "html.parser").find_all(
+        "meta", attrs={"name": "briefberlin-cutoff"}
+    )
+    if len(markers) > 1:
+        raise ValueError("Latest sent newsletter has ambiguous cutoff metadata; review required")
+    # Read old tag-based history for compatibility, but never create tags:
+    # this account rejects the tag option on campaign creation.
+    value = markers[0].get("content") if markers else newest.get("tag")
     try:
-        return datetime.fromisoformat(tag)
-    except ValueError:
-        logger.warning(
-            "Sent campaign %s has unparsable watermark tag %r", newest.get("name"), tag
-        )
-        return None
+        watermark = datetime.fromisoformat(str(value or ""))
+        if watermark.tzinfo is None:
+            raise ValueError("Cutoff timezone is missing")
+        return watermark
+    except ValueError as error:
+        raise ValueError(
+            "Latest sent newsletter has missing or invalid cutoff metadata; review required"
+        ) from error
 
 
 def detect_stale_campaigns(
@@ -708,7 +719,6 @@ def build_campaign_payload(
         "subject": issue.subject,
         "htmlContent": issue.html,
         "recipients": {"listIds": [list_id]},
-        "tag": cutoff.isoformat(),
         "replyTo": config.sender_email,
     }
     if scheduled_at is not None:
