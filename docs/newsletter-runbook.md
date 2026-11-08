@@ -24,24 +24,27 @@ acceptance checks below pass.
 
 ## Launch checklist
 
-1. **Embed the form**: replace the placeholder in
-   `output/_includes/brevo-signup-form.html` with the real HTML embed from the
-   Brevo form builder (Share -> Embed). Nothing else changes.
-2. **Configure Brevo redirects** (form editor, "Confirmation"/success URLs) to:
+1. **Form embedded**: the real Brevo iframe is installed in
+   `output/_includes/brevo-signup-form.html` with an accessible title and a
+   responsive width. Only the public URL is included.
+2. **Brevo redirects saved and verified after reload**:
    - Thank-you: `https://briefberlin.de/newsletter/danke/`
    - After confirmation: `https://briefberlin.de/newsletter/bestaetigt/`
-   - Unsubscribe page redirect: `https://briefberlin.de/newsletter/abgemeldet/`
-   (Brevo's own unsubscribe page stays in between; the redirect lands on our
-   page.) Verify the exact redirect fields available in the form editor.
+   - Default unsubscribe page: German copy/survey and redirect to
+     `https://briefberlin.de/newsletter/abgemeldet/` after the survey.
+   The default footer flow has an intermediate unsubscribe page/survey;
+   do not promise a single-click footer unsubscribe until delivered-mail
+   testing confirms the exact experience. Inbox RFC 8058 testing is pending.
 3. **Secrets / variables** (GitHub repo settings):
    - Secret `BREVO_API_KEY` - Brevo v3 API key; IP allow-listing must be OFF
      (GitHub runner IPs change every run).
-   - Variable `NEWSLETTER_ENABLED=true` - production gate for the builder.
-4. **Enable the schedule**: uncomment the `schedule:` block in
-   `.github/workflows/newsletter-daily.yml` (03:30 and 04:15 UTC; see the
-   workflow comments for the DST reasoning).
-5. **Run the live acceptance checks** below; keep the workflow disabled until
-   they pass.
+   - Keep `NEWSLETTER_ENABLED` absent or `false` during acceptance testing.
+     Test-list dispatches do not require the production gate.
+4. **Deploy the website and run the live acceptance checks** below. Keep the
+   production gate off and the schedule commented out until all checks pass.
+5. **Enable production after acceptance**: set `NEWSLETTER_ENABLED=true` and
+   uncomment the `schedule:` block in `.github/workflows/newsletter-daily.yml`
+   (03:30 and 04:15 UTC; see the workflow comments for the DST reasoning).
 
 ## Operating the builder
 
@@ -122,7 +125,7 @@ workflow; see workflow comments).
       `List-Unsubscribe-Post` headers, visible unsubscribe link, publisher
       footer with `/contact/` and `/privacy/` links.
 - [ ] Verify the delivered campaign's tracking behavior (click/open). See
-      limitations below - Brevo campaigns cannot disable tracking via API.
+      limitations below - verify the account-level consent settings in mail.
 - [ ] Verify the delivered campaign has a usable plain-text part (see
       limitations below).
 - [ ] Consent-event export works (Brevo contact export includes DOI events).
@@ -138,12 +141,14 @@ workflow; see workflow comments).
    (verified against the official OpenAPI spec). We render a plain-text
    version for previews/artifacts, but the delivered mail's text part is
    whatever Brevo generates from the HTML. Verify in acceptance.
-2. **Open/click tracking**: Brevo email campaigns track opens/clicks and the
-   campaign API exposes no switch to turn that off (only UTM customization
-   and account-level IP anonymization, which is not "off"). We send no UTM
-   parameters and add no own tracking, but provider tracking is expected.
-   This is a deviation from the original design goal "no tracking" and needs
-   an explicit go/no-go before launch.
+2. **Open/click tracking**: account-level per-contact tracking consent is
+   enabled, with "Track contacts whose consent is unknown" set to No.
+   Both settings were saved and verified after reload. The signup form does
+   not collect tracking consent. Verify DOI, welcome and campaign messages
+   in real delivered mail before claiming there are no pixels or rewritten
+   links. Existing contacts with explicit tracking consent are not covered
+   by the unknown-consent default. See Brevo's per-contact consent docs:
+   https://help.brevo.com/hc/en-us/articles/37113920427922
 3. **Partial delivery**: Brevo's campaign status has no per-recipient
    delivery view via API. The watermark advances on `sent`; if a send was
    partially delivered the status still reads `sent`. Mitigation is manual:

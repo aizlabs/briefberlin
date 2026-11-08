@@ -13,7 +13,7 @@ In der E-Mail steht: eine Überschrift, ein paar Sätze und ein Link zum ganzen 
 - **Kostenlos.** Der Newsletter kostet nichts.
 - **Einfach.** Die Nachrichten sind in einfachem Deutsch (Niveau A2 und B1).
 - **Nur bei Neuigkeiten.** An Tagen ohne neue Nachrichten schicken wir keine E-Mail.
-- **Jederzeit abmeldbar.** In jeder E-Mail ist ein Link zum Abmelden. Ein Klick reicht.
+- **Jederzeit abmeldbar.** In jeder E-Mail ist ein Link zum Abmelden.
 
 ## Anmeldung
 

@@ -1,7 +1,9 @@
 import re
 from pathlib import Path
+from urllib.parse import urlparse
 
 import yaml
+from bs4 import BeautifulSoup
 
 SITE_ROOT = Path("output")
 
@@ -41,18 +43,19 @@ def test_signup_page_embeds_brevo_form_with_closure_gate():
     assert "Datenschutzerkl" in page
 
 
-def test_brevo_form_include_is_placeholder_or_real_embed_without_secrets():
+def test_brevo_form_include_has_live_accessible_embed_without_secrets():
     include = (SITE_ROOT / "_includes" / "brevo-signup-form.html").read_text(
         encoding="utf-8"
     )
 
-    is_placeholder = "REPLACE THIS FILE" in include
-    is_real_embed = "sibforms.com" in include
-    # Placeholder until launch, real Brevo embed afterwards - but never both
-    # missing, and never a hand-invented endpoint.
-    assert is_placeholder or is_real_embed
-    if is_placeholder:
-        assert "6aefa90739d234847dcd4e0a" in include
+    iframe = BeautifulSoup(include, "html.parser").find("iframe")
+    assert iframe is not None
+    url = urlparse(iframe["src"])
+    assert url.scheme == "https"
+    assert url.hostname == "374fe9d0.sibforms.com"
+    assert url.path.startswith("/v2/serve/")
+    assert iframe.get("title") == "BriefBerlin Newsletter bestellen"
+    assert int(iframe["height"]) >= 650
     assert_not_secret(include)
 
 
@@ -94,10 +97,11 @@ def test_privacy_policy_discloses_brevo_and_turnstile_processing():
     assert "Turnstile" in privacy
     # Timestamps and IPs are processed too: the policy must not claim the
     # email address is the only data point.
-    assert "IP address" in privacy
-    assert "consent records" in privacy or "consent events" in privacy
-    # Not presented as legally approved.
-    assert "pending review" in privacy
+    assert "IP-Adresse" in privacy
+    assert "Einwilligungsnachweise" in privacy
+    # State tracking configuration without claiming no technical logs exist.
+    assert "technische Verbindungsdaten" in privacy
+    assert "Messung" in privacy
 
 
 def assert_not_secret(content: str) -> None:
