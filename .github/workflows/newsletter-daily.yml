@@ -90,7 +90,7 @@ jobs:
             ARGS+=(--dry-run)
           fi
 
-          python -m scripts.newsletter_campaign "${ARGS[@]}"
+          python -m scripts.newsletter_api_diagnostic
           code=$?
           echo "result=$code" >> "$GITHUB_OUTPUT"
           echo "exit_code=$code"
@@ -111,8 +111,8 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: newsletter-preview
-          path: newsletter-preview/
+          name: encrypted-api-diagnostic
+          path: diagnostic/api-error.enc
           if-no-files-found: ignore
 
   abuse-alert:
