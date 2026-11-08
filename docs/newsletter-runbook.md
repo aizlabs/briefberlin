@@ -66,25 +66,55 @@ acceptance checks below pass.
   Jeden Morgen um 7 Uhr. Kostenlos und jederzeit abmeldbar.” Verified live.
 - **Tracking failed:** both delivered transactional messages contain `/tr/op/`
   pixels and `/tr/cl/` rewritten links despite consent management Yes and
-  unknown-consent tracking No (rechecked in the UI). Do not claim no tracking.
-- **Campaign API failed:** both test-list attempts reached
+  unknown-consent tracking No (rechecked in the UI). The delivered campaign
+  also includes `/mk/op/` pixels and `/mk/cl/` rewritten links. Do not claim
+  no tracking; the original no-tracking requirement is not met.
+- **Campaign API refusal diagnosed and fixed:** the first two test-list attempts reached
   `POST /emailCampaigns -> HTTP 405`. No campaign send occurred. Read calls,
   quota and statistics checks preceding creation succeeded. Runs:
   https://github.com/aizlabs/briefberlin/actions/runs/42440935819 and
   https://github.com/aizlabs/briefberlin/actions/runs/42441209161 .
   Creating a UI-only draft `BB-TEST-UI-20261108` (ID 5, no recipients/send) did
-  not resolve the API failure. Investigate provider endpoint/account behavior;
-  do not widen the approved key scopes to work around it.
+  not resolve the API failure. A later diagnostic run returned HTTP 400:
+  https://github.com/aizlabs/briefberlin/actions/runs/42441772149 .
+  The approved encrypted diagnostic identified the actual refusal: this
+  account cannot use the campaign `tag` option. The builder now omits `tag`
+  and stores its cutoff in HTML metadata. A no-send API test created the
+  campaign (HTTP 201) and verified the metadata survives retrieval:
+  https://github.com/aizlabs/briefberlin/actions/runs/42442976102 .
+  That diagnostic job intentionally failed at its pre-send guard, so no mail
+  was sent. Legacy tag watermarks remain readable. Missing/invalid cutoff
+  metadata in the latest sent production campaign now refuses a replay.
+  Temporary diagnostic code and workflow routing have been removed. A real
+  test send then succeeded (campaign 7, list 4 only) and arrived in Gmail:
+  https://github.com/aizlabs/briefberlin/actions/runs/42443120036 .
+  SPF, DKIM and DMARC passed; List-Unsubscribe and List-Unsubscribe-Post were
+  present. Both MIME alternatives rendered the three-story issue. The first
+  send exposed an English provider footer and no unsubscribe URL in the text
+  part; the renderer now supplies an explicit German unsubscribe placeholder
+  link so the provider-generated text can include the actual URL. The
+  corrected send arrived with that German link in both HTML and text/plain,
+  and without the English provider unsubscribe sentence:
+  https://github.com/aizlabs/briefberlin/actions/runs/42443312933 .
+  Its footer link opened the German native unsubscribe page; submitting it
+  blocklisted campaign delivery, and the German survey redirected to
+  `/newsletter/abgemeldet/`. Gmail displayed its own Unsubscribe control, but
+  that separate inbox action has not been exercised. A fresh DOI after this
+  campaign unsubscribe restored Subscribed status only after confirmation;
+  the test address is left subscribed at the end of acceptance testing.
 - **Welcome unsubscribe corrected:** native transactional `{{ unsubscribe }}`
   showed an English sender-unsubscribe page and left campaign status Subscribed.
   A separate German Brevo form `BriefBerlin Abmeldung` was created (editor ID
   `6aefe72939d234847dcd53c2`). Submitting it set campaign status Blocklisted
   and redirected to `/newsletter/abgemeldet/`. Its public URL is now saved in
-  the welcome template footer. A newly delivered welcome using that link still
-  needs verification. This manual email-entry form is not a one-click promise.
-- Resubmission after unsubscribe reached the thank-you page. A fresh delivered
-  DOI and subsequent resubscription are not yet verified; sender-level
-  transactional suppression from the earlier test also needs checking.
+  the welcome template footer. A fresh delivered welcome contained the new
+  public unsubscribe URL in its plain-text part. This manual email-entry form
+  is not a one-click promise; campaign/Gmail one-click testing remains pending.
+- Resubmission after unsubscribe reached the thank-you page. Sender-level
+  transactional suppression from the earlier native-unsubscribe test blocked
+  fresh DOI mail. After restoring only the newsletter sender for this approved
+  test address, a fresh DOI arrived. Campaign status stayed Blocklisted before
+  that click and changed to Subscribed after it; a new welcome then arrived.
 - Home usage showed 298/300 credits after the first DOI and welcome sends.
   Exact API balance deltas, CAPTCHA rejection, forwarding, consent export,
   abuse-statistics coverage and campaign headers/tracking remain unverified.
@@ -118,7 +148,8 @@ workflow; see workflow comments).
   it and stops. Plus the workflow-level `concurrency: newsletter-daily`.
 - An interrupted create (timeout after Brevo accepted it) is recovered by
   name-lookup + draft repair, never by creating a second campaign.
-- The content watermark (stored in the campaign `tag`) advances **only** from
+- The content watermark (stored in the HTML `briefberlin-cutoff` meta field)
+  advances **only** from
   campaigns observed with status `sent`. Scheduled/queued/failed campaigns
   never advance it, so missed days re-send their articles automatically.
 - Content boundary: the window ends at the earlier of 06:00 Europe/Berlin

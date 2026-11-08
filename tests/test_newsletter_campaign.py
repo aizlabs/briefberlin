@@ -122,7 +122,7 @@ class FakeBrevo:
                 "id": self.next_id,
                 "name": payload["name"],
                 "status": "draft",
-                "tag": payload.get("tag", ""),
+                "htmlContent": payload.get("htmlContent", ""),
             }
             self.next_id += 1
             self.campaigns.append(campaign)
@@ -131,7 +131,7 @@ class FakeBrevo:
             "id": self.next_id,
             "name": payload["name"],
             "status": "queued" if payload.get("scheduledAt") else "draft",
-            "tag": payload.get("tag", ""),
+            "htmlContent": payload.get("htmlContent", ""),
             "scheduledAt": payload.get("scheduledAt"),
         }
         self.next_id += 1
@@ -359,6 +359,8 @@ def test_rendered_issue_escapes_content_and_filters_links():
     assert "evil.example.com" not in issue.text
     assert "https://briefberlin.de/articles/ok-a2/" in issue.html
     assert "evil" not in issue.text
+    assert 'href="{{ unsubscribe }}">Hier abmelden.</a>' in issue.html
+    assert "Newsletter abbestellen: {{ unsubscribe }}" in issue.text
 
 
 def test_subject_is_german_and_truncated():
@@ -508,6 +510,7 @@ def test_run_uses_sent_watermark_as_window_start():
     assert code == EXIT_OK
     assert details["reason"] == "created"
     payload = next(call[2] for call in client.calls if call[0] == "POST")
+    assert payload["type"] == "classic"
     html = payload["htmlContent"]
     assert "Story old-a2" not in html
     assert "Story new-a2" in html
@@ -645,7 +648,8 @@ def test_production_payload_uses_production_list_and_schedule():
     assert code == EXIT_OK
     assert payload["recipients"]["listIds"] == [3]
     assert payload["scheduledAt"] == "2026-11-08T07:00:00+01:00"
-    assert payload["tag"] == "2026-11-08T05:30:00+01:00"
+    assert 'name="briefberlin-cutoff" content="2026-11-08T05:30:00+01:00"' in payload["htmlContent"]
+    assert "tag" not in payload
     assert payload["sender"] == {"name": "BriefBerlin", "email": "newsletter@briefberlin.de"}
 
 
@@ -723,7 +727,8 @@ def test_pre_cutoff_preparation_recovers_later_publications_next_day(month, offs
                                     atom_feed([before, after]), now, client)
     assert code == EXIT_OK
     payload = next(c[2] for c in client.calls if c[0] == 'POST')
-    assert payload['tag'] == now.isoformat()
+    assert f'content="{now.isoformat()}"' in payload['htmlContent']
+    assert 'tag' not in payload
     assert 'Story after' not in payload['htmlContent']
     client.campaigns[0].update(status='sent', recipients={'lists': [3]})
     client.calls.clear()
@@ -802,6 +807,8 @@ def test_workflow_module_command_runs_without_editable_install():
         ("POST Method is not allowed on this path", "provider rejected this endpoint method"),
         ("Your account is not activated", "check account activation or suspension in Brevo"),
         ("Missing scope", "check API key resource permissions in Brevo"),
+        ("type is missing", "provider mentioned campaign field: type"),
+        ("htmlContent is invalid", "provider mentioned campaign field: htmlContent"),
         ("Unknown failure", ""),
     ],
 )
@@ -837,3 +844,38 @@ def test_api_errors_do_not_dump_non_json_provider_responses():
 
     with pytest.raises(BrevoApiError, match=r"^GET /account -> HTTP 502$"):
         client.remaining_email_credits()
+
+
+def test_watermark_round_trip_uses_html_metadata_without_tags():
+    now = datetime(2026, 11, 8, 5, 30, tzinfo=BERLIN)
+    client = FakeBrevo()
+    feed = atom_feed([make_entry("a-a2", "2026-11-08T05:00:00+01:00")])
+    code, _ = run_issue_builder(make_config(), "production", False, feed, now, client)
+    assert code == EXIT_OK
+    campaign = client.campaigns[0]
+    campaign.update(status="sent", recipients={"lists": [3]})
+    assert find_last_sent_watermark([campaign], "BB") == now
+    assert "tag" not in campaign
+
+
+@pytest.mark.parametrize("html", [
+    "",
+    '<meta name="briefberlin-cutoff" content="invalid">',
+    '<meta name="briefberlin-cutoff" content="2026-11-08T06:00:00">',
+    '<meta name="briefberlin-cutoff" content="2026-11-08T06:00:00+01:00">' * 2,
+])
+def test_sent_campaign_with_unreadable_cutoff_refuses_replay(html):
+    campaign = {"name": "BB-2026-11-08", "status": "sent",
+                "recipients": {"lists": [3]}, "htmlContent": html}
+    with pytest.raises(ValueError, match="review required"):
+        find_last_sent_watermark([campaign], "BB")
+
+
+def test_campaign_listing_requests_watermark_html():
+    response = requests.Response()
+    response.status_code = 200
+    response._content = b'{"campaigns": []}'
+    session = Mock(spec=requests.Session)
+    session.request.return_value = response
+    assert BrevoClient(make_config(), session=session).list_campaigns() == []
+    assert session.request.call_args.kwargs["params"]["excludeHtmlContent"] == "false"

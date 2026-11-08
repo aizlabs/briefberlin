@@ -415,19 +415,21 @@ def render_issue(
         f'<a href="{html_module.escape(base + "/", quote=True)}">briefberlin.de</a> · '
         f'<a href="{html_module.escape(base + "/contact/", quote=True)}">Kontakt</a> · '
         f'<a href="{html_module.escape(base + "/privacy/", quote=True)}">Datenschutz</a><br>'
-        "Du willst keine E-Mails mehr? Nutze den Abmelde-Link unten in dieser E-Mail.</p>"
+        'Du möchtest den Newsletter abbestellen? <a href="{{ unsubscribe }}">'
+        'Hier abmelden.</a></p>'
     )
     html_parts.append(footer_html)
     text_parts.extend(
         list(PUBLISHER_LINES)
         + [
             f"{base}/  ·  Kontakt: {base}/contact/  ·  Datenschutz: {base}/privacy/",
-            "Du willst keine E-Mails mehr? Nutze den Abmelde-Link unten in dieser E-Mail.",
+            "Newsletter abbestellen: {{ unsubscribe }}",
         ]
     )
 
     html = (
         '<!DOCTYPE html><html lang="de"><head><meta charset="utf-8">'
+        f'<meta name="briefberlin-cutoff" content="{window_end.isoformat()}">'
         '<meta name="viewport" content="width=device-width, initial-scale=1">'
         "<title>BriefBerlin</title></head>"
         '<body style="margin:0;padding:0;background:#f4f4f4;">'
@@ -493,6 +495,11 @@ class BrevoClient:
                     hint = " (check account activation or suspension in Brevo)"
                 elif any(word in message for word in ("permission", "scope", "access")):
                     hint = " (check API key resource permissions in Brevo)"
+                else:
+                    for field in ("sender", "subject", "htmlContent", "listIds", "recipients", "tag", "type"):
+                        if re.search(rf"\b{field.lower()}\b", message):
+                            hint = f" (provider mentioned campaign field: {field})"
+                            break
             raise BrevoApiError(f"{method} {path} -> HTTP {response.status_code}{hint}")
         if response.status_code == 204 or not response.content:
             return None
@@ -504,7 +511,8 @@ class BrevoClient:
         offset = 0
         while True:
             page = self._request(
-                "GET", "/emailCampaigns", params={"limit": limit, "offset": offset}
+                "GET", "/emailCampaigns",
+                params={"limit": limit, "offset": offset, "excludeHtmlContent": "false"},
             )
             batch = page.get("campaigns", []) if isinstance(page, dict) else []
             campaigns.extend(batch)
@@ -610,14 +618,23 @@ def find_last_sent_watermark(
             newest = campaign
     if newest is None:
         return None
-    tag = newest.get("tag") or ""
+    markers = BeautifulSoup(newest.get("htmlContent") or "", "html.parser").find_all(
+        "meta", attrs={"name": "briefberlin-cutoff"}
+    )
+    if len(markers) > 1:
+        raise ValueError("Latest sent newsletter has ambiguous cutoff metadata; review required")
+    # Read old tag-based history for compatibility, but never create tags:
+    # this account rejects the tag option on campaign creation.
+    value = markers[0].get("content") if markers else newest.get("tag")
     try:
-        return datetime.fromisoformat(tag)
-    except ValueError:
-        logger.warning(
-            "Sent campaign %s has unparsable watermark tag %r", newest.get("name"), tag
-        )
-        return None
+        watermark = datetime.fromisoformat(str(value or ""))
+        if watermark.tzinfo is None:
+            raise ValueError("Cutoff timezone is missing")
+        return watermark
+    except ValueError as error:
+        raise ValueError(
+            "Latest sent newsletter has missing or invalid cutoff metadata; review required"
+        ) from error
 
 
 def detect_stale_campaigns(
@@ -698,11 +715,11 @@ def build_campaign_payload(
 ) -> Dict[str, Any]:
     payload: Dict[str, Any] = {
         "name": issue_name,
+        "type": "classic",
         "sender": {"name": config.sender_name, "email": config.sender_email},
         "subject": issue.subject,
         "htmlContent": issue.html,
         "recipients": {"listIds": [list_id]},
-        "tag": cutoff.isoformat(),
         "replyTo": config.sender_email,
     }
     if scheduled_at is not None:
