@@ -5,11 +5,14 @@ fake records every call so isolation and no-contact-write guarantees are
 asserted on the actual call log.
 """
 
+import json
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
+from unittest.mock import Mock
 
 import pytest
+import requests
 from pydantic import ValidationError
 
 from scripts.models import NewsletterConfig
@@ -20,6 +23,7 @@ from scripts.newsletter_campaign import (
     EXIT_QUOTA,
     EXIT_STALE,
     BrevoApiError,
+    BrevoClient,
     build_subject,
     content_cutoff_for,
     deduplicate_stories,
@@ -790,3 +794,46 @@ def test_workflow_module_command_runs_without_editable_install():
                             cwd=root, env=env, capture_output=True, text=True, timeout=30)
     assert result.returncode == 0, result.stderr
     assert '--dry-run' in result.stdout
+
+
+@pytest.mark.parametrize(
+    ("message", "hint"),
+    [
+        ("POST Method is not allowed on this path", "provider rejected this endpoint method"),
+        ("Your account is not activated", "check account activation or suspension in Brevo"),
+        ("Missing scope", "check API key resource permissions in Brevo"),
+        ("Unknown failure", ""),
+    ],
+)
+def test_api_errors_expose_only_fixed_diagnostic_hints(message, hint):
+    response = requests.Response()
+    response.status_code = 405
+    response._content = json.dumps({
+        "message": message + " private@example.com xkeysib-private-test-value",
+        "details": {"api-key": "another-private-value"},
+    }).encode()
+    session = Mock(spec=requests.Session)
+    session.request.return_value = response
+    client = BrevoClient(make_config(), session=session)
+
+    with pytest.raises(BrevoApiError) as caught:
+        client.create_campaign({"name": "test"})
+
+    error = str(caught.value)
+    assert error.startswith("POST /emailCampaigns -> HTTP 405")
+    assert hint in error
+    assert "private" not in error
+    assert "xkeysib" not in error
+    assert "details" not in error
+
+
+def test_api_errors_do_not_dump_non_json_provider_responses():
+    response = requests.Response()
+    response.status_code = 502
+    response._content = b"<html>private@example.com xkeysib-private-test-value</html>"
+    session = Mock(spec=requests.Session)
+    session.request.return_value = response
+    client = BrevoClient(make_config(), session=session)
+
+    with pytest.raises(BrevoApiError, match=r"^GET /account -> HTTP 502$"):
+        client.remaining_email_credits()
