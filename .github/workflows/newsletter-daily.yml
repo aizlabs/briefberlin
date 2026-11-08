@@ -90,7 +90,7 @@ jobs:
             ARGS+=(--dry-run)
           fi
 
-          python scripts/newsletter_campaign.py "${ARGS[@]}"
+          python -m scripts.newsletter_campaign "${ARGS[@]}"
           code=$?
           echo "result=$code" >> "$GITHUB_OUTPUT"
           echo "exit_code=$code"
@@ -103,7 +103,7 @@ jobs:
           fi
 
           # 0 = ok/skip (empty issue, already scheduled, too late, dry run).
-          # 1 = error, 3 = quota guard, 4 = stale campaign state; these page
+          # 1 = error, 3 = quota guard, 4 = stale campaign state or article overflow; these page
           # the owner through the normal job-failure notification.
           exit "$code"
 

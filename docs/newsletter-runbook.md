@@ -62,7 +62,7 @@ BREVO_API_KEY=... NEWSLETTER_ENABLED=true uv run briefberlin-newsletter --target
 
 Exit codes: `0` ok/skip (empty issue, already scheduled, too late, dry run),
 `1` error (feed/API failure, gate refusal), `3` quota guard, `4` stale
-campaign state (needs a human decision). Only `1`, `3`, `4` page the owner
+campaign state or article-limit overflow (needs a human decision). Only `1`, `3`, `4` page the owner
 via the Actions failure notification (`3`/`4` are re-thrown as failures in the
 workflow; see workflow comments).
 
@@ -75,11 +75,20 @@ workflow; see workflow comments).
 - The content watermark (stored in the campaign `tag`) advances **only** from
   campaigns observed with status `sent`. Scheduled/queued/failed campaigns
   never advance it, so missed days re-send their articles automatically.
-- Deterministic cutoff: the issue window always ends at 06:00 Europe/Berlin
-  on the issue day, no matter when the run actually fires.
-- Quota: refuses production sends when list size exceeds
-  `daily_email_limit - daily_reserve` (300 - 60 by default), keeping headroom
-  for DOI/welcome mails inside the Brevo free plan's 300/day cap.
+- Content boundary: the window ends at the earlier of 06:00 Europe/Berlin
+  and the feed-fetch start time. Early preparation never consumes future
+  content; stories appearing after that snapshot remain eligible tomorrow.
+- Only strict `BB-YYYY-MM-DD` sent campaigns targeting production list 3
+  can advance production history. Test campaigns never affect that window.
+- If pending stories exceed `max_articles_per_issue`, exit 4 before any
+  campaign mutation. Raise the cap after review to send the complete backlog;
+  no truncation or watermark advance occurs, even for shared timestamps.
+- Quota: reads `GET /account` and requires one free email plan with
+  `creditsType=sendLimit` and a nonnegative integer `credits` balance.
+  Scheduling refuses unknown, ambiguous or unsupported plan responses and
+  requires the audience to fit within `min(300, remaining credits) - 60`.
+  SMS credits never count. This checks the current balance, not a reservation:
+  later DOI/welcome traffic can still consume the reserve before 07:00.
 - Test mode uses list 4 with campaign names `BB-TEST-<timestamp>`; production
   uses list 3. Config validation refuses equal list IDs. The builder calls no
   contact create/import/delete endpoint at all - audience growth and
@@ -117,6 +126,9 @@ workflow; see workflow comments).
 - [ ] Verify the delivered campaign has a usable plain-text part (see
       limitations below).
 - [ ] Consent-event export works (Brevo contact export includes DOI events).
+- [ ] Quota balance: compare `GET /account` free email credits before and
+      after real DOI, welcome and test sends; verify unknown balances prevent
+      scheduling. Confirm remaining credits plus reserve cover the audience.
 - [ ] Abuse statistics: confirm whether form-triggered DOI mails are counted
       in `/smtp/statistics/aggregatedReport` (fire 2-3 test signups, compare).
 
@@ -148,8 +160,13 @@ workflow; see workflow comments).
    add a second DMARC record). Decide: keep the external aggregate receiver
    or switch rua to `dmarc@briefberlin.de` in one edit.
 6. **Quota accounting**: the free plan counts DOI + welcome mails against
-   300/day; there is no verified API to query the exact remaining quota, so
-   the builder reserves a fixed headroom (`daily_reserve: 60`) instead.
+   300/day. The builder now reads the free email balance from `GET /account`
+   (`plan[].credits`, `creditsType=sendLimit`, `type=free`) and fails closed
+   if the response is unknown or unsupported. Before enabling production,
+   verify that this balance decreases after real DOI, welcome and test sends.
+   The 60-email reserve is additional headroom, not an atomic provider quota
+   reservation; signups after scheduling can still consume it.
+   Reference: https://developers.brevo.com/reference/get-account
 7. **Suspended/late campaigns**: if a past day's campaign sits in a pre-send
    state, the builder refuses (exit 4) rather than guessing. Manual recovery:
    investigate in Brevo; deleting the stuck campaign makes its articles

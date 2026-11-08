@@ -87,6 +87,7 @@ class FakeBrevo:
         requests_24h: int = 5,
         create_timeouts: int = 0,
         fail_create: bool = False,
+        remaining_credits: Optional[int] = 300,
     ) -> None:
         self.campaigns: List[Dict[str, Any]] = campaigns or []
         self.subscribers = subscribers
@@ -95,6 +96,7 @@ class FakeBrevo:
         self.calls: List[Tuple[str, str, Optional[Dict[str, Any]]]] = []
         self.create_timeouts = create_timeouts
         self.fail_create = fail_create
+        self.remaining_credits = remaining_credits
 
     def _log(self, method: str, path: str, payload: Optional[Dict[str, Any]] = None) -> None:
         self.calls.append((method, path, payload))
@@ -157,6 +159,10 @@ class FakeBrevo:
     def get_list_stats(self, list_id: int) -> Dict[str, Any]:
         self._log("GET", f"/contacts/lists/{list_id}")
         return {"id": list_id, "totalSubscribers": self.subscribers}
+
+    def remaining_email_credits(self) -> Optional[int]:
+        self._log("GET", "/account")
+        return self.remaining_credits
 
     def transactional_requests_24h(self) -> int:
         self._log("GET", "/smtp/statistics/aggregatedReport")
@@ -397,9 +403,9 @@ def test_german_date_formatting():
 
 def test_watermark_only_advances_from_sent_campaigns():
     campaigns = [
-        {"name": "BB-2026-11-05", "status": "sent", "tag": "2026-11-05T06:00:00+01:00"},
+        {"name": "BB-2026-11-05", "status": "sent", "recipients": {"lists": [3]}, "tag": "2026-11-05T06:00:00+01:00"},
         {"name": "BB-2026-11-06", "status": "queued", "tag": "2026-11-06T06:00:00+01:00"},
-        {"name": "BB-2026-11-04", "status": "sent", "tag": "2026-11-04T06:00:00+01:00"},
+        {"name": "BB-2026-11-04", "status": "sent", "recipients": {"lists": [3]}, "tag": "2026-11-04T06:00:00+01:00"},
     ]
     watermark = find_last_sent_watermark(campaigns, "BB")
     assert watermark == datetime(2026, 11, 5, 6, 0, tzinfo=BERLIN)
@@ -416,7 +422,7 @@ def test_detect_stale_campaigns_flags_past_pre_send_states():
     campaigns = [
         {"name": "BB-2026-11-06", "status": "queued", "tag": "t"},
         {"name": "BB-2026-11-07", "status": "in_process", "tag": "t"},
-        {"name": "BB-2026-11-05", "status": "sent", "tag": "t"},
+        {"name": "BB-2026-11-05", "status": "sent", "recipients": {"lists": [3]}, "tag": "t"},
         {"name": "BB-2026-11-08", "status": "queued", "tag": "t"},
     ]
     stale = detect_stale_campaigns(campaigns, "BB", now)
@@ -485,7 +491,7 @@ def test_run_uses_sent_watermark_as_window_start():
     now = datetime(2026, 11, 8, 5, 30, tzinfo=BERLIN)
     client = FakeBrevo(
         campaigns=[
-            {"name": "BB-2026-11-07", "status": "sent", "tag": "2026-11-07T06:00:00+01:00"}
+            {"name": "BB-2026-11-07", "status": "sent", "recipients": {"lists": [3]}, "tag": "2026-11-07T06:00:00+01:00"}
         ]
     )
     feed = atom_feed(
@@ -510,7 +516,7 @@ def test_missed_day_articles_are_recovered_after_failed_campaign():
     now = datetime(2026, 11, 8, 5, 30, tzinfo=BERLIN)
     client = FakeBrevo(
         campaigns=[
-            {"name": "BB-2026-11-06", "status": "sent", "tag": "2026-11-06T06:00:00+01:00"},
+            {"name": "BB-2026-11-06", "status": "sent", "recipients": {"lists": [3]}, "tag": "2026-11-06T06:00:00+01:00"},
             {"name": "BB-2026-11-07", "status": "cancelled", "tag": "2026-11-07T06:00:00+01:00"},
         ]
     )
@@ -534,7 +540,7 @@ def test_empty_window_skips_issue_without_campaign():
     now = datetime(2026, 11, 8, 5, 30, tzinfo=BERLIN)
     client = FakeBrevo(
         campaigns=[
-            {"name": "BB-2026-11-07", "status": "sent", "tag": "2026-11-07T06:00:00+01:00"}
+            {"name": "BB-2026-11-07", "status": "sent", "recipients": {"lists": [3]}, "tag": "2026-11-07T06:00:00+01:00"}
         ]
     )
     feed = atom_feed([make_entry("old-a2", "2026-11-05T10:00:00+01:00")])
@@ -635,7 +641,7 @@ def test_production_payload_uses_production_list_and_schedule():
     assert code == EXIT_OK
     assert payload["recipients"]["listIds"] == [3]
     assert payload["scheduledAt"] == "2026-11-08T07:00:00+01:00"
-    assert payload["tag"] == "2026-11-08T06:00:00+01:00"
+    assert payload["tag"] == "2026-11-08T05:30:00+01:00"
     assert payload["sender"] == {"name": "BriefBerlin", "email": "newsletter@briefberlin.de"}
 
 
@@ -688,3 +694,99 @@ def test_window_excludes_entries_after_deterministic_cutoff():
     assert code == EXIT_OK
     assert details["reason"] == "created"
     assert details["articles"] == 1
+
+
+@pytest.mark.parametrize('name,lists', [
+    ('BB-TEST-20261109-120000', [4]),
+    ('BB-2026-11-09', [4]),
+    ('BB-2026-11-09-special', [3]),
+])
+def test_nonproduction_campaign_cannot_advance_production_window(name, lists):
+    production = {'name': 'BB-2026-11-08', 'status': 'sent',
+                  'recipients': {'lists': [3]}, 'tag': '2026-11-08T05:00:00+01:00'}
+    other = {'name': name, 'status': 'sent', 'recipients': {'lists': lists},
+             'tag': '2026-11-09T06:00:00+01:00'}
+    assert find_last_sent_watermark([production, other], 'BB') == datetime.fromisoformat(production['tag'])
+
+
+@pytest.mark.parametrize('month,offset', [(1, '+01:00'), (7, '+02:00')])
+def test_pre_cutoff_preparation_recovers_later_publications_next_day(month, offset):
+    now = datetime(2026, month, 8, 4, 30, tzinfo=BERLIN)
+    client = FakeBrevo()
+    before = make_entry('before', f'2026-{month:02d}-08T04:00:00{offset}')
+    after = make_entry('after', f'2026-{month:02d}-08T05:45:00{offset}')
+    code, details = run_issue_builder(make_config(), 'production', False,
+                                    atom_feed([before, after]), now, client)
+    assert code == EXIT_OK
+    payload = next(c[2] for c in client.calls if c[0] == 'POST')
+    assert payload['tag'] == now.isoformat()
+    assert 'Story after' not in payload['htmlContent']
+    client.campaigns[0].update(status='sent', recipients={'lists': [3]})
+    client.calls.clear()
+    code, details = run_issue_builder(make_config(), 'production', False,
+                                    atom_feed([before, after]), now.replace(day=9), client)
+    assert code == EXIT_OK
+    payload = next(c[2] for c in client.calls if c[0] == 'POST')
+    assert 'Story after' in payload['htmlContent']
+    assert 'Story before' not in payload['htmlContent']
+
+
+def test_overflow_with_identical_timestamps_preserves_all_backlog():
+    now = datetime(2026, 11, 8, 5, 30, tzinfo=BERLIN)
+    feed = atom_feed([make_entry(f'story-{i}', '2026-11-08T04:00:00+01:00') for i in range(11)])
+    client = FakeBrevo()
+    code, details = run_issue_builder(make_config(), 'production', False, feed, now, client)
+    assert (code, details['reason']) == (EXIT_STALE, 'article_limit')
+    assert not any(c[0] in {'POST', 'PUT', 'DELETE'} for c in client.calls)
+    assert client.campaigns == []
+    code, details = run_issue_builder(make_config(max_articles_per_issue=11),
+                                    'production', False, feed, now, client)
+    assert code == EXIT_OK
+    assert details['articles'] == 11
+
+
+@pytest.mark.parametrize('remaining', [None, 0, 200, 299])
+def test_quota_guard_uses_consumed_credits_and_fails_closed(remaining):
+    client = FakeBrevo(subscribers=240, remaining_credits=remaining)
+    code, details = run_issue_builder(make_config(), 'production', False,
+        atom_feed([make_entry('one', '2026-11-08T04:00:00+01:00')]),
+        datetime(2026, 11, 8, 5, 30, tzinfo=BERLIN), client)
+    assert (code, details['reason']) == (EXIT_QUOTA, 'quota')
+    assert not any(c[0] in {'POST', 'PUT', 'DELETE'} for c in client.calls)
+
+
+@pytest.mark.parametrize('account,expected', [
+    ({'plan': [{'type': 'free', 'creditsType': 'sendLimit', 'credits': 237},
+               {'type': 'sms', 'creditsType': 'sendLimit', 'credits': 999}]}, 237),
+    ({'plan': [{'type': 'paid', 'creditsType': 'sendLimit', 'credits': 1000}]}, None),
+    ({'plan': [{'type': 'free', 'creditsType': 'sendLimit', 'credits': True}]}, None),
+    ({'plan': [{'type': 'free', 'creditsType': 'sendLimit', 'credits': -1}]}, None),
+    ({'plan': [{'type': 'free', 'creditsType': 'sendLimit', 'credits': '300'}]}, None),
+    ({'plan': []}, None), ({}, None),
+])
+def test_remaining_quota_parses_only_unambiguous_free_email_balance(monkeypatch, account, expected):
+    from scripts.newsletter_campaign import BrevoClient
+    client = BrevoClient(make_config())
+    calls = []
+    def request(method, path):
+        calls.append((method, path))
+        return account
+    monkeypatch.setattr(client, '_request', request)
+    assert client.remaining_email_credits() == expected
+    assert calls == [('GET', '/account')]
+
+
+def test_workflow_module_command_runs_without_editable_install():
+    import os
+    import subprocess
+    import sys
+    import sysconfig
+    root = Path(__file__).resolve().parents[1]
+    workflow = (root / '.github/workflows/newsletter-daily.yml').read_text()
+    assert 'python -m scripts.newsletter_campaign "${ARGS[@]}"' in workflow
+    # -S skips editable-install .pth files, matching the dependency-only runner.
+    env = dict(os.environ, PYTHONPATH=sysconfig.get_paths()['purelib'])
+    result = subprocess.run([sys.executable, '-S', '-m', 'scripts.newsletter_campaign', '--help'],
+                            cwd=root, env=env, capture_output=True, text=True, timeout=30)
+    assert result.returncode == 0, result.stderr
+    assert '--dry-run' in result.stdout

@@ -16,12 +16,12 @@ Safety properties (enforced here and covered by tests):
   sending/sent/dead state stop the run; an incomplete draft is repaired in
   place, never duplicated. The content watermark advances only from campaigns
   observed as ``sent``.
-- Deterministic content cutoff (issue day, content_cutoff_hour_berlin) so
-  schedule delays never shift the content window.
+- Content cutoff never exceeds the feed-fetch start time or the configured
+  issue-day boundary; early preparation cannot consume future content.
 - No production send closer than min_lead_minutes to 07:00 Europe/Berlin;
   the next issue simply recovers missed articles.
-- Quota guard against the Brevo free plan's 300 mails/day, reserving
-  headroom for double-opt-in and welcome mails.
+- Quota guard checks remaining free email credits and reserves additional
+  headroom for double-opt-in and welcome mails; unknown balances fail closed.
 
 API fields follow Brevo's official OpenAPI specs (developers.brevo.com,
 Marketing Campaigns / Contact Management / Email API, base
@@ -511,6 +511,26 @@ class BrevoClient:
         result = self._request("GET", f"/contacts/lists/{list_id}")
         return result if isinstance(result, dict) else {}
 
+    def remaining_email_credits(self) -> Optional[int]:
+        """Read remaining free-plan send credits; unknown plans fail closed.
+
+        Brevo GET /account returns plan[].credits, creditsType and type.
+        Do not confuse SMS credits or a paid plan's allocation with the daily
+        free email balance. Live acceptance must verify the account's signal.
+        """
+        account = self._request("GET", "/account")
+        if not isinstance(account, dict) or not isinstance(account.get("plan"), list):
+            return None
+        plans = [
+            plan for plan in account["plan"]
+            if isinstance(plan, dict) and plan.get("type") == "free"
+            and plan.get("creditsType") == "sendLimit"
+        ]
+        if len(plans) != 1:
+            return None
+        credits = plans[0].get("credits")
+        return credits if type(credits) is int and credits >= 0 else None
+
     def transactional_requests_24h(self) -> int:
         report = self._request("GET", "/smtp/statistics/aggregatedReport", params={"days": 1})
         if not isinstance(report, dict):
@@ -549,7 +569,7 @@ def find_named_campaign(
 
 
 def find_last_sent_watermark(
-    campaigns: List[Dict[str, Any]], prefix: str
+    campaigns: List[Dict[str, Any]], prefix: str, production_list_id: int = 3
 ) -> Optional[datetime]:
     """Content cutoff of the newest campaign actually observed as sent.
 
@@ -562,7 +582,11 @@ def find_last_sent_watermark(
     newest: Optional[Dict[str, Any]] = None
     for campaign in campaigns:
         name = campaign.get("name") or ""
-        if not name.startswith(f"{prefix}-") or campaign.get("status") != STATUS_SENT:
+        if not re.fullmatch(rf"{re.escape(prefix)}-\d{{4}}-\d{{2}}-\d{{2}}", name):
+            continue
+        if campaign.get("recipients", {}).get("lists") != [production_list_id]:
+            continue
+        if campaign.get("status") != STATUS_SENT:
             continue
         if newest is None or name > (newest.get("name") or ""):
             newest = campaign
@@ -610,17 +634,22 @@ def resolve_target_list(config: NewsletterConfig, target: str, dry_run: bool) ->
     return config.production_list_id if target == "production" else config.test_list_id
 
 
-def quota_check(subscribers: int, config: NewsletterConfig) -> Optional[str]:
+def quota_check(
+    subscribers: int, config: NewsletterConfig, remaining_credits: Optional[int]
+) -> Optional[str]:
+    if remaining_credits is None:
+        return "Remaining email quota is unknown; refusing to schedule a campaign."
     if subscribers > config.daily_email_limit:
         return (
             f"List has {subscribers} subscribers, above the {config.daily_email_limit} "
             "emails/day plan limit; sending would only reach part of the list."
         )
-    available = config.daily_email_limit - config.daily_reserve
+    available = min(config.daily_email_limit, remaining_credits) - config.daily_reserve
     if subscribers > available:
         return (
             f"List has {subscribers} subscribers but only {available} mails are "
-            f"unreserved ({config.daily_email_limit} limit minus {config.daily_reserve} "
+            f"unreserved ({remaining_credits} remaining credits, "
+            f"{config.daily_email_limit} daily limit, {config.daily_reserve} "
             "reserved for double-opt-in and welcome mails)."
         )
     return None
@@ -681,7 +710,8 @@ def run_issue_builder(
         issue_name = f"{prefix}-TEST-{stamp}"
 
     scheduled_at = scheduled_send_time_for(now, config.send_hour_berlin)
-    cutoff = content_cutoff_for(now, config.content_cutoff_hour_berlin)
+    # Never mark content after the start of the feed snapshot as processed.
+    cutoff = min(now, content_cutoff_for(now, config.content_cutoff_hour_berlin))
 
     entries = parse_feed(feed_xml)
     if not entries:
@@ -756,7 +786,7 @@ def run_issue_builder(
 
         list_stats = client.get_list_stats(list_id)
         subscribers = int(list_stats.get("totalSubscribers") or 0)
-        quota_error = quota_check(subscribers, config)
+        quota_error = quota_check(subscribers, config, client.remaining_email_credits())
         if quota_error:
             logger.critical("Quota guard refused the send: %s", quota_error)
             return EXIT_QUOTA, {
@@ -775,7 +805,7 @@ def run_issue_builder(
                 config.abuse_threshold_24h,
             )
 
-        watermark = find_last_sent_watermark(campaigns, prefix)
+        watermark = find_last_sent_watermark(campaigns, prefix, config.production_list_id)
 
     window_start = watermark or (cutoff - timedelta(days=config.first_run_lookback_days))
     selected: List[NewsletterArticle] = []
@@ -791,7 +821,19 @@ def run_issue_builder(
                     level=entry.level,
                 )
             )
-    selected = selected[: config.max_articles_per_issue]
+    if len(selected) > config.max_articles_per_issue:
+        # No timestamp can safely represent a truncated batch when multiple
+        # stories share a timestamp. Stop before creating/updating anything.
+        return EXIT_STALE, {
+            "reason": "article_limit",
+            "message": (
+                f"{len(selected)} pending stories exceed the issue limit "
+                f"({config.max_articles_per_issue}). Raise the limit after review; "
+                "no campaign or watermark was changed."
+            ),
+            "abuse_detected": abuse_detected,
+            "abuse_count_24h": abuse_count,
+        }
 
     if not selected:
         return EXIT_OK, {
@@ -933,6 +975,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 
     config = load_newsletter_config(args.environment)
 
+    # Capture BEFORE fetching: a slow request must not move the watermark
+    # beyond the snapshot that the server may have produced.
+    snapshot_started_at = datetime.now(BERLIN)
     if args.feed_file is not None:
         feed_xml = args.feed_file.read_text(encoding="utf-8")
     else:
@@ -949,7 +994,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 
     try:
         code, details = run_issue_builder(
-            config, args.target, args.dry_run, feed_xml, datetime.now(BERLIN), client
+            config, args.target, args.dry_run, feed_xml, snapshot_started_at, client
         )
     except (PermissionError, ValueError) as error:
         logger.error("%s", error)
