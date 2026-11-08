@@ -1,0 +1,140 @@
+name: Newsletter Daily Issue
+
+# Daily Brevo newsletter: build the issue from feed.xml and schedule the
+# campaign for 07:00 Europe/Berlin. See docs/newsletter-runbook.md before
+# enabling anything.
+#
+# DISABLED BY DEFAULT - the schedule trigger below stays commented out until
+# the newsletter PR is reviewed and the live acceptance checks pass.
+#
+# Enabling for production requires ALL of:
+#   1. Repository secret BREVO_API_KEY (Brevo v3 key, IP allow-listing OFF).
+#   2. Repository variable NEWSLETTER_ENABLED = true (production gate; the
+#      script refuses every production send without it).
+#   3. Uncommenting the `schedule:` block below.
+#
+# Cron reasoning (UTC; GitHub cron can fire up to ~30 min late):
+#   03:30 UTC = 05:30 CEST (summer) / 04:30 CET (winter)
+#   04:15 UTC = 06:15 CEST (summer) / 05:15 CET (winter)
+# Both slots leave >= 45 min lead before 07:00 in BOTH seasons, so the second
+# run is a usable retry in summer and winter (unlike a fixed 04:30/05:30 pair,
+# whose summer retry at 07:30 is already past the send). The script itself
+# refuses production sends with < 30 min lead, so a delayed trigger can never
+# create a late send; missed articles roll into the next issue.
+
+env:
+  # Production gate. Test-mode dispatches to list 4 do not require this.
+  NEWSLETTER_ENABLED: ${{ vars.NEWSLETTER_ENABLED }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "Audience: test (list 4) or production (list 3, requires NEWSLETTER_ENABLED)"
+        type: choice
+        options: [test, production]
+        default: test
+      dry_run:
+        description: "Dry run (build + preview only, no campaign is created)"
+        type: boolean
+        default: true
+  # schedule:
+  #   - cron: "30 3 * * *"
+  #   - cron: "15 4 * * *"
+
+# Never two overlapping newsletter runs: campaign-name idempotency plus this
+# concurrency group makes duplicate sends structurally impossible.
+concurrency:
+  group: newsletter-daily
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  build-issue:
+    runs-on: ubuntu-latest
+    outputs:
+      result: ${{ steps.newsletter.outputs.result }}
+      abuse_detected: ${{ steps.newsletter.outputs.abuse_detected }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install builder dependencies
+        run: python -m pip install --quiet requests feedparser beautifulsoup4 pyyaml pydantic
+
+      - name: Build / send newsletter issue
+        id: newsletter
+        env:
+          BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
+        run: |
+          set +e
+          TARGET="${{ inputs.target }}"
+          DRY="${{ inputs.dry_run }}"
+          # Scheduled runs always target production with a real send;
+          # manual dispatch defaults to the safe test/dry-run combination.
+          if [ "$GITHUB_EVENT_NAME" != "workflow_dispatch" ]; then
+            TARGET="production"
+            DRY="false"
+          fi
+          [ -z "$TARGET" ] && TARGET="test"
+          ARGS=(--target "$TARGET" --summary-path "$GITHUB_STEP_SUMMARY" --preview-dir newsletter-preview)
+          if [ "$DRY" != "false" ]; then
+            ARGS+=(--dry-run)
+          fi
+
+          python scripts/newsletter_campaign.py "${ARGS[@]}"
+          code=$?
+          echo "result=$code" >> "$GITHUB_OUTPUT"
+          echo "exit_code=$code"
+
+          # Abuse flag comes from the run summary marker line.
+          if grep -q "abuse alert: True" "$GITHUB_STEP_SUMMARY" 2>/dev/null; then
+            echo "abuse_detected=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "abuse_detected=false" >> "$GITHUB_OUTPUT"
+          fi
+
+          # 0 = ok/skip (empty issue, already scheduled, too late, dry run).
+          # 1 = error, 3 = quota guard, 4 = stale campaign state; these page
+          # the owner through the normal job-failure notification.
+          exit "$code"
+
+      - name: Upload issue preview
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: newsletter-preview
+          path: newsletter-preview/
+          if-no-files-found: ignore
+
+  abuse-alert:
+    needs: build-issue
+    if: needs.build-issue.outputs.abuse_detected == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Open abuse alert issue (aggregate counts only)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          gh issue create \
+            --repo "$REPO" \
+            --title "Newsletter: DOI volume above threshold (possible signup abuse)" \
+            --body "The daily newsletter run measured more confirmation/transactional mail requests in the last 24h than the configured threshold (newsletter.abuse_threshold_24h).
+
+          Possible list-bombing via the signup form. Recommended: set \`newsletter.signup_open: false\` in output/_config.yml, disable the form in Brevo, then investigate.
+
+          This alert contains aggregate counts only - no subscriber data.
+
+          Run: ${GITHUB_SERVER_URL:-https://github.com}/$REPO/actions/runs/$RUN_ID"

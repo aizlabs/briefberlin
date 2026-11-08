@@ -590,6 +590,67 @@ class AlertsConfig(BaseModel):
     cooldown_hours: int = Field(default=6, ge=0, description="Hours to suppress duplicate alerts")
 
 
+class NewsletterConfig(BaseModel):
+    """Daily Brevo newsletter campaign configuration.
+
+    Production sends stay disabled until explicitly enabled (``enabled`` /
+    NEWSLETTER_ENABLED). List IDs come from the Brevo account: 3 is the
+    confirmed production audience, 4 the test audience; they must never match.
+    """
+
+    enabled: bool = Field(
+        default=False,
+        description="Production gate: no production campaign is ever created while false",
+    )
+    api_key: Optional[str] = Field(default=None, description="Brevo API key (env BREVO_API_KEY)")
+    api_base_url: str = "https://api.brevo.com/v3"
+    site_base_url: str = "https://briefberlin.de"
+    feed_url: str = "https://briefberlin.de/feed.xml"
+    production_list_id: int = Field(default=3, description="Brevo list: BriefBerlin Taeglich (confirmed)")
+    test_list_id: int = Field(default=4, description="Brevo list: BriefBerlin Test")
+    sender_name: str = "BriefBerlin"
+    sender_email: str = "newsletter@briefberlin.de"
+    timezone: str = "Europe/Berlin"
+    send_hour_berlin: int = Field(default=7, ge=0, le=23, description="Issue send time (local hour)")
+    content_cutoff_hour_berlin: int = Field(
+        default=6,
+        ge=0,
+        le=23,
+        description="Deterministic content cutoff: issue-day local hour; entries published later wait for the next issue",
+    )
+    min_lead_minutes: int = Field(
+        default=30,
+        ge=1,
+        description="Refuse a production send with less than this lead time before the scheduled hour",
+    )
+    daily_email_limit: int = Field(default=300, ge=1, description="Brevo free-plan daily email cap")
+    daily_reserve: int = Field(
+        default=60,
+        ge=0,
+        description="Headroom reserved for double-opt-in and welcome emails inside the daily cap",
+    )
+    first_run_lookback_days: int = Field(
+        default=1, ge=1, description="Content window when no sent campaign exists yet"
+    )
+    abuse_threshold_24h: int = Field(
+        default=25,
+        ge=1,
+        description="Alert when more than this many confirmation/transactional mails were requested in 24h",
+    )
+    campaign_name_prefix: str = "BB"
+    max_articles_per_issue: int = Field(default=10, ge=1)
+    posts_dir: str = "output/_posts"
+
+    @model_validator(mode="after")
+    def _lists_must_differ(self) -> "NewsletterConfig":
+        if self.production_list_id == self.test_list_id:
+            raise ValueError(
+                "newsletter.production_list_id and newsletter.test_list_id must differ "
+                "(production and test audiences must be separate Brevo lists)"
+            )
+        return self
+
+
 class AudioStorageConfig(BaseModel):
     """Cloud storage configuration for generated audio assets."""
 

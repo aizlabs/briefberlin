@@ -43,6 +43,14 @@ copyright_url: "https://briefberlin.de"
 footer:
   since: "2026"
 
+# Newsletter signup (Brevo form embed).
+# Flip signup_open to false to replace the embedded Brevo form on
+# /newsletter/ with a temporary closure notice, e.g. during signup
+# abuse. The form itself stays configured in Brevo; disable it there
+# as well when closing signups.
+newsletter:
+  signup_open: true
+
 # Build settings
 markdown: kramdown
 highlighter: rouge

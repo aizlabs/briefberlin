@@ -9,6 +9,8 @@ main:
     url: /authors/
   - title: "Standards"
     url: /editorial-standards/
+  - title: "Newsletter"
+    url: /newsletter/
   - title: "Kontakt"
     url: /contact/
 
@@ -25,5 +27,7 @@ levels:
         url: /editorial-standards/
       - title: "Korrekturen"
         url: /corrections/
+      - title: "Newsletter"
+        url: /newsletter/
       - title: "Kontakt"
         url: /contact/

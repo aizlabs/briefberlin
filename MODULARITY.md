@@ -90,6 +90,7 @@ bundle exec jekyll build
 | Quality Gate | `scripts/quality_gate.py` | `tests/test_quality_gate.py` | `quality_gate` |
 | Publisher | `scripts/publisher.py` | `tests/test_publisher_sources.py` | `output` |
 | Telegram Publish | `scripts/publish_telegram_channel.py` | `tests/test_telegram_channel_publisher.py` | site config + deploy workflow |
+| Newsletter | `scripts/newsletter_campaign.py` | `tests/test_newsletter_campaign.py` | `config/base.yaml` -> `newsletter` + `docs/newsletter-runbook.md` |
 | Config | `scripts/config.py` | `tests/test_config.py` | `config/base.yaml`, `config/local.yaml` |
 
 ## Quick Diagnostics
