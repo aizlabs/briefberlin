@@ -217,10 +217,12 @@ def _execute_manual_pipeline(
         if not final_article:
             failed += 1
             logger.warning(
-                "Quality gate failed for %s article: score=%.1f issues=%s",
+                "Quality gate failed for %s article: score %.1f after %s attempts (pass mark %s). Issues: %s",
                 level,
                 quality_result.score,
-                len(quality_result.issues),
+                quality_result.attempts,
+                config.quality_gate.min_score,
+                " | ".join(quality_result.issues) or "none listed",
             )
             continue
 

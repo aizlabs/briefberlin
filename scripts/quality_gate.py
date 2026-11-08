@@ -118,6 +118,16 @@ class QualityGate:
             })
 
             passed = result_dict['total_score'] >= self.min_score
+            if not passed:
+                # Logged at info so a failed run explains itself without debug logging.
+                self.logger.info(
+                    "Quality issues (%s, attempt %d, score %.1f/%s): %s",
+                    level,
+                    attempt,
+                    result_dict['total_score'],
+                    self.min_score,
+                    " | ".join(result_dict['issues']) or "none listed",
+                )
 
             if passed:
                 self.logger.info(f"✅ Passed on attempt {attempt} (score: {result_dict['total_score']:.1f}/{self.min_score})")
@@ -154,7 +164,6 @@ class QualityGate:
             self.logger.info(
                 f"🔄 Regenerating (attempt {attempt + 1}) - score was {result_dict['total_score']:.1f}/{self.min_score}"
             )
-            self.logger.debug(f"   Issues: {', '.join(result_dict['issues'][:3])}")
 
             try:
                 current_article = generator.regenerate_with_feedback(
