@@ -226,6 +226,26 @@ metrics:
   enabled: true
   output: output/metrics/
 
+# Daily Brevo newsletter (see docs/newsletter-runbook.md).
+# `enabled` is the production gate: while false the campaign builder only ever
+# runs in --dry-run or --target test mode. List 3 = BriefBerlin Taeglich
+# (confirmed subscribers), list 4 = BriefBerlin Test. List 2 must never be used.
+newsletter:
+  enabled: false
+  site_base_url: https://briefberlin.de
+  feed_url: https://briefberlin.de/feed.xml
+  production_list_id: 3
+  test_list_id: 4
+  sender_name: BriefBerlin
+  sender_email: newsletter@briefberlin.de
+  send_hour_berlin: 7
+  content_cutoff_hour_berlin: 6   # deterministic cutoff: runs later than this never change the issue content window
+  min_lead_minutes: 30            # no production send closer than this to 07:00
+  daily_email_limit: 300          # Brevo free plan
+  daily_reserve: 60               # headroom for DOI + welcome mails
+  first_run_lookback_days: 1
+  abuse_threshold_24h: 25         # DOI/transactional volume alert threshold per 24h
+
 # Alerts (in CI, enabled and email_config.smtp can be overridden by ALERTS_ENABLED, ALERT_SMTP_*, EMAIL_USERNAME, EMAIL_PASSWORD)
 # Telegram alerts are configured in YAML via alerts.telegram.*
 alerts:

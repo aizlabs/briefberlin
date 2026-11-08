@@ -1,5 +1,10 @@
 source "https://rubygems.org"
 
+# Ruby >= 3.4 removed csv and bigdecimal from the default gems; jekyll 3.9
+# (github-pages) still requires them. Harmless no-ops on the Pages runner's
+# Ruby 3.1.
+gem "csv", group: :jekyll_plugins
+gem "bigdecimal", group: :jekyll_plugins
 gem "github-pages", group: :jekyll_plugins
 gem "jekyll-include-cache", group: :jekyll_plugins
 gem "minimal-mistakes-jekyll"

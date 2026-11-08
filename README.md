@@ -17,6 +17,10 @@ This repository prepares public German A2/B1 learner articles from manually prov
 - Run tests: `uv run pytest`
 - Lint: `uv run ruff check`
 
+## Newsletter
+
+The daily Brevo newsletter (signup pages on the site, 07:00 Europe/Berlin issue) is implemented but disabled until reviewed. See `docs/newsletter-runbook.md` for the launch checklist, safety properties, and pending live acceptance checks. Builder: `scripts/newsletter_campaign.py` (`uv run briefberlin-newsletter --dry-run`).
+
 ## Manual Generation
 
 Put private source articles in ignored local files, then run:
