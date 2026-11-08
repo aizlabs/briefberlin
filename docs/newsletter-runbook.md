@@ -46,6 +46,49 @@ acceptance checks below pass.
    uncomment the `schedule:` block in `.github/workflows/newsletter-daily.yml`
    (03:30 and 04:15 UTC; see the workflow comments for the DST reasoning).
 
+## Acceptance evidence — November 8, 2026
+
+- PR #21 merged at `974f44b6e79d431735ae3000fb5f4d9cb676e67c`; website
+  deployment passed: https://github.com/aizlabs/briefberlin/actions/runs/42440310719
+- Test dry-run passed and produced a three-story HTML/text/subject preview:
+  https://github.com/aizlabs/briefberlin/actions/runs/42440336490
+- Restricted `BriefBerlin GitHub Actions Newsletter` key created after approval
+  and saved as repository secret `BREVO_API_KEY`. It expires November 8, 2027
+  or after 90 days unused. Scopes: email campaigns All; transactional email,
+  contacts and account Read. Production gate remains absent; cron stays off.
+- Signup reached `/newsletter/danke/`; list 3 was empty before confirmation.
+  German DOI arrived, its link reached `/newsletter/bestaetigt/`, and the
+  contact then appeared in list 3. German welcome arrived afterward. Both
+  delivered messages had SPF, DKIM (`d=briefberlin.de`) and DMARC pass,
+  List-Unsubscribe headers and usable text/plain alternatives. These checks
+  do not establish campaign delivery behavior.
+- Signup description shortened in Brevo to: “Neue Nachrichten aus Berlin.
+  Jeden Morgen um 7 Uhr. Kostenlos und jederzeit abmeldbar.” Verified live.
+- **Tracking failed:** both delivered transactional messages contain `/tr/op/`
+  pixels and `/tr/cl/` rewritten links despite consent management Yes and
+  unknown-consent tracking No (rechecked in the UI). Do not claim no tracking.
+- **Campaign API failed:** both test-list attempts reached
+  `POST /emailCampaigns -> HTTP 405`. No campaign send occurred. Read calls,
+  quota and statistics checks preceding creation succeeded. Runs:
+  https://github.com/aizlabs/briefberlin/actions/runs/42440935819 and
+  https://github.com/aizlabs/briefberlin/actions/runs/42441209161 .
+  Creating a UI-only draft `BB-TEST-UI-20261108` (ID 5, no recipients/send) did
+  not resolve the API failure. Investigate provider endpoint/account behavior;
+  do not widen the approved key scopes to work around it.
+- **Welcome unsubscribe corrected:** native transactional `{{ unsubscribe }}`
+  showed an English sender-unsubscribe page and left campaign status Subscribed.
+  A separate German Brevo form `BriefBerlin Abmeldung` was created (editor ID
+  `6aefe72939d234847dcd53c2`). Submitting it set campaign status Blocklisted
+  and redirected to `/newsletter/abgemeldet/`. Its public URL is now saved in
+  the welcome template footer. A newly delivered welcome using that link still
+  needs verification. This manual email-entry form is not a one-click promise.
+- Resubmission after unsubscribe reached the thank-you page. A fresh delivered
+  DOI and subsequent resubscription are not yet verified; sender-level
+  transactional suppression from the earlier test also needs checking.
+- Home usage showed 298/300 credits after the first DOI and welcome sends.
+  Exact API balance deltas, CAPTCHA rejection, forwarding, consent export,
+  abuse-statistics coverage and campaign headers/tracking remain unverified.
+
 ## Operating the builder
 
 ```bash
@@ -107,16 +150,16 @@ workflow; see workflow comments).
 3. Investigate via Brevo's form logs; if a production send was already
    scheduled for 07:00, cancel/delete the `BB-<date>` campaign in Brevo.
 
-## Live acceptance checks (all PENDING - do not mark passed without evidence)
+## Live acceptance checks (partial results recorded below)
 
 - [ ] `newsletter@briefberlin.de` and `dmarc@briefberlin.de` deliver to the
       configured Gmail inbox (send mail from an external account).
 - [ ] Signup form rejects a missing/invalid Turnstile token (submit with the
       widget blocked; must NOT create a pending signup).
-- [ ] Signup does NOT enter list 3 before the DOI click (check list + form
+- [x] Signup does NOT enter list 3 before the DOI click (check list + form
       logs after form submit).
-- [ ] DOI email arrives in German from BriefBerlin, confirmation link works.
-- [ ] German welcome email (template 2) arrives after confirmation.
+- [x] DOI email arrives in German from BriefBerlin, confirmation link works.
+- [x] German welcome email (template 2) arrives after confirmation.
 - [ ] Unsubscribe works from the emailed link and from Gmail's one-click
       button; `/newsletter/abgemeldet/` shows afterwards; resubscription
       starts a fresh DOI.
@@ -143,7 +186,9 @@ workflow; see workflow comments).
    whatever Brevo generates from the HTML. Verify in acceptance.
 2. **Open/click tracking**: account-level per-contact tracking consent is
    enabled, with "Track contacts whose consent is unknown" set to No.
-   Both settings were saved and verified after reload. The signup form does
+   Both settings were saved and verified after reload. Live DOI/welcome tests
+   still showed pixels and rewritten links; this is an unresolved launch blocker.
+   The signup form does
    not collect tracking consent. Verify DOI, welcome and campaign messages
    in real delivered mail before claiming there are no pixels or rewritten
    links. Existing contacts with explicit tracking consent are not covered

@@ -475,7 +475,25 @@ class BrevoClient:
         self.calls.append((method, path))
         response = self.session.request(method, url, headers=headers, timeout=30, **kwargs)
         if response.status_code >= 400:
-            raise BrevoApiError(f"{method} {path} -> HTTP {response.status_code}")
+            # Never log a provider body: it may echo subscriber data or keys.
+            # Fixed hints let operators diagnose activation/scope/routing errors
+            # without exposing the underlying response in public Actions logs.
+            hint = ""
+            try:
+                error = response.json()
+            except ValueError:
+                error = None
+            if isinstance(error, dict):
+                message = str(error.get("message", "")).lower()
+                if "not allowed on this path" in message:
+                    hint = " (provider rejected this endpoint method)"
+                elif "account" in message and any(
+                    word in message for word in ("activat", "validat", "suspend")
+                ):
+                    hint = " (check account activation or suspension in Brevo)"
+                elif any(word in message for word in ("permission", "scope", "access")):
+                    hint = " (check API key resource permissions in Brevo)"
+            raise BrevoApiError(f"{method} {path} -> HTTP {response.status_code}{hint}")
         if response.status_code == 204 or not response.content:
             return None
         return response.json()
