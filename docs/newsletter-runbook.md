@@ -67,24 +67,31 @@ acceptance checks below pass.
 - **Tracking failed:** both delivered transactional messages contain `/tr/op/`
   pixels and `/tr/cl/` rewritten links despite consent management Yes and
   unknown-consent tracking No (rechecked in the UI). Do not claim no tracking.
-- **Campaign API failed:** both test-list attempts reached
+- **Campaign API failed:** the first two test-list attempts reached
   `POST /emailCampaigns -> HTTP 405`. No campaign send occurred. Read calls,
   quota and statistics checks preceding creation succeeded. Runs:
   https://github.com/aizlabs/briefberlin/actions/runs/42440935819 and
   https://github.com/aizlabs/briefberlin/actions/runs/42441209161 .
   Creating a UI-only draft `BB-TEST-UI-20261108` (ID 5, no recipients/send) did
-  not resolve the API failure. Investigate provider endpoint/account behavior;
+  not resolve the API failure. A later diagnostic run returned HTTP 400:
+  https://github.com/aizlabs/briefberlin/actions/runs/42441772149 .
+  The payload now includes `type: classic`, as shown by Brevo’s in-account
+  API example; live validation of this correction is pending.
+  Investigate provider endpoint/account behavior;
   do not widen the approved key scopes to work around it.
 - **Welcome unsubscribe corrected:** native transactional `{{ unsubscribe }}`
   showed an English sender-unsubscribe page and left campaign status Subscribed.
   A separate German Brevo form `BriefBerlin Abmeldung` was created (editor ID
   `6aefe72939d234847dcd53c2`). Submitting it set campaign status Blocklisted
   and redirected to `/newsletter/abgemeldet/`. Its public URL is now saved in
-  the welcome template footer. A newly delivered welcome using that link still
-  needs verification. This manual email-entry form is not a one-click promise.
-- Resubmission after unsubscribe reached the thank-you page. A fresh delivered
-  DOI and subsequent resubscription are not yet verified; sender-level
-  transactional suppression from the earlier test also needs checking.
+  the welcome template footer. A fresh delivered welcome contained the new
+  public unsubscribe URL in its plain-text part. This manual email-entry form
+  is not a one-click promise; campaign/Gmail one-click testing remains pending.
+- Resubmission after unsubscribe reached the thank-you page. Sender-level
+  transactional suppression from the earlier native-unsubscribe test blocked
+  fresh DOI mail. After restoring only the newsletter sender for this approved
+  test address, a fresh DOI arrived. Campaign status stayed Blocklisted before
+  that click and changed to Subscribed after it; a new welcome then arrived.
 - Home usage showed 298/300 credits after the first DOI and welcome sends.
   Exact API balance deltas, CAPTCHA rejection, forwarding, consent export,
   abuse-statistics coverage and campaign headers/tracking remain unverified.

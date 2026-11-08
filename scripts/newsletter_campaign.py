@@ -493,6 +493,11 @@ class BrevoClient:
                     hint = " (check account activation or suspension in Brevo)"
                 elif any(word in message for word in ("permission", "scope", "access")):
                     hint = " (check API key resource permissions in Brevo)"
+                else:
+                    for field in ("sender", "subject", "htmlContent", "listIds", "recipients", "tag", "type"):
+                        if re.search(rf"\b{field.lower()}\b", message):
+                            hint = f" (provider mentioned campaign field: {field})"
+                            break
             raise BrevoApiError(f"{method} {path} -> HTTP {response.status_code}{hint}")
         if response.status_code == 204 or not response.content:
             return None
@@ -698,6 +703,7 @@ def build_campaign_payload(
 ) -> Dict[str, Any]:
     payload: Dict[str, Any] = {
         "name": issue_name,
+        "type": "classic",
         "sender": {"name": config.sender_name, "email": config.sender_email},
         "subject": issue.subject,
         "htmlContent": issue.html,

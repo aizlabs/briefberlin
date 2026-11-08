@@ -508,6 +508,7 @@ def test_run_uses_sent_watermark_as_window_start():
     assert code == EXIT_OK
     assert details["reason"] == "created"
     payload = next(call[2] for call in client.calls if call[0] == "POST")
+    assert payload["type"] == "classic"
     html = payload["htmlContent"]
     assert "Story old-a2" not in html
     assert "Story new-a2" in html
@@ -802,6 +803,8 @@ def test_workflow_module_command_runs_without_editable_install():
         ("POST Method is not allowed on this path", "provider rejected this endpoint method"),
         ("Your account is not activated", "check account activation or suspension in Brevo"),
         ("Missing scope", "check API key resource permissions in Brevo"),
+        ("type is missing", "provider mentioned campaign field: type"),
+        ("htmlContent is invalid", "provider mentioned campaign field: htmlContent"),
         ("Unknown failure", ""),
     ],
 )
