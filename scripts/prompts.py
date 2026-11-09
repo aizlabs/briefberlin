@@ -440,10 +440,10 @@ def get_quality_judge_prompt(article: AdaptedArticle, level: str) -> str:
     Prompt for quality evaluation
 
     LLM judge scores article on 4 criteria (0-10 total):
-    - Grammar & Language (0-4)
-    - Educational Value (0-3)
-    - Content Quality (0-2)
-    - Level Appropriateness (0-1)
+    - Grammar & Language (0-5)
+    - Educational Value (0-1)
+    - Content Quality (0-1)
+    - Level Appropriateness (0-3)
 
     Args:
         article: Article dict with 'title', 'content', and text metadata
@@ -466,22 +466,22 @@ Content:
 
 EVALUATION CRITERIA (total 0-10 points):
 
-1. Grammar & Language (0-4 points):
+1. Grammar & Language (0-5 points):
 {LEVEL_EVALUATION_CRITERIA[level]}
 - Are there any grammar errors?
 - Is the grammar appropriate for {level}?
 
-2. Educational Value (0-3 points):
+2. Educational Value (0-1 point):
 - Is this interesting and useful for German learners?
 - Does it teach cultural concepts?
 - Is the article itself useful as a learning text?
 
-3. Content Quality (0-2 points):
+3. Content Quality (0-1 point):
 - Is the information accurate and coherent?
 - Is it well-structured (clear paragraphs)?
 - Does it flow naturally?
 
-4. Level Appropriateness (0-1 point):
+4. Level Appropriateness (0-3 points):
 - Is vocabulary suitable for {level}?
 - Is sentence complexity appropriate?
 - Would this engage {level} learners?
@@ -501,16 +501,16 @@ You see only the article text at this stage of the pipeline. Score only its lang
 
 OUTPUT FORMAT (return ONLY valid JSON, no markdown):
 {{
-  "grammar_score": 0-4,
+  "grammar_score": 0-5,
   "grammar_issues": ["specific issue 1", "specific issue 2"] or [],
 
-  "educational_score": 0-3,
+  "educational_score": 0-1,
   "educational_notes": "brief comment",
 
-  "content_score": 0-2,
+  "content_score": 0-1,
   "content_issues": ["issue1"] or [],
 
-  "level_score": 0-1,
+  "level_score": 0-3,
 
   "total_score": sum_of_all_scores,
 
