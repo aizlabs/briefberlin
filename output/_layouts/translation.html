@@ -29,7 +29,10 @@ layout: default
   <div class="page__inner-wrap">
     <header>
       {% if page.title %}<h1 id="page-title" class="page__title" itemprop="headline">{{ page.title }}</h1>{% endif %}
-      {% include language-selector.html t=t %}
+      <div class="article-tools">
+        {% include language-selector.html t=t %}
+        {% include newsletter-date-link.html %}
+      </div>
 
       <div class="article-meta">
         {% if page.level %}
