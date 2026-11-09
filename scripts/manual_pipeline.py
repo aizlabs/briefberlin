@@ -14,6 +14,7 @@ from typing import Sequence
 from scripts.audio_pipeline import AudioPipeline
 from scripts.config import AppConfig, load_config
 from scripts.content_generator import ContentGenerator
+from scripts.generation_trace import GenerationTrace
 from scripts.glossary_generator import GlossaryGenerator
 from scripts.logger import setup_logger
 from scripts.models import AdaptedArticle, QualityResult, SourceArticle, Topic
@@ -188,8 +189,20 @@ def _execute_manual_pipeline(
     topic = build_manual_topic(topic_metadata, sources)
     logger.info("Extracted topic metadata: title=%s keywords=%s", topic.title, topic.keywords)
 
-    generator = ContentGenerator(config, logger)
-    quality_gate = QualityGate(config, logger)
+    trace = GenerationTrace(source_paths, run_id) if config.generation.private_trace else None
+    if trace:
+        trace.record(
+            "settings", levels=levels, min_score=config.quality_gate.min_score,
+            max_attempts=config.quality_gate.max_attempts,
+            regeneration_strategy=config.generation.two_step_synthesis.regeneration_strategy,
+        )
+        logger.info("Private generation trace enabled beside the first input file")
+    generator = (
+        ContentGenerator(config, logger, trace=trace) if trace else ContentGenerator(config, logger)
+    )
+    quality_gate = (
+        QualityGate(config, logger, trace=trace) if trace else QualityGate(config, logger)
+    )
     glossary_generator = GlossaryGenerator(config, logger)
     translator = ArticleTranslator(config, logger)
     audio_pipeline = AudioPipeline(config, logger)
@@ -255,6 +268,8 @@ def _execute_manual_pipeline(
 
     logger.info("=" * 60)
     logger.info("Manual pipeline complete: published=%s failed=%s", len(published), failed)
+    if trace:
+        trace.record("run_completed", published=len(published), failed=failed)
     logger.info("=" * 60)
 
     for title, level, score in published:

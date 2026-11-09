@@ -30,6 +30,7 @@ ENV/
 private-input/
 input/private/
 *.source.txt
+*.generation-trace.jsonl
 
 # Runtime diagnostics that may contain operational details
 logs/

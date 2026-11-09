@@ -35,6 +35,7 @@ entity_extraction:
 
 # Article generation settings
 generation:
+  private_trace: false  # Preserve drafts and judge feedback beside the first private input
   articles_per_run: 4
   levels:
     - A2

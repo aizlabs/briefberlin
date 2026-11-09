@@ -31,6 +31,7 @@ load_dotenv()
 
 
 class GenerationConfig(BaseModel):
+    private_trace: bool = True
     articles_per_run: int = Field(..., ge=1)
     levels: List[str] = Field(..., min_length=1)
     target_word_count: Dict[str, int]
@@ -223,6 +224,12 @@ def apply_env_overrides(config_dict: Dict) -> Dict:
         config_dict.setdefault('llm', {})
         config_dict['llm'].setdefault('usage_reporting', {})
         config_dict['llm']['usage_reporting']['enabled'] = usage_reporting_enabled
+
+    # Private generation history (an explicit environment value overrides YAML).
+    private_trace = parse_bool(os.getenv('GENERATION_PRIVATE_TRACE'))
+    if private_trace is not None:
+        config_dict.setdefault('generation', {})
+        config_dict['generation']['private_trace'] = private_trace
 
     # Override articles per run
     articles_per_run = os.getenv('ARTICLES_PER_RUN')

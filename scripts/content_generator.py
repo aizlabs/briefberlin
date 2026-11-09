@@ -14,6 +14,7 @@ from typing import List
 
 from scripts.article_synthesizer import ArticleSynthesizer
 from scripts.config import AppConfig
+from scripts.generation_trace import GenerationTrace
 from scripts.level_adapter import LevelAdapter
 from scripts.models import AdaptedArticle, SourceArticle, Topic
 
@@ -21,7 +22,10 @@ from scripts.models import AdaptedArticle, SourceArticle, Topic
 class ContentGenerator:
     """Orchestrates two-step article generation (synthesis + adaptation)"""
 
-    def __init__(self, config: AppConfig, logger: logging.Logger):
+    def __init__(
+        self, config: AppConfig, logger: logging.Logger, trace: GenerationTrace | None = None
+    ):
+        self.trace = trace
         self.config = config
         self.logger = logger.getChild('ContentGenerator')
         self.generation_config = config.generation
@@ -67,6 +71,8 @@ class ContentGenerator:
         # Step 1: Synthesize native-level base article
         self.logger.info(f"Starting two-step generation for {level}: {topic.title}")
         base_article = self.synthesizer.synthesize(topic, sources)
+        if self.trace:
+            self.trace.record("base_article", level=level, article=base_article.model_dump(mode="json"))
 
         # Step 2: Adapt to target CEFR level
         article = self.adapter.adapt_to_level(base_article, level)
@@ -116,6 +122,8 @@ class ContentGenerator:
                     "falling back to full pipeline regeneration"
                 )
                 base_article = self.synthesizer.synthesize(topic, sources)
+                if self.trace:
+                    self.trace.record("base_article", level=level, article=base_article.model_dump(mode="json"))
             else:
                 self.logger.debug("Reusing base article from previous attempt")
 
@@ -126,5 +134,7 @@ class ContentGenerator:
             # Re-synthesize + re-adapt
             self.logger.info("Regenerating full pipeline (synthesis + adaptation)")
             base_article = self.synthesizer.synthesize(topic, sources)
+            if self.trace:
+                self.trace.record("base_article", level=level, article=base_article.model_dump(mode="json"))
 
             return self.adapter.adapt_to_level(base_article, level, feedback=issues)

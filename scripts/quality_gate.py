@@ -14,6 +14,7 @@ from pydantic import BaseModel, Field
 
 from scripts import prompts
 from scripts.config import AppConfig
+from scripts.generation_trace import GenerationTrace
 from scripts.llm_factory import create_chat_model
 from scripts.models import AdaptedArticle, QualityResult, SourceArticle, Topic
 
@@ -37,7 +38,10 @@ class JudgeResponse(BaseModel):
 class QualityGate:
     """Quality checking with smart regeneration"""
 
-    def __init__(self, config: AppConfig, logger: logging.Logger):
+    def __init__(
+        self, config: AppConfig, logger: logging.Logger, trace: GenerationTrace | None = None
+    ):
+        self.trace = trace
         self.config = config
         self.logger = logger.getChild('QualityGate')
 
@@ -101,7 +105,6 @@ class QualityGate:
         Returns:
             (final_article or None, quality_result)
         """
-        attempt_history = []
         current_article = article
         level = article.level
 
@@ -109,15 +112,19 @@ class QualityGate:
             self.logger.info(f"Quality check attempt {attempt}/{self.max_attempts}")
 
             # Evaluate current version
+            if self.trace:
+                self.trace.record(
+                    "draft", level=level, attempt=attempt,
+                    article=current_article.model_dump(mode="json"),
+                )
             result_dict = self._evaluate(current_article) # _evaluate returns Dict for now
 
-            attempt_history.append({
-                'attempt': attempt,
-                'score': result_dict['total_score'],
-                'issues': result_dict['issues']
-            })
-
             passed = result_dict['total_score'] >= self.min_score
+            if self.trace:
+                self.trace.record(
+                    "evaluation", level=level, attempt=attempt, passed=passed,
+                    min_score=self.min_score, feedback=result_dict,
+                )
             if not passed:
                 # Logged at info so a failed run explains itself without debug logging.
                 self.logger.info(
@@ -174,6 +181,8 @@ class QualityGate:
                     issues=result_dict['issues']
                 )
             except Exception as e:
+                if self.trace:
+                    self.trace.record("regeneration_failed", level=level, attempt=attempt + 1, error=str(e))
                 self.logger.error(f"Regeneration failed: {e}")
                 return None, QualityResult(
                     passed=False,

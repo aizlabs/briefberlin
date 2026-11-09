@@ -29,6 +29,7 @@ def base_config() -> AppConfig:
     config_dict = {
         'environment': 'test',
         'generation': {
+            'private_trace': False,
             'articles_per_run': 2,
             'levels': ['A2', 'B1'],
             'target_word_count': {
