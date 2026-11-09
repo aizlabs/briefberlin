@@ -29,7 +29,7 @@ def test_trace_defaults(base_config):
     generation = base_config.generation.model_dump(exclude={"private_trace"})
     assert GenerationConfig(**generation).private_trace is True
     config = load_yaml(Path(__file__).parents[1] / "config/base.yaml")
-    assert config["generation"]["private_trace"] is False
+    assert config["generation"]["private_trace"] is True
 
 
 def test_trace_location_permissions_and_preservation(tmp_path):

@@ -31,16 +31,15 @@ uv run briefberlin-manual private-input/source-1.source.txt private-input/source
 
 Use `--level B1` or repeat `--level A2 --level B1` to override configured levels. Use `--dry-run` to validate without writing a post.
 
-To preserve private generation history, set `GENERATION_PRIVATE_TRACE=true` (or
-`generation.private_trace: true` in YAML). Each run creates a unique
+Private generation history is enabled by default. Each run creates a unique
 `<first-input-filename>.<id>.generation-trace.jsonl` beside the first input file,
 including when inputs come from different folders. It records synthesized base
 articles, every simplified draft, and complete structured judge feedback with
 attempt numbers, scores, and pass/fail decisions. Each event is saved immediately,
 including during `--dry-run`. Files are Git-ignored, created with owner-only
 permissions, and retained indefinitely; delete them manually when no longer needed.
-The code default is enabled; the repository's `config/base.yaml` explicitly
-disables it. An explicit environment value overrides YAML.
+To disable it, set `GENERATION_PRIVATE_TRACE=false` or
+`generation.private_trace: false` in YAML. An explicit environment value overrides YAML.
 
 Articles use `output.default_author` from `config/base.yaml` unless an author is selected explicitly:
 
