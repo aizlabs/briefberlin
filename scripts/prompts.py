@@ -486,6 +486,19 @@ EVALUATION CRITERIA (total 0-10 points):
 - Is sentence complexity appropriate?
 - Would this engage {level} learners?
 
+SCOPE OF THIS EVALUATION:
+You see only the article text at this stage of the pipeline. Score only its language, its fit for
+{level} learners, and its internal coherence.
+- Do not ask for a source, a publication date, or external verification. Sources are deliberately
+  not shown to readers, and you cannot check facts here. Report a factual problem only if the text
+  contradicts itself.
+- Do not ask for a glossary or word list. A glossary is added automatically after this check. Judge
+  whether the vocabulary fits {level}; a few necessary topic words are acceptable when the sentence
+  makes their meaning clear.
+- Do not ask for content warnings, comprehension questions, exercises, or alternative texts. They
+  are not part of this format. Serious news topics are allowed and must not lower the score.
+- Every item in "issues" must be a change that can be made by rewriting the article text itself.
+
 OUTPUT FORMAT (return ONLY valid JSON, no markdown):
 {{
   "grammar_score": 0-4,
