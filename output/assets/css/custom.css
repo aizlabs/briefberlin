@@ -901,7 +901,7 @@ body {
 .layout--post .page__content,
 .layout--translation .page__content {
   font-family: var(--serif);
-  font-size: 1.1rem;
+  font-size: calc(1.1rem * var(--reading-scale, 1));
   line-height: 1.6;
   color: var(--ink);
 }
@@ -967,9 +967,90 @@ body {
   margin: 0 0 1.75rem;
   color: var(--ink);
   font-family: var(--serif);
-  font-size: 1.2rem;
+  font-size: calc(1.2rem * var(--reading-scale, 1));
   font-weight: 500;
   line-height: 1.45;
+}
+
+/* A single, quiet reading control with generous touch targets. */
+.reading-size[hidden] {
+  display: none;
+}
+
+.reading-size {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-block: -0.25rem 1.25rem;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 0.75rem;
+}
+
+.reading-size__stepper {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.035);
+}
+
+.reading-size button {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.reading-size .reading-size__smaller {
+  font-size: 1rem;
+}
+
+.reading-size .reading-size__larger {
+  font-size: 1.35rem;
+}
+
+.reading-size button:hover:not([aria-disabled="true"]) {
+  background: var(--rule);
+}
+
+.reading-size button:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: -4px;
+}
+
+.reading-size button[aria-disabled="true"] {
+  color: var(--ink-mute);
+  cursor: default;
+}
+
+.reading-size__value {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 48px;
+  min-height: 22px;
+  border-inline: 1px solid var(--rule);
+  font-variant-numeric: tabular-nums;
+}
+
+.reading-size .reading-size__reset {
+  padding-inline: 0.25em;
+  color: var(--ink-mute);
+}
+
+/* Reserve space so returning to 100% never moves the surrounding controls. */
+.reading-size__reset[aria-disabled="true"] {
+  visibility: hidden;
 }
 
 .page__sources {
@@ -988,7 +1069,7 @@ body {
   border-top: 1px solid var(--rule-firm);
   border-bottom: 0;
   font-family: var(--sans);
-  font-size: 0.78rem;
+  font-size: calc(0.78rem * var(--reading-scale, 1));
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;

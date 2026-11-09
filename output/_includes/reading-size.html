@@ -1,0 +1,8 @@
+<div class="reading-size" data-reading-size role="group" aria-label="{{ include.t.reading_size_label | escape }}" hidden>
+  <div class="reading-size__stepper" dir="ltr">
+    <button type="button" class="reading-size__smaller" data-reading-size-decrease aria-label="{{ include.t.reading_size_decrease | escape }}" title="{{ include.t.reading_size_decrease | escape }}">A</button>
+    <span class="reading-size__value" data-reading-size-value role="status" aria-live="polite" aria-atomic="true">100%</span>
+    <button type="button" class="reading-size__larger" data-reading-size-increase aria-label="{{ include.t.reading_size_increase | escape }}" title="{{ include.t.reading_size_increase | escape }}">A</button>
+  </div>
+  <button type="button" class="reading-size__reset" data-reading-size-reset>{{ include.t.reading_size_reset }}</button>
+</div>

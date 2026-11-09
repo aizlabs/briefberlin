@@ -10,6 +10,10 @@
 # Liquid cannot localize month NAMES, so date_format is numeric outside `en`.
 
 de:
+  reading_size_label: "Schriftgröße"
+  reading_size_decrease: "Schrift verkleinern"
+  reading_size_increase: "Schrift vergrößern"
+  reading_size_reset: "Zurücksetzen"
   by_label: "Von"
   reading_time_label: "%d Min. Lesezeit"
   # Level words, never CEFR codes: a learner recognizes "Anfänger" long before
@@ -49,6 +53,10 @@ de:
   date_label: "Aktualisiert:"
 
 en:
+  reading_size_label: "Text size"
+  reading_size_decrease: "Decrease text size"
+  reading_size_increase: "Increase text size"
+  reading_size_reset: "Reset"
   by_label: "By"
   reading_time_label: "%d min read"
   level_a2: "Beginner"
@@ -88,6 +96,10 @@ en:
   date_label: "Updated:"
 
 es:
+  reading_size_label: "Tamaño del texto"
+  reading_size_decrease: "Reducir el tamaño del texto"
+  reading_size_increase: "Aumentar el tamaño del texto"
+  reading_size_reset: "Restablecer"
   by_label: "Por"
   reading_time_label: "%d min de lectura"
   level_a2: "Principiante"
@@ -125,6 +137,10 @@ es:
   date_label: "Actualizado:"
 
 pl:
+  reading_size_label: "Rozmiar tekstu"
+  reading_size_decrease: "Zmniejsz tekst"
+  reading_size_increase: "Powiększ tekst"
+  reading_size_reset: "Resetuj"
   by_label: "Autor"
   reading_time_label: "%d min czytania"
   level_a2: "Początkujący"
@@ -162,6 +178,10 @@ pl:
   date_label: "Ostatnia aktualizacja:"
 
 tr:
+  reading_size_label: "Yazı boyutu"
+  reading_size_decrease: "Yazıyı küçült"
+  reading_size_increase: "Yazıyı büyüt"
+  reading_size_reset: "Sıfırla"
   by_label: "Yazan"
   reading_time_label: "%d dk okuma"
   level_a2: "Başlangıç"
@@ -199,6 +219,10 @@ tr:
   date_label: "Güncelleme tarihi:"
 
 uk:
+  reading_size_label: "Розмір тексту"
+  reading_size_decrease: "Зменшити текст"
+  reading_size_increase: "Збільшити текст"
+  reading_size_reset: "Скинути"
   by_label: "Автор"
   reading_time_label: "%d хв читання"
   level_a2: "Початковий"
@@ -236,6 +260,10 @@ uk:
   date_label: "Дата зміни:"
 
 ru:
+  reading_size_label: "Размер текста"
+  reading_size_decrease: "Уменьшить текст"
+  reading_size_increase: "Увеличить текст"
+  reading_size_reset: "Сбросить"
   by_label: "Автор"
   reading_time_label: "%d мин чтения"
   level_a2: "Начальный"
@@ -273,6 +301,10 @@ ru:
   date_label: "Дата изменения:"
 
 ar:
+  reading_size_label: "حجم النص"
+  reading_size_decrease: "تصغير النص"
+  reading_size_increase: "تكبير النص"
+  reading_size_reset: "إعادة ضبط"
   by_label: "بقلم"
   reading_time_label: "%d دقيقة قراءة"
   level_a2: "مبتدئ"

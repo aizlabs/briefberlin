@@ -49,6 +49,8 @@ layout: default
           {% endif %}
         </div>
 
+        {% include reading-size.html t=t %}
+
         {% if page.summary %}
           <p class="article-summary">{{ page.summary | escape }}</p>
         {% endif %}
