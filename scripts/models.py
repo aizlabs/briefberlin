@@ -437,10 +437,10 @@ class QualityResult(BaseModel):
     attempts: int = Field(..., ge=1, description="Number of generation attempts")
 
     # Detailed scores (optional)
-    grammar_score: Optional[float] = Field(default=None, ge=0, le=4)
-    educational_score: Optional[float] = Field(default=None, ge=0, le=3)
-    content_score: Optional[float] = Field(default=None, ge=0, le=2)
-    level_score: Optional[float] = Field(default=None, ge=0, le=1)
+    grammar_score: Optional[float] = Field(default=None, ge=0, le=5)
+    educational_score: Optional[float] = Field(default=None, ge=0, le=1)
+    content_score: Optional[float] = Field(default=None, ge=0, le=1)
+    level_score: Optional[float] = Field(default=None, ge=0, le=3)
 
     model_config = ConfigDict(frozen=False)
 

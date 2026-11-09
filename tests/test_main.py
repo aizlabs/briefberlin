@@ -63,8 +63,8 @@ def test_main_logs_glossary_retry_counts_when_glossary_stays_empty(
             strengths=["clear structure"],
             attempts=1,
             grammar_score=3.0,
-            educational_score=2.5,
-            content_score=2.0,
+            educational_score=0.8,
+            content_score=0.8,
             level_score=1.0,
         ),
     )
@@ -171,8 +171,8 @@ def test_main_does_not_log_after_retry_warning_when_no_retry_was_used(
             strengths=["clear structure"],
             attempts=1,
             grammar_score=3.0,
-            educational_score=2.5,
-            content_score=2.0,
+            educational_score=0.8,
+            content_score=0.8,
             level_score=1.0,
         ),
     )

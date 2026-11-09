@@ -100,8 +100,8 @@ def test_run_manual_pipeline_generates_and_publishes(
             strengths=["klar"],
             attempts=1,
             grammar_score=3.0,
-            educational_score=2.5,
-            content_score=1.8,
+            educational_score=0.8,
+            content_score=0.8,
             level_score=1.0,
         ),
     )
@@ -193,8 +193,8 @@ def test_run_manual_pipeline_reuses_publish_timestamp_for_audio(
             strengths=["klar"],
             attempts=1,
             grammar_score=3.0,
-            educational_score=2.5,
-            content_score=1.8,
+            educational_score=0.8,
+            content_score=0.8,
             level_score=1.0,
         ),
     )
@@ -287,8 +287,8 @@ def test_run_manual_pipeline_uses_publish_timestamp_override(
             strengths=["klar"],
             attempts=1,
             grammar_score=3.0,
-            educational_score=2.5,
-            content_score=1.8,
+            educational_score=0.8,
+            content_score=0.8,
             level_score=1.0,
         ),
     )
@@ -376,8 +376,8 @@ def test_run_manual_pipeline_dry_run_skips_audio_preparation(
             strengths=["klar"],
             attempts=1,
             grammar_score=3.0,
-            educational_score=2.5,
-            content_score=1.8,
+            educational_score=0.8,
+            content_score=0.8,
             level_score=1.0,
         ),
     )
@@ -444,7 +444,7 @@ def _pipeline_mocks(
         article,
         QualityResult(
             passed=True, score=8.3, issues=[], strengths=["klar"], attempts=1,
-            grammar_score=3.0, educational_score=2.5, content_score=1.8, level_score=1.0,
+            grammar_score=3.0, educational_score=0.8, content_score=0.8, level_score=1.0,
         ),
     )
     mock_quality_gate_class.return_value = gate

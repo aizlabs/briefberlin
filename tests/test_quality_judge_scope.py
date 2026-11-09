@@ -2,6 +2,7 @@
 
 from types import SimpleNamespace
 
+from scripts.models import QualityResult
 from scripts.prompts import get_quality_judge_prompt
 
 
@@ -23,3 +24,18 @@ def test_judge_points_add_up_to_ten_and_favour_language_and_level():
         "Level Appropriateness (0-3 points)",
     ):
         assert line in prompt
+
+
+def test_quality_result_accepts_the_top_score_of_every_category():
+    result = QualityResult(
+        passed=True,
+        score=10,
+        issues=[],
+        strengths=[],
+        attempts=1,
+        grammar_score=5,
+        educational_score=1,
+        content_score=1,
+        level_score=3,
+    )
+    assert result.grammar_score == 5
