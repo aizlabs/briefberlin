@@ -19,9 +19,10 @@ organization_schema: true
   <img class="paper-masthead__mark" src="{{ '/assets/images/logo.svg' | relative_url }}" alt="" width="44" height="44">
   <h1 class="paper-masthead__wordmark"><a href="{{ '/' | relative_url }}">BriefBerlin</a></h1>
   <p class="paper-masthead__tagline">Deutsch lernen mit aktuellen Nachrichten aus Berlin</p>
-  <p class="paper-masthead__dateline">
+  <p class="paper-masthead__dateline paper-masthead__dateline--newsletter">
     <span>{{ weekdays[weekday_index] }}, {{ site.time | date: "%-d" }}. {{ months[month_index] }} {{ site.time | date: "%Y" }}</span>
     <span class="paper-masthead__edition">Ausgabe Berlin</span>
+    {% include newsletter-date-link.html %}
   </p>
 </header>
 
