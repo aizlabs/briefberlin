@@ -1,0 +1,46 @@
+---
+lang: ar
+ref: 171949-vermisste-jugendliche-aus-berlin-tot-in-brandenbur-b1
+title: "العثور على فتاة مفقودة من برلين ميتة في براندنبورغ"
+date: 2026-11-10 17:19:49
+author: "clara-becker"
+level: B1
+category: "Kriminalität"
+summary: "عُثر على Lisa T. المفقودة ميتة في براندنبورغ؛ وتوجد شبهات قوية ضد رجل مصاب."
+description: "عُثر على Lisa T. المفقودة ميتة في براندنبورغ؛ وتوجد شبهات قوية ضد رجل مصاب."
+source_title: "Vermisste Jugendliche aus Berlin tot in Brandenburg gefunden"
+reading_time: 3
+glossary_heading: "المفردات"
+audio: null
+translations:
+  de: /articles/171949-vermisste-jugendliche-aus-berlin-tot-in-brandenbur-b1/
+  en: /articles/171949-vermisste-jugendliche-aus-berlin-tot-in-brandenbur-b1/en/
+  tr: /articles/171949-vermisste-jugendliche-aus-berlin-tot-in-brandenbur-b1/tr/
+  ru: /articles/171949-vermisste-jugendliche-aus-berlin-tot-in-brandenbur-b1/ru/
+  ar: /articles/171949-vermisste-jugendliche-aus-berlin-tot-in-brandenbur-b1/ar/
+  uk: /articles/171949-vermisste-jugendliche-aus-berlin-tot-in-brandenbur-b1/uk/
+  pl: /articles/171949-vermisste-jugendliche-aus-berlin-tot-in-brandenbur-b1/pl/
+  es: /articles/171949-vermisste-jugendliche-aus-berlin-tot-in-brandenbur-b1/es/
+---
+
+توفيت Lisa T.، الفتاة المفقودة من حي مارتسان في برلين. وعُثر على الفتاة البالغة من العمر 13 عاماً يوم الأحد في منزل خالٍ في باد فراينفالده بولاية براندنبورغ. وأعلنت النيابة العامة في برلين ذلك. كما عثرت فرق التدخل في المنزل نفسه على رجل مصاب بجروح تهدد حياته.
+
+اختفت Lisa صباح الثلاثاء وهي في طريقها إلى المدرسة. وكانت والدتها قد طلبت المساعدة علناً في البحث عنها حتى اللحظة الأخيرة. وتحدثت عن ذلك، من بين أمور أخرى، في بث مباشر على الإنترنت. ويقع مكان العثور عليها على بعد نحو 50 كيلومتراً شمال شرقي حي مارتسان في برلين، بالقرب من الحدود البولندية.
+
+استُدعيت الشرطة إلى المنزل في منطقة ألتغليتسن يوم الأحد نحو الظهر. وكانت هناك شكوك بأن شخصاً اقتحم المنزل الخالي. وعثرت الشرطة على الفتاة هناك بالصدفة. ولم يتعرف المحققون على المكان من خلال بلاغ يتعلق بقضية اختفائها.
+
+توجد شبهات قوية بأن الرجل الذي كان في المنزل اختطف Lisa وقتلها. وبحسب النيابة العامة، فقد ألحق بنفسه الجروح التي تهدد حياته. ونُقل إلى المستشفى، حيث تحرسه الشرطة. ولم يكن واضحاً في البداية ما إذا كان سينجو. ولم تكن هويته معروفة بعد أيضاً. كما لم يكن سبب وفاة الفتاة معروفاً. وكان من المقرر أن يفحص الأطباء جثمانها يوم الاثنين لمعرفة السبب. وبحث فريق من شرطة جرائم القتل عن أدلة في المنزل مساء الأحد. وسيحقق المحققون، من بين أمور أخرى، في كيفية اختطاف Lisa وما حدث في المنزل.
+
+حظيت حالات سابقة لاختفاء مراهقين في برلين باهتمام لفترة طويلة. فقد اختفت التلميذة Georgine K. عام 2006 أثناء عودتها من المدرسة في حي موابيت. ولم يصل المحققون إلى أحد جيرانها إلا بعد عشر سنوات. وأدانته محكمة لاحقاً بجريمة قتل. كما أن Rebecca من حي بريتس في برلين مفقودة منذ عام 2019. وكان عمرها آنذاك 15 عاماً. ولم تؤد عمليات البحث الكبيرة في براندنبورغ والبلاغات الكثيرة إلى معرفة مكانها على وجه اليقين.
+
+## المفردات
+
+- <strong lang="de" dir="ltr">vermisste</strong> - مفقودة - شخص يُبحث عنه لأن أحداً لا يعرف مكانه.
+- <strong lang="de" dir="ltr">Staatsanwaltschaft</strong> - النيابة العامة - جهة تحقق في الجرائم ويمكنها توجيه الاتهام.
+- <strong lang="de" dir="ltr">Einsatzkräfte</strong> - فرق التدخل - أشخاص يساعدون أثناء مهمة، مثل أفراد الشرطة.
+- <strong lang="de" dir="ltr">Fundort</strong> - مكان العثور - المكان الذي يُعثر فيه على شخص أو شيء.
+- <strong lang="de" dir="ltr">eingebrochen</strong> - اقتحم - دخل شخص إلى مبنى من دون إذن.
+- <strong lang="de" dir="ltr">Vermisstenfall</strong> - قضية شخص مفقود - قضية يُبحث فيها عن شخص اختفى.
+- <strong lang="de" dir="ltr">verschleppt</strong> - اختُطف - أُخذ شخص إلى مكان آخر ضد إرادته.
+- <strong lang="de" dir="ltr">zugefügt</strong> - ألحق - هنا: تسبب لنفسه بجروح.
+- <strong lang="de" dir="ltr">Gewissheit</strong> - اليقين - المعرفة المؤكدة بأن شيئاً ما صحيح.
