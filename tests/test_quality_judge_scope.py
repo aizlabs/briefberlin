@@ -3,7 +3,7 @@
 from types import SimpleNamespace
 
 from scripts.models import QualityResult
-from scripts.prompts import get_quality_judge_prompt
+from scripts.prompts import A2_NEWS_PROCESSING_INSTRUCTIONS, get_quality_judge_prompt
 
 
 def test_judge_prompt_excludes_what_the_pipeline_handles_elsewhere():
@@ -39,3 +39,11 @@ def test_quality_result_accepts_the_top_score_of_every_category():
         level_score=3,
     )
     assert result.grammar_score == 5
+
+
+def test_a2_instructions_name_the_forms_the_judge_rejects():
+    text = A2_NEWS_PROCESSING_INSTRUCTIONS
+    assert "A2 HARD RULES" in text
+    assert "Maximum length: 15 words (hard limit)" in text
+    for form in ("könnte", "würde", "wurde", "um ... zu", "war, hatte"):
+        assert form in text
