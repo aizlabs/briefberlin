@@ -28,8 +28,8 @@ organization_schema: true
 
 {%- comment -%}
   The translations are the feature a newcomer from Kyiv or Istanbul needs to see
-  first, so each language pitches itself in its own script. Picking one shows a
-  link to that translation under every story; picking it again hides them.
+  first, so each language is named in its own script. Picking one shows a link
+  to that translation under every story; picking it again hides them.
 {%- endcomment -%}
 <section class="langband" aria-labelledby="langband-title" data-langband>
   <h2 class="langband__title" id="langband-title">Jeder Artikel auch in deiner Sprache</h2>
@@ -39,7 +39,6 @@ organization_schema: true
       <button type="button" class="langband__option" data-reader-lang-option="{{ l.code }}" aria-pressed="false"
               lang="{{ l.code }}" dir="{{ l.dir }}">
         <span class="langband__endonym">{{ l.endonym }}</span>
-        <span class="langband__pitch">{{ l.homepage_pitch }}</span>
       </button>
     </li>
     {%- endunless %}{% endfor %}

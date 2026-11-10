@@ -1831,7 +1831,7 @@ body {
    Front page: reading languages and one story per news item
    ==========================================================================
    The language band sells the translations before the reader has to find the
-   dropdown inside an article. Each option pitches itself in its own script. */
+   dropdown inside an article. Compact buttons name each language in its own script. */
 
 .langband {
   max-width: var(--page-width);
@@ -1851,9 +1851,9 @@ body {
 }
 
 .langband__list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -1864,12 +1864,10 @@ body {
 }
 
 .langband__option {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  width: 100%;
-  height: 100%;
-  padding: 0.55rem 0.7rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem 0.75rem;
   border: 1px solid var(--rule);
   border-radius: 3px;
   background: transparent;
@@ -1896,13 +1894,6 @@ body {
   font-family: var(--sans);
   font-size: 15px;
   font-weight: 700;
-}
-
-.langband__pitch {
-  font-family: var(--serif);
-  font-size: 13px;
-  line-height: 1.35;
-  color: var(--ink-soft);
 }
 
 /* A paired story renders both versions; only the active level's one shows. */
@@ -1951,25 +1942,6 @@ a.story__level.is-current {
 @media (pointer: coarse) {
   .langband__option {
     min-height: 44px;
-  }
-}
-
-/* On a phone the seven pitches would push the news below the fold, so the band
-   becomes a single wrap of language names; the title already says what they do. */
-@media (max-width: 640px) {
-  .langband__list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-  }
-
-  .langband__option {
-    width: auto;
-    padding: 0.35rem 0.75rem;
-  }
-
-  .langband__pitch {
-    display: none;
   }
 }
 
