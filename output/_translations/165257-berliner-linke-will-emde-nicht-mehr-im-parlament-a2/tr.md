@@ -10,8 +10,6 @@ summary: "Berlin Die Linke, Vanessa Emde’nin Berlin parlamentosundaki yerini b
 description: "Berlin Die Linke, Vanessa Emde’nin Berlin parlamentosundaki yerini bırakmasını istiyor."
 source_title: "Berliner Linke will Emde nicht mehr im Parlament"
 reading_time: 2
-glossary_heading: "Kelimeler"
-audio: null
 translations:
   de: /articles/165257-berliner-linke-will-emde-nicht-mehr-im-parlament-a2/
   en: /articles/165257-berliner-linke-will-emde-nicht-mehr-im-parlament-a2/en/
@@ -32,14 +30,3 @@ Parti bu adım için basit nedenler söylüyor. Emde, onların görüşüne gör
 Kerstin Wolter ve Maximilian Schirmer Berlin Die Linke’yi yönetiyor. Onlar şöyle diyor: Partinin Emde’ye artık güveni yok. Emde, Neukölln’deki insanların oylarıyla doğrudan parlamentoya geldi.
 
 Sonunda açık: Berlin Die Linke içindeki tartışma henüz bitmedi. Şimdi konu, Emde’nin yerini gerçekten bırakıp bırakmayacağı.
-
-## Kelimeler
-
-- <strong lang="de" dir="ltr">ihren Platz abgibt</strong> - yerini bırakıyor - o, koltuğunu bırakıyor
-- <strong lang="de" dir="ltr">Abgeordnetenhaus</strong> - eyalet parlamentosu / temsilciler meclisi - Berlin’de bir parlamento
-- <strong lang="de" dir="ltr">Leitung</strong> - yönetim - bir grubu yöneten kişiler
-- <strong lang="de" dir="ltr">Mandat</strong> - vekillik / siyasi yer - seçmenler yoluyla gelen siyasi bir yer
-- <strong lang="de" dir="ltr">Streit</strong> - tartışma - insanlar aynı fikirde olmadığında
-- <strong lang="de" dir="ltr">Absprachen</strong> - anlaşmalar - insanların birlikte kararlaştırdığı şey
-- <strong lang="de" dir="ltr">nicht eingehalten</strong> - uymadı / yerine getirmedi - kararlaştırıldığı gibi yapmadı
-- <strong lang="de" dir="ltr">Vertrauen</strong> - güven - birinin iyi ve dürüst olduğuna inanma

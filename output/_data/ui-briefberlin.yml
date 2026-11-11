@@ -34,8 +34,6 @@ de:
   languages_search: "Sprache suchen"
   languages_aria: "Verfügbare Sprachen"
   languages_no_match: "Keine Sprache gefunden"
-  translation_notice: ""
-  translation_hint: ""
   # Theme chrome. Kept here, NOT in a vendored copy of the theme's
   # _data/ui-text.yml: Jekyll 3 does not load _data from theme gems, so
   # site.data.ui-text has always been nil on this site.
@@ -49,6 +47,25 @@ de:
   date_label: "Aktualisiert:"
 
 en:
+  news_navigation:
+    "/levels/": "Levels"
+    "/about/": "About"
+    "/authors/": "Editorial team"
+    "/editorial-standards/": "Standards"
+    "/newsletter/": "Newsletter"
+    "/contact/": "Contact"
+  frontpage_levels: "Reading level"
+  frontpage_lead: "Lead story"
+  frontpage_rail: "Also in the news"
+  frontpage_more: "More stories"
+  frontpage_briefs: "In brief"
+  news_categories:
+    Politik: "Politics"
+    Gesundheit: "Health"
+    Kriminalität: "Crime"
+    Stadtleben: "City life"
+  news_label: "News"
+  news_empty: "No articles in English yet."
   by_label: "By"
   reading_time_label: "%d min read"
   level_a2: "Beginner"
@@ -73,8 +90,7 @@ en:
   languages_search: "Search languages"
   languages_aria: "Available languages"
   languages_no_match: "No language found"
-  translation_notice: "This is a translation of the German original:"
-  translation_hint: "The audio is the German original — listen along while you read."
+  read_german_original: "Read the German original"
   # Theme chrome. Kept here, NOT in a vendored copy of the theme's
   # _data/ui-text.yml: Jekyll 3 does not load _data from theme gems, so
   # site.data.ui-text has always been nil on this site.
@@ -88,6 +104,25 @@ en:
   date_label: "Updated:"
 
 es:
+  news_navigation:
+    "/levels/": "Niveles"
+    "/about/": "Quiénes somos"
+    "/authors/": "Redacción"
+    "/editorial-standards/": "Estándares"
+    "/newsletter/": "Boletín"
+    "/contact/": "Contacto"
+  frontpage_levels: "Nivel de lectura"
+  frontpage_lead: "Noticia principal"
+  frontpage_rail: "También de actualidad"
+  frontpage_more: "Más noticias"
+  frontpage_briefs: "En breve"
+  news_categories:
+    Politik: "Política"
+    Gesundheit: "Salud"
+    Kriminalität: "Sucesos"
+    Stadtleben: "Vida urbana"
+  news_label: "Noticias"
+  news_empty: "Aún no hay artículos en español."
   by_label: "Por"
   reading_time_label: "%d min de lectura"
   level_a2: "Principiante"
@@ -110,8 +145,7 @@ es:
   languages_search: "Buscar idioma"
   languages_aria: "Idiomas disponibles"
   languages_no_match: "No se encontró ningún idioma"
-  translation_notice: "Esta es una traducción del original en alemán:"
-  translation_hint: "El audio es el original en alemán: escúchalo mientras lees."
+  read_german_original: "Leer el original en alemán"
   # Theme chrome. Kept here, NOT in a vendored copy of the theme's
   # _data/ui-text.yml: Jekyll 3 does not load _data from theme gems, so
   # site.data.ui-text has always been nil on this site.
@@ -125,6 +159,25 @@ es:
   date_label: "Actualizado:"
 
 pl:
+  news_navigation:
+    "/levels/": "Poziomy"
+    "/about/": "O nas"
+    "/authors/": "Redakcja"
+    "/editorial-standards/": "Standardy"
+    "/newsletter/": "Newsletter"
+    "/contact/": "Kontakt"
+  frontpage_levels: "Poziom czytania"
+  frontpage_lead: "Główny temat"
+  frontpage_rail: "Także w wiadomościach"
+  frontpage_more: "Więcej wiadomości"
+  frontpage_briefs: "W skrócie"
+  news_categories:
+    Politik: "Polityka"
+    Gesundheit: "Zdrowie"
+    Kriminalität: "Przestępczość"
+    Stadtleben: "Życie miasta"
+  news_label: "Wiadomości"
+  news_empty: "Nie ma jeszcze artykułów po polsku."
   by_label: "Autor"
   reading_time_label: "%d min czytania"
   level_a2: "Początkujący"
@@ -147,8 +200,7 @@ pl:
   languages_search: "Szukaj języka"
   languages_aria: "Dostępne języki"
   languages_no_match: "Nie znaleziono języka"
-  translation_notice: "To jest tłumaczenie niemieckiego oryginału:"
-  translation_hint: "Nagranie jest w oryginalnym języku niemieckim — słuchaj, czytając."
+  read_german_original: "Przeczytaj oryginał po niemiecku"
   # Theme chrome. Kept here, NOT in a vendored copy of the theme's
   # _data/ui-text.yml: Jekyll 3 does not load _data from theme gems, so
   # site.data.ui-text has always been nil on this site.
@@ -162,6 +214,25 @@ pl:
   date_label: "Ostatnia aktualizacja:"
 
 tr:
+  news_navigation:
+    "/levels/": "Seviyeler"
+    "/about/": "Hakkımızda"
+    "/authors/": "Yayın ekibi"
+    "/editorial-standards/": "Standartlar"
+    "/newsletter/": "Bülten"
+    "/contact/": "İletişim"
+  frontpage_levels: "Okuma seviyesi"
+  frontpage_lead: "Manşet"
+  frontpage_rail: "Gündemdeki diğer haberler"
+  frontpage_more: "Diğer haberler"
+  frontpage_briefs: "Kısa haberler"
+  news_categories:
+    Politik: "Siyaset"
+    Gesundheit: "Sağlık"
+    Kriminalität: "Suç"
+    Stadtleben: "Kent yaşamı"
+  news_label: "Haberler"
+  news_empty: "Henüz Türkçe makale yok."
   by_label: "Yazan"
   reading_time_label: "%d dk okuma"
   level_a2: "Başlangıç"
@@ -184,8 +255,7 @@ tr:
   languages_search: "Dil ara"
   languages_aria: "Mevcut diller"
   languages_no_match: "Dil bulunamadı"
-  translation_notice: "Bu, Almanca özgün metnin çevirisidir:"
-  translation_hint: "Ses kaydı Almanca özgün metindir — okurken dinleyin."
+  read_german_original: "Almanca orijinalini okuyun"
   # Theme chrome. Kept here, NOT in a vendored copy of the theme's
   # _data/ui-text.yml: Jekyll 3 does not load _data from theme gems, so
   # site.data.ui-text has always been nil on this site.
@@ -199,6 +269,25 @@ tr:
   date_label: "Güncelleme tarihi:"
 
 uk:
+  news_navigation:
+    "/levels/": "Рівні"
+    "/about/": "Про нас"
+    "/authors/": "Редакція"
+    "/editorial-standards/": "Стандарти"
+    "/newsletter/": "Розсилка"
+    "/contact/": "Контакти"
+  frontpage_levels: "Рівень читання"
+  frontpage_lead: "Головна новина"
+  frontpage_rail: "Також у новинах"
+  frontpage_more: "Більше новин"
+  frontpage_briefs: "Коротко"
+  news_categories:
+    Politik: "Політика"
+    Gesundheit: "Здоров’я"
+    Kriminalität: "Злочинність"
+    Stadtleben: "Міське життя"
+  news_label: "Новини"
+  news_empty: "Українською поки немає статей."
   by_label: "Автор"
   reading_time_label: "%d хв читання"
   level_a2: "Початковий"
@@ -221,8 +310,7 @@ uk:
   languages_search: "Пошук мови"
   languages_aria: "Доступні мови"
   languages_no_match: "Мову не знайдено"
-  translation_notice: "Це переклад німецького оригіналу:"
-  translation_hint: "Аудіо — німецький оригінал: слухайте, читаючи."
+  read_german_original: "Читати оригінал німецькою"
   # Theme chrome. Kept here, NOT in a vendored copy of the theme's
   # _data/ui-text.yml: Jekyll 3 does not load _data from theme gems, so
   # site.data.ui-text has always been nil on this site.
@@ -236,6 +324,25 @@ uk:
   date_label: "Дата зміни:"
 
 ru:
+  news_navigation:
+    "/levels/": "Уровни"
+    "/about/": "О нас"
+    "/authors/": "Редакция"
+    "/editorial-standards/": "Стандарты"
+    "/newsletter/": "Рассылка"
+    "/contact/": "Контакты"
+  frontpage_levels: "Уровень чтения"
+  frontpage_lead: "Главная новость"
+  frontpage_rail: "Также в новостях"
+  frontpage_more: "Другие новости"
+  frontpage_briefs: "Коротко"
+  news_categories:
+    Politik: "Политика"
+    Gesundheit: "Здоровье"
+    Kriminalität: "Преступность"
+    Stadtleben: "Городская жизнь"
+  news_label: "Новости"
+  news_empty: "Статей на русском пока нет."
   by_label: "Автор"
   reading_time_label: "%d мин чтения"
   level_a2: "Начальный"
@@ -258,8 +365,7 @@ ru:
   languages_search: "Поиск языка"
   languages_aria: "Доступные языки"
   languages_no_match: "Язык не найден"
-  translation_notice: "Это перевод немецкого оригинала:"
-  translation_hint: "Аудио — немецкий оригинал: слушайте во время чтения."
+  read_german_original: "Читать оригинал на немецком"
   # Theme chrome. Kept here, NOT in a vendored copy of the theme's
   # _data/ui-text.yml: Jekyll 3 does not load _data from theme gems, so
   # site.data.ui-text has always been nil on this site.
@@ -273,6 +379,25 @@ ru:
   date_label: "Дата изменения:"
 
 ar:
+  news_navigation:
+    "/levels/": "المستويات"
+    "/about/": "من نحن"
+    "/authors/": "فريق التحرير"
+    "/editorial-standards/": "المعايير"
+    "/newsletter/": "النشرة البريدية"
+    "/contact/": "اتصل بنا"
+  frontpage_levels: "مستوى القراءة"
+  frontpage_lead: "الخبر الرئيسي"
+  frontpage_rail: "أخبار أخرى"
+  frontpage_more: "المزيد من الأخبار"
+  frontpage_briefs: "أخبار موجزة"
+  news_categories:
+    Politik: "السياسة"
+    Gesundheit: "الصحة"
+    Kriminalität: "الجريمة"
+    Stadtleben: "حياة المدينة"
+  news_label: "الأخبار"
+  news_empty: "لا توجد مقالات بالعربية بعد."
   by_label: "بقلم"
   reading_time_label: "%d دقيقة قراءة"
   level_a2: "مبتدئ"
@@ -295,8 +420,7 @@ ar:
   languages_search: "ابحث عن لغة"
   languages_aria: "اللغات المتاحة"
   languages_no_match: "لم يتم العثور على لغة"
-  translation_notice: "هذه ترجمة للنص الألماني الأصلي:"
-  translation_hint: "الصوت هو النص الألماني الأصلي — استمع أثناء القراءة."
+  read_german_original: "اقرأ النص الألماني الأصلي"
   # Theme chrome. Kept here, NOT in a vendored copy of the theme's
   # _data/ui-text.yml: Jekyll 3 does not load _data from theme gems, so
   # site.data.ui-text has always been nil on this site.

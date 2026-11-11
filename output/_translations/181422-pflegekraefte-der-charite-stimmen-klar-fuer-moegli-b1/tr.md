@@ -10,8 +10,6 @@ summary: "Charité bakım personeli, iş yükünün azaltılması ve para konusu
 description: "Charité bakım personeli, iş yükünün azaltılması ve para konusundaki anlaşmazlık sürerken olası süresiz grev için açıkça oy verdi."
 source_title: "Pflegekräfte der Charité stimmen klar für möglichen Dauerstreik"
 reading_time: 3
-glossary_heading: "Kelimeler"
-audio: null
 translations:
   de: /articles/181422-pflegekraefte-der-charite-stimmen-klar-fuer-moegli-b1/
   en: /articles/181422-pflegekraefte-der-charite-stimmen-klar-fuer-moegli-b1/en/
@@ -32,14 +30,3 @@ Sözleşme, bir serviste çok az bakım personeli çalıştığında ne olacağ�
 Marburger Bund ile daha önce bir anlaşma sağlandı. Bu örgüt kadın ve erkek doktorları temsil ediyor. Charité ile daha yüksek maaşlar ve vardiya ödenekleri, yani belirli çalışma saatleri için ekstra para üzerinde anlaştı. Verdi ile anlaşmazlık ise hâlâ açık. Geçtiğimiz haftalarda Verdi, birkaç kez bazı bölümlerde kısa uyarı grevleri çağrısı yaptı. Gelecek hafta için yeni görüşmeler planlanıyor. Verdi görüşmeleri resmen başarısız ilan ederse süresiz grev başlayabilir.
 
 Böyle bir grevin klinik işleyişi üzerinde güçlü sonuçları olur. Katılıma göre Charité planlanabilir tedavileri ertelemek zorunda kalır. Bu, hastaları etkiler ve gelirleri düşürür. Charité Avrupa’nın en büyük üniversite hastanesidir. Mitte, Wedding, Steglitz ve Pankow’da yerleşkeleri var. Her yıl yüz binlerce insanı ayakta ve hastanede tedavi ediyor. Yaklaşık 25.000 çalışanıyla Berlin’in sağlık hizmetleri için çok önemlidir. Buna bağlı şirketler ve yaklaşık 7.000 bakım personeli de dahildir. Bu nedenle çatışma siyasi açıdan özellikle hassastır.
-
-## Kelimeler
-
-- <strong lang="de" dir="ltr">Pflegekräfte</strong> - bakım personeli; hemşireler - Meslek olarak hastalara veya yaşlılara bakan insanlar.
-- <strong lang="de" dir="ltr">Abstimmung</strong> - oylama - Oylarla yapılan resmî bir karar.
-- <strong lang="de" dir="ltr">Gewerkschaft</strong> - sendika - Çalışanların çıkarlarını temsil eden örgüt.
-- <strong lang="de" dir="ltr">unbefristeten Streik</strong> - süresiz grev - Kesin bir bitiş tarihi olmayan grev.
-- <strong lang="de" dir="ltr">Arbeit niederlegen</strong> - işi bırakmak; greve gitmek - Protesto olarak çalışmaya devam etmemek.
-- <strong lang="de" dir="ltr">entlasten</strong> - yükünü azaltmak; rahatlatmak - Birinden işi, baskıyı veya yükü almak.
-- <strong lang="de" dir="ltr">Beschäftigten</strong> - çalışanlar - Bir şirket veya kurumda çalışan kişiler.
-- <strong lang="de" dir="ltr">gekündigt</strong> - feshedildi; iptal edildi - Bir sözleşmeyi resmî olarak sona erdirdi.

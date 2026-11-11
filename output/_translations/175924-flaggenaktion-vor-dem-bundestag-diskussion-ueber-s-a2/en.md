@@ -10,8 +10,6 @@ summary: "After a flag protest outside the Bundestag, politicians are discussing
 description: "After a flag protest outside the Bundestag, politicians are discussing more security."
 source_title: "Flaggenaktion vor dem Bundestag: Diskussion über Sicherheit"
 reading_time: 2
-glossary_heading: "Vocabulary"
-audio: null
 translations:
   de: /articles/175924-flaggenaktion-vor-dem-bundestag-diskussion-ueber-s-a2/
   en: /articles/175924-flaggenaktion-vor-dem-bundestag-diskussion-ueber-s-a2/en/
@@ -38,14 +36,3 @@ The pole was apparently damaged. Workers first repaired it as best they could. T
 The grounds around the Bundestag are open to the public. The Berlin police protect the building from the outside. But they cannot guard the pole all the time. They now want to check the security there.
 
 Bundestag president Julia Klöckner is calling for more protection. Berlin should also help with this. CDU politician Thorsten Frei wants to look into a special protection zone. Demonstrations are forbidden there. Special rules for gatherings already apply at the Bundestag. Until 1999, there was such a protection zone around the parliament in Bonn.
-
-## Vocabulary
-
-- <strong lang="de" dir="ltr">Fahnenmast</strong> - flagpole - A tall pole with a flag on it.
-- <strong lang="de" dir="ltr">heruntergelassen</strong> - lowered - He moved the flag down.
-- <strong lang="de" dir="ltr">festgenommen</strong> - arrested - The police took the people away.
-- <strong lang="de" dir="ltr">Einsatzkräfte</strong> - emergency workers - People who help in an emergency, such as the police.
-- <strong lang="de" dir="ltr">Straftaten</strong> - crimes - Things people can be punished for doing.
-- <strong lang="de" dir="ltr">Gelände</strong> - grounds - A piece of land or an area around a building.
-- <strong lang="de" dir="ltr">notdürftig</strong> - as best they could - Only as well as needed, not completely.
-- <strong lang="de" dir="ltr">Schutzzone</strong> - protection zone - An area with special rules to keep it safe.

@@ -10,8 +10,6 @@ summary: "W Stadtbad Schöneberg krótko po otwarciu są problemy ze strefami, w
 description: "W Stadtbad Schöneberg krótko po otwarciu są problemy ze strefami, windą i powietrzem."
 source_title: "Probleme im Stadtbad Schöneberg"
 reading_time: 2
-glossary_heading: "Słowniczek"
-audio: null
 translations:
   de: /articles/161306-probleme-im-stadtbad-sch-neberg-a2/
   en: /articles/161306-probleme-im-stadtbad-sch-neberg-a2/en/
@@ -34,12 +32,3 @@ Teraz specjaliści sprawdzają technikę do czystej wody. Ustawiają też lepiej
 Część w windzie jest uszkodzona, a naprawa jest planowana. Operatorzy mówią: problemy mają trwać tylko krótko. Także restauracja szybkiej obsługi w starym basenie przeszkadza niektórym gościom. Tam niektórzy goście często mocno czują zapach jedzenia.
 
 Dlatego basen sprawdza lepszy system wentylacji dla restauracji. Rozmawia o tym z firmami i najemcą. Na początku 2024 roku basen musiał zostać zamknięty z powodu złej wody. Potem miasto wydało około 14 milionów euro.
-
-## Słowniczek
-
-- <strong lang="de" dir="ltr">Bauarbeiten</strong> - prace budowlane - Prace przy budynku albo miejscu.
-- <strong lang="de" dir="ltr">Fachleute</strong> - specjaliści - Ludzie z dużą wiedzą w jakiejś dziedzinie.
-- <strong lang="de" dir="ltr">Sprudelbecken</strong> - basen z bąbelkami - Basen z wodą, która się pieni i bulgocze.
-- <strong lang="de" dir="ltr">hineinlassen</strong> - wpuszczać - Pozwolić komuś wejść do środka.
-- <strong lang="de" dir="ltr">Betreiber</strong> - operatorzy - Ludzie albo firma, którzy czymś kierują.
-- <strong lang="de" dir="ltr">Luftanlage</strong> - system wentylacji - Urządzenie do świeżego albo lepszego powietrza.

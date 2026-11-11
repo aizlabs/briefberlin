@@ -10,8 +10,6 @@ summary: "Після акції з прапором перед Bundestag пол�
 description: "Після акції з прапором перед Bundestag політики говорять про те, як зробити його безпечнішим."
 source_title: "Flaggenaktion vor dem Bundestag: Diskussion über Sicherheit"
 reading_time: 2
-glossary_heading: "Словник"
-audio: null
 translations:
   de: /articles/175924-flaggenaktion-vor-dem-bundestag-diskussion-ueber-s-a2/
   en: /articles/175924-flaggenaktion-vor-dem-bundestag-diskussion-ueber-s-a2/en/
@@ -38,14 +36,3 @@ translations:
 Територія навколо Bundestag відкрита для всіх. Берлінська поліція охороняє будівлю ззовні. Але вона не може постійно охороняти флагшток. Тепер поліція хоче перевірити, як його охороняють.
 
 Голова Bundestag Юлія Кльокнер вимагає кращої охорони. Берлін теж має в цьому допомогти. Політик CDU Торстен Фрай хоче розглянути можливість створення особливої зони охорони. Там демонстрації заборонені. Вже сьогодні біля Bundestag діють особливі правила для зібрань. До 1999 року така зона охорони була навколо парламенту в Бонні.
-
-## Словник
-
-- <strong lang="de" dir="ltr">Fahnenmast</strong> - флагшток - Високий стовп, на якому висить прапор.
-- <strong lang="de" dir="ltr">heruntergelassen</strong> - спустив - Він опустив прапор униз.
-- <strong lang="de" dir="ltr">festgenommen</strong> - затримала - Поліція забрала цих людей із собою.
-- <strong lang="de" dir="ltr">Einsatzkräfte</strong> - працівники служб - Люди, які допомагають під час події, наприклад поліція.
-- <strong lang="de" dir="ltr">Straftaten</strong> - злочини - Вчинки, за які можна отримати покарання.
-- <strong lang="de" dir="ltr">Gelände</strong> - територія - Ділянка землі або площа навколо будівлі.
-- <strong lang="de" dir="ltr">notdürftig</strong> - тимчасово - Лише настільки добре, наскільки потрібно, не повністю.
-- <strong lang="de" dir="ltr">Schutzzone</strong> - зона охорони - Місце з особливими правилами для захисту.

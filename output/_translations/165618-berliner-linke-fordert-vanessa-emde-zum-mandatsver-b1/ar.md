@@ -10,8 +10,6 @@ summary: "يطالب حزب Die Linke في برلين Vanessa Emde بالتخل�
 description: "يطالب حزب Die Linke في برلين Vanessa Emde بالتخلي عن مقعدها في البرلمان بسبب تصريحات مثيرة للجدل وفقدان الثقة."
 source_title: "Berliner Linke fordert Vanessa Emde zum Mandatsverzicht auf"
 reading_time: 3
-glossary_heading: "المفردات"
-audio: null
 translations:
   de: /articles/165618-berliner-linke-fordert-vanessa-emde-zum-mandatsver-b1/
   en: /articles/165618-berliner-linke-fordert-vanessa-emde-zum-mandatsver-b1/en/
@@ -37,14 +35,3 @@ translations:
 
 كيف ستتطور الأمور
 ما إذا كانت Emde ستتخلى عن مقعدها البرلماني لا يزال مفتوحا. كثيرون في الحزب لا يتوقعون ذلك. وقد قالت مؤخرا: إنها لا تتراجع عن أي من تصريحاتها المثيرة للجدل. وإذا احتفظت بالمقعد، يمكن لقيادة الكتلة أن تطلب استبعادها من كتلة Die Linke البرلمانية. ولهذا تحتاج إلى ثلثي الأصوات. وتُعد هذه الأغلبية ممكنة الآن. Katalin Gennburg وGregor Gysi يطالبان بالانفصال عنها. أما مؤيدو Emde فيرون في ذلك خضوعا للضغط العام. ويتهمون قيادة الحزب بأنها تتخلى عن مبادئها من أجل ائتلاف محتمل.
-
-## المفردات
-
-- <strong lang="de" dir="ltr">verschärft</strong> - صعّد / زاد حدة - جعل الشيء أقوى أو أسوأ؛ يصبح الخلاف أشد.
-- <strong lang="de" dir="ltr">Vertrauensverlust</strong> - فقدان الثقة - عندما لا يعود الناس يثقون بشخص ما.
-- <strong lang="de" dir="ltr">verstoßen</strong> - خالف / انتهك - التصرف ضد قواعد أو قوانين أو اتفاقات.
-- <strong lang="de" dir="ltr">Auslöser</strong> - سبب مباشر / شرارة - شيء يبدأ حدثا أو خلافا.
-- <strong lang="de" dir="ltr">nahestehend</strong> - قريب من / مرتبط بـ - مرتبط بمجموعة سياسيا أو شخصيا بشكل وثيق.
-- <strong lang="de" dir="ltr">Judenfeindlichkeit</strong> - معاداة اليهود - عداء أو كراهية ضد اليهود واليهوديات.
-- <strong lang="de" dir="ltr">Sondierungen</strong> - محادثات استكشافية - محادثات سياسية أولى قبل مفاوضات ائتلاف محتملة.
-- <strong lang="de" dir="ltr">Parteiausschluss</strong> - الاستبعاد من الحزب - عندما يُستبعد شخص رسميا من حزب.

@@ -10,8 +10,6 @@ summary: "Tras una acción con una bandera ante el Bundestag, la policía invest
 description: "Tras una acción con una bandera ante el Bundestag, la policía investiga mientras los políticos hablan de mejorar la protección y establecer normas más estrictas para las protestas."
 source_title: "Flaggenaktion vor dem Bundestag führt zu Debatte über Sicherheit"
 reading_time: 3
-glossary_heading: "Vocabulario"
-audio: null
 translations:
   de: /articles/180104-flaggenaktion-vor-dem-bundestag-fuehrt-zu-debatte-b1/
   en: /articles/180104-flaggenaktion-vor-dem-bundestag-fuehrt-zu-debatte-b1/en/
@@ -32,14 +30,3 @@ Ahora, la unidad de seguridad del Estado, una sección de la policía, investiga
 La policía de Berlín protege el exterior del edificio del Reichstag. Explicó que la zona alrededor del edificio está, en principio, abierta a todos. Las vallas que hay allí ayudan a los visitantes a orientarse. La policía no tiene suficiente personal para vigilar permanentemente el mástil de la bandera. Ahora quiere revisar sus medidas. La presidenta del Bundestag, Julia Klöckner, pide una mejor protección y considera que el estado de Berlín también tiene responsabilidad. El alcalde de Berlín, Kai Wegner, condenó la acción por considerarla una falta de respeto a la democracia.
 
 El político de la CDU Thorsten Frei propuso pensar en normas más estrictas para las protestas alrededor del Parlamento. Ya existe allí una zona de protección especial. Las reuniones solo están permitidas bajo ciertas condiciones. Para ello es importante saber si perturban el trabajo del Bundestag o de sus grupos políticos. Hasta 1999 hubo una zona de protección más estricta alrededor de la antigua sede del Parlamento en Bonn.
-
-## Vocabulario
-
-- <strong lang="de" dir="ltr">ausgelöst</strong> - provocado - Causado o puesto en marcha algo.
-- <strong lang="de" dir="ltr">Fahnenmast</strong> - mástil de bandera - Un poste alto del que cuelga una bandera.
-- <strong lang="de" dir="ltr">Staatsschutz</strong> - unidad de seguridad del Estado - Una sección de la policía que investiga, entre otros, delitos con motivos políticos.
-- <strong lang="de" dir="ltr">Verdacht</strong> - sospecha - La idea de que alguien ha hecho algo, sin tener una prueba segura.
-- <strong lang="de" dir="ltr">Grundstück</strong> - terreno - Una parte delimitada de tierra que pertenece a alguien.
-- <strong lang="de" dir="ltr">verstoßen</strong> - infringido - No haber respetado una norma o una ley.
-- <strong lang="de" dir="ltr">Bewachung</strong> - vigilancia - La protección de un lugar por personas que lo vigilan.
-- <strong lang="de" dir="ltr">Schutzbereich</strong> - zona de protección - Una zona donde se aplican normas especiales de protección.

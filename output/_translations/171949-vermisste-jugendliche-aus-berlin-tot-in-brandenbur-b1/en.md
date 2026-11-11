@@ -10,8 +10,6 @@ summary: "The missing girl Lisa T. was found dead in Brandenburg; an injured man
 description: "The missing girl Lisa T. was found dead in Brandenburg; an injured man is a prime suspect."
 source_title: "Vermisste Jugendliche aus Berlin tot in Brandenburg gefunden"
 reading_time: 3
-glossary_heading: "Vocabulary"
-audio: null
 translations:
   de: /articles/171949-vermisste-jugendliche-aus-berlin-tot-in-brandenbur-b1/
   en: /articles/171949-vermisste-jugendliche-aus-berlin-tot-in-brandenbur-b1/en/
@@ -32,15 +30,3 @@ Police had been called to the house in the Altglietzen district around midday on
 The man in the house is a prime suspect in Lisa's abduction and killing. According to the public prosecutor's office, he inflicted his life-threatening injuries on himself. He was taken to hospital, where he is being guarded by police. At first, it was unclear whether he would survive. His identity was also not yet known. The girl's cause of death was also unknown. On Monday, doctors were due to examine her body to find the cause. A police team investigating killings searched the house for evidence on Sunday evening. Among other things, investigators will examine how Lisa was abducted and what happened in the house.
 
 In Berlin, previous cases of missing teenagers have received attention for a long time. The schoolgirl Georgine K. disappeared in 2006 on her way home from school in Moabit. It was not until ten years later that investigators tracked down a neighbour. A court later convicted him of murder. Rebecca from Berlin-Britz has also been missing since 2019. She was 15 years old at the time. Even large search operations in Brandenburg and many tips brought no certainty about where she is.
-
-## Vocabulary
-
-- <strong lang="de" dir="ltr">vermisste</strong> - missing - A person is being searched for because nobody knows where they are.
-- <strong lang="de" dir="ltr">Staatsanwaltschaft</strong> - public prosecutor's office - The authority investigates crimes and can bring charges.
-- <strong lang="de" dir="ltr">Einsatzkräfte</strong> - emergency responders - People who help during an emergency operation, such as police officers.
-- <strong lang="de" dir="ltr">Fundort</strong> - place where someone or something was found - The place where someone or something is found.
-- <strong lang="de" dir="ltr">eingebrochen</strong> - broken in - Someone entered a building without permission.
-- <strong lang="de" dir="ltr">Vermisstenfall</strong> - missing-person case - A case in which a missing person is being searched for.
-- <strong lang="de" dir="ltr">verschleppt</strong> - abducted - Someone was taken away against their will.
-- <strong lang="de" dir="ltr">zugefügt</strong> - inflicted - Here: He caused injuries to himself.
-- <strong lang="de" dir="ltr">Gewissheit</strong> - certainty - Knowing for sure that something is true.

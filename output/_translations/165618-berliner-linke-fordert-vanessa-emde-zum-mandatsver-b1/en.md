@@ -10,8 +10,6 @@ summary: "Berlin's Die Linke is calling on Vanessa Emde to give up her seat in p
 description: "Berlin's Die Linke is calling on Vanessa Emde to give up her seat in parliament because of controversial statements and a loss of trust."
 source_title: "Berliner Linke fordert Vanessa Emde zum Mandatsverzicht auf"
 reading_time: 3
-glossary_heading: "Vocabulary"
-audio: null
 translations:
   de: /articles/165618-berliner-linke-fordert-vanessa-emde-zum-mandatsver-b1/
   en: /articles/165618-berliner-linke-fordert-vanessa-emde-zum-mandatsver-b1/en/
@@ -37,14 +35,3 @@ The affair at times put a strain on talks with the Greens and SPD about a possib
 
 What happens next
 It is unclear whether Emde will give up her seat. Many in the party do not expect that. She recently said: She is not taking back any of her controversial statements. If she keeps the seat, the parliamentary group leadership can apply to exclude her from the Die Linke parliamentary group. For that, it needs two thirds of the votes. This majority is now seen as possible. Katalin Gennburg and Gregor Gysi are calling for a separation. Emde's supporters, however, see this as giving in to public pressure. They accuse the party leadership of giving up its own principles for a possible coalition.
-
-## Vocabulary
-
-- <strong lang="de" dir="ltr">verschärft</strong> - intensified; worsened - Made stronger or worse; the conflict becomes harsher.
-- <strong lang="de" dir="ltr">Vertrauensverlust</strong> - loss of trust - When people no longer trust someone.
-- <strong lang="de" dir="ltr">verstoßen</strong> - violated; broke - To act against rules, laws, or agreements.
-- <strong lang="de" dir="ltr">Auslöser</strong> - trigger; cause - Something that starts an event or a conflict.
-- <strong lang="de" dir="ltr">nahestehend</strong> - close to; affiliated with - Closely connected to a group politically or personally.
-- <strong lang="de" dir="ltr">Judenfeindlichkeit</strong> - antisemitism; hostility toward Jews - Hostility or hatred toward Jews.
-- <strong lang="de" dir="ltr">Sondierungen</strong> - exploratory talks - First political talks before possible coalition negotiations.
-- <strong lang="de" dir="ltr">Parteiausschluss</strong> - expulsion from the party - When someone is officially excluded from a party.

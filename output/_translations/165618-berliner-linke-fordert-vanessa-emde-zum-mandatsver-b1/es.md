@@ -10,8 +10,6 @@ summary: "Die Linke de Berlín exige a Vanessa Emde que renuncie a su escaño pa
 description: "Die Linke de Berlín exige a Vanessa Emde que renuncie a su escaño parlamentario por declaraciones polémicas y pérdida de confianza."
 source_title: "Berliner Linke fordert Vanessa Emde zum Mandatsverzicht auf"
 reading_time: 3
-glossary_heading: "Vocabulario"
-audio: null
 translations:
   de: /articles/165618-berliner-linke-fordert-vanessa-emde-zum-mandatsver-b1/
   en: /articles/165618-berliner-linke-fordert-vanessa-emde-zum-mandatsver-b1/en/
@@ -37,14 +35,3 @@ El caso afectó durante un tiempo las conversaciones con Grünen y SPD sobre un 
 
 Cómo sigue ahora
 No está claro si Emde entregará su mandato. En el partido, muchos no cuentan con ello. Ella dijo recientemente: no retira ninguna de sus declaraciones polémicas. Si conserva el escaño, la dirección del grupo parlamentario puede solicitar su expulsión del grupo parlamentario de Die Linke. Para ello necesita dos tercios de los votos. Esa mayoría se considera ahora posible. Katalin Gennburg y Gregor Gysi piden una separación. Los partidarios de Emde, en cambio, ven una cesión ante la presión pública. Acusan a la dirección del partido de abandonar sus propios principios por una posible coalición.
-
-## Vocabulario
-
-- <strong lang="de" dir="ltr">verschärft</strong> - agravado - Hecho más fuerte o peor; el conflicto se vuelve más duro.
-- <strong lang="de" dir="ltr">Vertrauensverlust</strong> - pérdida de confianza - Cuando las personas ya no confían en alguien.
-- <strong lang="de" dir="ltr">verstoßen</strong> - infringir - Actuar contra reglas, leyes o acuerdos.
-- <strong lang="de" dir="ltr">Auslöser</strong> - detonante - Algo que inicia un hecho o un conflicto.
-- <strong lang="de" dir="ltr">nahestehend</strong> - cercano a - Estar muy unido a un grupo política o personalmente.
-- <strong lang="de" dir="ltr">Judenfeindlichkeit</strong> - antisemitismo - Hostilidad u odio contra las judías y los judíos.
-- <strong lang="de" dir="ltr">Sondierungen</strong> - exploraciones - Primeras conversaciones políticas antes de posibles negociaciones de coalición.
-- <strong lang="de" dir="ltr">Parteiausschluss</strong> - expulsión del partido - Cuando alguien es expulsado oficialmente de un partido.

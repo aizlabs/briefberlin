@@ -10,8 +10,6 @@ summary: "صوّت ممرضو Charité بوضوح لصالح إضراب محتم
 description: "صوّت ممرضو Charité بوضوح لصالح إضراب محتمل غير محدود المدة، بينما يستمر الخلاف حول تخفيف الأعباء والمال."
 source_title: "Pflegekräfte der Charité stimmen klar für möglichen Dauerstreik"
 reading_time: 3
-glossary_heading: "المفردات"
-audio: null
 translations:
   de: /articles/181422-pflegekraefte-der-charite-stimmen-klar-fuer-moegli-b1/
   en: /articles/181422-pflegekraefte-der-charite-stimmen-klar-fuer-moegli-b1/en/
@@ -32,14 +30,3 @@ translations:
 كانت هناك بالفعل اتفاقية مع Marburger Bund. هذه المنظمة تمثل الطبيبات والأطباء. وقد اتفقت مع Charité على رواتب أعلى وبدلات نوبات، أي أموال إضافية لأوقات عمل معينة. أما الخلاف مع Verdi فلا يزال مفتوحا. في الأسابيع الماضية دعت Verdi عدة مرات في بعض المجالات إلى إضرابات تحذيرية قصيرة. ومن المخطط إجراء محادثات أخرى في الأسبوع المقبل. إذا أعلنت Verdi رسميا فشل المحادثات، يمكن أن يبدأ إضراب غير محدود المدة.
 
 سيكون لمثل هذا الإضراب آثار قوية على عمل المستشفى. وبحسب حجم المشاركة، سيتعين على Charité تأجيل علاجات يمكن التخطيط لها مسبقا. وهذا سيؤثر على المريضات والمرضى ويخفض الإيرادات. Charité هي أكبر مستشفى جامعي في أوروبا. ولها مواقع في Mitte وWedding وSteglitz وPankow. تعالج كل عام مئات الآلاف من الناس، خارج المستشفى وداخله. ومع نحو 25.000 عامل، فهي مهمة جدا للرعاية الصحية في برلين. ويشمل ذلك شركات تابعة ونحو 7.000 ممرض. لذلك فإن الصراع حساس سياسيا بشكل خاص.
-
-## المفردات
-
-- <strong lang="de" dir="ltr">Pflegekräfte</strong> - الممرضون - أشخاص يعتنون بالمرضى أو كبار السن كعمل مهني.
-- <strong lang="de" dir="ltr">Abstimmung</strong> - تصويت - قرار رسمي يتم من خلال الأصوات.
-- <strong lang="de" dir="ltr">Gewerkschaft</strong> - نقابة - منظمة تمثل مصالح العاملات والعاملين.
-- <strong lang="de" dir="ltr">unbefristeten Streik</strong> - إضراب غير محدود المدة - إضراب من دون تاريخ نهاية محدد.
-- <strong lang="de" dir="ltr">Arbeit niederlegen</strong> - التوقف عن العمل - عدم مواصلة العمل احتجاجا.
-- <strong lang="de" dir="ltr">entlasten</strong> - تخفيف العبء عن - إزالة عمل أو ضغط أو عبء عن شخص ما.
-- <strong lang="de" dir="ltr">Beschäftigten</strong> - العاملون - أشخاص يعملون في شركة أو مؤسسة.
-- <strong lang="de" dir="ltr">gekündigt</strong> - أنهى - أنهى عقدا بشكل رسمي.

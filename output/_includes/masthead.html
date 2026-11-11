@@ -5,6 +5,10 @@
      this renders through include_cached, which keys on name + parameters. {%- endcomment -%}
 {%- assign ui_locale = include.ui_locale | default: site.lang | default: "en" -%}
 {%- assign ui = site.data.ui-briefberlin[ui_locale] | default: site.data.ui-briefberlin.en -%}
+{%- assign home_url = '/' -%}
+{%- if ui.news_label -%}
+  {%- assign home_url = '/' | append: ui_locale | append: '/' -%}
+{%- endif -%}
 {% capture logo_path %}{{ site.logo }}{% endcapture %}
 
 <div class="masthead">
@@ -12,20 +16,26 @@
     <div class="masthead__menu">
       <nav id="site-nav" class="greedy-nav">
         {% unless logo_path == empty %}
-          <a class="site-logo" href="{{ '/' | relative_url }}"><img src="{{ logo_path | relative_url }}" alt="{{ site.masthead_title | default: site.title }}"></a>
+          <a class="site-logo" href="{{ home_url | relative_url }}"><img src="{{ logo_path | relative_url }}" alt="{{ site.masthead_title | default: site.title }}"></a>
         {% endunless %}
-        <a class="site-title" href="{{ '/' | relative_url }}">
+        <a class="site-title" href="{{ home_url | relative_url }}">
           {{ site.masthead_title | default: site.title | escape_once | strip }}
-          {% if site.subtitle %}<span class="site-subtitle">{{ site.subtitle | escape_once | strip }}</span>{% endif %}
+          {% if site.subtitle and home_url == '/' %}<span class="site-subtitle">{{ site.subtitle | escape_once | strip }}</span>{% endif %}
         </a>
         <ul class="visible-links">
           {%- for link in site.data.navigation.main -%}
+            {%- assign nav_url = link.url -%}
+            {%- assign nav_label = ui.news_navigation[link.url] | default: link.title -%}
+            {%- if link.url == '/' and ui.news_label -%}
+              {%- assign nav_url = home_url -%}
+              {%- assign nav_label = ui.news_label -%}
+            {%- endif -%}
             <li class="masthead__menu-item">
               <a
-                href="{{ link.url | relative_url }}"
+                href="{{ nav_url | relative_url }}"
                 {% if link.description %} title="{{ link.description }}"{% endif %}
                 {% if link.target %} target="{{ link.target }}"{% endif %}
-              >{{ link.title }}</a>
+              >{{ nav_label }}</a>
             </li>
           {%- endfor -%}
         </ul>

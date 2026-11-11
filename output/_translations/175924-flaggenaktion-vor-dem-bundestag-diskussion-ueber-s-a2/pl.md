@@ -10,8 +10,6 @@ summary: "Po akcji z flagą przed Bundestagiem politycy rozmawiają o większym 
 description: "Po akcji z flagą przed Bundestagiem politycy rozmawiają o większym bezpieczeństwie."
 source_title: "Flaggenaktion vor dem Bundestag: Diskussion über Sicherheit"
 reading_time: 2
-glossary_heading: "Słowniczek"
-audio: null
 translations:
   de: /articles/175924-flaggenaktion-vor-dem-bundestag-diskussion-ueber-s-a2/
   en: /articles/175924-flaggenaktion-vor-dem-bundestag-diskussion-ueber-s-a2/en/
@@ -38,14 +36,3 @@ Maszt został najwyraźniej uszkodzony. Pracownicy najpierw naprawili go prowizo
 Teren wokół Bundestagu jest dostępny dla wszystkich. Berlińska policja chroni budynek z zewnątrz. Nie może jednak cały czas pilnować masztu. Teraz chce sprawdzić, jak go chronić.
 
 Przewodnicząca Bundestagu Julia Klöckner chce większej ochrony. Berlin też ma w tym pomóc. Polityk CDU Thorsten Frei chce sprawdzić możliwość utworzenia specjalnej strefy ochronnej. Demonstracje są tam zakazane. Już dziś przy Bundestagu obowiązują specjalne zasady dotyczące zgromadzeń. Do 1999 roku taka strefa ochronna była wokół parlamentu w Bonn.
-
-## Słowniczek
-
-- <strong lang="de" dir="ltr">Fahnenmast</strong> - maszt flagowy - Wysoki słup, na którym wisi flaga.
-- <strong lang="de" dir="ltr">heruntergelassen</strong> - opuścił - Przesunął flagę w dół.
-- <strong lang="de" dir="ltr">festgenommen</strong> - zatrzymała - Policja zabrała te osoby ze sobą.
-- <strong lang="de" dir="ltr">Einsatzkräfte</strong> - pracownicy służb - Ludzie, którzy pomagają podczas akcji, na przykład policja.
-- <strong lang="de" dir="ltr">Straftaten</strong> - przestępstwa - Czyny, za które można dostać karę.
-- <strong lang="de" dir="ltr">Gelände</strong> - teren - Kawałek ziemi lub miejsce wokół budynku.
-- <strong lang="de" dir="ltr">notdürftig</strong> - prowizorycznie - Tylko na tyle, na ile trzeba, nie całkiem.
-- <strong lang="de" dir="ltr">Schutzzone</strong> - strefa ochronna - Miejsce ze specjalnymi zasadami ochrony.

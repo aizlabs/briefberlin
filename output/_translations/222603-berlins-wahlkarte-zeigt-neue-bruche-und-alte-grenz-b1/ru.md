@@ -10,16 +10,6 @@ summary: "Выборы в Берлине показывают усиление �
 description: "Выборы в Берлине показывают усиление политических флангов, новые успехи Linke и AfD, а также потери Grünen и SPD."
 source_title: "Berlins Wahlkarte zeigt neue Brüche und alte Grenzen"
 reading_time: 3
-glossary_heading: "Словарь"
-audio:
-  url: "https://media.briefberlin.de/articles/2026/09/20260922-222603-berlins-wahlkarte-zeigt-neue-bruche-und-alte-grenzen-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "elevenlabs"
-  voice: "OYTbf65OHHFELVut7v2H"
-  timings_url: "https://media.briefberlin.de/articles/2026/09/20260922-222603-berlins-wahlkarte-zeigt-neue-bruche-und-alte-grenzen-b1/article.timings.json"
-  timing_granularity: "word"
-  highlight_context: "sentence"
 translations:
   de: /articles/222603-berlins-wahlkarte-zeigt-neue-bruche-und-alte-grenz-b1/
   en: /articles/222603-berlins-wahlkarte-zeigt-neue-bruche-und-alte-grenz-b1/en/
@@ -38,13 +28,3 @@ translations:
 Одновременно AfD прибавила почти во всем городе, но очень по-разному. Самой сильной она остается в восточных окраинных районах, таких как Марцан-Хеллерсдорф, Лихтенберг и части Трептов-Кёпеник. В Шпандау и в некоторых местах рядом с кольцом она тоже получила больше голосов. В центре города она в основном оставалась ниже 20 процентов. Большие синие площади на карте могут вводить в заблуждение. Ведь там местами живет сравнительно мало людей. CDU остается сильной во многих западных внешних районах, в том числе в богатом Груневальде. Но она теряет голоса там, где AfD особенно сильно растет.
 
 SPD как сильнейшая партия почти уже не видна. Лишь на немногие кварталы, то есть небольшие городские районы, она еще влияет. Grünen теряют в центре, но за пределами кольца держатся лучше. На окраинах они местами прибавляют. Поэтому их спад в Берлине выглядит меньше. BSW, партия Sahra Wagenknecht, остается ниже пятипроцентного барьера для прохождения в парламент. На востоке BSW показывает свои лучшие результаты. В целом выборы показывают: политические фланги становятся сильнее, а традиционный центр теряет свой профиль.
-
-## Словарь
-
-- <strong lang="de" dir="ltr">Wahlergebnisse</strong> - результаты выборов - итоги выборов
-- <strong lang="de" dir="ltr">Stadtrand</strong> - окраина города - внешняя часть города
-- <strong lang="de" dir="ltr">Ost-West-Grenze</strong> - граница между востоком и западом - разделение между восточной и западной частью
-- <strong lang="de" dir="ltr">spielen eine Rolle</strong> - играть роль - быть важными или иметь влияние
-- <strong lang="de" dir="ltr">Wahlkreisen</strong> - избирательные округа - территории, где избиратели отдают свои голоса
-- <strong lang="de" dir="ltr">Zuwachs</strong> - прирост - чего-то становится больше
-- <strong lang="de" dir="ltr">Fünf-Prozent-Grenze</strong> - пятипроцентный барьер - минимальная доля голосов для прохождения в парламент

@@ -10,8 +10,6 @@ summary: "Zaginioną Lisę T. znaleziono martwą w Brandenburgii; ranny mężczy
 description: "Zaginioną Lisę T. znaleziono martwą w Brandenburgii; ranny mężczyzna jest poważnie podejrzewany o zbrodnię."
 source_title: "Vermisste Jugendliche aus Berlin tot in Brandenburg gefunden"
 reading_time: 3
-glossary_heading: "Słowniczek"
-audio: null
 translations:
   de: /articles/171949-vermisste-jugendliche-aus-berlin-tot-in-brandenbur-b1/
   en: /articles/171949-vermisste-jugendliche-aus-berlin-tot-in-brandenbur-b1/en/
@@ -32,15 +30,3 @@ Policję wezwano do domu w dzielnicy Altglietzen w niedzielę około południa. 
 Mężczyzna znaleziony w domu jest poważnie podejrzewany o porwanie i zabicie Lisy. Według prokuratury sam zadał sobie obrażenia zagrażające życiu. Trafił do szpitala, gdzie pilnuje go policja. Początkowo nie było jasne, czy przeżyje. Nie znano jeszcze również jego tożsamości. Nie była też znana przyczyna śmierci dziewczynki. W poniedziałek lekarze mieli zbadać ciało, aby ją ustalić. W niedzielę wieczorem policyjny zespół zajmujący się zabójstwami szukał śladów w domu. Śledczy zbadają między innymi, jak doszło do porwania Lisy i co wydarzyło się w domu.
 
 W Berlinie wcześniejsze zaginięcia nastolatków przez długi czas przyciągały uwagę. Uczennica Georgine K. zaginęła w 2006 roku w drodze powrotnej ze szkoły w Moabit. Dopiero dziesięć lat później śledczy trafili na trop sąsiada. Sąd skazał go później za morderstwo. Od 2019 roku zaginiona jest również Rebecca z Berlin-Britz. Miała wtedy 15 lat. Nawet szeroko zakrojone poszukiwania w Brandenburgii i wiele otrzymanych informacji nie dały pewności, gdzie się znajduje.
-
-## Słowniczek
-
-- <strong lang="de" dir="ltr">vermisste</strong> - zaginiona - Osoba jest poszukiwana, ponieważ nikt nie wie, gdzie się znajduje.
-- <strong lang="de" dir="ltr">Staatsanwaltschaft</strong> - prokuratura - Urząd prowadzi śledztwa w sprawie przestępstw i może wnieść oskarżenie.
-- <strong lang="de" dir="ltr">Einsatzkräfte</strong> - służby - Osoby, które pomagają podczas akcji, na przykład policjanci.
-- <strong lang="de" dir="ltr">Fundort</strong> - miejsce znalezienia - Miejsce, w którym znajduje się kogoś lub coś.
-- <strong lang="de" dir="ltr">eingebrochen</strong> - włamał się - Ktoś dostał się do budynku bez pozwolenia.
-- <strong lang="de" dir="ltr">Vermisstenfall</strong> - sprawa zaginięcia - Sprawa, w której poszukuje się zaginionej osoby.
-- <strong lang="de" dir="ltr">verschleppt</strong> - porwana - Ktoś został zabrany w inne miejsce wbrew swojej woli.
-- <strong lang="de" dir="ltr">zugefügt</strong> - zadał - Tutaj: sam spowodował u siebie obrażenia.
-- <strong lang="de" dir="ltr">Gewissheit</strong> - pewność - Wiedza, że coś na pewno jest prawdą.

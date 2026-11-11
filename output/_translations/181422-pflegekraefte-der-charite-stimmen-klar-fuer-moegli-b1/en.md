@@ -10,8 +10,6 @@ summary: "Charité nursing staff have voted clearly for a possible indefinite st
 description: "Charité nursing staff have voted clearly for a possible indefinite strike, while the dispute over relief and money continues."
 source_title: "Pflegekräfte der Charité stimmen klar für möglichen Dauerstreik"
 reading_time: 3
-glossary_heading: "Vocabulary"
-audio: null
 translations:
   de: /articles/181422-pflegekraefte-der-charite-stimmen-klar-fuer-moegli-b1/
   en: /articles/181422-pflegekraefte-der-charite-stimmen-klar-fuer-moegli-b1/en/
@@ -32,14 +30,3 @@ The employees won the previous contract in 2021 after a tough conflict. Later, i
 There has already been an agreement with the Marburger Bund. This organization represents the doctors. It agreed with Charité on higher salaries and shift allowances, meaning extra money for certain working hours. The dispute with Verdi, however, remains unresolved. In recent weeks, Verdi has several times called short warning strikes in individual areas. Further talks are planned for next week. If Verdi officially declares the talks to have failed, an indefinite strike can begin.
 
 Such a strike would have serious consequences for hospital operations. Depending on participation, Charité would have to postpone planned treatments. That would affect patients and reduce income. Charité is Europe’s largest university hospital. It has locations in Mitte, Wedding, Steglitz, and Pankow. Every year it treats hundreds of thousands of people, as outpatients and in the hospital. With around 25,000 employees, it is very important for health care in Berlin. This includes subsidiaries and about 7,000 nursing staff. That is why the conflict is especially politically sensitive.
-
-## Vocabulary
-
-- <strong lang="de" dir="ltr">Pflegekräfte</strong> - nursing staff; nurses - People whose job is to care for sick or elderly people.
-- <strong lang="de" dir="ltr">Abstimmung</strong> - vote; ballot - A formal decision made by casting votes.
-- <strong lang="de" dir="ltr">Gewerkschaft</strong> - trade union; labor union - An organization that represents the interests of employees and workers.
-- <strong lang="de" dir="ltr">unbefristeten Streik</strong> - indefinite strike - A strike with no fixed end date.
-- <strong lang="de" dir="ltr">Arbeit niederlegen</strong> - stop working; go on strike - To stop working as a form of protest.
-- <strong lang="de" dir="ltr">entlasten</strong> - relieve; reduce the burden on - To take work, pressure, or strain away from someone.
-- <strong lang="de" dir="ltr">Beschäftigten</strong> - employees; workers - People who work for a company or institution.
-- <strong lang="de" dir="ltr">gekündigt</strong> - terminated; canceled - Officially ended a contract.

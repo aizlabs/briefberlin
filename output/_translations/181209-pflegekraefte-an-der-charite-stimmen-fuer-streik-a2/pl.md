@@ -10,8 +10,6 @@ summary: "Wiele pielęgniarek i wielu pielęgniarzy w berlińskiej Charité jest
 description: "Wiele pielęgniarek i wielu pielęgniarzy w berlińskiej Charité jest gotowych do strajku, bo chcą lepszych warunków pracy."
 source_title: "Pflegekräfte an der Charité stimmen für Streik"
 reading_time: 2
-glossary_heading: "Słowniczek"
-audio: null
 translations:
   de: /articles/181209-pflegekraefte-an-der-charite-stimmen-fuer-streik-a2/
   en: /articles/181209-pflegekraefte-an-der-charite-stimmen-fuer-streik-a2/en/
@@ -34,13 +32,3 @@ Strajk oznacza: Ludzie przez pewien czas nie pracują. W ten sposób wywierają 
 Teraz Verdi i kierownictwo dalej ze sobą rozmawiają. Kierownictwo decyduje dużo o pracy w szpitalu. Jeśli obie strony nie znajdą porozumienia, Verdi może wezwać do strajku. Tak członków daje Verdi do tego dużo siły. Dlatego teraz rośnie nacisk na kierownictwo Charité.
 
 Verdi nie mówi, ilu członków tam jest. Ale na wielu oddziałach wiele pielęgniarek i wielu pielęgniarzy współpracuje z Verdi. Oddział to część szpitala. Dlatego wynik jest ważny dla rozmów.
-
-## Słowniczek
-
-- <strong lang="de" dir="ltr">Streit</strong> - spór - Problem między osobami albo grupami.
-- <strong lang="de" dir="ltr">Arbeitsbedingungen</strong> - warunki pracy - Sytuacja i zasady w pracy.
-- <strong lang="de" dir="ltr">Streik</strong> - strajk - Pracownicy celowo nie pracują, aby coś osiągnąć.
-- <strong lang="de" dir="ltr">Gewerkschaft</strong> - związek zawodowy - Grupa, która wspiera pracowników przy problemach.
-- <strong lang="de" dir="ltr">Druck</strong> - nacisk - Silny wpływ, aby ktoś coś zrobił.
-- <strong lang="de" dir="ltr">Leitung</strong> - kierownictwo - Osoby, które prowadzą organizację.
-- <strong lang="de" dir="ltr">Einigung</strong> - porozumienie - Gdy obie strony mówią tak dla rozwiązania.

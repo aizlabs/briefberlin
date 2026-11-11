@@ -10,8 +10,6 @@ summary: "Krótko po remoncie w Stadtbad Schöneberg znów są problemy technicz
 description: "Krótko po remoncie w Stadtbad Schöneberg znów są problemy techniczne, zamknięte części obiektu i krytyka ze strony gości."
 source_title: "Stadtbad Schöneberg hat kurz nach Sanierung wieder Technikprobleme"
 reading_time: 3
-glossary_heading: "Słowniczek"
-audio: null
 translations:
   de: /articles/161452-stadtbad-sch-neberg-hat-kurz-nach-sanierung-wieder-b1/
   en: /articles/161452-stadtbad-sch-neberg-hat-kurz-nach-sanierung-wieder-b1/en/
@@ -30,15 +28,3 @@ Berliner Bäder-Betriebe tłumaczą część problemów feriami jesiennymi. W ty
 Na początku 2024 roku operatorzy zamknęli basen, ponieważ parametry wody nie były wystarczająco dobre. Na częściową modernizację wydali około 14 milionów euro. Firmy odnowiły technikę do wody basenowej i uzdatniania wody. Naprawiły uszczelnienia i płytki w nieckach basenów. Poza tym pracowały przy wentylacji, przewodach elektrycznych, oświetleniu, ochronie przeciwpożarowej i częściach systemu sterowania budynkiem. System sterowania budynkiem pomaga centralnie nadzorować urządzenia techniczne. Mimo to specjaliści znaleźli podczas próbnego działania kolejne uszkodzenia. Należały do nich pęknięcia w tynku nad bocznymi oknami. Te uszkodzenia trzeba było naprawić przed otwarciem.
 
 Dalszą krytykę wywołuje punkt gastronomiczny w budynku. Od ponownego otwarcia sprzedaje tam jedzenie sieć fast food. Niektórym gościom basenu przeszkadza zapach smażonych potraw w pobliżu niecek. Dlatego operatorzy sprawdzają, czy mogą rozbudować istniejącą wentylację. Zepsuta winda, według operatorów, nie ma związku z remontem. Zepsuła się jedna część, a naprawa trwa. Ograniczenia mają być tylko tymczasowe. Nie wiadomo jednak jeszcze, kiedy wszystkie części obiektu znów zostaną otwarte.
-
-## Słowniczek
-
-- <strong lang="de" dir="ltr">Sanierung</strong> - remont; modernizacja - naprawa i odnowienie budynku albo obiektu
-- <strong lang="de" dir="ltr">Wiedereröffnung</strong> - ponowne otwarcie - ponowne otwarcie po zamknięciu
-- <strong lang="de" dir="ltr">Einschränkungen</strong> - ograniczenia - rzeczy, które nie są możliwe albo są możliwe tylko w ograniczony sposób
-- <strong lang="de" dir="ltr">gesperrt</strong> - zamknięty; zablokowany - niedostępny albo niemożliwy do użycia
-- <strong lang="de" dir="ltr">Solebecken</strong> - basen solankowy - basen z wodą zawierającą sól
-- <strong lang="de" dir="ltr">verzögert</strong> - opóźniony - wydarzyło się później, niż planowano
-- <strong lang="de" dir="ltr">Mängel</strong> - usterki; wady - błędy albo problemy w czymś
-- <strong lang="de" dir="ltr">Schwachstellen</strong> - słabe punkty - miejsca, w których coś nie działa dobrze
-- <strong lang="de" dir="ltr">Wasseraufbereitung</strong> - uzdatnianie wody - czyszczenie i techniczne przygotowanie wody

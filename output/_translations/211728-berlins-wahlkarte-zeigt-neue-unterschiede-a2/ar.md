@@ -10,16 +10,6 @@ summary: "تظهر الانتخابات في برلين اختلافات جدي�
 description: "تظهر الانتخابات في برلين اختلافات جديدة بين الأحياء واختلافات قديمة بين الشرق والغرب."
 source_title: "Berlins Wahlkarte zeigt neue Unterschiede"
 reading_time: 2
-glossary_heading: "المفردات"
-audio:
-  url: "https://media.briefberlin.de/articles/2026/09/20260922-211728-berlins-wahlkarte-zeigt-neue-unterschiede-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "elevenlabs"
-  voice: "OYTbf65OHHFELVut7v2H"
-  timings_url: "https://media.briefberlin.de/articles/2026/09/20260922-211728-berlins-wahlkarte-zeigt-neue-unterschiede-a2/article.timings.json"
-  timing_granularity: "word"
-  highlight_context: "sentence"
 translations:
   de: /articles/211728-berlins-wahlkarte-zeigt-neue-unterschiede-a2/
   en: /articles/211728-berlins-wahlkarte-zeigt-neue-unterschiede-a2/en/
@@ -40,13 +30,3 @@ translations:
 لكن Die Linke ليس قويا في الوسط فقط. يصل نجاحه أيضا أكثر إلى الغرب والشرق. في الغرب يحصل على أصوات في أجزاء من شارلوتنبورغ وشبانداو. في الشرق هو قوي في شمال تريبتو-كوبنيك.
 
 في النهاية تظهر خريطة الانتخابات شيئين مهمين. كثير من الناس ينتخبون اليوم بطريقة مختلفة، لكن التاريخ يبقى مهما.
-
-## المفردات
-
-- <strong lang="de" dir="ltr">Wahlkarte</strong> - خريطة الانتخابات - خريطة فيها نتائج انتخابات.
-- <strong lang="de" dir="ltr">Parteien</strong> - أحزاب - مجموعات في السياسة.
-- <strong lang="de" dir="ltr">Stadtteil</strong> - حي - جزء من مدينة.
-- <strong lang="de" dir="ltr">Unterschied</strong> - اختلاف - شيء ليس مثل شيء آخر.
-- <strong lang="de" dir="ltr">Rand</strong> - طرف؛ أطراف - الجزء الخارجي.
-- <strong lang="de" dir="ltr">Stadtrand</strong> - أطراف المدينة - الجزء الخارجي من مدينة.
-- <strong lang="de" dir="ltr">Stimmen</strong> - أصوات - قرارات الناخبين في انتخابات.

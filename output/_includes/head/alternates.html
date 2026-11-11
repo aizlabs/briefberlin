@@ -20,4 +20,13 @@
 {%- if page.translations.de %}
 <link rel="alternate" hreflang="x-default" href="{{ page.translations.de | absolute_url }}">
 {%- endif -%}
+{%- elsif page.layout == 'language-edition' or page.url == '/' -%}
+{%- for language in site.data.languages -%}
+{%- assign edition_url = '/' -%}
+{%- unless language.original -%}
+  {%- assign edition_url = '/' | append: language.code | append: '/' -%}
+{%- endunless %}
+<link rel="alternate" hreflang="{{ language.code }}" href="{{ edition_url | absolute_url }}">
+{%- endfor %}
+<link rel="alternate" hreflang="x-default" href="{{ '/' | absolute_url }}">
 {%- endif -%}

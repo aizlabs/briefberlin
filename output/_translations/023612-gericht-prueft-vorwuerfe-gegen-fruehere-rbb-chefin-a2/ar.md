@@ -10,8 +10,6 @@ summary: "تنظر محكمة في برلين في اتهامات تتعلق ب�
 description: "تنظر محكمة في برلين في اتهامات تتعلق بالمال ضد المديرة السابقة لـ RBB وثلاثة أشخاص آخرين."
 source_title: "Gericht prüft Vorwürfe gegen frühere RBB-Chefin"
 reading_time: 2
-glossary_heading: "المفردات"
-audio: null
 translations:
   de: /articles/023612-gericht-prueft-vorwuerfe-gegen-fruehere-rbb-chefin-a2/
   en: /articles/023612-gericht-prueft-vorwuerfe-gegen-fruehere-rbb-chefin-a2/en/
@@ -38,14 +36,3 @@ translations:
 بدأت المشكلات في RBB في صيف 2022. في البداية ظهرت تقارير عن عقد لزوج Schlesinger. وبعد ذلك ظهرت أيضًا انتقادات للمال الذي حصلت عليه الإدارة. واستقالت Schlesinger في أغسطس 2022. وبعد ذلك فصلتها RBB من العمل دون انتظار.
 
 تخطط المحكمة لتخصيص 56 يومًا للمحاكمة.
-
-## المفردات
-
-- <strong lang="de" dir="ltr">Vorwürfe</strong> - اتهامات - يقول شخص إن شخصًا آخر فعل شيئًا خاطئًا.
-- <strong lang="de" dir="ltr">Staatsanwaltschaft</strong> - النيابة العامة - تنظر في الجرائم المحتملة وتتهم الأشخاص أمام المحكمة.
-- <strong lang="de" dir="ltr">geschadet</strong> - أضرّ - جعل شيئًا أسوأ؛ وهنا: تسبب في خسارة المال.
-- <strong lang="de" dir="ltr">Zusammenschluss</strong> - اتحاد - تعمل عدة مجموعات معًا وتكوّن مجموعة أكبر.
-- <strong lang="de" dir="ltr">missachtet</strong> - لم يلتزم - لم يلتزموا بشيء، مثل القواعد.
-- <strong lang="de" dir="ltr">Verwaltungsrat</strong> - مجلس الرقابة - مجموعة تراقب عمل الإدارة.
-- <strong lang="de" dir="ltr">zurückgetreten</strong> - استقالت - قالت بنفسها: لن أقوم بهذا العمل بعد الآن.
-- <strong lang="de" dir="ltr">entlassen</strong> - فُصلت من العمل - قال صاحب العمل إنها لم تعد تستطيع العمل هناك.

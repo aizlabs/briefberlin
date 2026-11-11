@@ -10,8 +10,6 @@ summary: "عُثر على Lisa T. المفقودة ميتة في براندنب�
 description: "عُثر على Lisa T. المفقودة ميتة في براندنبورغ؛ وتوجد شبهات قوية ضد رجل مصاب."
 source_title: "Vermisste Jugendliche aus Berlin tot in Brandenburg gefunden"
 reading_time: 3
-glossary_heading: "المفردات"
-audio: null
 translations:
   de: /articles/171949-vermisste-jugendliche-aus-berlin-tot-in-brandenbur-b1/
   en: /articles/171949-vermisste-jugendliche-aus-berlin-tot-in-brandenbur-b1/en/
@@ -32,15 +30,3 @@ translations:
 توجد شبهات قوية بأن الرجل الذي كان في المنزل اختطف Lisa وقتلها. وبحسب النيابة العامة، فقد ألحق بنفسه الجروح التي تهدد حياته. ونُقل إلى المستشفى، حيث تحرسه الشرطة. ولم يكن واضحاً في البداية ما إذا كان سينجو. ولم تكن هويته معروفة بعد أيضاً. كما لم يكن سبب وفاة الفتاة معروفاً. وكان من المقرر أن يفحص الأطباء جثمانها يوم الاثنين لمعرفة السبب. وبحث فريق من شرطة جرائم القتل عن أدلة في المنزل مساء الأحد. وسيحقق المحققون، من بين أمور أخرى، في كيفية اختطاف Lisa وما حدث في المنزل.
 
 حظيت حالات سابقة لاختفاء مراهقين في برلين باهتمام لفترة طويلة. فقد اختفت التلميذة Georgine K. عام 2006 أثناء عودتها من المدرسة في حي موابيت. ولم يصل المحققون إلى أحد جيرانها إلا بعد عشر سنوات. وأدانته محكمة لاحقاً بجريمة قتل. كما أن Rebecca من حي بريتس في برلين مفقودة منذ عام 2019. وكان عمرها آنذاك 15 عاماً. ولم تؤد عمليات البحث الكبيرة في براندنبورغ والبلاغات الكثيرة إلى معرفة مكانها على وجه اليقين.
-
-## المفردات
-
-- <strong lang="de" dir="ltr">vermisste</strong> - مفقودة - شخص يُبحث عنه لأن أحداً لا يعرف مكانه.
-- <strong lang="de" dir="ltr">Staatsanwaltschaft</strong> - النيابة العامة - جهة تحقق في الجرائم ويمكنها توجيه الاتهام.
-- <strong lang="de" dir="ltr">Einsatzkräfte</strong> - فرق التدخل - أشخاص يساعدون أثناء مهمة، مثل أفراد الشرطة.
-- <strong lang="de" dir="ltr">Fundort</strong> - مكان العثور - المكان الذي يُعثر فيه على شخص أو شيء.
-- <strong lang="de" dir="ltr">eingebrochen</strong> - اقتحم - دخل شخص إلى مبنى من دون إذن.
-- <strong lang="de" dir="ltr">Vermisstenfall</strong> - قضية شخص مفقود - قضية يُبحث فيها عن شخص اختفى.
-- <strong lang="de" dir="ltr">verschleppt</strong> - اختُطف - أُخذ شخص إلى مكان آخر ضد إرادته.
-- <strong lang="de" dir="ltr">zugefügt</strong> - ألحق - هنا: تسبب لنفسه بجروح.
-- <strong lang="de" dir="ltr">Gewissheit</strong> - اليقين - المعرفة المؤكدة بأن شيئاً ما صحيح.

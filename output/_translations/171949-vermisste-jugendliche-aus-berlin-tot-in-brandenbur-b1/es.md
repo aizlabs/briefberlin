@@ -10,8 +10,6 @@ summary: "Lisa T., que estaba desaparecida, fue encontrada muerta en Brandeburgo
 description: "Lisa T., que estaba desaparecida, fue encontrada muerta en Brandeburgo; un hombre herido es el principal sospechoso."
 source_title: "Vermisste Jugendliche aus Berlin tot in Brandenburg gefunden"
 reading_time: 3
-glossary_heading: "Vocabulario"
-audio: null
 translations:
   de: /articles/171949-vermisste-jugendliche-aus-berlin-tot-in-brandenbur-b1/
   en: /articles/171949-vermisste-jugendliche-aus-berlin-tot-in-brandenbur-b1/en/
@@ -32,15 +30,3 @@ La policía había sido llamada el domingo hacia el mediodía a la casa, situada
 El hombre que estaba en la casa es el principal sospechoso de haber secuestrado y matado a Lisa. Según la fiscalía, él mismo se causó las heridas que ponían en peligro su vida. Fue trasladado al hospital, donde está vigilado por la policía. Al principio no estaba claro si sobreviviría. Su identidad tampoco se conocía aún. La causa de la muerte de la niña también seguía sin aclararse. El lunes, los médicos debían examinar el cuerpo para encontrar la causa. Un equipo de la policía especializado en homicidios buscó pistas en la casa el domingo por la noche. Los investigadores examinarán, entre otras cosas, cómo fue secuestrada Lisa y qué ocurrió en la casa.
 
 En Berlín, otros casos anteriores de adolescentes desaparecidos han recibido atención durante mucho tiempo. La estudiante Georgine K. desapareció en 2006 cuando volvía de la escuela en Moabit. No fue hasta diez años después cuando los investigadores siguieron la pista de un vecino. Un tribunal lo condenó más tarde por asesinato. Además, Rebecca, de Berlín-Britz, está desaparecida desde 2019. Entonces tenía 15 años. Ni las grandes operaciones de búsqueda en Brandeburgo ni las numerosas pistas permitieron saber con certeza dónde está.
-
-## Vocabulario
-
-- <strong lang="de" dir="ltr">vermisste</strong> - desaparecida - Se busca a una persona porque nadie sabe dónde está.
-- <strong lang="de" dir="ltr">Staatsanwaltschaft</strong> - fiscalía - La institución investiga delitos y puede presentar una acusación.
-- <strong lang="de" dir="ltr">Einsatzkräfte</strong> - agentes y equipos de emergencia - Personas que ayudan en una operación, por ejemplo, policías.
-- <strong lang="de" dir="ltr">Fundort</strong> - lugar donde se encontró a alguien o algo - El lugar donde se encuentra a alguien o algo.
-- <strong lang="de" dir="ltr">eingebrochen</strong> - entrado por la fuerza - Alguien ha entrado en un edificio sin permiso.
-- <strong lang="de" dir="ltr">Vermisstenfall</strong> - caso de una persona desaparecida - Un caso en el que se busca a una persona que ha desaparecido.
-- <strong lang="de" dir="ltr">verschleppt</strong> - secuestrada - Alguien fue llevado contra su voluntad.
-- <strong lang="de" dir="ltr">zugefügt</strong> - causado - Aquí: él mismo se causó heridas.
-- <strong lang="de" dir="ltr">Gewissheit</strong> - certeza - El conocimiento seguro de que algo es verdad.

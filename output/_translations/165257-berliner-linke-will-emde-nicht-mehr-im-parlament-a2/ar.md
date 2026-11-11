@@ -10,8 +10,6 @@ summary: "تريد Berliner Linke أن تتخلى Vanessa Emde عن مقعدها
 description: "تريد Berliner Linke أن تتخلى Vanessa Emde عن مقعدها في برلمان برلين."
 source_title: "Berliner Linke will Emde nicht mehr im Parlament"
 reading_time: 2
-glossary_heading: "المفردات"
-audio: null
 translations:
   de: /articles/165257-berliner-linke-will-emde-nicht-mehr-im-parlament-a2/
   en: /articles/165257-berliner-linke-will-emde-nicht-mehr-im-parlament-a2/en/
@@ -32,14 +30,3 @@ translations:
 يقود Kerstin Wolter وMaximilian Schirmer Berliner Linke. يقولان: لم يعد لدى الحزب ثقة في Emde. دخلت Emde البرلمان مباشرة بأصوات الناس في نويكولن.
 
 في النهاية الأمر واضح: الخلاف داخل Berliner Linke لم ينته بعد. الآن السؤال هو هل تتخلى Emde فعلًا عن مقعدها.
-
-## المفردات
-
-- <strong lang="de" dir="ltr">ihren Platz abgibt</strong> - تتخلى عن مقعدها - هي تعطي مقعدها لشخص آخر
-- <strong lang="de" dir="ltr">Abgeordnetenhaus</strong> - مجلس النواب - برلمان في برلين
-- <strong lang="de" dir="ltr">Leitung</strong> - القيادة - أشخاص يقودون مجموعة
-- <strong lang="de" dir="ltr">Mandat</strong> - مقعد سياسي - مقعد سياسي يأتي من الناخبين
-- <strong lang="de" dir="ltr">Streit</strong> - خلاف - عندما لا يتفق الناس
-- <strong lang="de" dir="ltr">Absprachen</strong> - اتفاقات - ما اتفق عليه الناس معًا
-- <strong lang="de" dir="ltr">nicht eingehalten</strong> - لم يلتزم - لم يفعل كما تم الاتفاق
-- <strong lang="de" dir="ltr">Vertrauen</strong> - ثقة - اعتقاد أن شخصًا جيد وصادق

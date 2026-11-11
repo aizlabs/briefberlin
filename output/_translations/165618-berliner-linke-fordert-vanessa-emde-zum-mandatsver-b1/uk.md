@@ -10,8 +10,6 @@ summary: "Берлінська Die Linke через суперечливі за�
 description: "Берлінська Die Linke через суперечливі заяви та втрату довіри закликає Vanessa Emde відмовитися від свого місця в парламенті."
 source_title: "Berliner Linke fordert Vanessa Emde zum Mandatsverzicht auf"
 reading_time: 3
-glossary_heading: "Словник"
-audio: null
 translations:
   de: /articles/165618-berliner-linke-fordert-vanessa-emde-zum-mandatsver-b1/
   en: /articles/165618-berliner-linke-fordert-vanessa-emde-zum-mandatsver-b1/en/
@@ -37,14 +35,3 @@ Die Linke каже: Emde кілька разів порушувала спіль
 
 Що буде далі
 Чи Emde складе свій мандат, поки невідомо. У партії багато хто цього не очікує. Нещодавно вона сказала: вона не відмовляється від жодної зі своїх суперечливих заяв. Якщо вона збереже місце, керівництво фракції може подати заяву про її виключення з фракції Die Linke. Для цього йому потрібні дві третини голосів. Тепер така більшість вважається можливою. Katalin Gennburg і Gregor Gysi вимагають відмежування. Натомість прихильники Emde бачать у цьому поступку публічному тиску. Вони звинувачують партійне керівництво в тому, що заради можливої коаліції воно відмовляється від власних принципів.
-
-## Словник
-
-- <strong lang="de" dir="ltr">verschärft</strong> - загострив; посилив - Зроблено сильнішим або гіршим; конфлікт стає жорсткішим.
-- <strong lang="de" dir="ltr">Vertrauensverlust</strong> - втрата довіри - Коли люди більше не довіряють комусь.
-- <strong lang="de" dir="ltr">verstoßen</strong> - порушувати - Діяти проти правил, законів або домовленостей.
-- <strong lang="de" dir="ltr">Auslöser</strong> - привід; поштовх - Те, що починає подію або конфлікт.
-- <strong lang="de" dir="ltr">nahestehend</strong> - близький до; пов’язаний із - Тісно пов’язаний з групою політично або особисто.
-- <strong lang="de" dir="ltr">Judenfeindlichkeit</strong> - антисемітизм; ворожість до євреїв - Ворожість або ненависть до єврейок і євреїв.
-- <strong lang="de" dir="ltr">Sondierungen</strong> - попередні консультації - Перші політичні переговори перед можливими коаліційними переговорами.
-- <strong lang="de" dir="ltr">Parteiausschluss</strong> - виключення з партії - Коли когось офіційно виключають із партії.

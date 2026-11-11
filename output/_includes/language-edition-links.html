@@ -1,0 +1,14 @@
+<nav class="language-edition-nav" aria-label="{{ include.label | escape }}">
+  {% if include.pills %}<p class="langband__title">{{ include.label | escape }}</p>{% endif %}
+  <ul class="langband__list">
+    {% for language in site.data.languages %}
+      {% assign edition_url = '/' %}
+      {% unless language.original %}
+        {% assign edition_url = '/' | append: language.code | append: '/' %}
+      {% endunless %}
+      <li>
+        <a href="{{ edition_url | relative_url }}" lang="{{ language.code }}" dir="{{ language.dir }}"{% if page.url == edition_url %} aria-current="page"{% endif %}{% if include.pills %} class="langband__option langband__endonym{% if page.url == edition_url %} is-active{% endif %}"{% endif %}>{{ language.endonym }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+</nav>

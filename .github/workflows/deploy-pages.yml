@@ -10,6 +10,9 @@ on:
     branches: [main]
     paths:
       - 'output/**'
+  schedule:
+    # Expire old Google News sitemap entries even on days without new posts.
+    - cron: '17 * * * *'
   workflow_dispatch:
 
 # Grant GITHUB_TOKEN permissions for Pages deployment

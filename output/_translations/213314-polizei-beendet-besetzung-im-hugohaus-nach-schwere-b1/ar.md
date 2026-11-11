@@ -10,16 +10,6 @@ summary: "أنهت الشرطة احتلال Hugohaus بعد نزاعات حول
 description: "أنهت الشرطة احتلال Hugohaus بعد نزاعات حول أعمال البناء، بينما تستمر الاحتجاجات والأسئلة القانونية."
 source_title: "Polizei beendet Besetzung im Hugohaus nach schweren Konflikten"
 reading_time: 3
-glossary_heading: "المفردات"
-audio:
-  url: "https://media.briefberlin.de/articles/2026/09/20260926-213314-polizei-beendet-besetzung-im-hugohaus-nach-schweren-konflikten-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "elevenlabs"
-  voice: "OYTbf65OHHFELVut7v2H"
-  timings_url: "https://media.briefberlin.de/articles/2026/09/20260926-213314-polizei-beendet-besetzung-im-hugohaus-nach-schweren-konflikten-b1/article.timings.json"
-  timing_granularity: "word"
-  highlight_context: "sentence"
 translations:
   de: /articles/213314-polizei-beendet-besetzung-im-hugohaus-nach-schwere-b1/
   en: /articles/213314-polizei-beendet-besetzung-im-hugohaus-nach-schwere-b1/en/
@@ -38,11 +28,3 @@ translations:
 أثناء التفتيش عثرت قوات العملية، بحسب معلومات الشرطة، على أسلحة صوتية ومقلاع وأشياء محتملة للرمي. تشبه الأسلحة الصوتية الأسلحة الحقيقية، لكنها لا تطلق رصاصا عاديا. وكانت الشرطة قد أوقفت أعمال البناء مؤقتا يوم الأربعاء. وبذلك أرادت منع مزيد من العنف. في الوقت نفسه تجمع مؤيدو المحتلين على الجانب الآخر من الشارع. وفي بعض الأوقات نزل عدة عشرات من الأشخاص إلى الطريق. وهناك يوجد الآن مخيم احتجاج مسجل. ينام ويأكل ويحتج هناك نحو 30 من البانك، معظمهم شباب. صباح الجمعة بقي الوضع هادئا.
 
 الفندق وبيت الشباب السابقان مملوكان منذ بضعة أسابيع لشركة dBS Investment GmbH. كان البيت قد تدهور أكثر فأكثر على مدى سنوات. تخطط الشركة لهدمه ثم بناء مجمع سكني. عاشت مجموعة من البانك نحو سنتين في المبنى. ويسمي المالكون ذلك استخداما بلا إذن. وبحسب أقوالهم، طلبوا من السكان عدة مرات المغادرة. والآن من المقرر أن تستمر أعمال إزالة المواد الضارة والتفكيك. ويبقى مفتوحا ما سيحدث للأشياء التي تركها المحتلون وراءهم. كما أن المطالبات المحتملة بسبب التأخيرات أو الأضرار لم تتضح بعد.
-
-## المفردات
-
-- <strong lang="de" dir="ltr">Besetzung</strong> - احتلال أو وضع اليد على مكان - عندما يحتل أشخاص بيتا ويبقون فيه.
-- <strong lang="de" dir="ltr">Räumung</strong> - إخلاء - يجب على أشخاص مغادرة مكان، وغالبا يكون ذلك مع الشرطة.
-- <strong lang="de" dir="ltr">Durchsuchung</strong> - تفتيش - تبحث الشرطة في مكان عن أشياء أو أدلة.
-- <strong lang="de" dir="ltr">Eigentümer</strong> - مالكون - أشخاص يملك لهم شيء.
-- <strong lang="de" dir="ltr">Straftaten</strong> - جرائم - أفعال تخالف قانون العقوبات.

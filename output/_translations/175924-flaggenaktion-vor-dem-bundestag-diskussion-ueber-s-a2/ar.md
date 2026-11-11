@@ -10,8 +10,6 @@ summary: "بعد إنزال علم أمام Bundestag، يناقش سياسيو�
 description: "بعد إنزال علم أمام Bundestag، يناقش سياسيون زيادة الأمن."
 source_title: "Flaggenaktion vor dem Bundestag: Diskussion über Sicherheit"
 reading_time: 2
-glossary_heading: "المفردات"
-audio: null
 translations:
   de: /articles/175924-flaggenaktion-vor-dem-bundestag-diskussion-ueber-s-a2/
   en: /articles/175924-flaggenaktion-vor-dem-bundestag-diskussion-ueber-s-a2/en/
@@ -38,14 +36,3 @@ translations:
 المكان حول Bundestag مفتوح للجميع. وتحمي شرطة برلين المبنى من الخارج. لكنها لا تستطيع حراسة السارية طوال الوقت. والآن تريد مراجعة طريقة الحماية.
 
 تطالب رئيسة Bundestag، Julia Klöckner، بمزيد من الحماية. وعلى برلين أيضًا أن تساعد في ذلك. ويريد السياسي Thorsten Frei من CDU دراسة إنشاء منطقة حماية خاصة. وتُمنع المظاهرات هناك. وتوجد بالفعل اليوم قواعد خاصة للتجمعات عند Bundestag. وحتى عام 1999، كانت هناك منطقة حماية كهذه حول البرلمان في بون.
-
-## المفردات
-
-- <strong lang="de" dir="ltr">Fahnenmast</strong> - سارية علم - عمود عالٍ يُعلّق عليه علم.
-- <strong lang="de" dir="ltr">heruntergelassen</strong> - أنزل - حرّك العلم إلى الأسفل.
-- <strong lang="de" dir="ltr">festgenommen</strong> - قبضت على - أخذت الشرطة الأشخاص معها.
-- <strong lang="de" dir="ltr">Einsatzkräfte</strong> - أفراد فرق الطوارئ - أشخاص يساعدون عند حدوث طارئ، مثل الشرطة.
-- <strong lang="de" dir="ltr">Straftaten</strong> - جرائم - أفعال يمكن أن يُعاقَب الشخص عليها.
-- <strong lang="de" dir="ltr">Gelände</strong> - مكان - قطعة أرض أو مساحة حول مبنى.
-- <strong lang="de" dir="ltr">notdürftig</strong> - بشكل مؤقت - بالقدر الضروري فقط، وليس بشكل كامل.
-- <strong lang="de" dir="ltr">Schutzzone</strong> - منطقة حماية - مكان له قواعد خاصة للحماية.

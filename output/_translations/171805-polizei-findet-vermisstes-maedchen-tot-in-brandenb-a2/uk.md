@@ -10,8 +10,6 @@ summary: "Поліція знайшла зниклу Лізу мертвою в 
 description: "Поліція знайшла зниклу Лізу мертвою в Бранденбурзі та розслідує цю справу."
 source_title: "Polizei findet vermisstes Mädchen tot in Brandenburg"
 reading_time: 2
-glossary_heading: "Словник"
-audio: null
 translations:
   de: /articles/171805-polizei-findet-vermisstes-maedchen-tot-in-brandenb-a2/
   en: /articles/171805-polizei-findet-vermisstes-maedchen-tot-in-brandenb-a2/en/
@@ -36,12 +34,3 @@ translations:
 Чоловік потрапив до лікарні, і поліція охороняє його. Його життя було в небезпеці. Спочатку було неясно, хто він. Причина смерті Лізи теж ще не була відома.
 
 У понеділок лікар має оглянути її тіло. Поліція шукає в будинку сліди. Вона хоче знати: як чоловік забрав Лізу із собою? Час до її смерті також важливий.
-
-## Словник
-
-- <strong lang="de" dir="ltr">Meldung</strong> - повідомлення - Звістка про те, що сталося.
-- <strong lang="de" dir="ltr">zufällig</strong> - випадково - Це не було заплановано.
-- <strong lang="de" dir="ltr">Staatsanwaltschaft</strong> - прокуратура - Ці люди перевіряють, чи хтось порушив закон.
-- <strong lang="de" dir="ltr">mitgenommen</strong> - забрав із собою - Він забрав її в інше місце.
-- <strong lang="de" dir="ltr">Mord</strong> - навмисне вбивство - Хтось навмисно вбиває людину.
-- <strong lang="de" dir="ltr">Spuren</strong> - сліди - Речі, які можуть показати, що сталося.

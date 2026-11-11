@@ -10,8 +10,6 @@ summary: "Berliner Linke, tartışmalı açıklamaları ve güven kaybı nedeniy
 description: "Berliner Linke, tartışmalı açıklamaları ve güven kaybı nedeniyle Vanessa Emde’yi parlamento koltuğundan vazgeçmeye çağırıyor."
 source_title: "Berliner Linke fordert Vanessa Emde zum Mandatsverzicht auf"
 reading_time: 3
-glossary_heading: "Kelimeler"
-audio: null
 translations:
   de: /articles/165618-berliner-linke-fordert-vanessa-emde-zum-mandatsver-b1/
   en: /articles/165618-berliner-linke-fordert-vanessa-emde-zum-mandatsver-b1/en/
@@ -37,14 +35,3 @@ Bu olay, Grünen ve SPD ile olası bir hükümet hakkındaki görüşmeleri bir 
 
 Nasıl devam edecek
 Emde’nin vekilliğini bırakıp bırakmayacağı açık değil. Partide birçok kişi bunu beklemiyor. Emde son olarak şunu söyledi: Tartışmalı açıklamalarının hiçbirini geri almıyor. Sandalyeyi korursa, Linksfraktion yönetimi onun Linksfraktion’dan çıkarılması için başvurabilir. Bunun için oyların üçte ikisi gerekir. Bu çoğunluk artık mümkün görülüyor. Katalin Gennburg ve Gregor Gysi yolların ayrılmasını istiyor. Emde’yi destekleyenler ise bunu kamuoyu baskısı karşısında geri adım atmak olarak görüyor. Parti yönetimini, olası bir koalisyon için kendi temel ilkelerinden vazgeçmekle suçluyorlar.
-
-## Kelimeler
-
-- <strong lang="de" dir="ltr">verschärft</strong> - sertleştirdi; kötüleştirdi - Daha güçlü ya da daha kötü hale getirilmiş; çatışma daha sert olur.
-- <strong lang="de" dir="ltr">Vertrauensverlust</strong> - güven kaybı - İnsanların artık birine güvenmemesi durumu.
-- <strong lang="de" dir="ltr">verstoßen</strong> - aykırı davranmak; ihlal etmek - Kurallara, yasalara veya anlaşmalara karşı davranmak.
-- <strong lang="de" dir="ltr">Auslöser</strong> - tetikleyici; neden - Bir olayı veya çatışmayı başlatan şey.
-- <strong lang="de" dir="ltr">nahestehend</strong> - yakın; bağlantılı - Bir grupla siyasi veya kişisel olarak yakın bağ içinde olmak.
-- <strong lang="de" dir="ltr">Judenfeindlichkeit</strong> - Yahudi düşmanlığı; antisemitizm - Yahudilere karşı düşmanlık veya nefret.
-- <strong lang="de" dir="ltr">Sondierungen</strong> - ön görüşmeler - Olası koalisyon görüşmelerinden önce yapılan ilk siyasi görüşmeler.
-- <strong lang="de" dir="ltr">Parteiausschluss</strong> - partiden çıkarma - Bir kişinin resmen bir partiden çıkarılması.

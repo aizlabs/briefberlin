@@ -10,8 +10,6 @@ summary: "La Linke de Berlín quiere que Vanessa Emde deje su puesto en el Parla
 description: "La Linke de Berlín quiere que Vanessa Emde deje su puesto en el Parlamento de Berlín."
 source_title: "Berliner Linke will Emde nicht mehr im Parlament"
 reading_time: 2
-glossary_heading: "Vocabulario"
-audio: null
 translations:
   de: /articles/165257-berliner-linke-will-emde-nicht-mehr-im-parlament-a2/
   en: /articles/165257-berliner-linke-will-emde-nicht-mehr-im-parlament-a2/en/
@@ -32,14 +30,3 @@ El partido da razones simples para este paso. Según su opinión, Emde no respet
 Kerstin Wolter y Maximilian Schirmer dirigen la Linke de Berlín. Dicen: El partido ya no tiene confianza en Emde. Emde llegó al Parlamento directamente por votos de la gente de Neukölln.
 
 Al final queda claro: La disputa en la Linke de Berlín aún no ha terminado. Ahora se trata de si Emde realmente deja su puesto.
-
-## Vocabulario
-
-- <strong lang="de" dir="ltr">ihren Platz abgibt</strong> - deja su puesto - ella deja su asiento
-- <strong lang="de" dir="ltr">Abgeordnetenhaus</strong> - Cámara de Diputados - un parlamento en Berlín
-- <strong lang="de" dir="ltr">Leitung</strong> - dirección - personas que dirigen un grupo
-- <strong lang="de" dir="ltr">Mandat</strong> - mandato / puesto político - un puesto político por votantes
-- <strong lang="de" dir="ltr">Streit</strong> - disputa / discusión - cuando las personas no están de acuerdo
-- <strong lang="de" dir="ltr">Absprachen</strong> - acuerdos - lo que las personas han acordado juntas
-- <strong lang="de" dir="ltr">nicht eingehalten</strong> - no cumplido - no hecho como se acordó
-- <strong lang="de" dir="ltr">Vertrauen</strong> - confianza - creer que alguien es bueno y honesto

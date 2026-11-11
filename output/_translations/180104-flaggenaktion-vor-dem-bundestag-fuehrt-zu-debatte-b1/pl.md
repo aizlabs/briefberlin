@@ -10,8 +10,6 @@ summary: "Po akcji z flagą przed Bundestagiem policja prowadzi dochodzenie, a p
 description: "Po akcji z flagą przed Bundestagiem policja prowadzi dochodzenie, a politycy rozmawiają o lepszej ochronie i surowszych zasadach protestów."
 source_title: "Flaggenaktion vor dem Bundestag führt zu Debatte über Sicherheit"
 reading_time: 3
-glossary_heading: "Słowniczek"
-audio: null
 translations:
   de: /articles/180104-flaggenaktion-vor-dem-bundestag-fuehrt-zu-debatte-b1/
   en: /articles/180104-flaggenaktion-vor-dem-bundestag-fuehrt-zu-debatte-b1/en/
@@ -32,14 +30,3 @@ Teraz wydział policji zajmujący się ochroną państwa prowadzi dochodzenie pr
 Berlińska policja chroni budynek Reichstagu od zewnątrz. Wyjaśniła, że teren wokół budynku jest zasadniczo otwarty dla wszystkich. Znajdujące się tam barierki pomagają odwiedzającym znaleźć drogę. Policja nie ma dość osób, by stale pilnować terenu bezpośrednio przy maszcie. Zamierza teraz przeanalizować swoje działania. Przewodnicząca Bundestagu Julia Klöckner domaga się lepszej ochrony i uważa, że kraj związkowy Berlin również ponosi za nią odpowiedzialność. Burmistrz Berlina Kai Wegner potępił tę akcję jako wyraz braku szacunku dla demokracji.
 
 Polityk CDU Thorsten Frei zaproponował, aby zastanowić się nad surowszymi zasadami protestów wokół parlamentu. Już teraz istnieje tam specjalna strefa ochronna. Zgromadzenia są dozwolone tylko pod określonymi warunkami. Ważne jest przy tym, czy zakłócają pracę Bundestagu lub jego ugrupowań politycznych. Surowsza strefa ochronna istniała do 1999 roku wokół dawnej siedziby parlamentu w Bonn.
-
-## Słowniczek
-
-- <strong lang="de" dir="ltr">ausgelöst</strong> - wywołał - Spowodował coś lub dał temu początek.
-- <strong lang="de" dir="ltr">Fahnenmast</strong> - maszt flagowy - Wysoki słup, na którym wisi flaga.
-- <strong lang="de" dir="ltr">Staatsschutz</strong> - wydział ochrony państwa - Część policji, która bada między innymi przestępstwa popełnione z powodów politycznych.
-- <strong lang="de" dir="ltr">Verdacht</strong> - podejrzenie - Przypuszczenie, że ktoś coś zrobił, bez pewnego dowodu.
-- <strong lang="de" dir="ltr">Grundstück</strong> - działka - Wydzielony kawałek ziemi, który do kogoś należy.
-- <strong lang="de" dir="ltr">verstoßen</strong> - naruszyć - Nie przestrzegać zasady lub prawa.
-- <strong lang="de" dir="ltr">Bewachung</strong> - pilnowanie - Ochrona miejsca przez osoby, które go pilnują.
-- <strong lang="de" dir="ltr">Schutzbereich</strong> - strefa ochronna - Obszar, na którym obowiązują specjalne zasady ochrony.

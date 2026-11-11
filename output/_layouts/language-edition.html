@@ -1,0 +1,61 @@
+---
+layout: default
+---
+
+{%- assign ui = site.data.ui-briefberlin[page.lang] -%}
+{%- assign language = site.data.languages | where: 'code', page.lang | first -%}
+{%- assign translations = site.translations | where: 'lang', page.lang -%}
+{%- assign source_groups = site.posts | group_by_exp: 'post', 'post.story | default: post.description | default: post.url' -%}
+{%- assign story_groups = '' | split: '' -%}
+{%- for group in source_groups -%}
+  {%- assign versions = '' | split: '' -%}
+  {%- for post in group.items -%}
+    {%- assign translation_url = post.translations[page.lang] -%}
+    {%- if translation_url -%}
+      {%- assign translation = translations | where: 'url', translation_url | first -%}
+      {%- if translation -%}
+        {%- assign versions = versions | push: translation -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- if versions.size > 0 -%}
+    {%- assign story_groups = story_groups | push: versions -%}
+  {%- endif -%}
+{%- endfor -%}
+
+<div id="main" role="main">
+  <div class="archive">
+    <header class="paper-masthead">
+      <img class="paper-masthead__mark" src="{{ '/assets/images/logo.svg' | relative_url }}" alt="" width="44" height="44">
+      <h1 class="paper-masthead__wordmark"><a href="{{ page.url | relative_url }}">BriefBerlin</a></h1>
+      <p class="paper-masthead__tagline">{{ page.title | escape }}</p>
+      <p class="paper-masthead__dateline">
+        <time datetime="{{ site.time | date_to_xmlschema }}">{{ site.time | date: ui.date_format }}</time>
+        <span>{{ language.endonym }}</span>
+      </p>
+    </header>
+
+    <div class="langband">
+      {% include language-edition-links.html label=ui.languages_aria pills=true %}
+    </div>
+
+    {% if story_groups.size > 0 %}
+      <nav class="levelbar" aria-label="{{ ui.frontpage_levels }}" data-levelbar>
+        <p class="levelbar__label" id="levelbar-label">{{ ui.frontpage_levels }}</p>
+        <div class="levelbar__options" role="group" aria-labelledby="levelbar-label">
+          {% for entry in site.data.levels %}
+            {% assign level_key = entry[1].slug | prepend: 'level_' %}
+            <button type="button" class="levelbar__option{% if forloop.first %} is-active{% endif %}"
+                    data-level="{{ entry[0] }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}">
+              {{ ui[level_key] }}
+            </button>
+          {% endfor %}
+        </div>
+      </nav>
+      {% include frontpage-grid.html groups=story_groups ui=ui brief_limit=story_groups.size %}
+      {% include frontpage-controls.html %}
+    {% else %}
+      <p class="frontpage__empty">{{ ui.news_empty | escape }}</p>
+    {% endif %}
+  </div>
+</div>

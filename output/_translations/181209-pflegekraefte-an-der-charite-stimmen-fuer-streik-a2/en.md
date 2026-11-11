@@ -10,8 +10,6 @@ summary: "Many nurses at Berlin's Charité are ready for a strike because they w
 description: "Many nurses at Berlin's Charité are ready for a strike because they want better working conditions."
 source_title: "Pflegekräfte an der Charité stimmen für Streik"
 reading_time: 2
-glossary_heading: "Vocabulary"
-audio: null
 translations:
   de: /articles/181209-pflegekraefte-an-der-charite-stimmen-fuer-streik-a2/
   en: /articles/181209-pflegekraefte-an-der-charite-stimmen-fuer-streik-a2/en/
@@ -34,13 +32,3 @@ A strike means: People do not work for a time. In this way they put pressure on 
 Now Verdi and the management are still talking with each other. The management decides a lot about the work in the hospital. If both sides do not find an agreement, Verdi can call for a strike. The yes from the members gives Verdi a lot of strength for this. That is why the pressure on the management of Charité is now growing.
 
 Verdi does not say how many members it has there. But on many wards, many nurses work together with Verdi. A ward is an area in a hospital. That is why the result is important for the talks.
-
-## Vocabulary
-
-- <strong lang="de" dir="ltr">Streit</strong> - dispute, conflict - A problem between people or groups.
-- <strong lang="de" dir="ltr">Arbeitsbedingungen</strong> - working conditions - The situation and rules at work.
-- <strong lang="de" dir="ltr">Streik</strong> - strike - Workers do not work on purpose to reach something.
-- <strong lang="de" dir="ltr">Gewerkschaft</strong> - trade union - A group that supports workers with problems.
-- <strong lang="de" dir="ltr">Druck</strong> - pressure - Strong influence so that someone does something.
-- <strong lang="de" dir="ltr">Leitung</strong> - management, leadership - People who lead an organization.
-- <strong lang="de" dir="ltr">Einigung</strong> - agreement - When both sides say yes to a solution.

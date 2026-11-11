@@ -10,8 +10,6 @@ summary: "En la piscina municipal Schöneberg hay problemas con zonas, ascensor 
 description: "En la piscina municipal Schöneberg hay problemas con zonas, ascensor y aire poco después de la apertura."
 source_title: "Probleme im Stadtbad Schöneberg"
 reading_time: 2
-glossary_heading: "Vocabulario"
-audio: null
 translations:
   de: /articles/161306-probleme-im-stadtbad-sch-neberg-a2/
   en: /articles/161306-probleme-im-stadtbad-sch-neberg-a2/en/
@@ -34,12 +32,3 @@ Ahora especialistas revisan la técnica para agua limpia. También ajustan mejor
 Una pieza del ascensor está dañada, y una reparación está planeada. Los operadores dicen: Los problemas deben durar solo poco tiempo. También un restaurante de comida rápida en la piscina antigua molesta a algunos visitantes. Allí algunos visitantes huelen a menudo la comida muy fuerte.
 
 Por eso la piscina revisa un mejor sistema de aire para el restaurante. Habla sobre eso con empresas y con el inquilino. A principios de 2024 la piscina tuvo que cerrar por mala agua. Después la ciudad gastó unos 14 millones de euros.
-
-## Vocabulario
-
-- <strong lang="de" dir="ltr">Bauarbeiten</strong> - obras - Trabajos en un edificio o lugar.
-- <strong lang="de" dir="ltr">Fachleute</strong> - especialistas - Personas con mucho saber en un campo.
-- <strong lang="de" dir="ltr">Sprudelbecken</strong> - piscina con burbujas - Una piscina con agua con burbujas.
-- <strong lang="de" dir="ltr">hineinlassen</strong> - dejar entrar - Dejar que alguien vaya hacia dentro.
-- <strong lang="de" dir="ltr">Betreiber</strong> - operadores - Personas o una empresa que dirige algo.
-- <strong lang="de" dir="ltr">Luftanlage</strong> - sistema de aire - Sistema para aire fresco o mejor.

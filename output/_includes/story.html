@@ -2,16 +2,16 @@
   A single front-page story: one news item, in every level it was written at.
 
   Parameters:
-    group   - a group from `group_by_exp` on the page's posts (keyed on the
-              shared topic description), so .items holds the A2 and B1 versions
+    group   - a group of posts or an array of translated versions
     variant - lead | rail | secondary | brief
+    ui      - localized labels for a translated edition
 
   Both versions are rendered. The front page's `data-active-level` decides which
   one is visible, so switching level is a CSS change, works without a reload,
   and a reader without JavaScript still gets the A2 version and a link to B1.
   A story that only exists at one level always shows that version.
 {%- endcomment -%}
-{%- assign items = include.group.items -%}
+{%- assign items = include.group.items | default: include.group -%}
 {%- assign a2 = items | where: "level", "A2" | first -%}
 {%- assign b1 = items | where: "level", "B1" | first -%}
 {%- assign variant = include.variant | default: "brief" -%}
@@ -22,10 +22,14 @@
 <article class="story story--{{ variant }}{% if a2 and b1 %} story--paired{% endif %}">
   {%- for story in versions %}
   {%- assign level = site.data.levels[story.level] -%}
+  {%- assign category = story.category -%}
+  {%- if include.ui -%}
+    {%- assign category = include.ui.news_categories[story.category] -%}
+  {%- endif -%}
   <div class="story__version"{% if story.level %} data-version="{{ story.level }}"{% endif %}>
     <a class="story__link" href="{{ story.url | relative_url }}"{% if story.level %} data-level="{{ story.level }}"{% endif %}>
-      {%- if story.category %}
-      <span class="story__kicker">{{ story.category }}</span>
+      {%- if category %}
+      <span class="story__kicker">{{ category }}</span>
       {%- endif %}
       <h2 class="story__headline">{{ story.title }}</h2>
       <p class="story__deck">{{ story.summary | default: story.description | default: story.content | strip_html | truncatewords: 26 }}</p>
@@ -33,23 +37,28 @@
     </a>
     <p class="story__meta">
       {%- if a2 and b1 %}
-      <span class="story__levels" role="group" aria-label="Niveau">
+      <span class="story__levels" role="group" aria-label="{{ include.ui.frontpage_levels | default: 'Niveau' }}">
         {%- for other in versions %}{% assign other_level = site.data.levels[other.level] %}
+        {%- assign level_key = other_level.slug | prepend: 'level_' -%}
         <a class="story__level story__level--{{ other_level.slug }}{% if other.url == story.url %} is-current{% endif %}"
-           href="{{ other.url | relative_url }}"{% if other.url == story.url %} aria-current="true"{% endif %}>{{ other_level.label }}</a>
+           href="{{ other.url | relative_url }}"{% if other.url == story.url %} aria-current="true"{% endif %}>{{ include.ui[level_key] | default: other_level.label }}</a>
         {%- endfor %}
       </span>
       {%- elsif level %}
-      <span class="story__level story__level--{{ level.slug }}">{{ level.label }}</span>
+      {%- assign level_key = level.slug | prepend: 'level_' -%}
+      <span class="story__level story__level--{{ level.slug }}">{{ include.ui[level_key] | default: level.label }}</span>
       {%- endif %}
-      <time datetime="{{ story.date | date_to_xmlschema }}">{{ story.date | date: "%d.%m.%Y" }}</time>
+      {%- assign date_format = include.ui.date_format | default: '%d.%m.%Y' %}
+      <time datetime="{{ story.date | date_to_xmlschema }}">{{ story.date | date: date_format }}</time>
       {%- if story.reading_time %}
-      <span class="story__reading-time">{{ story.reading_time }} Min.</span>
+      <span class="story__reading-time">{{ include.ui.reading_time_label | default: '%d Min.' | replace: '%d', story.reading_time }}</span>
       {%- endif %}
+      {%- unless include.ui -%}
       {%- for l in site.data.languages %}{% unless l.original %}{% if story.translations[l.code] %}
       <a class="story__translation" data-lang="{{ l.code }}" href="{{ story.translations[l.code] | relative_url }}"
          hreflang="{{ l.code }}" lang="{{ l.code }}" dir="{{ l.dir }}"><span aria-hidden="true">文A</span> {{ l.endonym }}</a>
       {%- endif %}{% endunless %}{% endfor %}
+      {%- endunless %}
     </p>
   </div>
   {%- endfor %}

@@ -10,8 +10,6 @@ summary: "عثرت الشرطة على Lisa المفقودة ميتة في بر�
 description: "عثرت الشرطة على Lisa المفقودة ميتة في براندنبورغ، وهي تحقق في القضية."
 source_title: "Polizei findet vermisstes Mädchen tot in Brandenburg"
 reading_time: 2
-glossary_heading: "المفردات"
-audio: null
 translations:
   de: /articles/171805-polizei-findet-vermisstes-maedchen-tot-in-brandenb-a2/
   en: /articles/171805-polizei-findet-vermisstes-maedchen-tot-in-brandenb-a2/en/
@@ -36,12 +34,3 @@ translations:
 نُقل الرجل إلى المستشفى، وتحرسه الشرطة. كانت حياته في خطر. لم تكن هويته واضحة في البداية. ولم يكن سبب وفاة Lisa معروفًا بعد.
 
 من المقرر أن يفحص طبيب جسدها يوم الاثنين. تبحث الشرطة في البيت عن آثار. وهي تريد أن تعرف: كيف أخذ الرجل Lisa؟ ومن المهم أيضًا معرفة ما حدث في الوقت الذي سبق موتها.
-
-## المفردات
-
-- <strong lang="de" dir="ltr">Meldung</strong> - بلاغ - خبر عن شيء حدث.
-- <strong lang="de" dir="ltr">zufällig</strong> - بالصدفة - لم يكن الأمر مخططًا له.
-- <strong lang="de" dir="ltr">Staatsanwaltschaft</strong> - النيابة العامة - هؤلاء الأشخاص يتحققون مما إذا كان أحد قد خالف القانون.
-- <strong lang="de" dir="ltr">mitgenommen</strong> - أخذ معه - أخذها إلى مكان آخر.
-- <strong lang="de" dir="ltr">Mord</strong> - القتل العمد - أن يقتل شخص إنسانًا عن قصد.
-- <strong lang="de" dir="ltr">Spuren</strong> - آثار - أشياء يمكن أن تُظهر ما حدث.

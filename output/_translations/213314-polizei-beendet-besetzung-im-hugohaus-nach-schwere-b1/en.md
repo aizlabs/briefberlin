@@ -10,16 +10,6 @@ summary: "Police ended the occupation of the Hugohaus after conflicts over const
 description: "Police ended the occupation of the Hugohaus after conflicts over construction work, while protest and legal questions continue."
 source_title: "Polizei beendet Besetzung im Hugohaus nach schweren Konflikten"
 reading_time: 3
-glossary_heading: "Vocabulary"
-audio:
-  url: "https://media.briefberlin.de/articles/2026/09/20260926-213314-polizei-beendet-besetzung-im-hugohaus-nach-schweren-konflikten-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "elevenlabs"
-  voice: "OYTbf65OHHFELVut7v2H"
-  timings_url: "https://media.briefberlin.de/articles/2026/09/20260926-213314-polizei-beendet-besetzung-im-hugohaus-nach-schweren-konflikten-b1/article.timings.json"
-  timing_granularity: "word"
-  highlight_context: "sentence"
 translations:
   de: /articles/213314-polizei-beendet-besetzung-im-hugohaus-nach-schwere-b1/
   en: /articles/213314-polizei-beendet-besetzung-im-hugohaus-nach-schwere-b1/en/
@@ -38,11 +28,3 @@ Before the operation, there had been serious conflicts because of construction w
 During the search, emergency workers found alarm guns, a slingshot, and possible objects for throwing, according to police. Alarm guns look similar to real weapons, but do not fire normal bullets. Police had already stopped the construction work temporarily on Wednesday. In this way, they wanted to prevent further violence. At the same time, supporters of the squatters gathered on the other side of the street. At times, several dozen people went onto the roadway. A registered protest camp is now there. Around 30 mostly young punks sleep, eat, and protest there. On Friday morning, the situation remained calm.
 
 The former hotel and hostel has belonged to dBS Investment GmbH for a few weeks. The house had become more and more run-down over the years. The company plans to demolish it and then build a residential complex. A group of punks lived in the building for about two years. The owners call this use without permission. According to their own statements, they asked the residents to leave several times. Now work to remove harmful substances and to dismantle parts of the building is to continue. It remains unclear what will happen to belongings left behind by the squatters. Possible claims because of delays or damage are also still unclear.
-
-## Vocabulary
-
-- <strong lang="de" dir="ltr">Besetzung</strong> - occupation; squatting - When people occupy a house and stay there.
-- <strong lang="de" dir="ltr">Räumung</strong> - eviction; clearing out - People have to leave a place, often with police.
-- <strong lang="de" dir="ltr">Durchsuchung</strong> - search - Police look in a place for things or evidence.
-- <strong lang="de" dir="ltr">Eigentümer</strong> - owners - People who own something.
-- <strong lang="de" dir="ltr">Straftaten</strong> - criminal offenses - Actions that break criminal law.

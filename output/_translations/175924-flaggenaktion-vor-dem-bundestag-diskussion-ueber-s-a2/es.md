@@ -10,8 +10,6 @@ summary: "Tras una acción con una bandera ante el Bundestag, los políticos hab
 description: "Tras una acción con una bandera ante el Bundestag, los políticos hablan de aumentar la seguridad."
 source_title: "Flaggenaktion vor dem Bundestag: Diskussion über Sicherheit"
 reading_time: 2
-glossary_heading: "Vocabulario"
-audio: null
 translations:
   de: /articles/175924-flaggenaktion-vor-dem-bundestag-diskussion-ueber-s-a2/
   en: /articles/175924-flaggenaktion-vor-dem-bundestag-diskussion-ueber-s-a2/en/
@@ -38,14 +36,3 @@ Al parecer, el mástil sufrió un daño. Los trabajadores lo repararon primero d
 El terreno alrededor del Bundestag está abierto al público. La policía de Berlín protege el edificio desde fuera. Pero no puede vigilar el mástil todo el tiempo. Ahora quiere revisar la protección.
 
 La presidenta del Bundestag, Julia Klöckner, pide más protección. Berlín también debe ayudar. El político de la CDU Thorsten Frei quiere estudiar una zona especial de protección. Allí están prohibidas las manifestaciones. Ya hoy hay reglas especiales para las reuniones junto al Bundestag. Hasta 1999 había una zona de protección así alrededor del parlamento en Bonn.
-
-## Vocabulario
-
-- <strong lang="de" dir="ltr">Fahnenmast</strong> - mástil de bandera - Un palo alto del que cuelga una bandera.
-- <strong lang="de" dir="ltr">heruntergelassen</strong> - bajado - Él movió la bandera hacia abajo.
-- <strong lang="de" dir="ltr">festgenommen</strong> - detenido - La policía se llevó a las personas.
-- <strong lang="de" dir="ltr">Einsatzkräfte</strong> - equipos de emergencia - Personas que ayudan en una emergencia, por ejemplo, la policía.
-- <strong lang="de" dir="ltr">Straftaten</strong> - delitos - Acciones por las que se puede recibir un castigo.
-- <strong lang="de" dir="ltr">Gelände</strong> - terreno - Un pedazo de tierra o un espacio alrededor de un edificio.
-- <strong lang="de" dir="ltr">notdürftig</strong> - de forma provisional - Solo lo necesario, sin hacerlo por completo.
-- <strong lang="de" dir="ltr">Schutzzone</strong> - zona de protección - Un lugar con reglas especiales para protegerlo.

@@ -10,8 +10,6 @@ summary: "Берлинская Die Linke хочет, чтобы Vanessa Emde о�
 description: "Берлинская Die Linke хочет, чтобы Vanessa Emde отдала своё место в берлинском парламенте."
 source_title: "Berliner Linke will Emde nicht mehr im Parlament"
 reading_time: 2
-glossary_heading: "Словарь"
-audio: null
 translations:
   de: /articles/165257-berliner-linke-will-emde-nicht-mehr-im-parlament-a2/
   en: /articles/165257-berliner-linke-will-emde-nicht-mehr-im-parlament-a2/en/
@@ -32,14 +30,3 @@ translations:
 Kerstin Wolter и Maximilian Schirmer руководят берлинской Die Linke. Они говорят: у партии больше нет доверия к Emde. Emde попала в парламент напрямую через голоса людей в Нойкёльне.
 
 В конце ясно: спор в берлинской Die Linke ещё не закончен. Теперь речь о том, действительно ли Emde отдаст своё место.
-
-## Словарь
-
-- <strong lang="de" dir="ltr">ihren Platz abgibt</strong> - отдаёт своё место - она отдаёт своё место
-- <strong lang="de" dir="ltr">Abgeordnetenhaus</strong> - Палата депутатов - парламент в Берлине
-- <strong lang="de" dir="ltr">Leitung</strong> - руководство - люди, которые руководят группой
-- <strong lang="de" dir="ltr">Mandat</strong> - мандат - политическое место через избирателей
-- <strong lang="de" dir="ltr">Streit</strong> - спор - когда люди не согласны
-- <strong lang="de" dir="ltr">Absprachen</strong> - договорённости - то, о чём люди договорились вместе
-- <strong lang="de" dir="ltr">nicht eingehalten</strong> - не выполнено - сделано не так, как было договорено
-- <strong lang="de" dir="ltr">Vertrauen</strong> - доверие - вера в то, что человек хороший и честный

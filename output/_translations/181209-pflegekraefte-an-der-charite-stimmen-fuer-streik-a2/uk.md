@@ -10,8 +10,6 @@ summary: "Багато медсестер і медбратів у берлін�
 description: "Багато медсестер і медбратів у берлінській Charité готові до страйку, бо вони хочуть кращих умов праці."
 source_title: "Pflegekräfte an der Charité stimmen für Streik"
 reading_time: 2
-glossary_heading: "Словник"
-audio: null
 translations:
   de: /articles/181209-pflegekraefte-an-der-charite-stimmen-fuer-streik-a2/
   en: /articles/181209-pflegekraefte-an-der-charite-stimmen-fuer-streik-a2/en/
@@ -34,13 +32,3 @@ translations:
 Тепер Verdi і керівництво далі говорять одне з одним. Керівництво багато вирішує про роботу в лікарні. Якщо обидві сторони не знайдуть згоди, Verdi може закликати до страйку. Так від членів дає Verdi для цього багато сили. Тому тепер тиск на керівництво Charité зростає.
 
 Verdi не каже, скільки членів там є. Але на багатьох відділеннях багато медсестер і медбратів працюють разом з Verdi. Відділення — це частина лікарні. Тому результат важливий для розмов.
-
-## Словник
-
-- <strong lang="de" dir="ltr">Streit</strong> - конфлікт - Проблема між людьми або групами.
-- <strong lang="de" dir="ltr">Arbeitsbedingungen</strong> - умови праці - Ситуація і правила на роботі.
-- <strong lang="de" dir="ltr">Streik</strong> - страйк - Працівники навмисно не працюють, щоб чогось досягти.
-- <strong lang="de" dir="ltr">Gewerkschaft</strong> - профспілка - Група, яка підтримує працівників при проблемах.
-- <strong lang="de" dir="ltr">Druck</strong> - тиск - Сильний вплив, щоб хтось щось зробив.
-- <strong lang="de" dir="ltr">Leitung</strong> - керівництво - Люди, які керують організацією.
-- <strong lang="de" dir="ltr">Einigung</strong> - згода - Коли обидві сторони кажуть так до рішення.

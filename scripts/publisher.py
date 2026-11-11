@@ -512,33 +512,14 @@ reading_time: {article.reading_time}
         )
         return "\n".join(lines) + "\n"
 
-    def _format_translated_vocabulary(self, translation: ArticleTranslation) -> str:
-        """Static glossary list for a translated page.
-
-        The German headword is wrapped in ``lang="de" dir="ltr"`` so it stays
-        readable inside a right-to-left page.
-
-        No JSON payload and no clickable spans: the translated body contains no
-        German words for them to attach to.
-        """
-        rows = []
-        for item in translation.vocabulary:
-            definition = " - ".join(p for p in (item.translation, item.explanation) if p)
-            if not definition:
-                continue
-            rows.append(
-                f'- <strong lang="de" dir="ltr">{item.term}</strong> - {definition}'
-            )
-        if not rows:
-            return ""
-        return "\n".join(["", f"## {translation.glossary_heading}", "", *rows]) + "\n"
-
     def _generate_translation_markdown(
         self,
         article: AdaptedArticle,
         translation: ArticleTranslation,
         timestamp: datetime,
         ref: str,
+        *,
+        news_sitemap: bool = True,
     ) -> str:
         esc = self._escape_yaml_string
         category = (
@@ -552,6 +533,7 @@ reading_time: {article.reading_time}
         author_line = f'author: "{esc(author)}"\n' if author else ""
         summary_line = f'summary: "{esc(translation.summary)}"\n' if translation.summary else ""
         description = translation.summary or translation.title
+        news_sitemap_line = "" if news_sitemap else "news_sitemap: false\n"
 
         frontmatter = (
             "---\n"
@@ -566,10 +548,7 @@ reading_time: {article.reading_time}
             f'description: "{esc(description)}"\n'
             f'source_title: "{esc(article.title)}"\n'
             f"reading_time: {translation.reading_time}\n"
-            f'glossary_heading: "{esc(translation.glossary_heading)}"\n'
-            # Audio is deliberately the GERMAN track: the reader listens in German
-            # while reading their own language.
-            f"{self._format_audio(article)}\n"
+            f"{news_sitemap_line}"
             f"{self._format_translations_map(article, ref)}"
             "---\n\n"
         )
@@ -577,7 +556,7 @@ reading_time: {article.reading_time}
         # NOTE: never _render_content_with_translation_hints here. It scans for
         # German terms case-insensitively; over English text it wraps incidental
         # matches, and its _is_word_char check is meaningless for Arabic.
-        return frontmatter + translation.content + "\n" + self._format_translated_vocabulary(translation)
+        return frontmatter + translation.content + "\n"
 
     def _render_content_with_translation_hints(
         self,

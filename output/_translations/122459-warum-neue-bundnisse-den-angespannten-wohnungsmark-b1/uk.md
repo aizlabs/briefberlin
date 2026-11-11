@@ -10,16 +10,6 @@ summary: "Житлова криза посилює тиск на політик�
 description: "Житлова криза посилює тиск на політику й суспільство, бо брак житла впливає на особисті рішення, роботу та соціальне зростання."
 source_title: "Warum neue Bündnisse den angespannten Wohnungsmarkt entlasten sollen"
 reading_time: 3
-glossary_heading: "Словник"
-audio:
-  url: "https://media.briefberlin.de/articles/2026/09/20260921-122459-warum-neue-bundnisse-den-angespannten-wohnungsmarkt-entlasten-sollen-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "elevenlabs"
-  voice: "OYTbf65OHHFELVut7v2H"
-  timings_url: "https://media.briefberlin.de/articles/2026/09/20260921-122459-warum-neue-bundnisse-den-angespannten-wohnungsmarkt-entlasten-sollen-b1/article.timings.json"
-  timing_granularity: "word"
-  highlight_context: "sentence"
 translations:
   de: /articles/122459-warum-neue-bundnisse-den-angespannten-wohnungsmark-b1/
   en: /articles/122459-warum-neue-bundnisse-den-angespannten-wohnungsmark-b1/en/
@@ -40,13 +30,3 @@ translations:
 Що довше бракує доступного житла, то більшим стає політичний тиск. Тому партії та ініціативи вимагають сильнішого втручання в ринок. Особливо радикальна пропозиція — передати великі житлові фонди під суспільний контроль. Це означає: великі житлові компанії більше не повинні самі контролювати свої квартири як приватну власність. Натомість суспільство, тобто держава або публічна установа, має визначати більше. Багато хто сподівається завдяки цьому на нижчу орендну плату. Але в короткостроковій перспективі через це не з’явиться жодної нової квартири.
 
 Саме тут і починають діяти нові союзи. Якщо адміністрації, будівельні компанії, об’єднання орендарів і власники співпрацюють, вони можуть раніше з’ясовувати конфлікти. Вони також можуть краще планувати, де нове житло має сенс. Така співпраця не розв’яже кризу одразу. Попри це, вона може допомогти повернути довіру і швидше зробити можливими конкретні будівельні проєкти. Без нового доступного житла тиск і далі зростатиме.
-
-## Словник
-
-- <strong lang="de" dir="ltr">Wohnungskrise</strong> - житлова криза - Ситуація, коли доступного житла є занадто мало.
-- <strong lang="de" dir="ltr">Bündnissen</strong> - союзам; об’єднанням - Групи, які разом хочуть досягти певної мети.
-- <strong lang="de" dir="ltr">Wohnungsmarkt</strong> - ринок житла - Ринок квартир і будинків для оренди або купівлі.
-- <strong lang="de" dir="ltr">entlasten</strong> - розвантажувати; послаблювати тиск - Зменшувати тиск або навантаження.
-- <strong lang="de" dir="ltr">Familiengründung</strong> - створення сім’ї - Початок власної сім’ї, часто з дітьми.
-- <strong lang="de" dir="ltr">Vergesellschaftung</strong> - передача під суспільний контроль - Передача приватної власності під контроль суспільства.
-- <strong lang="de" dir="ltr">Wohnungsbestände</strong> - житлові фонди - Усі квартири, якими хтось володіє або керує.

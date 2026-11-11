@@ -10,8 +10,6 @@ summary: "Poco después de la renovación, en el Stadtbad Schöneberg hay de nue
 description: "Poco después de la renovación, en el Stadtbad Schöneberg hay de nuevo problemas técnicos, cierres y críticas de los visitantes."
 source_title: "Stadtbad Schöneberg hat kurz nach Sanierung wieder Technikprobleme"
 reading_time: 3
-glossary_heading: "Vocabulario"
-audio: null
 translations:
   de: /articles/161452-stadtbad-sch-neberg-hat-kurz-nach-sanierung-wieder-b1/
   en: /articles/161452-stadtbad-sch-neberg-hat-kurz-nach-sanierung-wieder-b1/en/
@@ -30,15 +28,3 @@ Los Berliner Bäder-Betriebe explican una parte de los problemas por las vacacio
 A comienzos de 2024, los operadores cerraron la piscina porque los valores del agua no eran lo bastante buenos. Para la modernización parcial gastaron alrededor de 14 millones de euros. Las empresas renovaron la técnica para el agua de la piscina y el tratamiento del agua. Repararon impermeabilizaciones y azulejos en las piscinas. Además trabajaron en la ventilación, los cables eléctricos, la luz, la protección contra incendios y partes del control del edificio. El control del edificio ayuda a vigilar de forma central las instalaciones técnicas. Aun así, especialistas encontraron más daños durante el funcionamiento de prueba. Entre ellos había grietas en el revoque sobre las ventanas laterales. Estos daños tuvieron que repararse antes de la apertura.
 
 El puesto de comida en el edificio causa más críticas. Desde la reapertura, una cadena de comida rápida vende comida allí. A algunos bañistas les molesta el olor de los alimentos fritos cerca de las piscinas. Por eso los operadores estudian si pueden ampliar la ventilación existente. Según los operadores, el ascensor averiado no está relacionado con la renovación. Una pieza ha fallado y la reparación está en marcha. Las limitaciones deben ser solo temporales. Pero aún no se sabe cuándo volverán a abrir todas las zonas.
-
-## Vocabulario
-
-- <strong lang="de" dir="ltr">Sanierung</strong> - renovación; rehabilitación - Reparación y renovación de un edificio o una instalación
-- <strong lang="de" dir="ltr">Wiedereröffnung</strong> - reapertura - La nueva apertura después de un cierre
-- <strong lang="de" dir="ltr">Einschränkungen</strong> - limitaciones; restricciones - Cosas que no son posibles o solo lo son de forma limitada
-- <strong lang="de" dir="ltr">gesperrt</strong> - cerrado; bloqueado - No accesible o no utilizable
-- <strong lang="de" dir="ltr">Solebecken</strong> - piscina de agua salina - Piscina con agua que contiene sal
-- <strong lang="de" dir="ltr">verzögert</strong> - retrasado - Ocurre más tarde de lo previsto
-- <strong lang="de" dir="ltr">Mängel</strong> - defectos; fallos - Errores o problemas en algo
-- <strong lang="de" dir="ltr">Schwachstellen</strong> - puntos débiles - Lugares en los que algo no funciona bien
-- <strong lang="de" dir="ltr">Wasseraufbereitung</strong> - tratamiento del agua - Limpieza y tratamiento técnico del agua

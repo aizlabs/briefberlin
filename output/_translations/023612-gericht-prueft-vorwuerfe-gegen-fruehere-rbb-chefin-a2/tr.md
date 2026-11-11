@@ -10,8 +10,6 @@ summary: "Berlin'de bir mahkeme, eski RBB başkanı ve üç kişi hakkındaki pa
 description: "Berlin'de bir mahkeme, eski RBB başkanı ve üç kişi hakkındaki para iddialarını inceliyor."
 source_title: "Gericht prüft Vorwürfe gegen frühere RBB-Chefin"
 reading_time: 2
-glossary_heading: "Kelimeler"
-audio: null
 translations:
   de: /articles/023612-gericht-prueft-vorwuerfe-gegen-fruehere-rbb-chefin-a2/
   en: /articles/023612-gericht-prueft-vorwuerfe-gegen-fruehere-rbb-chefin-a2/en/
@@ -38,14 +36,3 @@ Savcılık, Schlesinger'in evindeki on akşam yemeğinden de söz ediyor. RBB bu
 2022 yazında RBB'de sorunlar başladı. İlk önce Schlesinger'in kocasının bir sözleşmesi hakkında haberler çıktı. Daha sonra yönetim için verilen parayla ilgili de eleştiriler oldu. Schlesinger, Ağustos 2022'de görevinden ayrıldı. Daha sonra RBB onu beklemeden işten çıkardı.
 
 Mahkeme, dava için 56 gün ayırmayı planlıyor.
-
-## Kelimeler
-
-- <strong lang="de" dir="ltr">Vorwürfe</strong> - iddialar - Birinin yanlış bir şey yaptığı söyleniyor.
-- <strong lang="de" dir="ltr">Staatsanwaltschaft</strong> - savcılık - İşlenmiş olabilecek suçları inceler ve insanları suçlar.
-- <strong lang="de" dir="ltr">geschadet</strong> - zarar verdi - Bir şeyi daha kötü yaptı; burada: para kaybettirdi.
-- <strong lang="de" dir="ltr">Zusammenschluss</strong> - birlik - Birkaç grup birlikte çalışır ve daha büyük bir grup oluşturur.
-- <strong lang="de" dir="ltr">missachtet</strong> - uymadı - Bir kurala ya da söylenen bir şeye uymadılar.
-- <strong lang="de" dir="ltr">Verwaltungsrat</strong> - yönetim kurulu - Yönetimin çalışmalarını denetleyen bir grup.
-- <strong lang="de" dir="ltr">zurückgetreten</strong> - görevinden ayrıldı - Kendisi şöyle dedi: Bu işi artık yapmıyorum.
-- <strong lang="de" dir="ltr">entlassen</strong> - işten çıkarıldı - İşveren şöyle dedi: Artık burada çalışamaz.

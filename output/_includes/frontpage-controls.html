@@ -1,0 +1,65 @@
+<script>
+(function () {
+  var root = document.querySelector('[data-frontpage]');
+  if (!root) return;
+
+  function load(key) {
+    try { return window.localStorage.getItem(key); } catch (error) { return null; }
+  }
+  function save(key, value) {
+    try {
+      if (value) window.localStorage.setItem(key, value);
+      else window.localStorage.removeItem(key);
+    } catch (error) { /* private mode */ }
+  }
+
+  // Level: every story stays on the page; only which version it shows changes.
+  var LEVEL_KEY = 'briefberlin:level';
+  var levelButtons = Array.prototype.slice.call(document.querySelectorAll('[data-levelbar] .levelbar__option'));
+  var levels = levelButtons.map(function (button) { return button.getAttribute('data-level'); });
+  var note = document.querySelector('[data-level-note]');
+
+  function applyLevel(level, persist) {
+    root.setAttribute('data-active-level', level);
+    levelButtons.forEach(function (button) {
+      var on = button.getAttribute('data-level') === level;
+      button.classList.toggle('is-active', on);
+      button.setAttribute('aria-pressed', on ? 'true' : 'false');
+      if (on && note) note.textContent = button.getAttribute('data-note') || '';
+    });
+    if (persist) save(LEVEL_KEY, level);
+  }
+
+  levelButtons.forEach(function (button) {
+    button.addEventListener('click', function () { applyLevel(button.getAttribute('data-level'), true); });
+  });
+  // The old "all" choice no longer exists, so it falls back to the first level.
+  var storedLevel = load(LEVEL_KEY);
+  applyLevel(levels.indexOf(storedLevel) === -1 ? levels[0] : storedLevel, false);
+
+  // Reading language: shows a link to that translation under every story.
+  var LANG_KEY = 'briefberlin:reader-lang';
+  var langButtons = Array.prototype.slice.call(document.querySelectorAll('[data-reader-lang-option]'));
+  var codes = langButtons.map(function (button) { return button.getAttribute('data-reader-lang-option'); });
+
+  function applyLang(code, persist) {
+    if (code) root.setAttribute('data-reader-lang', code);
+    else root.removeAttribute('data-reader-lang');
+    langButtons.forEach(function (button) {
+      var on = button.getAttribute('data-reader-lang-option') === code;
+      button.classList.toggle('is-active', on);
+      button.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    if (persist) save(LANG_KEY, code);
+  }
+
+  langButtons.forEach(function (button) {
+    button.addEventListener('click', function () {
+      var code = button.getAttribute('data-reader-lang-option');
+      applyLang(root.getAttribute('data-reader-lang') === code ? null : code, true);
+    });
+  });
+  var storedLang = load(LANG_KEY);
+  applyLang(codes.indexOf(storedLang) === -1 ? null : storedLang, false);
+})();
+</script>

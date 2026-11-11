@@ -10,8 +10,6 @@ summary: "Суд в Берлине проверяет обвинения, свя
 description: "Суд в Берлине проверяет обвинения, связанные с деньгами, против бывшей главы RBB и ещё трёх человек."
 source_title: "Gericht prüft Vorwürfe gegen frühere RBB-Chefin"
 reading_time: 2
-glossary_heading: "Словарь"
-audio: null
 translations:
   de: /articles/023612-gericht-prueft-vorwuerfe-gegen-fruehere-rbb-chefin-a2/
   en: /articles/023612-gericht-prueft-vorwuerfe-gegen-fruehere-rbb-chefin-a2/en/
@@ -38,14 +36,3 @@ RBB делает радио- и телепрограммы для всех. Лю
 Летом 2022 года в RBB начались проблемы. Сначала появились сообщения о договоре мужа Шлезингер. Затем стали критиковать и деньги, которые получало руководство. Шлезингер ушла с должности в августе 2022 года. Позже RBB уволил её без срока ожидания.
 
 Суд планирует выделить на процесс 56 дней.
-
-## Словарь
-
-- <strong lang="de" dir="ltr">Vorwürfe</strong> - обвинения - Когда говорят, что кто-то сделал что-то плохое.
-- <strong lang="de" dir="ltr">Staatsanwaltschaft</strong> - прокуратура - Она проверяет возможные преступления и обвиняет людей в суде.
-- <strong lang="de" dir="ltr">geschadet</strong> - причинили ущерб - Сделали что-то хуже; здесь: привели к потере денег.
-- <strong lang="de" dir="ltr">Zusammenschluss</strong> - объединение - Несколько групп работают вместе и образуют одну большую группу.
-- <strong lang="de" dir="ltr">missachtet</strong> - нарушили - Они не соблюдали что-то.
-- <strong lang="de" dir="ltr">Verwaltungsrat</strong> - наблюдательный совет - Группа людей, которая контролирует работу руководства.
-- <strong lang="de" dir="ltr">zurückgetreten</strong> - ушла с должности - Она сама сказала: я больше не буду делать эту работу.
-- <strong lang="de" dir="ltr">entlassen</strong> - уволил - Работодатель сказал: она больше не может здесь работать.

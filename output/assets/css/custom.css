@@ -1896,6 +1896,18 @@ body {
   font-weight: 700;
 }
 
+.language-edition-nav {
+  margin-block-start: 0.65rem;
+}
+
+.page__footer .language-edition-nav .langband__list {
+  column-gap: 1rem;
+}
+
+.langband__option.langband__endonym {
+  text-decoration: none;
+}
+
 /* A paired story renders both versions; only the active level's one shows. */
 .frontpage[data-active-level="A2"] .story--paired .story__version[data-version="B1"],
 .frontpage[data-active-level="B1"] .story--paired .story__version[data-version="A2"] {

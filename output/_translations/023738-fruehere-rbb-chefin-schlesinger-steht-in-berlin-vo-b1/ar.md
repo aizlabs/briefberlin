@@ -10,8 +10,6 @@ summary: "تبدأ في برلين محاكمة Patricia Schlesinger وثلاث�
 description: "تبدأ في برلين محاكمة Patricia Schlesinger وثلاثة مسؤولين سابقين آخرين في RBB بتهم تتعلق بإلحاق أضرار مالية بالمؤسسة."
 source_title: "Frühere RBB-Chefin Schlesinger steht in Berlin vor Gericht"
 reading_time: 3
-glossary_heading: "المفردات"
-audio: null
 translations:
   de: /articles/023738-fruehere-rbb-chefin-schlesinger-steht-in-berlin-vo-b1/
   en: /articles/023738-fruehere-rbb-chefin-schlesinger-steht-in-berlin-vo-b1/en/
@@ -32,14 +30,3 @@ translations:
 أثارت القضية أزمة في RBB في صيف 2022. وفي البداية، أُثيرت أسئلة حول عقد استشاري لزوج Schlesinger لدى Messe Berlin. وكان Wolf رئيس مجلس الرقابة هناك، وفي الوقت نفسه رئيس مجلس إدارة RBB. ولاحقًا، وُجهت انتقادات أيضًا إلى سيارة Schlesinger المخصصة للعمل وإلى التجديد المكلف للطابق الذي يضم مكتبها. واعتبرت Schlesinger دعواتها إلى العشاء جزءًا من عملها. لكن إحدى المشاركات اعتقدت أنه لقاء خاص. وفي 7 أغسطس 2022، استقالت Schlesinger. وفي 22 أغسطس، أنهت RBB عملها فورًا، دون فترة انتظار.
 
 أضرت القضية بالثقة في البث العام. ودرست لجنة من برلمان ولاية براندنبورغ عمل مجلس الإدارة ومهامه. وأصبحت الآن المتطلبات المهنية لأعضائه أكثر صرامة. وعلى المحكمة أن تحدد ما إذا كان المتهمون قد خالفوا القانون الجنائي. ويطالب دفاع Schlesinger بالبراءة، قائلًا إن قراراتها كان هدفها خدمة المؤسسة.
-
-## المفردات
-
-- <strong lang="de" dir="ltr">Staatsanwaltschaft</strong> - النيابة العامة - الجهة التي تحقق في الجرائم وتوجّه الاتهامات.
-- <strong lang="de" dir="ltr">Vorwürfe</strong> - اتهامات - أقوال تفيد بأن شخصًا فعل شيئًا خاطئًا.
-- <strong lang="de" dir="ltr">Verwaltungsrats</strong> - مجلس الإدارة - هيئة تراقب عمل مؤسسة.
-- <strong lang="de" dir="ltr">zu Unrecht</strong> - دون وجه حق - دون مبرر قانوني أو فعلي.
-- <strong lang="de" dir="ltr">umgangen</strong> - تجاوز - لم يُشرك شيئًا أو شخصًا عمدًا.
-- <strong lang="de" dir="ltr">ohne Wartefrist</strong> - دون فترة انتظار - فورًا، دون انتظار مدة حتى النهاية.
-- <strong lang="de" dir="ltr">verstoßen</strong> - خالف - تصرف بما يخالف قانونًا أو قاعدة.
-- <strong lang="de" dir="ltr">Freispruch</strong> - البراءة - قرار من المحكمة بعدم إدانة شخص متهم.

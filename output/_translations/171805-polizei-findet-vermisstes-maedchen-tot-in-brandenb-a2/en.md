@@ -10,8 +10,6 @@ summary: "The police have found the missing Lisa dead in Brandenburg and are loo
 description: "The police have found the missing Lisa dead in Brandenburg and are looking into the case."
 source_title: "Polizei findet vermisstes Mädchen tot in Brandenburg"
 reading_time: 2
-glossary_heading: "Vocabulary"
-audio: null
 translations:
   de: /articles/171805-polizei-findet-vermisstes-maedchen-tot-in-brandenb-a2/
   en: /articles/171805-polizei-findet-vermisstes-maedchen-tot-in-brandenb-a2/en/
@@ -36,12 +34,3 @@ A badly injured man was also in the house. According to the public prosecutor's 
 The man was taken to hospital, and the police are guarding him. His life was in danger. At first, it was not clear who he was. It was also not yet known how Lisa died.
 
 A doctor is due to examine her body on Monday. The police are looking for clues in the house. They want to know: How did the man take Lisa away? The time leading up to her death is also important.
-
-## Vocabulary
-
-- <strong lang="de" dir="ltr">Meldung</strong> - report - A message about something that happened.
-- <strong lang="de" dir="ltr">zufällig</strong> - by chance - It was not planned.
-- <strong lang="de" dir="ltr">Staatsanwaltschaft</strong> - public prosecutor's office - These people check whether someone has broken the law.
-- <strong lang="de" dir="ltr">mitgenommen</strong> - taken away - He took her to another place.
-- <strong lang="de" dir="ltr">Mord</strong> - murder - Someone kills a person on purpose.
-- <strong lang="de" dir="ltr">Spuren</strong> - clues - Things that can show what happened.

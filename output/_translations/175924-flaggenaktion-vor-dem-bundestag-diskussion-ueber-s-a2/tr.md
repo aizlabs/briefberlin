@@ -10,8 +10,6 @@ summary: "Bundestag önündeki bayrak eyleminden sonra siyasetçiler daha fazla 
 description: "Bundestag önündeki bayrak eyleminden sonra siyasetçiler daha fazla güvenliği tartışıyor."
 source_title: "Flaggenaktion vor dem Bundestag: Diskussion über Sicherheit"
 reading_time: 2
-glossary_heading: "Kelimeler"
-audio: null
 translations:
   de: /articles/175924-flaggenaktion-vor-dem-bundestag-diskussion-ueber-s-a2/
   en: /articles/175924-flaggenaktion-vor-dem-bundestag-diskussion-ueber-s-a2/en/
@@ -38,14 +36,3 @@ Görünüşe göre direkte bir hasar vardı. İşçiler onu önce geçici olarak
 Bundestag çevresindeki alana herkes girebilir. Berlin polisi binayı dışarıdan koruyor. Ama direği sürekli koruyamaz. Şimdi korumayı gözden geçirmek istiyor.
 
 Bundestag Başkanı Julia Klöckner daha fazla koruma istiyor. Berlin de buna yardım etmeli. CDU'lu siyasetçi Thorsten Frei özel bir koruma alanı kurulmasını değerlendirmek istiyor. Böyle bir alanda gösteriler yasak. Bundestag'da toplantılar için bugün de özel kurallar var. 1999 yılına kadar Bonn'daki parlamento çevresinde böyle bir koruma alanı vardı.
-
-## Kelimeler
-
-- <strong lang="de" dir="ltr">Fahnenmast</strong> - bayrak direği - Üzerinde bayrak asılı olan yüksek bir direk.
-- <strong lang="de" dir="ltr">heruntergelassen</strong> - indirdi - Bayrağı aşağıya doğru hareket ettirdi.
-- <strong lang="de" dir="ltr">festgenommen</strong> - gözaltına aldı - Polis insanları alıp götürdü.
-- <strong lang="de" dir="ltr">Einsatzkräfte</strong> - görevliler - Bir olayda yardım eden kişiler, örneğin polisler.
-- <strong lang="de" dir="ltr">Straftaten</strong> - suçlar - İnsanın ceza alabileceği işler.
-- <strong lang="de" dir="ltr">Gelände</strong> - alan - Bir toprak parçası veya bir binanın çevresindeki yer.
-- <strong lang="de" dir="ltr">notdürftig</strong> - geçici olarak - Sadece gerektiği kadar iyi, tam değil.
-- <strong lang="de" dir="ltr">Schutzzone</strong> - koruma alanı - Koruma için özel kuralları olan bir alan.

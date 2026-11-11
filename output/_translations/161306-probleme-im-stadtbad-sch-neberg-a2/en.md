@@ -10,8 +10,6 @@ summary: "At Stadtbad Schöneberg, shortly after opening, there are problems wit
 description: "At Stadtbad Schöneberg, shortly after opening, there are problems with areas, the elevator, and the air."
 source_title: "Probleme im Stadtbad Schöneberg"
 reading_time: 2
-glossary_heading: "Vocabulary"
-audio: null
 translations:
   de: /articles/161306-probleme-im-stadtbad-sch-neberg-a2/
   en: /articles/161306-probleme-im-stadtbad-sch-neberg-a2/en/
@@ -34,12 +32,3 @@ Now experts are checking the technology for clean water. They are also setting t
 A part on the elevator is damaged, and a repair is planned. The operators say: The problems should last only a short time. A fast-food restaurant in the old pool also bothers some guests. Some guests there often smell the food strongly.
 
 So the pool is checking a better ventilation system for the restaurant. It is talking about this with companies and the tenant. At the start of 2024, the pool had to close because of bad water. After that, the city spent about 14 million euros.
-
-## Vocabulary
-
-- <strong lang="de" dir="ltr">Bauarbeiten</strong> - construction work - Work on a building or place.
-- <strong lang="de" dir="ltr">Fachleute</strong> - experts - People with much knowledge in one area.
-- <strong lang="de" dir="ltr">Sprudelbecken</strong> - whirlpool; bubble pool - A pool with bubbling water.
-- <strong lang="de" dir="ltr">hineinlassen</strong> - let in; allow inside - To let someone go inside.
-- <strong lang="de" dir="ltr">Betreiber</strong> - operators - People or a company that run something.
-- <strong lang="de" dir="ltr">Luftanlage</strong> - ventilation system - A system for fresh or better air.

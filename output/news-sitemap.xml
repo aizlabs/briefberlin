@@ -5,27 +5,27 @@ permalink: /news-sitemap.xml
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
-  {% assign cutoff_seconds = 172800 %}
-  {% assign current_time = "now" | date: "%s" %}
-  {% for post in site.posts %}
-    {% assign post_time = post.date | date: "%s" %}
-    {% assign time_diff = current_time | minus: post_time %}
-    {% if time_diff <= cutoff_seconds %}
+  {%- assign cutoff_seconds = 172800 -%}
+  {%- assign current_time = site.time | date: "%s" -%}
+  {%- assign articles = site.posts | concat: site.translations -%}
+  {%- for article in articles -%}
+    {%- if article.date == nil or article.published == false or article.sitemap == false or article.news_sitemap == false -%}
+      {%- continue -%}
+    {%- endif -%}
+    {%- assign article_time = article.date | date: "%s" -%}
+    {%- assign age_seconds = current_time | minus: article_time -%}
+    {%- if age_seconds >= 0 and age_seconds <= cutoff_seconds %}
     <url>
-      <loc>{{ post.url | absolute_url }}</loc>
+      <loc>{{ article.url | absolute_url | xml_escape }}</loc>
       <news:news>
         <news:publication>
-          <news:name>{{ site.title }}</news:name>
-          <news:language>de</news:language>
+          <news:name>{{ site.title | xml_escape }}</news:name>
+          <news:language>{{ article.lang | default: site.lang | xml_escape }}</news:language>
         </news:publication>
-        <news:publication_date>{{ post.date | date_to_xmlschema }}</news:publication_date>
-        <news:title>{{ post.title | xml_escape }}</news:title>
-        {% assign article_keywords = post.keywords | default: post.topics %}
-        {% if article_keywords %}
-        <news:keywords>{{ article_keywords | join: ", " | xml_escape }}</news:keywords>
-        {% endif %}
+        <news:publication_date>{{ article.date | date_to_xmlschema }}</news:publication_date>
+        <news:title>{{ article.title | xml_escape }}</news:title>
       </news:news>
     </url>
-    {% endif %}
-  {% endfor %}
+    {%- endif -%}
+  {%- endfor %}
 </urlset>

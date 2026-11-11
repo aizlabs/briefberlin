@@ -10,8 +10,6 @@ summary: "Полиция нашла пропавшую Лизу мёртвой �
 description: "Полиция нашла пропавшую Лизу мёртвой в Бранденбурге и расследует это дело."
 source_title: "Polizei findet vermisstes Mädchen tot in Brandenburg"
 reading_time: 2
-glossary_heading: "Словарь"
-audio: null
 translations:
   de: /articles/171805-polizei-findet-vermisstes-maedchen-tot-in-brandenb-a2/
   en: /articles/171805-polizei-findet-vermisstes-maedchen-tot-in-brandenb-a2/en/
@@ -36,12 +34,3 @@ translations:
 Мужчину отвезли в больницу, и полиция его охраняет. Его жизнь была в опасности. Сначала было неясно, кто он такой. Причина смерти Лизы тоже ещё не была известна.
 
 В понедельник врач должен осмотреть её тело. Полиция ищет следы в доме. Она хочет знать: как мужчина увёз Лизу? Время до её смерти тоже важно.
-
-## Словарь
-
-- <strong lang="de" dir="ltr">Meldung</strong> - сообщение - Сообщение о том, что произошло.
-- <strong lang="de" dir="ltr">zufällig</strong> - случайно - Это не было запланировано.
-- <strong lang="de" dir="ltr">Staatsanwaltschaft</strong> - прокуратура - Эти люди проверяют, нарушил ли кто-то закон.
-- <strong lang="de" dir="ltr">mitgenommen</strong> - увёз - Он отвёз её в другое место.
-- <strong lang="de" dir="ltr">Mord</strong> - преднамеренное убийство - Кто-то убивает человека намеренно.
-- <strong lang="de" dir="ltr">Spuren</strong> - следы - Вещи, которые могут показать, что произошло.

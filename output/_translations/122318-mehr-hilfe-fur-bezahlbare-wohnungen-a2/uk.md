@@ -10,16 +10,6 @@ summary: "Німеччині потрібно більше співпраці і
 description: "Німеччині потрібно більше співпраці і більше простої допомоги для доступного житла."
 source_title: "Mehr Hilfe für bezahlbare Wohnungen"
 reading_time: 2
-glossary_heading: "Словник"
-audio:
-  url: "https://media.briefberlin.de/articles/2026/09/20260921-122318-mehr-hilfe-fur-bezahlbare-wohnungen-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "elevenlabs"
-  voice: "OYTbf65OHHFELVut7v2H"
-  timings_url: "https://media.briefberlin.de/articles/2026/09/20260921-122318-mehr-hilfe-fur-bezahlbare-wohnungen-a2/article.timings.json"
-  timing_granularity: "word"
-  highlight_context: "sentence"
 translations:
   de: /articles/122318-mehr-hilfe-fur-bezahlbare-wohnungen-a2/
   en: /articles/122318-mehr-hilfe-fur-bezahlbare-wohnungen-a2/en/
@@ -40,11 +30,3 @@ translations:
 Деякі люди хочуть забрати житло у великих житлових фірм. Це означає: держава забирає у фірм житло і платить за це. Багато експертів бачать у цьому проблеми. Такий крок триває довго і коштує дуже багато грошей. Крім того, через це спочатку не з’являється нового житла.
 
 Криза має старі причини. Міста виросли сильніше, ніж багато хто думав. Раніше було кілька мільйонів соціальних квартир. Сьогодні є менше ніж один мільйон. У короткий час бідні домогосподарства потребують більше допомоги з орендою. У довгий час Німеччині потрібно більше житла, яке має не лише приносити прибуток.
-
-## Словник
-
-- <strong lang="de" dir="ltr">knapp</strong> - мало / бракує - цього є недостатньо.
-- <strong lang="de" dir="ltr">Grundstücke</strong> - земельні ділянки - частини землі, часто для будинків.
-- <strong lang="de" dir="ltr">Genossenschaften</strong> - кооперативи - групи, які чимось спільно володіють і користуються.
-- <strong lang="de" dir="ltr">enteignen</strong> - відчужувати майно - держава забирає власність і платить за це.
-- <strong lang="de" dir="ltr">Sozialwohnungen</strong> - соціальні квартири - дешеві квартири з допомогою від держави.

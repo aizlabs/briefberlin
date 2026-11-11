@@ -10,8 +10,6 @@ summary: "Berlin Die Linke wants Vanessa Emde to give up her seat in the Berlin 
 description: "Berlin Die Linke wants Vanessa Emde to give up her seat in the Berlin parliament."
 source_title: "Berliner Linke will Emde nicht mehr im Parlament"
 reading_time: 2
-glossary_heading: "Vocabulary"
-audio: null
 translations:
   de: /articles/165257-berliner-linke-will-emde-nicht-mehr-im-parlament-a2/
   en: /articles/165257-berliner-linke-will-emde-nicht-mehr-im-parlament-a2/en/
@@ -32,14 +30,3 @@ The party gives simple reasons for this step. In its view, Emde ignored joint de
 Kerstin Wolter and Maximilian Schirmer lead Berlin Die Linke. They say: The party no longer has trust in Emde. Emde came into parliament directly through votes from people in Neukölln.
 
 In the end, it is clear: The argument in Berlin Die Linke is not over yet. Now it is about whether Emde really gives up her seat.
-
-## Vocabulary
-
-- <strong lang="de" dir="ltr">ihren Platz abgibt</strong> - gives up her seat - she gives away her seat
-- <strong lang="de" dir="ltr">Abgeordnetenhaus</strong> - House of Representatives - a parliament in Berlin
-- <strong lang="de" dir="ltr">Leitung</strong> - leadership - people who lead a group
-- <strong lang="de" dir="ltr">Mandat</strong> - mandate / political seat - a political seat through voters
-- <strong lang="de" dir="ltr">Streit</strong> - argument - when people do not agree
-- <strong lang="de" dir="ltr">Absprachen</strong> - agreements - what people have agreed together
-- <strong lang="de" dir="ltr">nicht eingehalten</strong> - not kept - not done as agreed
-- <strong lang="de" dir="ltr">Vertrauen</strong> - trust - belief that someone is good and honest

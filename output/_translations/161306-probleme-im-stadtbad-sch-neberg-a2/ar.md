@@ -10,8 +10,6 @@ summary: "في مسبح Stadtbad Schöneberg توجد بعد وقت قصير م�
 description: "في مسبح Stadtbad Schöneberg توجد بعد وقت قصير من الافتتاح مشاكل في بعض الأماكن والمصعد والهواء."
 source_title: "Probleme im Stadtbad Schöneberg"
 reading_time: 2
-glossary_heading: "المفردات"
-audio: null
 translations:
   de: /articles/161306-probleme-im-stadtbad-sch-neberg-a2/
   en: /articles/161306-probleme-im-stadtbad-sch-neberg-a2/en/
@@ -34,12 +32,3 @@ translations:
 جزء في المصعد تالف، ومن المخطط إصلاحه. يقول المشغلون: يجب أن تستمر المشاكل وقتاً قصيراً فقط. كما أن مطعماً سريعاً في المسبح القديم يزعج بعض الضيوف. هناك يشم بعض الضيوف رائحة الطعام كثيراً وبقوة.
 
 لذلك يفحص المسبح نظام هواء أفضل للمطعم. وهو يتحدث في ذلك مع شركات والمستأجر. في بداية 2024 اضطر المسبح إلى الإغلاق بسبب ماء سيئ. بعد ذلك أنفقت المدينة حوالي 14 مليون يورو.
-
-## المفردات
-
-- <strong lang="de" dir="ltr">Bauarbeiten</strong> - أعمال البناء - أعمال في مبنى أو مكان.
-- <strong lang="de" dir="ltr">Fachleute</strong> - مختصون - أشخاص لديهم معرفة كثيرة في مجال ما.
-- <strong lang="de" dir="ltr">Sprudelbecken</strong> - حوض فقاعات - حوض فيه ماء مع فقاعات.
-- <strong lang="de" dir="ltr">hineinlassen</strong> - يدخل - السماح لشخص أن يذهب إلى الداخل.
-- <strong lang="de" dir="ltr">Betreiber</strong> - مشغلون - أشخاص أو شركة يديرون شيئاً.
-- <strong lang="de" dir="ltr">Luftanlage</strong> - نظام تهوية - نظام لهواء نقي أو أفضل.

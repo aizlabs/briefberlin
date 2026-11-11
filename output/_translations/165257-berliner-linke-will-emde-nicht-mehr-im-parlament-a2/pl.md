@@ -10,8 +10,6 @@ summary: "Berlińska Die Linke chce, aby Vanessa Emde oddała swoje miejsce w be
 description: "Berlińska Die Linke chce, aby Vanessa Emde oddała swoje miejsce w berlińskim parlamencie."
 source_title: "Berliner Linke will Emde nicht mehr im Parlament"
 reading_time: 2
-glossary_heading: "Słowniczek"
-audio: null
 translations:
   de: /articles/165257-berliner-linke-will-emde-nicht-mehr-im-parlament-a2/
   en: /articles/165257-berliner-linke-will-emde-nicht-mehr-im-parlament-a2/en/
@@ -32,14 +30,3 @@ Partia podaje proste powody tego kroku. Zdaniem partii Emde kilka razy nie przes
 Kerstin Wolter i Maximilian Schirmer prowadzą berlińską Die Linke. Mówią: Partia nie ma już zaufania do Emde. Emde weszła do parlamentu bezpośrednio dzięki głosom ludzi w Neukölln.
 
 Na końcu jest jasne: spór w berlińskiej Die Linke jeszcze się nie skończył. Teraz chodzi o to, czy Emde naprawdę odda swoje miejsce.
-
-## Słowniczek
-
-- <strong lang="de" dir="ltr">ihren Platz abgibt</strong> - oddaje swoje miejsce - ona oddaje swoje miejsce
-- <strong lang="de" dir="ltr">Abgeordnetenhaus</strong> - parlament krajowy / Izba Deputowanych - parlament w Berlinie
-- <strong lang="de" dir="ltr">Leitung</strong> - kierownictwo - osoby, które prowadzą grupę
-- <strong lang="de" dir="ltr">Mandat</strong> - mandat / miejsce polityczne - miejsce polityczne dzięki wyborcom
-- <strong lang="de" dir="ltr">Streit</strong> - spór / kłótnia - gdy ludzie nie są zgodni
-- <strong lang="de" dir="ltr">Absprachen</strong> - ustalenia - to, co ludzie razem ustalili
-- <strong lang="de" dir="ltr">nicht eingehalten</strong> - nie dotrzymane / nieprzestrzegane - nie zrobione tak, jak ustalono
-- <strong lang="de" dir="ltr">Vertrauen</strong> - zaufanie - wiara, że ktoś jest dobry i uczciwy

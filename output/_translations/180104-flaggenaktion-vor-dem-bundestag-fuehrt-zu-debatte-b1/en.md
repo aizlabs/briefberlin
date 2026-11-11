@@ -10,8 +10,6 @@ summary: "After a flag protest outside the Bundestag, police are investigating w
 description: "After a flag protest outside the Bundestag, police are investigating while politicians discuss better security and stricter protest rules."
 source_title: "Flaggenaktion vor dem Bundestag führt zu Debatte über Sicherheit"
 reading_time: 3
-glossary_heading: "Vocabulary"
-audio: null
 translations:
   de: /articles/180104-flaggenaktion-vor-dem-bundestag-fuehrt-zu-debatte-b1/
   en: /articles/180104-flaggenaktion-vor-dem-bundestag-fuehrt-zu-debatte-b1/en/
@@ -32,14 +30,3 @@ The state security police, a police department, are now investigating all three 
 Berlin police protect the Reichstag building from the outside. They said that the area around the building is generally open to everyone. The barriers there help visitors find their way. Police do not have enough staff to guard the flagpole itself permanently. They now plan to review their security measures. Bundestag President Julia Klöckner is calling for better protection and also sees the state of Berlin as responsible. Berlin's governing mayor, Kai Wegner, condemned the action as disrespect for democracy.
 
 CDU politician Thorsten Frei suggested considering stricter rules for protests around parliament. There is already a special protected area there. Gatherings are allowed only under certain conditions. An important factor is whether they disrupt the work of the Bundestag or its political groups. A stricter protection zone existed until 1999 around the former seat of parliament in Bonn.
-
-## Vocabulary
-
-- <strong lang="de" dir="ltr">ausgelöst</strong> - triggered - Caused something or set it in motion.
-- <strong lang="de" dir="ltr">Fahnenmast</strong> - flagpole - A tall pole from which a flag hangs.
-- <strong lang="de" dir="ltr">Staatsschutz</strong> - state security police - A police department that investigates, among other things, politically motivated crimes.
-- <strong lang="de" dir="ltr">Verdacht</strong> - suspicion - A belief that someone has done something, without certain proof.
-- <strong lang="de" dir="ltr">Grundstück</strong> - property - A defined piece of land that belongs to someone.
-- <strong lang="de" dir="ltr">verstoßen</strong> - violated - Failed to follow a rule or law.
-- <strong lang="de" dir="ltr">Bewachung</strong> - guarding - The protection of a place by people who keep watch.
-- <strong lang="de" dir="ltr">Schutzbereich</strong> - protected area - An area where special rules apply for protection.

@@ -10,8 +10,6 @@ summary: "A Berlin court is examining allegations about money against the former
 description: "A Berlin court is examining allegations about money against the former RBB chief and three other people."
 source_title: "Gericht prüft Vorwürfe gegen frühere RBB-Chefin"
 reading_time: 2
-glossary_heading: "Vocabulary"
-audio: null
 translations:
   de: /articles/023612-gericht-prueft-vorwuerfe-gegen-fruehere-rbb-chefin-a2/
   en: /articles/023612-gericht-prueft-vorwuerfe-gegen-fruehere-rbb-chefin-a2/en/
@@ -38,14 +36,3 @@ The public prosecutor's office also mentions ten dinners at Schlesinger's home. 
 The problems at the RBB began in the summer of 2022. First, there were reports about a contract for Schlesinger's husband. After that, there was also criticism about the money for the people in charge. Schlesinger resigned in August 2022. Later, the RBB fired her without a waiting period.
 
 The court has planned 56 days for the trial.
-
-## Vocabulary
-
-- <strong lang="de" dir="ltr">Vorwürfe</strong> - accusations - People say that someone has done something wrong.
-- <strong lang="de" dir="ltr">Staatsanwaltschaft</strong> - public prosecutor's office - It looks into possible crimes and takes people to court.
-- <strong lang="de" dir="ltr">geschadet</strong> - harmed - Made something worse; here: caused a loss of money.
-- <strong lang="de" dir="ltr">Zusammenschluss</strong> - association - Several groups work together and form a larger group.
-- <strong lang="de" dir="ltr">missachtet</strong> - ignored - They did not follow something.
-- <strong lang="de" dir="ltr">Verwaltungsrat</strong> - supervisory board - A group that checks the work of the people in charge.
-- <strong lang="de" dir="ltr">zurückgetreten</strong> - resigned - She said herself: I will not do this job anymore.
-- <strong lang="de" dir="ltr">entlassen</strong> - fired - Her employer said: She can no longer work there.

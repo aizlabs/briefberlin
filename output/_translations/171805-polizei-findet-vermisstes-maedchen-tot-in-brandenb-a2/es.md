@@ -10,8 +10,6 @@ summary: "La policía ha encontrado muerta en Brandeburgo a Lisa, que estaba des
 description: "La policía ha encontrado muerta en Brandeburgo a Lisa, que estaba desaparecida, e investiga el caso."
 source_title: "Polizei findet vermisstes Mädchen tot in Brandenburg"
 reading_time: 2
-glossary_heading: "Vocabulario"
-audio: null
 translations:
   de: /articles/171805-polizei-findet-vermisstes-maedchen-tot-in-brandenb-a2/
   en: /articles/171805-polizei-findet-vermisstes-maedchen-tot-in-brandenb-a2/en/
@@ -36,12 +34,3 @@ En la casa también había un hombre muy herido. Según la fiscalía, él mismo 
 El hombre fue al hospital y la policía lo vigila. Su vida estaba en peligro. Al principio no se sabía quién era. Tampoco se sabía aún por qué había muerto Lisa.
 
 El lunes, un médico examinará su cuerpo. La policía busca pistas en la casa. Quiere saber: ¿Cómo se llevó el hombre a Lisa? También es importante saber qué pasó hasta su muerte.
-
-## Vocabulario
-
-- <strong lang="de" dir="ltr">Meldung</strong> - aviso - Una noticia sobre algo que ha pasado.
-- <strong lang="de" dir="ltr">zufällig</strong> - por casualidad - No estaba planeado.
-- <strong lang="de" dir="ltr">Staatsanwaltschaft</strong> - fiscalía - Estas personas comprueban si alguien ha actuado contra la ley.
-- <strong lang="de" dir="ltr">mitgenommen</strong> - se llevó - Él la llevó a otro lugar.
-- <strong lang="de" dir="ltr">Mord</strong> - asesinato - Una persona mata a otra a propósito.
-- <strong lang="de" dir="ltr">Spuren</strong> - pistas - Cosas que pueden mostrar lo que pasó.

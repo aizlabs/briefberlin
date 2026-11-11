@@ -10,8 +10,6 @@ summary: "Shortly after the renovation, there are again technical problems, clos
 description: "Shortly after the renovation, there are again technical problems, closures and criticism from guests at Stadtbad Schöneberg."
 source_title: "Stadtbad Schöneberg hat kurz nach Sanierung wieder Technikprobleme"
 reading_time: 3
-glossary_heading: "Vocabulary"
-audio: null
 translations:
   de: /articles/161452-stadtbad-sch-neberg-hat-kurz-nach-sanierung-wieder-b1/
   en: /articles/161452-stadtbad-sch-neberg-hat-kurz-nach-sanierung-wieder-b1/en/
@@ -30,15 +28,3 @@ The Berliner Bäder-Betriebe explain some of the problems with the autumn holida
 At the beginning of 2024, the operators closed the pool because the water values were not good enough. They spent about 14 million euros on the partial modernization. The companies renewed the technology for the pool water and the water treatment. They repaired seals and tiles in the pools. They also worked on ventilation, electrical wiring, lighting, fire protection and parts of the building control system. The building control system helps to monitor technical systems centrally. Nevertheless, experts found further damage during trial operation. This included cracks in the plaster above the side windows. This damage had to be repaired before the opening.
 
 The snack bar in the building is causing further criticism. Since the reopening, a fast-food chain has been selling food there. Some bathers are bothered by the smell of fried food near the pools. The operators are therefore checking whether they can expand the existing ventilation. According to the operators, the broken elevator is not connected with the renovation. A component has failed, and the repair is under way. The restrictions are supposed to be only temporary. However, it is not yet known when all areas will reopen.
-
-## Vocabulary
-
-- <strong lang="de" dir="ltr">Sanierung</strong> - renovation; refurbishment - Repair and renewal of a building or facility
-- <strong lang="de" dir="ltr">Wiedereröffnung</strong> - reopening - Opening again after a closure
-- <strong lang="de" dir="ltr">Einschränkungen</strong> - restrictions; limitations - Things that are not possible or are possible only in a limited way
-- <strong lang="de" dir="ltr">gesperrt</strong> - closed; blocked off - Not accessible or not usable
-- <strong lang="de" dir="ltr">Solebecken</strong> - saltwater pool - Pool with salty water
-- <strong lang="de" dir="ltr">verzögert</strong> - delayed - Happened later than planned
-- <strong lang="de" dir="ltr">Mängel</strong> - defects; faults - Errors or problems with something
-- <strong lang="de" dir="ltr">Schwachstellen</strong> - weak points; vulnerabilities - Places where something does not work well
-- <strong lang="de" dir="ltr">Wasseraufbereitung</strong> - water treatment - Cleaning and technical treatment of water

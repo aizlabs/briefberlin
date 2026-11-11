@@ -10,16 +10,6 @@ summary: "Polis, inşaat çalışmaları nedeniyle çıkan çatışmaların ard�
 description: "Polis, inşaat çalışmaları nedeniyle çıkan çatışmaların ardından Hugohaus’un işgalini sona erdirdi; protesto ve hukuki sorular ise sürüyor."
 source_title: "Polizei beendet Besetzung im Hugohaus nach schweren Konflikten"
 reading_time: 3
-glossary_heading: "Kelimeler"
-audio:
-  url: "https://media.briefberlin.de/articles/2026/09/20260926-213314-polizei-beendet-besetzung-im-hugohaus-nach-schweren-konflikten-b1/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "elevenlabs"
-  voice: "OYTbf65OHHFELVut7v2H"
-  timings_url: "https://media.briefberlin.de/articles/2026/09/20260926-213314-polizei-beendet-besetzung-im-hugohaus-nach-schweren-konflikten-b1/article.timings.json"
-  timing_granularity: "word"
-  highlight_context: "sentence"
 translations:
   de: /articles/213314-polizei-beendet-besetzung-im-hugohaus-nach-schwere-b1/
   en: /articles/213314-polizei-beendet-besetzung-im-hugohaus-nach-schwere-b1/en/
@@ -38,11 +28,3 @@ Operasyondan önce inşaat çalışmaları nedeniyle ciddi çatışmalar yaşanm
 Arama sırasında görevli ekipler, polisin verdiği bilgilere göre kuru sıkı silahlar, bir sapan ve olası fırlatma nesneleri buldu. Kuru sıkı silahlar gerçek silahlara benzer, ama normal mermi atmaz. Polis daha çarşamba günü inşaat çalışmalarını geçici olarak durdurdu. Böylece daha fazla şiddeti önlemek istedi. Aynı zamanda işgalcilerin destekçileri yolun karşı tarafında toplandı. Zaman zaman birkaç düzine kişi yola çıktı. Orada şimdi kayıtlı bir protesto kampı bulunuyor. Çoğu genç punklardan oluşan yaklaşık 30 kişi orada uyuyor, yemek yiyor ve protesto ediyor. Cuma sabahı durum sakin kaldı.
 
 Eski otel ve hostel birkaç haftadır dBS Investment GmbH’ye ait. Ev yıllar içinde giderek daha fazla bakımsız kaldı. Şirket yıkım ve ardından bir konut kompleksi planlıyor. Bir grup punk yaklaşık iki yıl bu binada yaşadı. Mülk sahipleri bunu izinsiz kullanım olarak adlandırıyor. Kendi açıklamalarına göre sakinlerden birkaç kez gitmelerini istediler. Şimdi zararlı maddelerin kaldırılması ve geri söküm çalışmalarının devam etmesi gerekiyor. İşgalcilerin geride bıraktığı eşyaların ne olacağı belirsiz. Gecikmeler veya zararlar nedeniyle olası talepler de henüz netleşmedi.
-
-## Kelimeler
-
-- <strong lang="de" dir="ltr">Besetzung</strong> - işgal - İnsanların bir evi işgal edip orada kalması.
-- <strong lang="de" dir="ltr">Räumung</strong> - tahliye - İnsanların bir yeri terk etmek zorunda kalması, çoğu zaman polisle.
-- <strong lang="de" dir="ltr">Durchsuchung</strong> - arama - Polisin bir yerde eşya ya da kanıt araması.
-- <strong lang="de" dir="ltr">Eigentümer</strong> - mülk sahipleri - Bir şeyin sahibi olan kişiler.
-- <strong lang="de" dir="ltr">Straftaten</strong> - suçlar - Ceza yasasına aykırı olan eylemler.

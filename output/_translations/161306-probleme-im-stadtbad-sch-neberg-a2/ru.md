@@ -10,8 +10,6 @@ summary: "В Stadtbad Schöneberg вскоре после открытия ес�
 description: "В Stadtbad Schöneberg вскоре после открытия есть проблемы с зонами, лифтом и воздухом."
 source_title: "Probleme im Stadtbad Schöneberg"
 reading_time: 2
-glossary_heading: "Словарь"
-audio: null
 translations:
   de: /articles/161306-probleme-im-stadtbad-sch-neberg-a2/
   en: /articles/161306-probleme-im-stadtbad-sch-neberg-a2/en/
@@ -34,12 +32,3 @@ Stadtbad Schöneberg в Берлине снова открыт с сентябр
 Одна деталь в лифте повреждена, и ремонт запланирован. Операторы говорят: проблемы должны длиться только недолго. Также ресторан быстрого питания в старом бассейне мешает некоторым гостям. Там некоторые гости часто сильно чувствуют запах еды.
 
 Поэтому бассейн проверяет лучшую систему вентиляции для ресторана. Он говорит об этом с фирмами и арендатором. В начале 2024 года бассейн должен был закрыться из-за плохой воды. Потом город потратил около 14 миллионов евро.
-
-## Словарь
-
-- <strong lang="de" dir="ltr">Bauarbeiten</strong> - строительные работы - Работы на здании или в каком-то месте.
-- <strong lang="de" dir="ltr">Fachleute</strong> - специалисты - Люди с большим знанием в одной области.
-- <strong lang="de" dir="ltr">Sprudelbecken</strong> - бассейн с пузырьками - Бассейн с водой, которая пузырится.
-- <strong lang="de" dir="ltr">hineinlassen</strong> - впускать - Позволить кому-то зайти внутрь.
-- <strong lang="de" dir="ltr">Betreiber</strong> - операторы - Люди или фирма, которые чем-то управляют.
-- <strong lang="de" dir="ltr">Luftanlage</strong> - система вентиляции - Система для свежего или лучшего воздуха.

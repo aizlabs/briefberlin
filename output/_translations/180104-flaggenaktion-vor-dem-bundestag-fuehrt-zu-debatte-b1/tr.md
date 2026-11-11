@@ -10,8 +10,6 @@ summary: "Bundestag önündeki bir bayrak eyleminin ardından polis soruşturma 
 description: "Bundestag önündeki bir bayrak eyleminin ardından polis soruşturma yürütürken, siyasetçiler daha iyi koruma ve protestolar için daha sıkı kurallar üzerinde konuşuyor."
 source_title: "Flaggenaktion vor dem Bundestag führt zu Debatte über Sicherheit"
 reading_time: 3
-glossary_heading: "Kelimeler"
-audio: null
 translations:
   de: /articles/180104-flaggenaktion-vor-dem-bundestag-fuehrt-zu-debatte-b1/
   en: /articles/180104-flaggenaktion-vor-dem-bundestag-fuehrt-zu-debatte-b1/en/
@@ -32,14 +30,3 @@ Berlin polisinin verdiği bilgiye göre adam bir saatten fazla süre direkte kal
 Berlin polisi Reichstag binasını dışarıdan koruyor. Polis, binanın çevresindeki alanın genel olarak herkese açık olduğunu açıkladı. Oradaki bariyerler ziyaretçilerin yollarını bulmasına yardımcı oluyor. Polisin doğrudan bayrak direğinin başında sürekli nöbet tutacak kadar personeli yok. Polis şimdi aldığı önlemleri gözden geçirmek istiyor. Bundestag Başkanı Julia Klöckner daha iyi koruma talep ediyor ve Berlin eyaletinin de sorumluluğu olduğunu düşünüyor. Berlin Belediye Başkanı Kai Wegner, eylemi demokrasiye saygısızlık olarak kınadı.
 
 CDU'lu siyasetçi Thorsten Frei, parlamento çevresindeki protestolar için daha sıkı kurallar üzerinde düşünülmesini önerdi. Bugün de orada özel bir koruma bölgesi bulunuyor. Toplantılara yalnızca belirli koşullar altında izin veriliyor. Bu konuda toplantıların Bundestag'ın veya onun siyasi gruplarının çalışmalarını aksatıp aksatmadığı önem taşıyor. Bonn'daki eski parlamento binasının çevresinde 1999 yılına kadar daha sıkı bir koruma bölgesi vardı.
-
-## Kelimeler
-
-- <strong lang="de" dir="ltr">ausgelöst</strong> - yol açtı - Bir şeye neden oldu veya bir şeyi başlattı.
-- <strong lang="de" dir="ltr">Fahnenmast</strong> - bayrak direği - Üzerinde bayrak asılı olan yüksek direk.
-- <strong lang="de" dir="ltr">Staatsschutz</strong> - devlet güvenliği birimi - Polisin, diğer görevlerinin yanı sıra siyasi nedenlerle işlenen suçları araştıran bir bölümü.
-- <strong lang="de" dir="ltr">Verdacht</strong> - şüphe - Kesin bir kanıt olmadan birinin bir şey yaptığını düşünme.
-- <strong lang="de" dir="ltr">Grundstück</strong> - arazi - Sınırları belirlenmiş ve birine ait olan toprak parçası.
-- <strong lang="de" dir="ltr">verstoßen</strong> - ihlal etmek - Bir kurala veya yasaya uymamak.
-- <strong lang="de" dir="ltr">Bewachung</strong> - nöbet tutarak koruma - Bir yerin, çevreyi gözetleyen kişiler tarafından korunması.
-- <strong lang="de" dir="ltr">Schutzbereich</strong> - koruma bölgesi - Koruma amacıyla özel kuralların geçerli olduğu alan.

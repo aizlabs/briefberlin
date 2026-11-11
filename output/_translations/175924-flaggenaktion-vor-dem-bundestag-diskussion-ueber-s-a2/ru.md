@@ -10,8 +10,6 @@ summary: "После акции с флагом перед Bundestag полит�
 description: "После акции с флагом перед Bundestag политики говорят о том, как сделать это место безопаснее."
 source_title: "Flaggenaktion vor dem Bundestag: Diskussion über Sicherheit"
 reading_time: 2
-glossary_heading: "Словарь"
-audio: null
 translations:
   de: /articles/175924-flaggenaktion-vor-dem-bundestag-diskussion-ueber-s-a2/
   en: /articles/175924-flaggenaktion-vor-dem-bundestag-diskussion-ueber-s-a2/en/
@@ -38,14 +36,3 @@ translations:
 На территорию вокруг Bundestag может войти любой человек. Берлинская полиция охраняет здание снаружи. Но она не может постоянно охранять флагшток. Теперь полиция хочет проверить, как лучше защищать это место.
 
 Председатель Bundestag Юлия Клёкнер требует усилить защиту. Берлин тоже должен в этом помочь. Политик CDU Торстен Фрай хочет рассмотреть создание особой охранной зоны. В ней запрещены демонстрации. Уже сейчас у Bundestag действуют особые правила для собраний. До 1999 года такая охранная зона была вокруг парламента в Бонне.
-
-## Словарь
-
-- <strong lang="de" dir="ltr">Fahnenmast</strong> - флагшток - Высокий столб, на котором висит флаг.
-- <strong lang="de" dir="ltr">heruntergelassen</strong> - спустил - Он опустил флаг вниз.
-- <strong lang="de" dir="ltr">festgenommen</strong> - задержала - Полиция забрала этих людей с собой.
-- <strong lang="de" dir="ltr">Einsatzkräfte</strong> - сотрудники служб - Люди, которые приходят на помощь, например полиция.
-- <strong lang="de" dir="ltr">Straftaten</strong> - преступления - Поступки, за которые можно получить наказание.
-- <strong lang="de" dir="ltr">Gelände</strong> - территория - Участок земли или место вокруг здания.
-- <strong lang="de" dir="ltr">notdürftig</strong> - на скорую руку - Только как необходимо, не до конца.
-- <strong lang="de" dir="ltr">Schutzzone</strong> - охранная зона - Место с особыми правилами для защиты.

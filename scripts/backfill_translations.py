@@ -250,8 +250,8 @@ def main(argv: Sequence[str] | None = None) -> int:
             continue
 
         publisher.translations_dir = translations_dir
-        # Reuse the publisher so backfilled files are byte-compatible with
-        # pipeline-generated ones.
+        # Backfills display the original story's date. Omit them from the News
+        # sitemap because that date does not establish when a translation first ran.
         target = translations_dir / ref
         target.mkdir(parents=True, exist_ok=True)
         from datetime import datetime
@@ -260,7 +260,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         timestamp = stamp if isinstance(stamp, datetime) else datetime.now()
         for translation in article.translations:
             (target / f"{translation.lang}.md").write_text(
-                publisher._generate_translation_markdown(article, translation, timestamp, ref),
+                publisher._generate_translation_markdown(
+                    article, translation, timestamp, ref, news_sitemap=False
+                ),
                 encoding="utf-8",
             )
 

@@ -10,8 +10,6 @@ summary: "En Berlín comienza el juicio contra Patricia Schlesinger y otros tres
 description: "En Berlín comienza el juicio contra Patricia Schlesinger y otros tres antiguos responsables del RBB por presuntos perjuicios económicos a la emisora."
 source_title: "Frühere RBB-Chefin Schlesinger steht in Berlin vor Gericht"
 reading_time: 3
-glossary_heading: "Vocabulario"
-audio: null
 translations:
   de: /articles/023738-fruehere-rbb-chefin-schlesinger-steht-in-berlin-vo-b1/
   en: /articles/023738-fruehere-rbb-chefin-schlesinger-steht-in-berlin-vo-b1/en/
@@ -32,14 +30,3 @@ Otras acusaciones se refieren a diez cenas en el apartamento de Schlesinger, por
 El escándalo provocó una crisis en el RBB en el verano de 2022. Al principio surgieron preguntas sobre un contrato de asesoría del marido de Schlesinger con Messe Berlin. Wolf era allí presidente del consejo de supervisión y, al mismo tiempo, presidente del consejo de administración del RBB. Más tarde también hubo críticas por el coche oficial de Schlesinger y por la costosa reforma de la planta donde estaba su oficina. Ella consideraba que sus invitaciones a cenar eran por motivos de trabajo. En cambio, una participante pensaba que se trataba de una reunión privada. El 7 de agosto de 2022, Schlesinger dimitió. El 22 de agosto, el RBB la despidió sin plazo de preaviso.
 
 El escándalo dañó la confianza en la radio y televisión públicas. Una comisión del Brandenburger Landtag investigó el trabajo y las funciones del consejo de administración. Desde entonces se aplican requisitos profesionales más estrictos para sus miembros. El tribunal debe aclarar ahora si los acusados infringieron la ley penal. La defensa de Schlesinger pide su absolución: sostiene que sus decisiones buscaban beneficiar a la emisora.
-
-## Vocabulario
-
-- <strong lang="de" dir="ltr">Staatsanwaltschaft</strong> - fiscalía - Organismo que investiga delitos y presenta acusaciones.
-- <strong lang="de" dir="ltr">Vorwürfe</strong> - acusaciones - Afirmaciones de que alguien ha hecho algo malo.
-- <strong lang="de" dir="ltr">Verwaltungsrats</strong> - consejo de administración - Órgano que supervisa el trabajo de una organización.
-- <strong lang="de" dir="ltr">zu Unrecht</strong> - indebidamente - Sin justificación legal ni motivo válido.
-- <strong lang="de" dir="ltr">umgangen</strong> - evitado - Que se ha dejado algo o a alguien deliberadamente al margen.
-- <strong lang="de" dir="ltr">ohne Wartefrist</strong> - sin plazo de preaviso - De inmediato, sin esperar un tiempo hasta el final.
-- <strong lang="de" dir="ltr">verstoßen</strong> - infringido - Actuado en contra de una ley o una norma.
-- <strong lang="de" dir="ltr">Freispruch</strong> - absolución - Decisión judicial de no condenar a una persona acusada.

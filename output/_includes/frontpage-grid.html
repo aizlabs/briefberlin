@@ -1,0 +1,37 @@
+{%- assign lead_groups = include.groups | slice: 0, 1 -%}
+{%- assign rail_groups = include.groups | slice: 1, 2 -%}
+{%- assign secondary_groups = include.groups | slice: 3, 3 -%}
+{%- assign brief_limit = include.brief_limit | default: 18 -%}
+{%- assign brief_groups = include.groups | slice: 6, brief_limit -%}
+{%- assign first_level = site.data.levels | first | first -%}
+
+<div class="frontpage" data-frontpage data-active-level="{{ first_level }}">
+  <div class="frontpage__top">
+    <section class="frontpage__slot frontpage__slot--lead" aria-label="{{ include.ui.frontpage_lead | default: "Aufmacher" }}">
+      {%- for group in lead_groups %}{% include story.html group=group variant="lead" ui=include.ui %}{% endfor %}
+    </section>
+
+    {%- if rail_groups.size > 0 %}
+    <section class="frontpage__slot frontpage__slot--rail" aria-label="{{ include.ui.frontpage_rail | default: "Ebenfalls aktuell" }}">
+      {%- for group in rail_groups %}{% include story.html group=group variant="rail" ui=include.ui %}{% endfor %}
+    </section>
+    {%- endif %}
+  </div>
+
+  {%- if secondary_groups.size > 0 %}
+  <section class="frontpage__slot frontpage__slot--secondary" aria-label="{{ include.ui.frontpage_more | default: "Weitere Artikel" }}">
+    <div class="frontpage__slot-body">
+      {%- for group in secondary_groups %}{% include story.html group=group variant="secondary" ui=include.ui %}{% endfor %}
+    </div>
+  </section>
+  {%- endif %}
+
+  {%- if brief_groups.size > 0 %}
+  <section class="frontpage__slot frontpage__slot--briefs" aria-labelledby="briefs-title">
+    <h2 class="frontpage__slot-title" id="briefs-title">{{ include.ui.frontpage_briefs | default: "Kurz gemeldet" }}</h2>
+    <div class="frontpage__slot-body">
+      {%- for group in brief_groups %}{% include story.html group=group variant="brief" ui=include.ui %}{% endfor %}
+    </div>
+  </section>
+  {%- endif %}
+</div>

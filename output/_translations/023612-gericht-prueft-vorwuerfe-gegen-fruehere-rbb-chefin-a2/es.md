@@ -10,8 +10,6 @@ summary: "Un tribunal de Berlín examina las acusaciones sobre dinero contra la 
 description: "Un tribunal de Berlín examina las acusaciones sobre dinero contra la antigua directora de RBB y otras tres personas."
 source_title: "Gericht prüft Vorwürfe gegen frühere RBB-Chefin"
 reading_time: 2
-glossary_heading: "Vocabulario"
-audio: null
 translations:
   de: /articles/023612-gericht-prueft-vorwuerfe-gegen-fruehere-rbb-chefin-a2/
   en: /articles/023612-gericht-prueft-vorwuerfe-gegen-fruehere-rbb-chefin-a2/en/
@@ -38,14 +36,3 @@ La fiscalía también habla de diez cenas en el piso de Schlesinger. RBB pagó 4
 Los problemas en RBB comenzaron en el verano de 2022. Primero hubo noticias sobre un contrato del marido de Schlesinger. Después también hubo críticas por el dinero para la dirección. Schlesinger dejó su puesto en agosto de 2022. Más tarde, RBB la despidió sin esperar.
 
 El tribunal planea 56 días para el juicio.
-
-## Vocabulario
-
-- <strong lang="de" dir="ltr">Vorwürfe</strong> - acusaciones - Se dice que alguien ha hecho algo malo.
-- <strong lang="de" dir="ltr">Staatsanwaltschaft</strong> - fiscalía - Investiga posibles delitos y acusa a personas.
-- <strong lang="de" dir="ltr">geschadet</strong> - causado daño - Ha hecho que algo esté peor; aquí: ha hecho perder dinero.
-- <strong lang="de" dir="ltr">Zusammenschluss</strong> - unión - Varios grupos trabajan juntos y forman un grupo más grande.
-- <strong lang="de" dir="ltr">missachtet</strong> - no respetado - No han seguido algo, como una regla.
-- <strong lang="de" dir="ltr">Verwaltungsrat</strong> - consejo de control - Un grupo que controla el trabajo de la dirección.
-- <strong lang="de" dir="ltr">zurückgetreten</strong> - dejado su puesto - Ella misma ha dicho: Ya no hago este trabajo.
-- <strong lang="de" dir="ltr">entlassen</strong> - despedido - La empresa ha dicho: Ya no puede trabajar aquí.

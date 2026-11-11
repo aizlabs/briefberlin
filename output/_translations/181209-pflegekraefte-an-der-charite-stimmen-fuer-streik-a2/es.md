@@ -10,8 +10,6 @@ summary: "Muchas personas del personal de enfermería de la Charité de Berlín 
 description: "Muchas personas del personal de enfermería de la Charité de Berlín están dispuestas a hacer una huelga, porque quieren mejores condiciones de trabajo."
 source_title: "Pflegekräfte an der Charité stimmen für Streik"
 reading_time: 2
-glossary_heading: "Vocabulario"
-audio: null
 translations:
   de: /articles/181209-pflegekraefte-an-der-charite-stimmen-fuer-streik-a2/
   en: /articles/181209-pflegekraefte-an-der-charite-stimmen-fuer-streik-a2/en/
@@ -34,13 +32,3 @@ Una huelga significa: las personas no trabajan durante un tiempo. Así hacen pre
 Ahora Verdi y la dirección siguen hablando entre sí. La dirección decide mucho sobre el trabajo en el hospital. Si las dos partes no encuentran un acuerdo, Verdi puede llamar a la huelga. El sí de los miembros le da a Verdi mucha fuerza para eso. Por eso ahora crece la presión sobre la dirección de la Charité.
 
 Verdi no dice cuántos miembros hay allí. Pero en muchas plantas muchas personas del personal de enfermería trabajan con Verdi. Una planta es una zona en un hospital. Por eso el resultado es importante para las conversaciones.
-
-## Vocabulario
-
-- <strong lang="de" dir="ltr">Streit</strong> - conflicto - Un problema entre personas o grupos.
-- <strong lang="de" dir="ltr">Arbeitsbedingungen</strong> - condiciones de trabajo - La situación y las reglas en el trabajo.
-- <strong lang="de" dir="ltr">Streik</strong> - huelga - Los trabajadores no trabajan a propósito para conseguir algo.
-- <strong lang="de" dir="ltr">Gewerkschaft</strong> - sindicato - Un grupo que apoya a los trabajadores con problemas.
-- <strong lang="de" dir="ltr">Druck</strong> - presión - Influencia fuerte para que alguien haga algo.
-- <strong lang="de" dir="ltr">Leitung</strong> - dirección - Personas que dirigen una organización.
-- <strong lang="de" dir="ltr">Einigung</strong> - acuerdo - Cuando las dos partes dicen sí a una solución.

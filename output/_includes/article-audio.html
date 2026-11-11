@@ -1,13 +1,5 @@
 {%- comment -%}
-  Article audio player. Extracted verbatim from _layouts/post.html so the German
-  post layout and the translation layout share one source of truth.
-
-  Translation pages keep the GERMAN audio on purpose: the reader listens to the
-  German original while reading their own language. Only the labels are localized.
-
-  Params:
-    t       = the site.data.ui-briefberlin block for this page's language
-    caption = optional small note rendered directly under the player card
+  Article audio player. Pass the page's UI strings as t.
 {%- endcomment -%}
 {% if page.audio and page.audio.url %}
         <section
@@ -49,8 +41,5 @@
               <button class="is-active" type="button" data-speed="1" aria-label="{{ include.t.audio_speed_100 }}">1x</button>
             </div>
           </div>
-          {%- if include.caption %}
-          <p class="article-audio__caption">{{ include.caption }}</p>
-          {%- endif %}
         </section>
 {% endif %}

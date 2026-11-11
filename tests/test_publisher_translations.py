@@ -7,6 +7,7 @@ import pytest
 from scripts.models import (
     AdaptedArticle,
     ArticleTranslation,
+    AudioAsset,
     TranslatedVocabularyItem,
     VocabularyItem,
 )
@@ -113,7 +114,6 @@ def test_translated_page_frontmatter(publisher, article, tmp_path):
     assert "lang: ar" in text
     assert f"ref: {ref}" in text
     assert 'source_title: "Linke gewinnt in Berlin und setzt Regierung unter Druck"' in text
-    assert 'glossary_heading: "المفردات"' in text
     assert 'category: "Politik"' in text
     assert "reading_time: 3" in text
     # The URL comes from the file's location; a permalink key would be a second
@@ -132,14 +132,21 @@ def test_translated_body_has_no_german_hint_markup(publisher, article, tmp_path)
     assert "data-term-id" not in text
 
 
-def test_translated_glossary_keeps_german_headword_marked_ltr(publisher, article, tmp_path):
+def test_audio_and_glossary_only_publish_on_german_article(publisher, article, tmp_path):
+    publisher.config.audio.website.enabled = True
+    article.audio = AudioAsset(url="https://example.com/german.mp3")
     publisher.save_article(article, timestamp=TIMESTAMP)
     ref = publisher._post_ref(article, TIMESTAMP)
     text = (tmp_path / "_translations" / ref / "ar.md").read_text("utf-8")
 
-    assert "## المفردات" in text
-    assert '<strong lang="de" dir="ltr">Landtagswahlen</strong>' in text
-    assert "## Vokabeln" not in text
+    assert text.split("---\n", 2)[2].strip() == article.translations[1].content
+    assert "glossary_heading:" not in text
+    assert "audio:" not in text
+
+    german_path = tmp_path / "_posts" / publisher._generate_filename(article, TIMESTAMP)
+    german = german_path.read_text("utf-8")
+    assert "## Vokabeln" in german
+    assert "https://example.com/german.mp3" in german
 
 
 def test_resaving_overwrites_instead_of_duplicating(publisher, article, tmp_path):

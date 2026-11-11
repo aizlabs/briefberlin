@@ -10,16 +10,6 @@ summary: "Niemcy potrzebują więcej współpracy i więcej prostej pomocy dla t
 description: "Niemcy potrzebują więcej współpracy i więcej prostej pomocy dla tanich mieszkań."
 source_title: "Mehr Hilfe für bezahlbare Wohnungen"
 reading_time: 2
-glossary_heading: "Słowniczek"
-audio:
-  url: "https://media.briefberlin.de/articles/2026/09/20260921-122318-mehr-hilfe-fur-bezahlbare-wohnungen-a2/article.mp3"
-  format: "mp3"
-  mime_type: "audio/mpeg"
-  provider: "elevenlabs"
-  voice: "OYTbf65OHHFELVut7v2H"
-  timings_url: "https://media.briefberlin.de/articles/2026/09/20260921-122318-mehr-hilfe-fur-bezahlbare-wohnungen-a2/article.timings.json"
-  timing_granularity: "word"
-  highlight_context: "sentence"
 translations:
   de: /articles/122318-mehr-hilfe-fur-bezahlbare-wohnungen-a2/
   en: /articles/122318-mehr-hilfe-fur-bezahlbare-wohnungen-a2/en/
@@ -40,11 +30,3 @@ Koszty mają wiele powodów. Budowanie jest drogie, ale także działki kosztuj�
 Niektórzy ludzie chcą wywłaszczyć duże firmy mieszkaniowe. To znaczy: państwo odbiera firmom mieszkania i za to płaci. Wielu ekspertów widzi przy tym problemy. Taki krok trwa długo i kosztuje bardzo dużo pieniędzy. Poza tym przez to na początku nie powstają nowe mieszkania.
 
 Kryzys ma stare przyczyny. Miasta rosły silniej, niż wielu myślało. Dawniej było kilka milionów mieszkań socjalnych. Dziś jest mniej niż milion. W krótkim czasie biedne gospodarstwa domowe potrzebują więcej pomocy przy czynszu. W długim czasie Niemcy potrzebują więcej mieszkań, które nie mają tylko przynosić zysku.
-
-## Słowniczek
-
-- <strong lang="de" dir="ltr">knapp</strong> - mało; w niedoborze - nie ma tego wystarczająco dużo.
-- <strong lang="de" dir="ltr">Grundstücke</strong> - działki - kawałki ziemi, często pod domy.
-- <strong lang="de" dir="ltr">Genossenschaften</strong> - spółdzielnie - grupy, które coś wspólnie posiadają i używają.
-- <strong lang="de" dir="ltr">enteignen</strong> - wywłaszczyć - państwo zabiera własność i za to płaci.
-- <strong lang="de" dir="ltr">Sozialwohnungen</strong> - mieszkania socjalne - tanie mieszkania z pomocą państwa.

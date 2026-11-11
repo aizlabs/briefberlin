@@ -10,8 +10,6 @@ summary: "Sąd w Berlinie sprawdza zarzuty dotyczące pieniędzy wobec byłej sz
 description: "Sąd w Berlinie sprawdza zarzuty dotyczące pieniędzy wobec byłej szefowej RBB i trzech innych osób."
 source_title: "Gericht prüft Vorwürfe gegen frühere RBB-Chefin"
 reading_time: 2
-glossary_heading: "Słowniczek"
-audio: null
 translations:
   de: /articles/023612-gericht-prueft-vorwuerfe-gegen-fruehere-rbb-chefin-a2/
   en: /articles/023612-gericht-prueft-vorwuerfe-gegen-fruehere-rbb-chefin-a2/en/
@@ -38,14 +36,3 @@ Prokuratura mówi też o dziesięciu kolacjach w mieszkaniu Schlesinger. RBB zap
 Latem 2022 roku zaczęły się problemy w RBB. Najpierw pojawiły się informacje o umowie męża Schlesinger. Potem krytykowano też pieniądze dla kierownictwa. Schlesinger zrezygnowała ze stanowiska w sierpniu 2022 roku. Później RBB zwolniła ją ze skutkiem natychmiastowym.
 
 Sąd planuje 56 dni na proces.
-
-## Słowniczek
-
-- <strong lang="de" dir="ltr">Vorwürfe</strong> - zarzuty - Ktoś mówi, że inna osoba zrobiła coś złego.
-- <strong lang="de" dir="ltr">Staatsanwaltschaft</strong> - prokuratura - Sprawdza, czy doszło do przestępstwa, i oskarża ludzi.
-- <strong lang="de" dir="ltr">geschadet</strong> - zaszkodził - Sprawił, że coś stało się gorsze; tutaj: stracił pieniądze.
-- <strong lang="de" dir="ltr">Zusammenschluss</strong> - zrzeszenie - Kilka grup działa razem i tworzy większą grupę.
-- <strong lang="de" dir="ltr">missachtet</strong> - nie przestrzegał - Nie stosował się do czegoś.
-- <strong lang="de" dir="ltr">Verwaltungsrat</strong> - rada nadzorcza - Grupa, która kontroluje pracę kierownictwa.
-- <strong lang="de" dir="ltr">zurückgetreten</strong> - zrezygnował ze stanowiska - Sam powiedział: nie będę już tego robić.
-- <strong lang="de" dir="ltr">entlassen</strong> - zwolniony - Pracodawca powiedział, że ta osoba nie może już tam pracować.

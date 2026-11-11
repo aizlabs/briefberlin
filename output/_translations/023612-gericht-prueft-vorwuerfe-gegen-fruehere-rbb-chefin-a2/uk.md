@@ -10,8 +10,6 @@ summary: "Суд у Берліні перевіряє звинувачення �
 description: "Суд у Берліні перевіряє звинувачення щодо грошей проти колишньої керівниці RBB і ще трьох людей."
 source_title: "Gericht prüft Vorwürfe gegen frühere RBB-Chefin"
 reading_time: 2
-glossary_heading: "Словник"
-audio: null
 translations:
   de: /articles/023612-gericht-prueft-vorwuerfe-gegen-fruehere-rbb-chefin-a2/
   en: /articles/023612-gericht-prueft-vorwuerfe-gegen-fruehere-rbb-chefin-a2/en/
@@ -38,14 +36,3 @@ RBB робить радіо- і телепрограми для всіх. Люд
 Влітку 2022 року в RBB почалися проблеми. Спочатку з’явилися повідомлення про договір чоловіка Шлезінгер. Після цього також почали критикувати виплати керівництву. Шлезінгер пішла з посади в серпні 2022 року. Пізніше RBB звільнила її без попередження.
 
 Суд планує 56 днів для цього процесу.
-
-## Словник
-
-- <strong lang="de" dir="ltr">Vorwürfe</strong> - звинувачення - Кажуть, що хтось зробив щось неправильно.
-- <strong lang="de" dir="ltr">Staatsanwaltschaft</strong> - прокуратура - Вона перевіряє можливі злочини та звинувачує людей у суді.
-- <strong lang="de" dir="ltr">geschadet</strong> - завдали шкоди - Зробили щось гіршим; тут: втратили гроші.
-- <strong lang="de" dir="ltr">Zusammenschluss</strong> - об’єднання - Кілька груп працюють разом і створюють більшу групу.
-- <strong lang="de" dir="ltr">missachtet</strong> - не дотрималися - Вони не зробили так, як було потрібно.
-- <strong lang="de" dir="ltr">Verwaltungsrat</strong> - наглядова рада - Група людей, яка контролює роботу керівництва.
-- <strong lang="de" dir="ltr">zurückgetreten</strong> - пішла з посади - Вона сама сказала: я більше не робитиму цю роботу.
-- <strong lang="de" dir="ltr">entlassen</strong> - звільнили - Роботодавець сказав: вона більше не може тут працювати.

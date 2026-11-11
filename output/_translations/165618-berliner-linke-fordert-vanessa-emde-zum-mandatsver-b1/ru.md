@@ -10,8 +10,6 @@ summary: "Берлинская Die Linke призывает Vanessa Emde отк�
 description: "Берлинская Die Linke призывает Vanessa Emde отказаться от места в парламенте из-за спорных заявлений и потери доверия."
 source_title: "Berliner Linke fordert Vanessa Emde zum Mandatsverzicht auf"
 reading_time: 3
-glossary_heading: "Словарь"
-audio: null
 translations:
   de: /articles/165618-berliner-linke-fordert-vanessa-emde-zum-mandatsver-b1/
   en: /articles/165618-berliner-linke-fordert-vanessa-emde-zum-mandatsver-b1/en/
@@ -37,14 +35,3 @@ Die Linke говорит: Emde несколько раз нарушала общ
 
 Что будет дальше
 Откажется ли Emde от своего мандата, пока неизвестно. В партии многие на это не рассчитывают. Недавно она сказала: она не отказывается ни от одного из своих спорных заявлений. Если она сохранит место, руководство фракции может подать заявление о её исключении из фракции Die Linke. Для этого ему нужно две трети голосов. Такое большинство теперь считается возможным. Katalin Gennburg и Gregor Gysi требуют разрыва. Сторонники Emde, напротив, видят в этом уступку общественному давлению. Они обвиняют партийное руководство в том, что ради возможной коалиции оно отказывается от собственных принципов.
-
-## Словарь
-
-- <strong lang="de" dir="ltr">verschärft</strong> - обострил; ухудшил - Сделал сильнее или хуже; конфликт становится жёстче.
-- <strong lang="de" dir="ltr">Vertrauensverlust</strong> - потеря доверия - Когда люди больше не доверяют кому-то.
-- <strong lang="de" dir="ltr">verstoßen</strong> - нарушать - Действовать против правил, законов или соглашений.
-- <strong lang="de" dir="ltr">Auslöser</strong> - повод; причина - Что-то, что запускает событие или конфликт.
-- <strong lang="de" dir="ltr">nahestehend</strong> - близкий; связанный - Тесно связан с группой политически или лично.
-- <strong lang="de" dir="ltr">Judenfeindlichkeit</strong> - антисемитизм; враждебность к евреям - Враждебность или ненависть к еврейкам и евреям.
-- <strong lang="de" dir="ltr">Sondierungen</strong> - предварительные переговоры - Первые политические переговоры перед возможными коалиционными переговорами.
-- <strong lang="de" dir="ltr">Parteiausschluss</strong> - исключение из партии - Когда кого-то официально исключают из партии.

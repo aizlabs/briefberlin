@@ -10,8 +10,6 @@ summary: "Yenilemeden kısa süre sonra Stadtbad Schöneberg’de yeniden teknik
 description: "Yenilemeden kısa süre sonra Stadtbad Schöneberg’de yeniden teknik sorunlar, kapatılan alanlar ve konuklardan eleştiriler var."
 source_title: "Stadtbad Schöneberg hat kurz nach Sanierung wieder Technikprobleme"
 reading_time: 3
-glossary_heading: "Kelimeler"
-audio: null
 translations:
   de: /articles/161452-stadtbad-sch-neberg-hat-kurz-nach-sanierung-wieder-b1/
   en: /articles/161452-stadtbad-sch-neberg-hat-kurz-nach-sanierung-wieder-b1/en/
@@ -30,15 +28,3 @@ Berliner Bäder-Betriebe, sorunların bir kısmını sonbahar tatiliyle açıkl�
 2024 başında işletmeciler havuzu kapattı, çünkü su değerleri yeterince iyi değildi. Kısmi modernizasyon için yaklaşık 14 milyon avro harcadılar. Şirketler havuz suyu ve su arıtma teknolojisini yeniledi. Havuzlardaki yalıtımları ve fayansları onardılar. Ayrıca havalandırma, elektrik hatları, ışık, yangın güvenliği ve bina kontrol sisteminin bazı bölümleri üzerinde çalıştılar. Bina kontrol sistemi, teknik tesisleri merkezi olarak denetlemeye yardımcı olur. Buna rağmen uzmanlar deneme işletmesinde başka hasarlar buldu. Bunlar arasında yan pencerelerin üzerindeki sıvada çatlaklar vardı. Bu hasarların açılıştan önce onarılması gerekiyordu.
 
 Binadaki büfe de daha fazla eleştiriye neden oluyor. Yeniden açılıştan beri orada bir fast food zinciri yemek satıyor. Bazı havuz konuklarını, havuzların yakınındaki kızartılmış yiyecek kokusu rahatsız ediyor. Bu nedenle işletmeciler, mevcut havalandırmayı genişletip genişletemeyeceklerini inceliyor. İşletmecilerin verdiği bilgilere göre bozuk asansörün yenilemeyle bağlantısı yok. Bir parça arızalandı ve onarım sürüyor. Kısıtlamaların yalnızca geçici olması planlanıyor. Ancak tüm bölümlerin ne zaman yeniden açılacağı henüz bilinmiyor.
-
-## Kelimeler
-
-- <strong lang="de" dir="ltr">Sanierung</strong> - yenileme; tadilat - Bir binanın veya tesisin onarılması ve yenilenmesi
-- <strong lang="de" dir="ltr">Wiedereröffnung</strong> - yeniden açılış - Bir kapanmadan sonra yeniden açılma
-- <strong lang="de" dir="ltr">Einschränkungen</strong> - kısıtlamalar; sınırlamalar - Hiç mümkün olmayan ya da yalnızca sınırlı mümkün olan şeyler
-- <strong lang="de" dir="ltr">gesperrt</strong> - kapalı; erişime kapatılmış - Girilemeyen veya kullanılamayan
-- <strong lang="de" dir="ltr">Solebecken</strong> - tuzlu su havuzu - Tuzlu su içeren havuz
-- <strong lang="de" dir="ltr">verzögert</strong> - gecikmiş - Planlanandan daha geç gerçekleşmiş
-- <strong lang="de" dir="ltr">Mängel</strong> - kusurlar; eksikler - Bir şeydeki hatalar veya sorunlar
-- <strong lang="de" dir="ltr">Schwachstellen</strong> - zayıf noktalar - Bir şeyin iyi çalışmadığı yerler
-- <strong lang="de" dir="ltr">Wasseraufbereitung</strong> - su arıtma - Suyun temizlenmesi ve teknik olarak işlenmesi
