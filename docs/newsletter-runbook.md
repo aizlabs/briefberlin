@@ -185,7 +185,7 @@ BREVO_API_KEY=... NEWSLETTER_ENABLED=true uv run briefberlin-newsletter --target
 
 Exit codes: `0` ok/skip (empty issue, already scheduled, too late, dry run),
 `1` error (feed/API failure, gate refusal), `3` quota guard, `4` stale
-campaign state or article-limit overflow (needs a human decision). Only `1`, `3`, `4` page the owner
+campaign state (needs a human decision). Only `1`, `3`, `4` page the owner
 via the Actions failure notification (`3`/`4` are re-thrown as failures in the
 workflow; see workflow comments).
 
@@ -198,15 +198,19 @@ workflow; see workflow comments).
 - The content watermark (stored in the HTML `briefberlin-cutoff` meta field)
   advances **only** from
   campaigns observed with status `sent`. Scheduled/queued/failed campaigns
-  never advance it, so missed days re-send their articles automatically.
+  never advance it, so stories from missed days can be picked up while they
+  are still in the feed.
+- If there is no sent production campaign, the window starts two days before
+  the current content cutoff. Subsequent issues start at the content cutoff
+  recorded in the latest sent production campaign.
 - Content boundary: the window ends at the earlier of 06:00 Europe/Berlin
   and the feed-fetch start time. Early preparation never consumes future
   content; stories appearing after that snapshot remain eligible tomorrow.
 - Only strict `BB-YYYY-MM-DD` sent campaigns targeting production list 3
   can advance production history. Test campaigns never affect that window.
-- If pending stories exceed `max_articles_per_issue`, exit 4 before any
-  campaign mutation. Raise the cap after review to send the complete backlog;
-  no truncation or watermark advance occurs, even for shared timestamps.
+- If eligible stories exceed `max_articles_per_issue` (default 10), the issue
+  includes the newest stories up to the limit. The saved cutoff still covers
+  the full window, so omitted stories are dropped once the issue is sent.
 - Quota: reads `GET /account` and requires one free email plan with
   `creditsType=sendLimit` and a nonnegative integer `credits` balance.
   Scheduling refuses unknown, ambiguous or unsupported plan responses and

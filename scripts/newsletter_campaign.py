@@ -863,18 +863,15 @@ def run_issue_builder(
                 )
             )
     if len(selected) > config.max_articles_per_issue:
-        # No timestamp can safely represent a truncated batch when multiple
-        # stories share a timestamp. Stop before creating/updating anything.
-        return EXIT_STALE, {
-            "reason": "article_limit",
-            "message": (
-                f"{len(selected)} pending stories exceed the issue limit "
-                f"({config.max_articles_per_issue}). Raise the limit after review; "
-                "no campaign or watermark was changed."
-            ),
-            "abuse_detected": abuse_detected,
-            "abuse_count_24h": abuse_count,
-        }
+        logger.info(
+            "Issue %s: keeping the %d newest stories out of %d eligible stories",
+            issue_name,
+            config.max_articles_per_issue,
+            len(selected),
+        )
+        # Representatives are ordered oldest first. Keep the full issue cutoff
+        # so omitted stories stay outside future issues once this one is sent.
+        selected = selected[-config.max_articles_per_issue :]
 
     if not selected:
         return EXIT_OK, {

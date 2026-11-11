@@ -100,7 +100,7 @@ jobs:
           fi
 
           # 0 = ok/skip (empty issue, already scheduled, too late, dry run).
-          # 1 = error, 3 = quota guard, 4 = stale campaign state or article overflow; these page
+          # 1 = error, 3 = quota guard, 4 = stale campaign state; these page
           # the owner through the normal job-failure notification.
           exit "$code"
 

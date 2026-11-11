@@ -244,7 +244,7 @@ newsletter:
   min_lead_minutes: 30            # no production send closer than this to 07:00
   daily_email_limit: 300          # Brevo free plan
   daily_reserve: 60               # headroom for DOI + welcome mails
-  first_run_lookback_days: 1
+  first_run_lookback_days: 2
   abuse_threshold_24h: 25         # DOI/transactional volume alert threshold per 24h
 
 # Alerts (in CI, enabled and email_config.smtp can be overridden by ALERTS_ENABLED, ALERT_SMTP_*, EMAIL_USERNAME, EMAIL_PASSWORD)

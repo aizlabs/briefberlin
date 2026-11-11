@@ -687,6 +687,24 @@ def test_abuse_below_threshold_stays_quiet():
     assert details["abuse_detected"] is False
 
 
+def test_first_issue_includes_stories_from_two_day_lookback():
+    now = datetime(2026, 11, 11, 6, 20, tzinfo=BERLIN)
+    client = FakeBrevo()
+    feed = atom_feed(
+        [
+            make_entry("at-start", "2026-11-09T06:00:00+01:00"),
+            make_entry("within-window", "2026-11-09T06:01:00+01:00"),
+        ]
+    )
+
+    code, details = run_issue_builder(make_config(), "production", False, feed, now, client)
+
+    assert code == EXIT_OK
+    assert details["articles"] == 1
+    payload = next(call[2] for call in client.calls if call[0] == "POST")
+    assert "Story within-window" in payload["htmlContent"]
+
+
 def test_window_excludes_entries_after_deterministic_cutoff():
     # Entry published 06:10 (after the 06:00 cutoff) waits for the next issue
     # even though the (delayed) run happens at 06:20.
@@ -740,18 +758,25 @@ def test_pre_cutoff_preparation_recovers_later_publications_next_day(month, offs
     assert 'Story before' not in payload['htmlContent']
 
 
-def test_overflow_with_identical_timestamps_preserves_all_backlog():
+def test_issue_keeps_newest_stories_and_drops_excess_after_send():
     now = datetime(2026, 11, 8, 5, 30, tzinfo=BERLIN)
-    feed = atom_feed([make_entry(f'story-{i}', '2026-11-08T04:00:00+01:00') for i in range(11)])
+    entries = [make_entry("older", "2026-11-08T03:00:00+01:00")]
+    entries += [make_entry(f"story-{i}", "2026-11-08T04:00:00+01:00") for i in range(10)]
     client = FakeBrevo()
-    code, details = run_issue_builder(make_config(), 'production', False, feed, now, client)
-    assert (code, details['reason']) == (EXIT_STALE, 'article_limit')
-    assert not any(c[0] in {'POST', 'PUT', 'DELETE'} for c in client.calls)
-    assert client.campaigns == []
-    code, details = run_issue_builder(make_config(max_articles_per_issue=11),
-                                    'production', False, feed, now, client)
-    assert code == EXIT_OK
-    assert details['articles'] == 11
+    config = make_config()
+
+    code, details = run_issue_builder(config, "production", False, atom_feed(entries), now, client)
+
+    assert (code, details["reason"], details["articles"]) == (EXIT_OK, "created", 10)
+    payload = next(call[2] for call in client.calls if call[0] == "POST")
+    assert "Story older" not in payload["htmlContent"]
+
+    client.campaigns[0].update(status="sent", recipients={"lists": [3]})
+    code, details = run_issue_builder(
+        config, "production", False, atom_feed(entries), now.replace(day=9), client
+    )
+
+    assert (code, details["reason"]) == (EXIT_OK, "empty_issue")
 
 
 @pytest.mark.parametrize('remaining', [None, 0, 200, 299])

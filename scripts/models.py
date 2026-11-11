@@ -630,7 +630,7 @@ class NewsletterConfig(BaseModel):
         description="Headroom reserved for double-opt-in and welcome emails inside the daily cap",
     )
     first_run_lookback_days: int = Field(
-        default=1, ge=1, description="Content window when no sent campaign exists yet"
+        default=2, ge=1, description="Content window when no sent campaign exists yet"
     )
     abuse_threshold_24h: int = Field(
         default=25,
