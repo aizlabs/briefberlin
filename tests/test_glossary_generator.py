@@ -2,6 +2,7 @@ import json
 from unittest.mock import MagicMock
 
 import pytest
+import spacy
 from langchain_core.utils.function_calling import convert_to_openai_function
 
 from scripts.glossary_generator import (
@@ -538,6 +539,60 @@ def test_validate_without_nlp_keeps_generic_terms_when_explanation_mentions_a_co
 
     assert [item.term for item in accepted] == ["Haushaltsplan"]
     assert dropped == {}
+
+
+@pytest.fixture
+def glossary_generator_with_nlp(glossary_generator):
+    try:
+        glossary_generator._nlp = spacy.load("de_core_news_sm")
+    except OSError:
+        pytest.skip("de_core_news_sm not installed")
+    return glossary_generator
+
+
+def test_validate_with_nlp_keeps_common_nouns_the_model_tags_as_people_or_places(
+    glossary_generator_with_nlp,
+):
+    # de_core_news_sm tags these ordinary nouns as LOC/PER (seen in a real article).
+    content = (
+        "Die Bewohner haben nichts gehört. Die Ermittler suchen weiter. "
+        "Zeugen sagen etwas anderes. In Sicherheitskreisen heißt es, der Fall sei klar. "
+        "Das Dorf liegt an der polnischen Grenze."
+    )
+    candidates = [
+        VocabularyItem(term="Bewohner", english="residents", explanation="Menschen im Ort"),
+        VocabularyItem(term="Ermittler", english="investigators", explanation="Polizei"),
+        VocabularyItem(term="Zeugen", english="witnesses", explanation="Sie haben etwas gesehen"),
+        VocabularyItem(
+            term="Sicherheitskreisen", english="security circles", explanation="Polizei und Behörden"
+        ),
+        VocabularyItem(term="Grenze", english="border", explanation="Ende eines Landes"),
+    ]
+
+    accepted, dropped = glossary_generator_with_nlp.validate(content, candidates)
+
+    assert dropped == {}
+    assert [item.term for item in accepted] == [
+        "Bewohner",
+        "Ermittler",
+        "Zeugen",
+        "Sicherheitskreisen",
+        "Grenze",
+    ]
+
+
+def test_validate_with_nlp_still_drops_people_and_places(glossary_generator_with_nlp):
+    content = "Angela Merkel besuchte Altglietzen. Danach fuhr sie nach Frankfurt."
+    candidates = [
+        VocabularyItem(term="Angela Merkel", english="Angela Merkel", explanation="Politikerin"),
+        VocabularyItem(term="Altglietzen", english="Altglietzen", explanation="ein Dorf"),
+        VocabularyItem(term="Frankfurt", english="Frankfurt", explanation="eine Stadt"),
+    ]
+
+    accepted, dropped = glossary_generator_with_nlp.validate(content, candidates)
+
+    assert accepted == []
+    assert set(dropped) == {"Angela Merkel", "Altglietzen", "Frankfurt"}
 
 
 def test_apply_bolding_marks_only_accepted_terms(glossary_generator):

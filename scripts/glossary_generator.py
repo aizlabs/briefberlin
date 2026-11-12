@@ -28,6 +28,8 @@ from scripts.text_utils import (
 )
 
 REJECT_ENTITY_LABELS = {"PER", "PERSON", "GPE", "LOC"}
+# Leading words skipped when checking whether an English gloss is capitalised like a name.
+ENGLISH_GLOSS_LEADERS = {"a", "an", "the", "to"}
 MAX_CLICKABLE_TERM_WORDS = 3
 ORGANIZATION_OR_GROUP_TOKENS = {
     "agencia",
@@ -881,9 +883,29 @@ class GlossaryGenerator:
         for span in self._find_matching_spans(doc, term):
             for ent in doc.ents:
                 if ent.start <= span.start and span.end <= ent.end:
-                    if ent.label_ in REJECT_ENTITY_LABELS:
+                    if ent.label_ in REJECT_ENTITY_LABELS and self._entity_hit_is_a_name(
+                        span, term, english
+                    ):
                         return True
         return False
+
+    def _entity_hit_is_a_name(self, span, term: str, english: str) -> bool:
+        """Whether a PER/LOC tag on `span` should be believed.
+
+        The small German model tags many capitalised common nouns as people or places
+        (Zeugen -> LOC, Bewohner -> PER, "polnischen Grenze" -> LOC). Believe the tag when
+        the term itself is tagged as a proper noun, or when the English gloss reads like a
+        name (capitalised or unchanged); a lowercase gloss such as "witnesses" means a
+        common noun that learners need.
+        """
+        if any(token.pos_ == "PROPN" for token in span):
+            return True
+        gloss_words = [w for w in english.split() if w.casefold() not in ENGLISH_GLOSS_LEADERS]
+        if not gloss_words:
+            return True
+        if self._fold_text(english) == self._fold_text(term):
+            return True
+        return gloss_words[0][:1].isupper()
 
     def _is_transparent_term(self, term: str, english: str) -> bool:
         term_tokens = [
