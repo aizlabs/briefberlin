@@ -511,9 +511,25 @@ class UsageReportingConfig(BaseModel):
     prices: Dict[str, Dict[str, ModelPricingConfig]] = Field(default_factory=dict)
 
 
+def resolve_model_provider(
+    model: str, default_provider: str, model_options: Optional[Dict[str, Any]] = None
+) -> str:
+    """Provider that serves `model`: `llm.model_options.<model>.provider` when set,
+    otherwise the run's provider (`llm.provider`)."""
+    options = (model_options or {}).get(model)
+    explicit = (
+        options.get("provider") if isinstance(options, dict) else getattr(options, "provider", None)
+    )
+    return str(explicit) if explicit else default_provider
+
+
 class ModelOptions(BaseModel):
     """Request options for one model, keyed by model name in `llm.model_options`."""
 
+    provider: Optional[Literal["openai", "anthropic"]] = Field(
+        default=None,
+        description="Provider serving this model; unset means the run's llm.provider",
+    )
     supports_temperature: bool = Field(
         default=True,
         description="False for models that only accept their default temperature; none is sent",
@@ -560,6 +576,14 @@ class LLMConfig(BaseModel):
         description="Per-model request options (temperature support, reasoning effort)",
     )
     usage_reporting: UsageReportingConfig = Field(default_factory=UsageReportingConfig)
+
+    def provider_for(self, model: str) -> str:
+        """Provider that serves `model` in this configuration."""
+        return resolve_model_provider(model, self.provider, self.model_options)
+
+    def role_models(self) -> Dict[str, str]:
+        """The configured model for every role that has one."""
+        return {role: m for role, m in self.models.model_dump().items() if m}
 
 
 class SMTPConfig(BaseModel):

@@ -15,6 +15,8 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 from pydantic import SecretStr
 
+from scripts.models import resolve_model_provider
+
 # Kept under its own name so the structured-output check still works when tests
 # replace `ChatAnthropic` with a stand-in.
 _ANTHROPIC_CHAT_TYPE = ChatAnthropic
@@ -39,7 +41,9 @@ def create_chat_model(
     Returns:
         A LangChain chat model instance.
     """
-    provider = llm_config["provider"]
+    provider = resolve_model_provider(
+        model_name, llm_config["provider"], llm_config.get("model_options")
+    )
     extra_options = dict(provider_options or {})
     # Per-model request options live in config (llm.model_options), never in code:
     # some models only accept their default temperature, reasoning models take an

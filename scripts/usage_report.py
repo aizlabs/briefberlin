@@ -89,12 +89,13 @@ class RunUsageReport:
             )
             return
         for model, raw_usage in usage_by_model.items():
+            provider = self._provider_for_model(str(model))
             try:
                 if not isinstance(raw_usage, Mapping):
                     raise TypeError("usage metadata must be an object")
                 input_details = _mapping(raw_usage.get("input_token_details"))
                 record = ModelUsageRecord(
-                    provider=self.default_provider,
+                    provider=provider,
                     model=str(model),
                     modality="text",
                     input_tokens=_non_negative_int(raw_usage.get("input_tokens")),
@@ -105,7 +106,7 @@ class RunUsageReport:
                 )
             except (TypeError, ValueError) as exc:
                 self._record_incomplete(
-                    provider=self.default_provider,
+                    provider=provider,
                     model=str(model),
                     modality="text",
                     source="langchain",
@@ -348,6 +349,20 @@ class RunUsageReport:
         ) / MILLION
         output_cost = Decimal(usage.output_tokens) * pricing.output_per_million / MILLION
         return CostedUsage(usage, pricing_name, input_cost, output_cost)
+
+    def _provider_for_model(self, model: str) -> str:
+        """The provider whose price list names `model`; the run default when none or
+        several do. LangChain reports usage per model without saying which provider
+        served it, and one run can mix providers."""
+        owners = [
+            provider
+            for provider, prices in self.config.prices.items()
+            if model in prices
+            or any(
+                fnmatchcase(model, pattern) for pricing in prices.values() for pattern in pricing.aliases
+            )
+        ]
+        return owners[0] if len(owners) == 1 else self.default_provider
 
     def _resolve_price(
         self,

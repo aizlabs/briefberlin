@@ -82,6 +82,14 @@ class AppConfig(BaseModel):
             else:
                 raise ValueError("ANTHROPIC_API_KEY is required for Anthropic provider")
 
+        # Roles can use models from different providers; each one in use needs its key.
+        for role, model in self.llm.role_models().items():
+            provider = self.llm.provider_for(model)
+            if provider == 'anthropic' and not self.llm.anthropic_api_key:
+                raise ValueError(f"ANTHROPIC_API_KEY is required: {role} uses {model}")
+            if provider == 'openai' and not (self.llm.openai_api_key or self.llm.base_url):
+                raise ValueError(f"OPENAI_API_KEY is required: {role} uses {model}")
+
         if self.language.prompt_pack not in SUPPORTED_PROMPT_PACKS:
             supported = ", ".join(sorted(SUPPORTED_PROMPT_PACKS))
             raise ValueError(

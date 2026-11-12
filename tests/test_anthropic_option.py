@@ -29,9 +29,12 @@ def anthropic_config(monkeypatch):
     return load_config("production")
 
 
-def test_switching_the_provider_uses_opus_for_every_role(anthropic_config):
+def test_switching_the_provider_uses_opus_to_write_and_grade_and_terra_to_translate(
+    anthropic_config,
+):
     models = anthropic_config.llm.models
-    assert {getattr(models, role) for role in ROLES} == {OPUS}
+    assert {models.generation, models.adaptation, models.quality_check} == {OPUS}
+    assert models.translation == "gpt-6.1-terra"
 
 
 def test_the_default_provider_keeps_its_own_models(monkeypatch):
@@ -90,7 +93,10 @@ def test_claude_structured_output_uses_the_json_schema_format_not_a_forced_tool(
 def test_command_line_provider_and_model_reach_the_config(monkeypatch, anthropic_config):
     from scripts import manual_pipeline
 
-    monkeypatch.delenv("LLM_PROVIDER", raising=False)
+    # run_manual_pipeline writes LLM_PROVIDER/LLM_MODEL into os.environ; register both
+    # with monkeypatch so they are restored after this test instead of leaking.
+    monkeypatch.setenv("LLM_PROVIDER", "")
+    monkeypatch.setenv("LLM_MODEL", "")
     seen = {}
 
     def fake_load_config(environment):

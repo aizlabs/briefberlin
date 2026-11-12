@@ -186,6 +186,13 @@ def _execute_manual_pipeline(
     logger.info("Environment: %s", environment)
     logger.info("Dry Run: %s", dry_run)
     logger.info("Provider: %s", config.llm.provider)
+    logger.info(
+        "Models: %s",
+        ", ".join(
+            f"{role}={model} ({config.llm.provider_for(model)})"
+            for role, model in config.llm.role_models().items()
+        ),
+    )
     logger.info("Levels: %s", levels)
     logger.info("Private source count: %s", len(sources))
     logger.info("=" * 60)
@@ -335,8 +342,9 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         choices=["openai", "anthropic"],
         default=None,
         help=(
-            "LLM provider for this run. Defaults to LLM_PROVIDER or llm.provider. "
-            "A provider listed in llm.provider_models brings its own models."
+            "Model set for this run. Defaults to LLM_PROVIDER or llm.provider. "
+            "A provider listed in llm.provider_models brings its own models, which "
+            "may mix providers (each model is served by its own provider)."
         ),
     )
     parser.add_argument(

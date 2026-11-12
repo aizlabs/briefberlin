@@ -146,39 +146,49 @@ llm:
     translation: gpt-6.1-terra # For reader-language translation (see `translations:`)
     quality_check: gpt-6.1-terra
   # Models used instead of `models` when the provider is switched, e.g. with
-  # `--provider anthropic` or LLM_PROVIDER=anthropic (needs ANTHROPIC_API_KEY).
-  # Audio still uses OpenAI.
+  # `--provider anthropic` or LLM_PROVIDER=anthropic. A model with
+  # model_options.<model>.provider is served by that provider, so a set can mix them;
+  # every provider in use needs its API key. Audio uses OpenAI.
   provider_models:
     anthropic:
       generation: claude-opus-5-5
       adaptation: claude-opus-5-5
-      translation: claude-opus-5-5
       quality_check: claude-opus-5-5
+      # Terra translates as well as Opus at ~1/7 of the cost (blind test, 3 judges).
+      translation: gpt-6.1-terra
   # Temperatures apply only to models that accept them (see model_options).
   temperature: 0.3
   quality_temperature: 0.1
   max_tokens: 8192
   # Per-model request options. A model not listed here gets the settings above.
+  #   provider: openai|anthropic -> who serves this model, whatever llm.provider says
   #   supports_temperature: false  -> no temperature is sent (model only accepts its default)
   #   reasoning_effort: low|medium|high -> for reasoning models; unset = model default
   #   max_tokens: N -> output limit for this model (thinking counts toward it on Claude)
   model_options:
     gpt-5.5:
+      provider: openai
       supports_temperature: false
     gpt-6.1-sol:
+      provider: openai
       supports_temperature: false
     gpt-6.1-terra:
+      provider: openai
       supports_temperature: false
     gpt-6-luna:
+      provider: openai
       supports_temperature: false
     claude-opus-5-5:
+      provider: anthropic
       supports_temperature: false
       reasoning_effort: medium
       max_tokens: 16000
     claude-sonnet-5-5:
+      provider: anthropic
       supports_temperature: false
       max_tokens: 16000
     claude-haiku-5-5:
+      provider: anthropic
       supports_temperature: false
       max_tokens: 16000
   usage_reporting:

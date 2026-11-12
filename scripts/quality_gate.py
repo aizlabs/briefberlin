@@ -16,7 +16,13 @@ from scripts import prompts
 from scripts.config import AppConfig
 from scripts.generation_trace import GenerationTrace
 from scripts.llm_factory import create_chat_model, with_structured_output
-from scripts.models import AdaptedArticle, QualityResult, SourceArticle, Topic
+from scripts.models import (
+    AdaptedArticle,
+    QualityResult,
+    SourceArticle,
+    Topic,
+    resolve_model_provider,
+)
 
 
 class JudgeResponse(BaseModel):
@@ -59,7 +65,10 @@ class QualityGate:
 
     def _init_llm_client(self):
         """Initialize LLM client (Anthropic or OpenAI) based on config"""
-        provider = self.llm_config['provider']
+        model = self.llm_config['models']['quality_check']
+        provider = resolve_model_provider(
+            model, self.llm_config['provider'], self.llm_config.get('model_options')
+        )
         provider_options = (
             {'model_kwargs': {'response_format': {'type': 'json_object'}}}
             if provider == 'openai'
@@ -67,11 +76,11 @@ class QualityGate:
         )
         self.llm_client = create_chat_model(
             self.llm_config,
-            self.llm_config['models']['quality_check'],
+            model,
             self.quality_temperature,
             provider_options=provider_options,
         )
-        self.logger.info("Initialized %s client for quality checks", provider.capitalize())
+        self.logger.info("Initialized %s client for quality checks (%s)", provider.capitalize(), model)
 
     def _init_judge_chain(self):
         """Build a LangChain pipeline that enforces structured JSON responses."""
