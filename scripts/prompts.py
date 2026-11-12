@@ -984,11 +984,16 @@ RULES
    No markdown (no **, #, -, []()), no HTML, no buttons, no footnotes.
 
 3. PROPER NAMES STAY GERMAN - COMMON WORDS MUST BE TRANSLATED.
-   Keep these in their German spelling, because the reader meets them on signs, maps
-   and in the German article: personal names; street, square and park names
-   (Karl-Marx-Straße, Hermannplatz, Tempelhofer Feld); Berlin districts and local
-   places (Neukölln, Gropiusstadt); organisation and institution names (Senat, BVG,
-   Bundestag); party names and abbreviations (CDU, SPD, AfD, Die Linke, BSW).
+   A proper name is the name of one specific person, place, building, organisation
+   or event. Test: if the reader could find it on a map, a sign or a website under
+   that German name, it is a name. Keep every word of it in its German spelling,
+   because the reader meets it in Berlin and in the German article. Examples:
+   Karl-Marx-Straße, Hermannplatz, Tempelhofer Feld, Neukölln, Gemeinschaftshaus
+   Gropiusstadt, Rathaus Neukölln, Senat, BVG, Bundestag, CDU, Die Linke.
+
+   Job titles, roles and descriptions are NOT names, even when they belong to a named
+   person or body: Bezirksstadträtin, Sprecherin, Polizei, Bürgermeister. Translate
+   them.
 
    Everything else is ordinary vocabulary and MUST be translated, even if it is a
    long German compound. For example Wohnungskrise, Wohnungsmarkt, Genossenschaften,
@@ -1000,7 +1005,7 @@ RULES
    Hamburg -> Гамбург / هامبورغ, Bayern -> Бавария).
 
    If {language.name} is written in Cyrillic or Arabic script, write each German name
-   from the list above in its German spelling followed by a transliteration in
+   in its German spelling followed by a transliteration in
    brackets the first time it appears in the summary and the first time it appears in
    the body: "Hermannplatz (Германплац)", "Karl-Marx-Straße (Карл-Маркс-штрассе)",
    "Neukölln (نويكولن)". After that, write the German spelling alone. The title uses

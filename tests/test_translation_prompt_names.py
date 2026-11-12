@@ -28,3 +28,15 @@ def test_the_old_contradictory_rule_is_gone():
 
 def test_latin_alphabet_languages_keep_the_german_spelling_alone():
     assert "uses the Latin alphabet, write the German spelling alone" in _prompt("pl", "Polish")
+
+
+def test_name_rule_is_generic_with_a_lookup_test():
+    prompt = _prompt("es", "Spanish")
+    assert "find it on a map, a sign or a website" in prompt
+    assert "Gemeinschaftshaus" in prompt and "Gropiusstadt" in prompt
+
+
+def test_roles_are_translated_not_kept_as_names():
+    prompt = _prompt("tr", "Turkish")
+    assert "Job titles, roles and descriptions are NOT names" in prompt
+    assert "Bezirksstadträtin" in prompt
