@@ -518,9 +518,17 @@ class ModelOptions(BaseModel):
         default=True,
         description="False for models that only accept their default temperature; none is sent",
     )
-    reasoning_effort: Optional[Literal["none", "minimal", "low", "medium", "high", "xhigh"]] = Field(
+    reasoning_effort: Optional[
+        Literal["none", "minimal", "low", "medium", "high", "xhigh", "max"]
+    ] = Field(
         default=None,
         description="Reasoning effort for reasoning models; unset uses the model's default",
+    )
+    max_tokens: Optional[int] = Field(
+        default=None,
+        ge=100,
+        le=100000,
+        description="Output token limit for this model; unset uses llm.max_tokens",
     )
 
 
@@ -532,6 +540,10 @@ class LLMConfig(BaseModel):
         description="LLM provider identifier (e.g., openai, anthropic)"
     )
     models: LLMModelsConfig
+    provider_models: Dict[str, Dict[str, str]] = Field(
+        default_factory=dict,
+        description="Models per role for a non-default provider, keyed by provider name",
+    )
     openai_api_key: Optional[str] = Field(default=None, description="OpenAI API key")
     anthropic_api_key: Optional[str] = Field(default=None, description="Anthropic API key")
     base_url: Optional[str] = Field(

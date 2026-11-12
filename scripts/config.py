@@ -201,6 +201,23 @@ def apply_env_overrides(config_dict: Dict) -> Dict:
         config_dict.setdefault('llm', {})
         config_dict['llm']['provider'] = llm_provider
 
+    # A provider with its own model set (llm.provider_models) uses those models for
+    # every role it names. LLM_MODEL then sets one model for every role, and the
+    # LLM_*_MODEL variables below override single roles.
+    llm_section = config_dict.get('llm') or {}
+    provider_models = (llm_section.get('provider_models') or {}).get(
+        str(llm_section.get('provider', '')).strip().lower()
+    )
+    if provider_models:
+        llm_section['models'] = {**(llm_section.get('models') or {}), **provider_models}
+    llm_model = os.getenv('LLM_MODEL')
+    if llm_model:
+        config_dict.setdefault('llm', {})
+        config_dict['llm']['models'] = {
+            role: llm_model
+            for role in ('generation', 'adaptation', 'quality_check', 'topic_extraction', 'translation')
+        }
+
     llm_base_url = os.getenv('LLM_BASE_URL')
     if llm_base_url:
         config_dict.setdefault('llm', {})
@@ -211,6 +228,7 @@ def apply_env_overrides(config_dict: Dict) -> Dict:
         'LLM_ADAPTATION_MODEL': 'adaptation',
         'LLM_QUALITY_CHECK_MODEL': 'quality_check',
         'LLM_TOPIC_EXTRACTION_MODEL': 'topic_extraction',
+        'LLM_TRANSLATION_MODEL': 'translation',
     }
     for env_var, model_key in llm_model_env_vars.items():
         model_value = os.getenv(env_var)

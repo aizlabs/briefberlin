@@ -15,6 +15,10 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 from pydantic import SecretStr
 
+# Kept under its own name so the structured-output check still works when tests
+# replace `ChatAnthropic` with a stand-in.
+_ANTHROPIC_CHAT_TYPE = ChatAnthropic
+
 
 def create_chat_model(
     llm_config: Dict[str, Any],
@@ -45,6 +49,7 @@ def create_chat_model(
         temperature = None
     if options.get("reasoning_effort"):
         extra_options.setdefault("reasoning_effort", options["reasoning_effort"])
+    max_tokens = options.get("max_tokens") or llm_config.get("max_tokens", 4096)
 
     if provider == "anthropic":
         api_key = llm_config.get("anthropic_api_key")
@@ -54,7 +59,7 @@ def create_chat_model(
         return ChatAnthropic(
             api_key=SecretStr(api_key),
             model_name=model_name,
-            max_tokens_to_sample=llm_config.get("max_tokens", 4096),
+            max_tokens_to_sample=max_tokens,
             temperature=temperature,
             timeout=None,
             stop=None,
@@ -72,7 +77,7 @@ def create_chat_model(
             api_key=SecretStr(api_key or "local-api-key"),
             base_url=base_url,
             model=model_name,
-            max_completion_tokens=llm_config.get("max_tokens", 4096),
+            max_completion_tokens=max_tokens,
             temperature=temperature,
             **extra_options,
         )
@@ -91,7 +96,13 @@ def with_structured_output(
 
     Uses LangChain's `with_structured_output` API so that all JSON parsing
     and validation is handled centrally instead of manual json.loads.
+
+    Claude models get the JSON-schema response format of the Anthropic API.
+    The LangChain default for Claude is a forced tool call, which current
+    Claude models reject.
     """
+    if isinstance(chat_model, _ANTHROPIC_CHAT_TYPE):
+        kwargs.setdefault("method", "json_schema")
     return cast(Any, chat_model.with_structured_output(response_model, **kwargs))
 
 
