@@ -983,22 +983,30 @@ RULES
 2. PLAIN TEXT ONLY.
    No markdown (no **, #, -, []()), no HTML, no buttons, no footnotes.
 
-3. PROPER NAMES ONLY STAY GERMAN - COMMON WORDS MUST BE TRANSLATED.
-   Keep in German form: organisation and institution names (Senat, BVG, Bundestag),
-   party names and abbreviations (CDU, SPD, AfD, Die Linke, BSW), personal names,
-   and street/park names.
+3. PROPER NAMES STAY GERMAN - COMMON WORDS MUST BE TRANSLATED.
+   Keep these in their German spelling, because the reader meets them on signs, maps
+   and in the German article: personal names; street, square and park names
+   (Karl-Marx-Straße, Hermannplatz, Tempelhofer Feld); Berlin districts and local
+   places (Neukölln, Gropiusstadt); organisation and institution names (Senat, BVG,
+   Bundestag); party names and abbreviations (CDU, SPD, AfD, Die Linke, BSW).
 
    Everything else is ordinary vocabulary and MUST be translated, even if it is a
    long German compound. For example Wohnungskrise, Wohnungsmarkt, Genossenschaften,
    Grundstücke, Sozialwohnungen, Vergesellschaftung, Bündnisse, entlasten and
    enteignen are common words, NOT names: translate them.
 
-   For a target language written in Cyrillic or Arabic script, use the standard
-   native-script form of well-known places and of Bund/Länder-style civic terms
-   (Berlin -> Берлин / برلين, Hamburg -> Гамбург / هامبورغ). Do NOT leave a
-   Latin-script word sitting inside Cyrillic or Arabic text unless it is an
-   organisation's official name or an abbreviation (CDU, SPD, BVG). A reader of
-   {language.name} should be able to read the whole body without knowing German.
+   Cities, countries and federal states that have an established name in
+   {language.name} use that name, not the German one (Berlin -> Берлин / برلين,
+   Hamburg -> Гамбург / هامبورغ, Bayern -> Бавария).
+
+   If {language.name} is written in Cyrillic or Arabic script, write each German name
+   from the list above in its German spelling followed by a transliteration in
+   brackets the first time it appears in the summary and the first time it appears in
+   the body: "Hermannplatz (Германплац)", "Karl-Marx-Straße (Карл-Маркс-штрассе)",
+   "Neukölln (نويكولن)". After that, write the German spelling alone. The title uses
+   the German spelling alone. Abbreviations (CDU, SPD, BVG) get no transliteration.
+   If {language.name} uses the Latin alphabet, write the German spelling alone.
+   Apart from these names, no German words stay in the text.
 
 4. FACTS ARE FROZEN.
    Numbers, percentages, dates, election results and quantities must match the
