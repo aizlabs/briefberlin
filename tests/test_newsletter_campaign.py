@@ -565,14 +565,25 @@ def test_malformed_feed_aborts_without_campaign():
     assert details["reason"] == "malformed_or_empty_feed"
 
 
-def test_no_production_send_close_to_send_time():
-    now = datetime(2026, 11, 8, 6, 40, tzinfo=BERLIN)  # only 20 min lead
+@pytest.mark.parametrize("hour,minute,expected_hour,expected_minute", [
+    (6, 40, 7, 0),
+    (7, 0, 7, 1),
+    (13, 40, 13, 41),
+])
+def test_production_schedules_even_when_trigger_is_late(hour, minute, expected_hour, expected_minute):
+    now = datetime(2026, 11, 8, hour, minute, tzinfo=BERLIN)
     client = FakeBrevo()
     feed = atom_feed([make_entry("a-a2", "2026-11-08T05:00:00+01:00")])
     code, details = run_issue_builder(make_config(), "production", False, feed, now, client)
     assert code == EXIT_OK
-    assert details["reason"] == "too_late"
-    assert not any(call[0] == "POST" for call in client.calls)
+    assert details["reason"] == "created"
+    assert datetime.fromisoformat(details["scheduled_at"]) == now.replace(
+        hour=expected_hour, minute=expected_minute
+    )
+    client.campaigns[0]["status"] = "queued"
+    code, details = run_issue_builder(make_config(), "production", False, feed, now, client)
+    assert details["reason"] == "already_scheduled_or_sent"
+    assert len(client.campaigns) == 1
 
 
 def test_quota_guard_refuses_over_reserve():

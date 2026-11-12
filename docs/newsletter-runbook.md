@@ -178,12 +178,12 @@ uv run briefberlin-newsletter --dry-run
 # Send immediately to the TEST list (4) - requires BREVO_API_KEY
 BREVO_API_KEY=... uv run briefberlin-newsletter --target test
 
-# Production (list 3) - additionally requires NEWSLETTER_ENABLED=true and
-# >= 30 min lead before 07:00 Berlin
+# Production (list 3) requires NEWSLETTER_ENABLED=true. Targets 07:00 Berlin;
+# delayed runs schedule delivery one minute after preparation starts.
 BREVO_API_KEY=... NEWSLETTER_ENABLED=true uv run briefberlin-newsletter --target production
 ```
 
-Exit codes: `0` ok/skip (empty issue, already scheduled, too late, dry run),
+Exit codes: `0` ok/skip (empty issue, already scheduled, dry run),
 `1` error (feed/API failure, gate refusal), `3` quota guard, `4` stale
 campaign state (needs a human decision). Only `1`, `3`, `4` page the owner
 via the Actions failure notification (`3`/`4` are re-thrown as failures in the

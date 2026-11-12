@@ -618,11 +618,6 @@ class NewsletterConfig(BaseModel):
         le=23,
         description="Deterministic content cutoff: issue-day local hour; entries published later wait for the next issue",
     )
-    min_lead_minutes: int = Field(
-        default=30,
-        ge=1,
-        description="Refuse a production send with less than this lead time before the scheduled hour",
-    )
     daily_email_limit: int = Field(default=300, ge=1, description="Brevo free-plan daily email cap")
     daily_reserve: int = Field(
         default=60,

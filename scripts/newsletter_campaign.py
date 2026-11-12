@@ -18,8 +18,8 @@ Safety properties (enforced here and covered by tests):
   observed as ``sent``.
 - Content cutoff never exceeds the feed-fetch start time or the configured
   issue-day boundary; early preparation cannot consume future content.
-- No production send closer than min_lead_minutes to 07:00 Europe/Berlin;
-  the next issue simply recovers missed articles.
+- Production targets 07:00 Europe/Berlin; delayed runs schedule delivery
+  one minute after preparation starts.
 - Quota guard checks remaining free email credits and reserves additional
   headroom for double-opt-in and welcome mails; unknown balances fail closed.
 
@@ -804,22 +804,6 @@ def run_issue_builder(
             logger.critical(message)
             return EXIT_STALE, {"reason": "stale_campaigns", "message": message}
 
-        if target == "production":
-            lead = scheduled_at - now
-            if lead < timedelta(minutes=config.min_lead_minutes):
-                abuse_count, abuse_detected = check_abuse(client, config)
-                message = (
-                    f"Too late to schedule today's issue ({lead} left, minimum "
-                    f"{config.min_lead_minutes} min). No late send; articles stay in the window."
-                )
-                logger.warning(message)
-                return EXIT_OK, {
-                    "reason": "too_late",
-                    "message": message,
-                    "abuse_detected": abuse_detected,
-                    "abuse_count_24h": abuse_count,
-                }
-
         list_stats = client.get_list_stats(list_id)
         subscribers = int(list_stats.get("totalSubscribers") or 0)
         remaining_credits = client.remaining_email_credits()
@@ -894,7 +878,9 @@ def run_issue_builder(
         }
 
     assert client is not None
-    scheduled_at_payload = scheduled_at if target == "production" else None
+    scheduled_at_payload = (
+        max(scheduled_at, now + timedelta(minutes=1)) if target == "production" else None
+    )
     payload = build_campaign_payload(
         config, issue_name, issue, list_id, cutoff, scheduled_at_payload
     )

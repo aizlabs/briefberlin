@@ -10,14 +10,8 @@ name: Newsletter Daily Issue
 #      script refuses every production send without it).
 #   3. The active `schedule:` block below.
 #
-# Cron reasoning (UTC; GitHub cron can fire up to ~30 min late):
-#   03:30 UTC = 05:30 CEST (summer) / 04:30 CET (winter)
-#   04:15 UTC = 06:15 CEST (summer) / 05:15 CET (winter)
-# Both slots leave >= 45 min lead before 07:00 in BOTH seasons, so the second
-# run is a usable retry in summer and winter (unlike a fixed 04:30/05:30 pair,
-# whose summer retry at 07:30 is already past the send). The script itself
-# refuses production sends with < 30 min lead, so a delayed trigger can never
-# create a late send; missed articles roll into the next issue.
+# Prepare early for 07:00 Europe/Berlin. GitHub may delay scheduled triggers
+# by hours; delayed runs schedule delivery one minute after preparation starts.
 
 env:
   # Production gate. Test-mode dispatches to list 4 do not require this.
@@ -99,7 +93,7 @@ jobs:
             echo "abuse_detected=false" >> "$GITHUB_OUTPUT"
           fi
 
-          # 0 = ok/skip (empty issue, already scheduled, too late, dry run).
+          # 0 = ok/skip (empty issue, already scheduled, dry run).
           # 1 = error, 3 = quota guard, 4 = stale campaign state; these page
           # the owner through the normal job-failure notification.
           exit "$code"

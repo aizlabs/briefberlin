@@ -241,7 +241,6 @@ newsletter:
   sender_email: newsletter@briefberlin.de
   send_hour_berlin: 7
   content_cutoff_hour_berlin: 6   # deterministic cutoff: runs later than this never change the issue content window
-  min_lead_minutes: 30            # no production send closer than this to 07:00
   daily_email_limit: 300          # Brevo free plan
   daily_reserve: 60               # headroom for DOI + welcome mails
   first_run_lookback_days: 2
