@@ -145,6 +145,15 @@ llm:
     adaptation: gpt-6.1-terra # For level adaptation (Step 2) - can use cheaper model
     translation: gpt-6.1-terra # For reader-language translation (see `translations:`)
     quality_check: gpt-6.1-terra
+  # Models used instead of `models` when the provider is switched, e.g. with
+  # `--provider anthropic` or LLM_PROVIDER=anthropic (needs ANTHROPIC_API_KEY).
+  # Audio still uses OpenAI.
+  provider_models:
+    anthropic:
+      generation: claude-opus-5-5
+      adaptation: claude-opus-5-5
+      translation: claude-opus-5-5
+      quality_check: claude-opus-5-5
   # Temperatures apply only to models that accept them (see model_options).
   temperature: 0.3
   quality_temperature: 0.1
@@ -152,6 +161,7 @@ llm:
   # Per-model request options. A model not listed here gets the settings above.
   #   supports_temperature: false  -> no temperature is sent (model only accepts its default)
   #   reasoning_effort: low|medium|high -> for reasoning models; unset = model default
+  #   max_tokens: N -> output limit for this model (thinking counts toward it on Claude)
   model_options:
     gpt-5.5:
       supports_temperature: false
@@ -161,11 +171,37 @@ llm:
       supports_temperature: false
     gpt-6-luna:
       supports_temperature: false
+    claude-opus-5-5:
+      supports_temperature: false
+      reasoning_effort: medium
+      max_tokens: 16000
+    claude-sonnet-5-5:
+      supports_temperature: false
+      max_tokens: 16000
+    claude-haiku-5-5:
+      supports_temperature: false
+      max_tokens: 16000
   usage_reporting:
     enabled: true
     currency: USD
     pricing_as_of: 2026-11-07
     prices:
+      anthropic:
+        claude-opus-5-5:
+          modality: text
+          input_per_million: 4.00
+          cached_input_per_million: 0.20
+          output_per_million: 20.00
+        claude-sonnet-5-5:
+          modality: text
+          input_per_million: 2.00
+          cached_input_per_million: 0.10
+          output_per_million: 10.00
+        claude-haiku-5-5:
+          modality: text
+          input_per_million: 0.10
+          cached_input_per_million: 0.10
+          output_per_million: 0.50
       openai:
         gpt-5.5:
           aliases: ["gpt-5.5-2026-04-23"]

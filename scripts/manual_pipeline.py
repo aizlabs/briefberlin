@@ -134,6 +134,12 @@ def run_manual_pipeline(args: argparse.Namespace) -> int:
     dry_run = bool(args.dry_run)
     run_id = create_run_id(environment)
 
+    # Command-line choices go through the same variables as .env, so they follow
+    # one set of rules in load_config and win over .env for this run.
+    if getattr(args, "provider", None):
+        os.environ["LLM_PROVIDER"] = args.provider
+    if getattr(args, "model", None):
+        os.environ["LLM_MODEL"] = args.model
     config = load_config(environment)
     logger = setup_logger(config, run_id)
 
@@ -323,6 +329,23 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         "--no-translate",
         action="store_true",
         help="Skip reader-language translations even when translations.enabled is true.",
+    )
+    parser.add_argument(
+        "--provider",
+        choices=["openai", "anthropic"],
+        default=None,
+        help=(
+            "LLM provider for this run. Defaults to LLM_PROVIDER or llm.provider. "
+            "A provider listed in llm.provider_models brings its own models."
+        ),
+    )
+    parser.add_argument(
+        "--model",
+        default=None,
+        help=(
+            "One model for writing, grading and translation in this run, "
+            "for example claude-sonnet-5-5. Defaults to the configured models."
+        ),
     )
     return parser.parse_args(argv)
 

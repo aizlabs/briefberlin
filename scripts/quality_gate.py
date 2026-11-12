@@ -15,7 +15,7 @@ from pydantic import BaseModel, Field
 from scripts import prompts
 from scripts.config import AppConfig
 from scripts.generation_trace import GenerationTrace
-from scripts.llm_factory import create_chat_model
+from scripts.llm_factory import create_chat_model, with_structured_output
 from scripts.models import AdaptedArticle, QualityResult, SourceArticle, Topic
 
 
@@ -78,7 +78,7 @@ class QualityGate:
         parser = PydanticOutputParser(pydantic_object=JudgeResponse)
         self.format_instructions = parser.get_format_instructions()
 
-        structured_llm = self.llm_client.with_structured_output(JudgeResponse)
+        structured_llm = with_structured_output(self.llm_client, JudgeResponse)
 
         self.judge_prompt = ChatPromptTemplate.from_messages([
             ("user", "{prompt}\n\n{format_instructions}"),
