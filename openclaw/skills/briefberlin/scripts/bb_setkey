@@ -1,0 +1,25 @@
+#!/bin/bash
+# Save secrets into the bot's .env at a hidden prompt (nothing is echoed or logged).
+# Usage: bb_setkey NAME [NAME ...]   e.g.  bb_setkey ELEVENLABS_API_KEY
+set -u
+ENV_FILE=${BB_ENV_FILE:-/opt/openclaw/work/briefberlin/.env}
+ALLOWED='^(ELEVENLABS_API_KEY|AWS_ACCESS_KEY_ID|AWS_SECRET_ACCESS_KEY|OPENAI_API_KEY|ANTHROPIC_API_KEY)$'
+[ $# -gt 0 ] || { echo "usage: bb_setkey NAME [NAME ...]"; exit 2; }
+[ -f "$ENV_FILE" ] || { echo "ERROR: $ENV_FILE not found"; exit 2; }
+for name in "$@"; do
+  [[ "$name" =~ $ALLOWED ]] || { echo "ERROR: $name is not a key this script manages"; exit 2; }
+done
+umask 077
+for name in "$@"; do
+  read -rsp "Paste $name (hidden), then Enter: " value; echo
+  value=${value//$'\r'/}
+  value="${value#"${value%%[![:space:]]*}"}"; value="${value%"${value##*[![:space:]]}"}"
+  if [ -z "$value" ]; then echo "  skipped $name (empty)"; continue; fi
+  if [[ "$value" =~ [[:space:]\"\'\\] ]]; then echo "  ERROR: $name contains spaces or quotes; not saved"; continue; fi
+  tmp=$(mktemp "$ENV_FILE.XXXXXX")
+  grep -v -E "^${name}=" "$ENV_FILE" > "$tmp"
+  printf '%s=%s\n' "$name" "$value" >> "$tmp"
+  chmod 600 "$tmp" && mv -f "$tmp" "$ENV_FILE"
+  echo "  saved $name (${#value} characters)"
+  unset value
+done

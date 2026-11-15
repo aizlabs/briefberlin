@@ -1,0 +1,213 @@
+#!/bin/bash
+# BriefBerlin workflow for OpenClaw: generate -> preview -> publish or discard.
+# Nothing reaches GitHub unless "publish" is run. Generation makes no audio; publish
+# narrates the approved posts (ElevenLabs) and uploads the MP3s before committing.
+set -u
+REPO=${BB_REPO:-/opt/openclaw/work/briefberlin}
+STATE=${BB_STATE:-/opt/openclaw/work/.bb-pending}
+UV=${BB_UV:-/opt/openclaw/.local/bin/uv}
+PATHS=(output/_posts output/_translations)
+export GIT_TERMINAL_PROMPT=0 AUDIO_ENABLED=false AUDIO_UPLOAD_ENABLED=false
+export XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR:-/run/user/$(id -u)}
+export DBUS_SESSION_BUS_ADDRESS=${DBUS_SESSION_BUS_ADDRESS:-unix:path=$XDG_RUNTIME_DIR/bus}
+TARGET=/opt/openclaw/work/.bb-telegram-target
+HERE=$(cd "$(dirname "$(readlink -f "$0")")" && pwd)
+cd "$REPO" || { echo "ERROR: repo not found"; exit 2; }
+
+WORK=/opt/openclaw/work
+INBOX=${BB_INBOX:-$WORK/inbox}
+LOGS=${BB_LOGS:-$WORK/logs}
+# Sends a message straight to the user's Telegram chat through bb_tg.py (Telegram Bot API).
+# Not `openclaw message send`: that writes into the agent's session (losing command results)
+# and turns button values into plugin-only callbacks that never reach the agent.
+# BB_NOTIFY=0 turns it off (tests), BB_NOTIFY=print prints it instead.
+# Optional 2nd argument: buttons as space-separated Label=value pairs.
+notify() {
+  [ "${BB_NOTIFY:-1}" = print ] && { echo "[telegram] $1"; [ -n "${2:-}" ] && echo "[buttons] $2"; return 0; }
+  [ "${BB_NOTIFY:-1}" = 1 ] && [ -f "$TARGET" ] || return 0
+  local args=() b err
+  for b in ${2:-}; do args+=(--button "$b"); done
+  err=$(python3 "$HERE/bb_tg.py" "${args[@]}" "$1" 2>&1 >/dev/null) || { echo "WARNING: Telegram notification failed: $err"; return 1; }
+}
+RETRY_BUTTONS="Retry=bb-generate Cancel=bb-cancel"
+# Public URL of each post, using the site's /articles/<slug>/ convention.
+post_urls() {
+  local url base f slug
+  url=$(grep -E '^url:' output/_config.yml | sed -E 's/^url:[[:space:]]*//; s/["'"'"']//g; s:/*$::')
+  base=$(grep -E '^baseurl:' output/_config.yml | sed -E 's/^baseurl:[[:space:]]*//; s/["'"'"']//g; s:^/*::; s:/*$::')
+  for f in "$@"; do
+    slug=$(basename "$f" .md | sed -E 's/^[0-9]{4}-[0-9]{2}-[0-9]{2}-//')
+    echo "$url${base:+/$base}/articles/$slug/"
+  done
+}
+
+changed() { git status --porcelain --untracked-files=all -- "${PATHS[@]}" | cut -c4-; }
+posts() { changed | grep -E '^output/_posts/.*\.md$'; }
+clean_output() {
+  git reset -q -- "${PATHS[@]}"
+  git checkout -q -- "${PATHS[@]}"
+  git clean -fdq -- "${PATHS[@]}"
+}
+forget_source() {
+  [ -f "$STATE" ] && rm -f -- "$(cat "$STATE")"
+  rm -f -- "$STATE"
+}
+need_pending() { [ -f "$STATE" ] || { echo "ERROR: nothing is waiting. Generate an article first."; exit 3; }; }
+# Each waiting article has an id (its source timestamp). Buttons carry it, so an old button
+# can never publish or discard a newer article.
+pending_id() { basename "$(cat "$STATE")" .source.txt; }
+check_id() {
+  [ -z "${1:-}" ] || [ "$1" = "$(pending_id)" ] && return 0
+  notify "That button belongs to an older article, so I ignored it. Nothing was changed."
+  echo "ERROR: button is for article $1, but $(pending_id) is waiting. Nothing changed."; exit 6
+}
+
+case "${1:-status}" in
+received)
+  # Confirms a collected paste and offers a Generate button. Usage: bb received <file>
+  src=${2:-}
+  [ -f "$src" ] || { echo "ERROR: source file not found"; exit 2; }
+  [ -f "$STATE" ] && { echo "ERROR: an article is already waiting. Run publish or discard first."; exit 3; }
+  words=$(wc -w < "$src")
+  if [ "${BB_NOTIFY:-1}" = 1 ] && [ -f "$TARGET" ]; then
+    notify "Article received (~$words words). Generate the A2 and B1 versions? If Telegram split your paste, send the remaining parts before tapping. (Or type: generate / cancel)" \
+      "Generate=bb-generate Cancel=bb-cancel" \
+      && echo "BUTTONS SENT ($words words)" || echo "WARNING: could not send buttons; ask the user to reply generate"
+  else
+    echo "RECEIVED: $words words"
+  fi
+  ;;
+generate)
+  src=${2:-}
+  [ -f "$src" ] || { echo "ERROR: source file not found"; exit 2; }
+  [ -f "$STATE" ] && { echo "ERROR: an article is already waiting. Run publish or discard first."; exit 3; }
+  [ -z "$(git status --porcelain)" ] || { echo "ERROR: repo has uncommitted changes. Stopping."; exit 3; }
+  grep -qE '^OPENAI_API_KEY=.+' .env 2>/dev/null || { echo "ERROR: no OPENAI_API_KEY in .env"; exit 4; }
+  if [ "${BB_PROVIDER:-anthropic}" = anthropic ]; then
+    grep -qE '^ANTHROPIC_API_KEY=.+' .env 2>/dev/null || { echo "ERROR: no ANTHROPIC_API_KEY in .env"; exit 4; }
+  fi
+  git pull -q --ff-only origin main || { echo "ERROR: could not update from GitHub"; exit 5; }
+  mkdir -p private-input
+  dest="$REPO/private-input/$(date +%Y%m%d-%H%M%S).source.txt"
+  mv -- "$src" "$dest"
+  echo "$dest" > "$STATE"
+  # The full pipeline output goes to a log file (OpenClaw only shows the agent the last line).
+  mkdir -p "$LOGS"; chmod 700 "$LOGS"
+  log="$LOGS/generate-$(basename "$dest" .source.txt).log"
+  # Model set: anthropic = Opus writes, adapts and grades; Terra translates.
+  # BB_PROVIDER=openai switches back to Terra for everything.
+  "$UV" run briefberlin-manual --environment production --provider "${BB_PROVIDER:-anthropic}" \
+    --level A2 --level B1 "$dest" > "$log" 2>&1
+  rc=$?
+  n=$(posts | wc -l)
+  if [ "$rc" -ne 0 ] || [ "$n" -ne 2 ]; then
+    clean_output; rm -f -- "$STATE"
+    # Keep the source so the user can retry with one tap.
+    mkdir -p "$INBOX"
+    if [ -e "$INBOX/article.txt" ]; then kept="$dest"; else mv -- "$dest" "$INBOX/article.txt"; kept="$INBOX/article.txt"; fi
+    report=$(python3 "$HERE/bb_report.py" "$log" "$rc" "$n" 2>&1)
+    [ "$kept" = "$dest" ] && report="$report
+(A newer paste is waiting in the inbox, so this source was kept at $dest instead.)"
+    notify "${report:0:3800}
+(Or type: retry / cancel)" "$RETRY_BUTTONS"
+    [ "${#report}" -gt 3800 ] && notify "(report cut at 3800 characters; full log: $log)"
+    echo "$report"
+    echo "FAILED: the full report and Retry/Cancel buttons were sent to Telegram. Log: $log"
+    exit 1
+  fi
+  grep -E 'Quality gate passed|^Generated|TOTAL' "$log" | sed -E 's/.*"message": "([^"]*)".*/\1/'
+  echo "READY: run preview, then wait for the user to say publish or discard. Log: $log"
+  ;;
+preview)
+  need_pending
+  # Sends the article text straight to the user's Telegram chat; prints only a status line.
+  "$UV" run python "$HERE/bb_preview.py" $(posts) || exit $?
+  echo "Translation files waiting: $(changed | grep -c '^output/_translations/')"
+  id=$(pending_id)
+  if [ "${BB_NOTIFY:-1}" = 1 ] && [ -f "$TARGET" ]; then
+    notify "Publish these two articles to briefberlin.de? (Or type: publish / discard)" \
+      "Publish=bb-publish:$id Discard=bb-discard:$id" \
+      && echo "BUTTONS SENT" || echo "WARNING: could not send buttons; ask the user to reply publish or discard"
+  fi
+  ;;
+publish)
+  need_pending
+  check_id "${2:-}"
+  n=$(posts | wc -l)
+  if [ "$n" -ne 2 ]; then
+    notify "Publish FAILED: expected 2 new articles but found $n. Nothing was published."
+    echo "ERROR: expected 2 new posts, found $n"; exit 3
+  fi
+  # Audio only for approved posts: narrate each one and upload it, then commit.
+  # A failure publishes without audio and says so. BB_AUDIO=0 turns this off.
+  audio_note=""
+  if [ "${BB_AUDIO:-1}" = 1 ]; then
+    notify "Publishing: adding audio first (about half a minute)…"
+    mkdir -p "$LOGS"; alog="$LOGS/audio-$(pending_id).log"; afail=0
+    for p in $(posts | sort); do
+      # A retried publish keeps audio that was already made.
+      grep -qE '^audio:[[:space:]]*$' "$p" && continue
+      "$UV" run briefberlin-audio-post "$p" --environment production --upload \
+        --public-base-url https://media.briefberlin.de --s3-bucket briefberlin-audio-prod \
+        --s3-region eu-central-1 --s3-prefix articles >> "$alog" 2>&1 || afail=$((afail + 1))
+    done
+    if [ "$afail" -gt 0 ]; then
+      audio_note="
+Audio failed for $afail of 2 articles, so they are live without it. Log: $alog"
+    else
+      audio_note="
+Audio added to both articles."
+    fi
+  fi
+  mapfile -t URLS < <(post_urls $(posts | sort))
+  git add -- "${PATHS[@]}"
+  if git diff --cached --name-only | grep -qvE '^output/(_posts|_translations)/'; then
+    git reset -q
+    notify "Publish FAILED: unexpected files were about to be committed, so I stopped. Nothing was published."
+    echo "ERROR: unexpected files staged. Nothing published."; exit 3
+  fi
+  if ! git commit -q -m "Generate articles - $(date -u '+%Y-%m-%d %H:%M UTC')"; then
+    git reset -q
+    notify "Publish FAILED: git commit failed. Nothing was published; the article is still waiting."
+    echo "ERROR: commit failed"; exit 5
+  fi
+  ERRF=$(mktemp)
+  # Someone (or a code change) may have pushed since generate; replay our commit on top.
+  if ! git pull -q --rebase origin main 2>"$ERRF"; then
+    git rebase --abort 2>/dev/null
+  fi
+  if ! git push -q origin main 2>>"$ERRF"; then
+    err=$(grep -v '^$' "$ERRF" | head -1 | cut -c1-200); rm -f "$ERRF"
+    git reset -q --soft HEAD~1; git reset -q
+    notify "Publish FAILED: GitHub rejected the push. Nothing went live and the article is still waiting.
+Error: ${err:-unknown}"
+    echo "FAILED: push to GitHub failed. Nothing was published and the article is still waiting."
+    exit 5
+  fi
+  rm -f "$ERRF"
+  sha=$(git rev-parse HEAD)
+  forget_source
+  notify "Published (commit ${sha:0:7}). GitHub Pages is deploying now; I'll message again when it's live.
+A2: ${URLS[0]}
+B1: ${URLS[1]}$audio_note"
+  if [ "${BB_WATCH:-1}" = 1 ]; then
+    systemd-run --user --quiet --collect --unit="bb-watch-${sha:0:12}" \
+      "$HERE/bb_watch.sh" "$sha" "${URLS[@]}" >/dev/null 2>&1 \
+      || notify "Note: I couldn't start the deploy watcher, so there won't be a 'live' message. Check the links in a few minutes."
+  fi
+  echo "PUBLISHED: ${sha:0:7}.${audio_note:+ $(echo "$audio_note" | tr -d "\n")} Result and links were sent to Telegram; a second message follows when the deploy finishes."
+  ;;
+discard)
+  need_pending
+  check_id "${2:-}"
+  clean_output; forget_source
+  notify "Discarded: both articles and the saved source were deleted. Nothing was published."
+  echo "DISCARDED: article and source deleted."
+  ;;
+status)
+  if [ -f "$STATE" ]; then echo "WAITING: $(posts | wc -l) posts for review"; else echo "IDLE"; fi
+  ;;
+*)
+  echo "usage: bb generate <file> | preview | publish [id] | discard [id] | status"; exit 2
+  ;;
+esac
