@@ -23,8 +23,6 @@ translations:
   es: /articles/115434-ein-croissant-fuer-6-80-euro-in-berlin-a2/es/
 ---
 
-# Ein Croissant für 6,80 Euro in Berlin
-
 Das Café „Tobi“ in Berlin-Wilmersdorf <button type="button" class="article-term" data-term-id="term-1">verkauft</button> <button type="button" class="article-term" data-term-id="term-2">besondere</button> Croissants. Ein Croissant mit <button type="button" class="article-term" data-term-id="term-3">Lachs</button>, <button type="button" class="article-term" data-term-id="term-4">Schinken</button> oder <button type="button" class="article-term article-term--default" data-term-id="term-5">Ziegenkäse</button> kostet 6,80 Euro. Manche <button type="button" class="article-term" data-term-id="term-6">Gäste</button> finden diesen <button type="button" class="article-term" data-term-id="term-7">Preis</button> sehr hoch.
 
 Oleg Cherednychenko und seine Frau Hanna Nenno haben das Café seit einem Jahr. Sie sind 2022 aus der Ukraine nach Deutschland gekommen. Oleg <button type="button" class="article-term" data-term-id="term-8">backt</button> in der <button type="button" class="article-term" data-term-id="term-9">Küche</button>, und Hanna macht Kaffee für die <button type="button" class="article-term" data-term-id="term-6">Gäste</button>. Oleg sagt: Die Qualität ist gut, und wir machen <button type="button" class="article-term" data-term-id="term-10">fast</button> alles <button type="button" class="article-term" data-term-id="term-11">selbst</button>.

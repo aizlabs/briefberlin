@@ -695,6 +695,7 @@ Adapt the below NATIVE-LEVEL article to A2 CEFR level following ALL steps (1-5) 
     - Maintain factual accuracy absolutely
     - Target word count: ~200 words
     - Do not include vocabulary lists or markdown emphasis
+    - Do not repeat the title or add any heading in content; content starts with the first paragraph
 
 OUTPUT FORMAT (return ONLY valid JSON, no markdown):
 {{
@@ -767,6 +768,7 @@ Key goals:
 - Keep authentic tone while keeping sentences clear and within length limits
 - Target word count: ~300 words (acceptable range 270-330)
 - Do not include vocabulary lists or markdown emphasis
+- Do not repeat the title or add any heading in content; content starts with the first paragraph
 
 OUTPUT FORMAT (return ONLY valid JSON, no markdown):
 {{

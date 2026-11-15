@@ -47,8 +47,6 @@ translations:
   es: /articles/214659-auslaendische-aerzte-warten-in-deutschland-lange-a-a2/es/
 ---
 
-# <button type="button" class="article-term" data-term-id="term-1">Ausländische</button> Ärzte <button type="button" class="article-term" data-term-id="term-2">warten</button> in Deutschland lange auf Arbeit
-
 Deutschland <button type="button" class="article-term" data-term-id="term-3">braucht</button> mehr Ärzte aus dem <button type="button" class="article-term" data-term-id="term-4">Ausland</button>. Aber Ärzte von <button type="button" class="article-term" data-term-id="term-5">außerhalb</button> der EU <button type="button" class="article-term" data-term-id="term-2">warten</button> oft Jahre. Zuerst <button type="button" class="article-term" data-term-id="term-6">prüfen</button> die <button type="button" class="article-term article-term--default" data-term-id="term-7">Ämter</button> ihren <button type="button" class="article-term article-term--default" data-term-id="term-8">Abschluss</button>.
 
 Viele Ärzte in Deutschland sind schon alt. Ende 2025 war <button type="button" class="article-term" data-term-id="term-9">jeder vierte</button> Arzt 60 Jahre oder älter. Schon heute <button type="button" class="article-term" data-term-id="term-2">warten</button> Patienten lange auf <button type="button" class="article-term" data-term-id="term-10">Termine</button>. Viele <button type="button" class="article-term" data-term-id="term-11">Praxen</button> haben zu viel Arbeit.

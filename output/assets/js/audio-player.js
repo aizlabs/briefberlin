@@ -142,11 +142,12 @@
         targets.set(block.id, summary);
       }
       if (block.kind === "body") {
-        while (paragraphIndex < paragraphs.length) {
-          const candidate = paragraphs[paragraphIndex];
-          paragraphIndex += 1;
-          if (candidate.textContent === block.text) {
-            targets.set(block.id, candidate);
+        // Search forward for this block's paragraph. If none matches (e.g. a heading that
+        // is not a <p>), leave the position alone so later blocks can still be matched.
+        for (let index = paragraphIndex; index < paragraphs.length; index += 1) {
+          if (paragraphs[index].textContent === block.text) {
+            targets.set(block.id, paragraphs[index]);
+            paragraphIndex = index + 1;
             break;
           }
         }

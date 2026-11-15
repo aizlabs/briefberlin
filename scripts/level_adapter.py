@@ -8,6 +8,7 @@ Uses different strategies per level:
 """
 
 import logging
+import re
 from typing import List, Optional, cast
 
 from pydantic import BaseModel, Field
@@ -15,6 +16,14 @@ from pydantic import BaseModel, Field
 from scripts.config import AppConfig
 from scripts.llm_factory import build_structured_prompt_chain
 from scripts.models import AdaptedArticle, BaseArticle
+
+# A Markdown heading as the first line of the body (models sometimes repeat the title).
+_LEADING_HEADING = re.compile(r"\A\s*#{1,6}[ \t][^\n]*(?:\n+|\Z)")
+
+
+def strip_leading_heading(content: str) -> str:
+    """Remove a heading at the start of the article body; the page renders the title."""
+    return _LEADING_HEADING.sub("", content, count=1).lstrip("\n")
 
 
 class LevelAdapter:
@@ -150,7 +159,7 @@ class LevelAdapter:
         """Convert structured adaptation response into AdaptedArticle with metadata."""
         try:
             parsed = response.model_dump()
-            parsed["content"] = parsed.get("content", "").replace("**", "")
+            parsed["content"] = strip_leading_heading(parsed.get("content", "").replace("**", ""))
             parsed["vocabulary"] = []
 
             parsed['level'] = level
