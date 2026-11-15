@@ -716,7 +716,7 @@ class ElevenLabsTTSConfig(BaseModel):
 
     api_key: Optional[str] = Field(default=None, exclude=True)
     model: str = "eleven_multilingual_v2"
-    voice: str = "OYTbf65OHHFELVut7v2H"
+    voice: str = "BWfLElHIfDtE09FrC6tz"
     output_format: str = "mp3_44100_128"
     speed_by_level: Dict[str, float] = Field(default_factory=dict)
 

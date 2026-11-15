@@ -44,7 +44,7 @@ def test_elevenlabs_writes_audio_and_returns_word_cues(base_config, tmp_path: Pa
     assert result.usage.input_characters == len(text)
     request = client.post.call_args
     assert request.args[0].endswith(
-        "/text-to-speech/OYTbf65OHHFELVut7v2H/with-timestamps"
+        "/text-to-speech/BWfLElHIfDtE09FrC6tz/with-timestamps"
     )
     assert request.kwargs["json"] == {
         "text": text,

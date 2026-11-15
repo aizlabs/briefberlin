@@ -13,7 +13,7 @@ from scripts.manual_pipeline import parse_author_slug, run_manual_pipeline
 STANDARD_AUDIO_ENV = {
     "AUDIO_PROVIDER": "elevenlabs",
     "ELEVENLABS_TTS_MODEL": "eleven_multilingual_v2",
-    "ELEVENLABS_VOICE_ID": "OYTbf65OHHFELVut7v2H",
+    "ELEVENLABS_VOICE_ID": "BWfLElHIfDtE09FrC6tz",
     "AUDIO_FORMAT": "mp3",
     "AUDIO_PUBLIC_BASE_URL": "https://media.briefberlin.de",
     "AUDIO_S3_BUCKET": "briefberlin-audio-prod",
