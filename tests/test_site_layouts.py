@@ -142,3 +142,20 @@ def test_audio_resume_does_not_build_a_selector_from_the_stored_rate():
     assert 'getAttribute("data-speed")' in script
     # Restoring position/rate must never be able to prevent playback resuming.
     assert "resumePlayback()" in script
+
+
+def test_audio_play_button_labels_follow_the_page_language():
+    import yaml
+
+    ui = yaml.safe_load(Path("output/_data/ui-briefberlin.yml").read_text(encoding="utf-8"))
+    for lang, texts in ui.items():
+        if isinstance(texts, dict) and "audio_play" in texts:
+            assert texts.get("audio_pause"), f"{lang} has no audio_pause label"
+
+    include = Path("output/_includes/article-audio.html").read_text(encoding="utf-8")
+    assert 'data-label-play="{{ include.t.audio_play' in include
+    assert 'data-label-pause="{{ include.t.audio_pause' in include
+
+    script = Path("output/assets/js/audio-player.js").read_text(encoding="utf-8")
+    assert "dataset.labelPause" in script and "dataset.labelPlay" in script
+    assert "Reproducir" not in script and "Pausar" not in script

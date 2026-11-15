@@ -38,7 +38,11 @@
 
   function setPlayButton(playButton, isPlaying) {
     const icon = playButton.querySelector("i");
-    playButton.setAttribute("aria-label", isPlaying ? "Pausar" : "Reproducir");
+    // Labels come from the page (its language); keep the rendered label if one is missing.
+    const label = isPlaying ? playButton.dataset.labelPause : playButton.dataset.labelPlay;
+    if (label) {
+      playButton.setAttribute("aria-label", label);
+    }
 
     if (!icon) {
       return;

@@ -26,7 +26,7 @@
                 <i class="fas fa-rotate-left" aria-hidden="true"></i>
                 <span>10</span>
               </button>
-              <button class="article-audio__button article-audio__play" type="button" aria-label="{{ include.t.audio_play }}">
+              <button class="article-audio__button article-audio__play" type="button" aria-label="{{ include.t.audio_play }}" data-label-play="{{ include.t.audio_play | escape }}" data-label-pause="{{ include.t.audio_pause | escape }}">
                 <i class="fas fa-play" aria-hidden="true"></i>
               </button>
               <button class="article-audio__button article-audio__skip-forward" type="button" aria-label="{{ include.t.audio_forward10 }}">
