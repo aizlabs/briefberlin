@@ -10,6 +10,11 @@
 # Liquid cannot localize month NAMES, so date_format is numeric outside `en`.
 
 de:
+  newsletter_signup: "Newsletter bestellen"
+  reading_size_label: "Schriftgröße"
+  reading_size_decrease: "Schrift verkleinern"
+  reading_size_increase: "Schrift vergrößern"
+  reading_size_reset: "Zurücksetzen"
   by_label: "Von"
   reading_time_label: "%d Min. Lesezeit"
   # Level words, never CEFR codes: a learner recognizes "Anfänger" long before
@@ -48,6 +53,11 @@ de:
   date_label: "Aktualisiert:"
 
 en:
+  newsletter_signup: "Subscribe to the newsletter"
+  reading_size_label: "Text size"
+  reading_size_decrease: "Decrease text size"
+  reading_size_increase: "Increase text size"
+  reading_size_reset: "Reset"
   news_navigation:
     "/levels/": "Levels"
     "/about/": "About"
@@ -106,6 +116,11 @@ en:
   date_label: "Updated:"
 
 es:
+  newsletter_signup: "Suscribirse al boletín"
+  reading_size_label: "Tamaño del texto"
+  reading_size_decrease: "Reducir el tamaño del texto"
+  reading_size_increase: "Aumentar el tamaño del texto"
+  reading_size_reset: "Restablecer"
   news_navigation:
     "/levels/": "Niveles"
     "/about/": "Quiénes somos"
@@ -162,6 +177,11 @@ es:
   date_label: "Actualizado:"
 
 pl:
+  newsletter_signup: "Zapisz się do newslettera"
+  reading_size_label: "Rozmiar tekstu"
+  reading_size_decrease: "Zmniejsz tekst"
+  reading_size_increase: "Powiększ tekst"
+  reading_size_reset: "Resetuj"
   news_navigation:
     "/levels/": "Poziomy"
     "/about/": "O nas"
@@ -218,6 +238,11 @@ pl:
   date_label: "Ostatnia aktualizacja:"
 
 tr:
+  newsletter_signup: "Bültene abone ol"
+  reading_size_label: "Yazı boyutu"
+  reading_size_decrease: "Yazıyı küçült"
+  reading_size_increase: "Yazıyı büyüt"
+  reading_size_reset: "Sıfırla"
   news_navigation:
     "/levels/": "Seviyeler"
     "/about/": "Hakkımızda"
@@ -274,6 +299,11 @@ tr:
   date_label: "Güncelleme tarihi:"
 
 uk:
+  newsletter_signup: "Підписатися на розсилку"
+  reading_size_label: "Розмір тексту"
+  reading_size_decrease: "Зменшити текст"
+  reading_size_increase: "Збільшити текст"
+  reading_size_reset: "Скинути"
   news_navigation:
     "/levels/": "Рівні"
     "/about/": "Про нас"
@@ -330,6 +360,11 @@ uk:
   date_label: "Дата зміни:"
 
 ru:
+  newsletter_signup: "Подписаться на рассылку"
+  reading_size_label: "Размер текста"
+  reading_size_decrease: "Уменьшить текст"
+  reading_size_increase: "Увеличить текст"
+  reading_size_reset: "Сбросить"
   news_navigation:
     "/levels/": "Уровни"
     "/about/": "О нас"
@@ -386,6 +421,11 @@ ru:
   date_label: "Дата изменения:"
 
 ar:
+  newsletter_signup: "اشترك في النشرة البريدية"
+  reading_size_label: "حجم النص"
+  reading_size_decrease: "تصغير النص"
+  reading_size_increase: "تكبير النص"
+  reading_size_reset: "إعادة ضبط"
   news_navigation:
     "/levels/": "المستويات"
     "/about/": "من نحن"
