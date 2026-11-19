@@ -78,11 +78,26 @@
     return nodes;
   }
 
+  // Jekyll's Markdown renderer turns straight quotes into curly ones (Ku'damm -> Ku’damm),
+  // while the narration text keeps them straight. Compare with quotes folded; the mapping is
+  // one character to one character, so cue offsets still line up with the page text.
+  function foldQuotes(text) {
+    return text
+      .replace(/[\u2018\u2019\u201A\u201B\u2032]/g, "'")
+      .replace(/[\u201C\u201D\u201E\u201F\u2033]/g, '"');
+  }
+
+  function sameText(pageText, blockText) {
+    const page = foldQuotes(pageText);
+    const block = foldQuotes(blockText);
+    return page === block || page.trimEnd() === block;
+  }
+
   function textMatchesBlock(target, block) {
     if (!target) {
       return false;
     }
-    return target.textContent === block.text || target.textContent.trimEnd() === block.text;
+    return sameText(target.textContent, block.text);
   }
 
   function wrapCues(target, block, cues) {
@@ -149,7 +164,7 @@
         // Search forward for this block's paragraph. If none matches (e.g. a heading that
         // is not a <p>), leave the position alone so later blocks can still be matched.
         for (let index = paragraphIndex; index < paragraphs.length; index += 1) {
-          if (paragraphs[index].textContent === block.text) {
+          if (sameText(paragraphs[index].textContent, block.text)) {
             targets.set(block.id, paragraphs[index]);
             paragraphIndex = index + 1;
             break;

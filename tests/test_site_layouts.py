@@ -159,3 +159,11 @@ def test_audio_play_button_labels_follow_the_page_language():
     script = Path("output/assets/js/audio-player.js").read_text(encoding="utf-8")
     assert "dataset.labelPause" in script and "dataset.labelPlay" in script
     assert "Reproducir" not in script and "Pausar" not in script
+
+
+def test_audio_highlighting_ignores_typographic_quotes():
+    # kramdown renders Ku'damm as Ku’damm; the narration keeps the straight apostrophe.
+    script = Path("output/assets/js/audio-player.js").read_text(encoding="utf-8")
+    assert "function foldQuotes" in script
+    assert "sameText(paragraphs[index].textContent, block.text)" in script
+    assert "return sameText(target.textContent, block.text);" in script
