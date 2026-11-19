@@ -154,3 +154,24 @@ test('export rechecks current storage and restores focus when it becomes unreada
     assert.equal(await page.locator('[data-words-articles]').evaluate(el => el === document.activeElement), true);
   } finally { await context.close(); }
 });
+test('outdated links stay listed without a link; unreadable records are reported', async () => {
+  const { context, page } = await setup();
+  try {
+    await seed(page);
+    await page.evaluate(() => {
+      const data = JSON.parse(localStorage.getItem('briefberlin.myWords.v1'));
+      // Simulate a base-path change: every saved link now points elsewhere.
+      data.entries.forEach(e => { e.articleUrl = location.origin + '/old-base/articles/test/'; });
+      data.entries.push({ term: 'kaputt' });
+      localStorage.setItem('briefberlin.myWords.v1', JSON.stringify(data));
+    });
+    await page.reload();
+    assert.equal(await page.locator('[data-words-count]').innerText(), '3 gespeicherte Wörter');
+    assert.equal(await page.locator('.my-words-entry__source a').count(), 0);
+    assert.equal(await page.locator('.my-words-entry__source').first().innerText(), 'Artikel: Testartikel');
+    assert.equal(await page.locator('[data-words-toolbar]').isVisible(), true);
+    assert.match(await page.locator('[data-words-hidden]').innerText(), /^1 gespeicherter Eintrag kann nicht angezeigt werden/);
+    await page.getByRole('button', { name: 'Zug entfernen', exact: true }).click();
+    assert.equal(await page.evaluate(() => JSON.parse(localStorage.getItem('briefberlin.myWords.v1')).entries.some(e => e.term === 'kaputt')), true);
+  } finally { await context.close(); }
+});

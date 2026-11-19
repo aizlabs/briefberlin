@@ -12,6 +12,7 @@
     const status = root.querySelector("[data-words-status]");
     const undo = root.querySelector("[data-words-undo]");
     const retry = root.querySelector("[data-words-retry]");
+    const hiddenNotice = root.querySelector("[data-words-hidden]");
     const collator = new Intl.Collator("de");
     let entries = [], readable = false, lastRemovedKey = null;
     function ordered() {
@@ -45,7 +46,12 @@
         if (entry.translation) row.append(textElement("p", entry.translation, "my-words-entry__translation"));
         if (entry.explanation) row.append(textElement("p", entry.explanation));
         const source = textElement("p", "Artikel: ", "my-words-entry__source");
-        const link = textElement("a", entry.articleTitle); link.href = entry.articleUrl; source.append(link); row.append(source);
+        // A word whose saved link no longer fits this site stays listed, with
+        // its article title as plain text instead of a link.
+        if (store.linkable(entry)) {
+          const link = textElement("a", entry.articleTitle); link.href = entry.articleUrl; source.append(link);
+        } else source.append(textElement("span", entry.articleTitle));
+        row.append(source);
         list.append(row);
         remove.addEventListener("click", function () {
           const index = ordered().findIndex(function (item) { return item.key === entry.key; });
@@ -66,7 +72,7 @@
       if (focusedKey) {
         const rows = Array.from(list.children);
         const targetRow = rows.find(function (node) { return node.dataset.wordKey === focusedKey; }) || rows[Math.min(focusedIndex, rows.length - 1)];
-        const target = targetRow ? targetRow.querySelector(focusedControl) : root.querySelector("[data-words-articles]");
+        const target = targetRow ? targetRow.querySelector(focusedControl) || targetRow.querySelector("button") : root.querySelector("[data-words-articles]");
         target.focus();
       }
     }
@@ -82,6 +88,11 @@
         message("Deine gespeicherten Wörter konnten nicht geladen werden. Deine Daten wurden nicht verändert.");
         return;
       }
+      const hidden = state.hidden || 0;
+      hiddenNotice.hidden = !hidden;
+      hiddenNotice.textContent = hidden === 1
+        ? "1 gespeicherter Eintrag kann nicht angezeigt werden. Er bleibt in diesem Browser gespeichert."
+        : hidden + " gespeicherte Einträge können nicht angezeigt werden. Sie bleiben in diesem Browser gespeichert.";
       entries = state.entries; render(); message(store.canUndo() ? "Wort entfernt. " : "");
     }
     function mutationFailed() {
@@ -109,7 +120,11 @@
         refresh(state);
         if (!state.ok || !entries.length) return;
         try {
-          window.BriefBerlin.wordExport.download(ordered(), button.dataset.wordsDownload);
+          // Outdated links are exported without a URL rather than as a broken link.
+          const exported = ordered().map(function (entry) {
+            return store.linkable(entry) ? entry : Object.assign({}, entry, { articleUrl: "" });
+          });
+          window.BriefBerlin.wordExport.download(exported, button.dataset.wordsDownload);
           const details = root.querySelector("[data-words-export]");
           details.open = false; details.querySelector("summary").focus();
         } catch (_) { message("Die Datei konnte nicht erstellt werden. Bitte versuche es erneut."); }

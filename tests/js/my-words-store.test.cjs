@@ -61,14 +61,34 @@ test('invalid entries and duplicate keys are skipped but kept verbatim on write'
   assert.deepEqual(f.store.read().entries, [saved]);
   assert.equal(f.store.add(entry('neu')).ok, true);
   const written = JSON.parse(f.raw()).entries;
-  assert.deepEqual(written.map(e => e.term), ['die Genehmigung', 'neu', 'kaputt', 'die Genehmigung']);
-  assert.deepEqual(written[2], invalid);
+  assert.deepEqual(written.map(e => e.term), ['die Genehmigung', 'neu', 'die Genehmigung', 'kaputt']);
+  assert.deepEqual(written[3], invalid);
+  assert.equal(f.store.read().hidden, 1);
 });
-test('removing a word also drops its preserved duplicates so it does not reappear', () => {
+test('a word whose saved link no longer matches the site stays readable', () => {
+  const old = fixture(); old.store.add(entry()); old.store.add(entry('beantragen'));
+  // Same data, read after the configured base path changed.
+  const f = fixture({ basePath: '/preview' }); f.setRaw(old.raw());
+  const state = f.store.read();
+  assert.deepEqual(state.entries.map(e => e.term), ['die Genehmigung', 'beantragen']);
+  assert.equal(state.hidden, 0);
+  assert.equal(f.store.linkable(state.entries[0]), false);
+  assert.equal(old.store.linkable(state.entries[0]), true);
+  // Existing records are not rewritten, but new saves still need a current link.
+  assert.equal(f.store.add(entry('neu')).ok, false);
+  assert.equal(f.store.add(entry('neu', { articleUrl: 'https://briefberlin.de/preview/articles/x/' })).ok, true);
+  assert.equal(JSON.parse(f.raw()).entries[0].articleUrl, 'https://briefberlin.de/articles/neue-regeln/');
+});
+test('removing a word drops its duplicates, undo restores them, malformed records stay', () => {
   const f = fixture(); f.store.add(entry()); const saved = f.store.read().entries[0];
-  f.setRaw(JSON.stringify({ schemaVersion: 1, entries: [saved, saved] }));
+  const duplicate = { ...saved, explanation: 'Eine andere Fassung.' };
+  const malformed = { ...saved, savedAt: 'kaputt' };
+  f.setRaw(JSON.stringify({ schemaVersion: 1, entries: [saved, duplicate, malformed] }));
   assert.equal(f.store.remove(saved.key).ok, true);
   assert.deepEqual(f.store.read().entries, []);
+  assert.deepEqual(JSON.parse(f.raw()).entries, [malformed]);
+  assert.equal(f.store.undo().ok, true);
+  assert.deepEqual(JSON.parse(f.raw()).entries, [saved, duplicate, malformed]);
 });
 test('subscribers receive the committed state without another storage read', () => {
   const f = fixture(); let reads = 0; const getItem = f.storage.getItem;

@@ -71,3 +71,8 @@ test('download revokes object URL even when DOM setup fails', () => {
     assert.equal(revoked, 1); assert.equal(scheduled, 1);
   }
 });
+test('Anki exports an entry without a link as plain article title', () => {
+  const out = exporter.anki([{ ...entry, articleUrl: '' }]);
+  assert.match(out, /Artikel: Regeln &amp; &lt;Neues&gt;/);
+  assert.doesNotMatch(out, /<a href/);
+});

@@ -22,9 +22,12 @@
     const rows = ["#separator:Tab", "#html:true"];
     entries.forEach(function (entry) {
       const back = [entry.translation, entry.explanation].filter(Boolean).map(html);
-      const url = new URL(entry.articleUrl);
-      if (!/^https?:$/.test(url.protocol)) throw new Error("Invalid article URL");
-      back.push('Artikel: <a href="' + html(url.href) + '">' + html(entry.articleTitle) + "</a>");
+      if (!entry.articleUrl) back.push("Artikel: " + html(entry.articleTitle));
+      else {
+        const url = new URL(entry.articleUrl);
+        if (!/^https?:$/.test(url.protocol)) throw new Error("Invalid article URL");
+        back.push('Artikel: <a href="' + html(url.href) + '">' + html(entry.articleTitle) + "</a>");
+      }
       rows.push([html(entry.term), back.join("<br>")].map(quoted).join("\t"));
     });
     return rows.join("\n") + "\n";

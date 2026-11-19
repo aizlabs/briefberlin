@@ -10,15 +10,20 @@
     const articlePath = (options.basePath || "").replace(/\/$/, "") + "/articles/";
     const listeners = new Set();
     let undoEntry = null;
-    function valid(entry) {
+    // A record is readable vocabulary when its own fields are intact. Its
+    // source link is checked separately: a link that no longer matches the
+    // current site (for example after a base-path change) must not hide the word.
+    function validRecord(entry) {
       if (!entry || typeof entry !== "object") return false;
       if (!ENTRY_FIELDS.every(function (field) { return typeof entry[field] === "string"; })) return false;
       if (!entry.term.trim() || !entry.language || !entry.articleTitle.trim()) return false;
       if (entry.key !== wordKey(entry.language, entry.term)) return false;
       const savedTime = Date.parse(entry.savedAt);
-      if (!Number.isFinite(savedTime) || new Date(savedTime).toISOString() !== entry.savedAt) return false;
+      return Number.isFinite(savedTime) && new Date(savedTime).toISOString() === entry.savedAt;
+    }
+    function linkable(articleUrl) {
       try {
-        const url = new URL(entry.articleUrl);
+        const url = new URL(articleUrl);
         // A path prefix is insufficient if an encoded separator or traversal
         // segment is interpreted differently by the server or a later consumer.
         const safeSegments = url.pathname.split("/").every(function (segment) {
@@ -30,24 +35,29 @@
           url.pathname.startsWith(articlePath) && url.pathname.length > articlePath.length;
       } catch (_) { return false; }
     }
-    // Invalid or duplicate entries are skipped, not fatal: one bad record (or a
-    // later change to the article URL contract) must not lock the whole list.
-    // They are kept verbatim in `preserved` and written back on every commit,
-    // so stored data is never silently discarded.
+    // Stored records fall into three groups:
+    // - entries: readable words, the first record per key;
+    // - duplicates: later readable records for a key already listed;
+    // - malformed: records that cannot be shown. They are counted in `hidden`
+    //   and written back untouched on every commit.
+    function snapshot(entries, duplicates, malformed) {
+      return { ok: true, entries: entries, duplicates: duplicates, malformed: malformed, hidden: malformed.length };
+    }
     function read() {
       try {
         const raw = options.storage().getItem(STORAGE_KEY);
-        if (raw === null) return { ok: true, entries: [], preserved: [] };
+        if (raw === null) return snapshot([], [], []);
         const data = JSON.parse(raw);
         if (!data || data.schemaVersion !== 1 || !Array.isArray(data.entries)) {
           return { ok: false, error: "invalid-data" };
         }
-        const entries = [], preserved = [], keys = new Set();
+        const entries = [], duplicates = [], malformed = [], keys = new Set();
         data.entries.forEach(function (entry) {
-          if (valid(entry) && !keys.has(entry.key)) { entries.push(entry); keys.add(entry.key); }
-          else preserved.push(entry);
+          if (!validRecord(entry)) malformed.push(entry);
+          else if (keys.has(entry.key)) duplicates.push(entry);
+          else { entries.push(entry); keys.add(entry.key); }
         });
-        return { ok: true, entries: entries, preserved: preserved };
+        return snapshot(entries, duplicates, malformed);
       } catch (_) { return { ok: false, error: "storage-read" }; }
     }
     function notify(state) {
@@ -59,12 +69,12 @@
         catch (error) { if (root.console) root.console.error("Meine Wörter subscriber failed", error); }
       });
     }
-    function commit(entries, preserved, removed) {
+    function commit(entries, duplicates, malformed, removed) {
       try {
-        options.storage().setItem(STORAGE_KEY, JSON.stringify({ schemaVersion: 1, entries: entries.concat(preserved) }));
+        options.storage().setItem(STORAGE_KEY, JSON.stringify({ schemaVersion: 1, entries: entries.concat(duplicates, malformed) }));
       } catch (_) { return { ok: false, error: "storage-write" }; }
       undoEntry = removed || null;
-      const state = { ok: true, entries: entries, preserved: preserved };
+      const state = snapshot(entries, duplicates, malformed);
       notify(state);
       return state;
     }
@@ -83,30 +93,35 @@
         ENTRY_FIELDS.forEach(function (field) { entry[field] = candidate[field]; });
         entry.key = wordKey(candidate.language, candidate.term);
         entry.savedAt = timestamp;
-        if (!valid(entry)) return { ok: false, error: "invalid-entry" };
+        // New saves must also carry a current, safe article link.
+        if (!validRecord(entry) || !linkable(entry.articleUrl)) return { ok: false, error: "invalid-entry" };
         if (!keys.has(entry.key)) { entries.push(entry); keys.add(entry.key); }
       }
-      return entries.length === state.entries.length ? state : commit(entries, state.preserved);
+      return entries.length === state.entries.length ? state : commit(entries, state.duplicates, state.malformed);
     }
     function remove(key) {
       const state = read();
       if (!state.ok) return state;
       const entry = state.entries.find(function (e) { return e.key === key; });
       if (!entry) return state;
-      // Drop preserved duplicates of the removed word too, or the next read
-      // would promote one of them and the word would reappear.
-      const preserved = state.preserved.filter(function (e) { return !e || e.key !== key; });
-      return commit(state.entries.filter(function (e) { return e.key !== key; }), preserved, entry);
+      // Readable duplicates of the word go too, or the next read would promote
+      // one and the word would reappear; undo restores them all. Malformed
+      // records are never touched by a removal.
+      const dropped = state.duplicates.filter(function (e) { return e.key === key; });
+      return commit(state.entries.filter(function (e) { return e.key !== key; }),
+        state.duplicates.filter(function (e) { return e.key !== key; }), state.malformed,
+        { entry: entry, duplicates: dropped });
     }
     function undo() {
       const state = read();
       if (!state.ok || !undoEntry) return state;
-      if (state.entries.some(function (e) { return e.key === undoEntry.key; })) {
+      const pending = undoEntry;
+      if (state.entries.some(function (e) { return e.key === pending.entry.key; })) {
         undoEntry = null;
         notify(state);
         return state;
       }
-      return commit(state.entries.concat([undoEntry]), state.preserved);
+      return commit(state.entries.concat([pending.entry]), state.duplicates.concat(pending.duplicates), state.malformed);
     }
     if (options.events) {
       options.events.addEventListener("storage", function (event) {
@@ -123,6 +138,7 @@
     }
     return { read: read, addMany: addMany, add: function (entry) { return addMany([entry]); },
       remove: remove, undo: undo, canUndo: function () { return !!undoEntry; },
+      linkable: function (entry) { return !!entry && linkable(entry.articleUrl); },
       subscribe: function (listener) { listeners.add(listener); return function () { listeners.delete(listener); }; },
       wordKey: wordKey };
   }

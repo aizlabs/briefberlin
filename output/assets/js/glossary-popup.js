@@ -131,12 +131,14 @@
     const itemsByKey = new Map();
     itemsById.forEach(function (item) { if (!itemsByKey.has(keyOf(item))) itemsByKey.set(keyOf(item), item); });
     // Saved-word identity stays case-sensitive (sie/Sie), but list rows are
-    // matched to hints like the previous glossary did: by data-term-id, then
-    // exact term, then case-insensitive term.
+    // matched to hints by term id, then exact term, then a case-insensitive
+    // term only when exactly one hint fits. Ambiguous rows (SIE for sie and
+    // Sie) stay unmatched rather than guessing.
     function folded(text) { return text.normalize("NFC").trim().replace(/\s+/gu, " ").toLocaleLowerCase(locale); }
     const keysByFoldedTerm = new Map();
     itemsByKey.forEach(function (item, key) {
-      if (!keysByFoldedTerm.has(folded(item.term))) keysByFoldedTerm.set(folded(item.term), key);
+      const fold = folded(item.term);
+      keysByFoldedTerm.set(fold, keysByFoldedTerm.has(fold) ? null : key);
     });
     let list = findGlossaryList(pageContent, locale);
     let dynamicHeading = null;
@@ -165,7 +167,7 @@
     const term = element("div", "article-glossary-popup__term");
     const translation = element("div", "article-glossary-popup__english");
     const explanation = element("div", "article-glossary-popup__explanation");
-    const savedLabel = element("span", "my-words-saved", "In Meine Wörter gespeichert ✓");
+    const savedLabel = element("span", "my-words-saved", "In ‚Meine Wörter‘ gespeichert ✓");
     const action = button("Wort speichern", "article-glossary-popup__add");
     const popupStatus = element("div", "my-words-status"); popupStatus.setAttribute("role", "status");
     const popupText = element("span"); const popupUndo = button("Rückgängig", "my-words-text-button"); popupUndo.hidden = true;
@@ -173,9 +175,16 @@
     inner.append(close, term, translation, explanation, savedLabel, action, popupStatus); popup.append(inner); document.body.append(popup);
     let activeItem = null, activeTarget = null;
     let saved = new Set(), readable = true, controls = null, bulk = null;
-    // Storage errors are reported only once the reader has used a word popup,
-    // not on every article for readers who never use Meine Wörter.
+    // Storage errors are reported only after the reader tries to change their
+    // collection (save, save all, remove, undo). Reading a definition is the
+    // core reading aid and stays quiet even when storage is unavailable.
     let engaged = false;
+    const LOAD_ERROR = "Deine gespeicherten Wörter konnten nicht geladen werden. Deine Daten wurden nicht verändert.";
+    const REMOVED = "Aus ‚Meine Wörter‘ entfernt. ";
+    function failed() {
+      engaged = true;
+      message(store.read().ok ? "Die Änderung konnte nicht gespeichert werden. Bitte versuche es erneut." : LOAD_ERROR);
+    }
     if (!canSave) { action.hidden = true; savedLabel.hidden = true; }
     function message(text) {
       statusText.textContent = text; popupText.textContent = text;
@@ -210,10 +219,9 @@
       const link = element("a", "", "Meine Wörter →"); link.href = root.dataset.myWordsUrl || "/meine-woerter/";
       controls.append(bulk, link); list.before(controls);
       bulk.addEventListener("click", function () {
-        engaged = true;
         // A successful write re-renders through the store subscription.
         const result = store.addMany(visibleItems().map(candidate));
-        if (!result.ok) { message("Die Änderung konnte nicht gespeichert werden. Bitte versuche es erneut."); return; }
+        if (!result.ok) { failed(); return; }
         message("Alle Wörter gespeichert.");
       });
     }
@@ -225,16 +233,17 @@
       savedLabel.hidden = !isSaved;
       // Removing affects Meine Wörter only; a word from the article's own
       // vocabulary list stays in that list.
-      action.textContent = isSaved ? "Aus Meine Wörter entfernen" : "Wort speichern";
+      action.textContent = isSaved ? "Aus ‚Meine Wörter‘ entfernen" : "Wort speichern";
+      // The accessible name must carry the same meaning as the visible label.
       // The store rejects unreadable data; leave retry available after transient failures.
-      action.setAttribute("aria-label", activeItem.term + (isSaved ? " entfernen" : " speichern"));
+      action.setAttribute("aria-label", activeItem.term + (isSaved ? " aus ‚Meine Wörter‘ entfernen" : " speichern"));
     }
     function refresh(state) {
       readable = state.ok;
       if (!state.ok) {
         if (bulk) bulk.disabled = true;
         updatePopup();
-        if (engaged) message("Deine gespeicherten Wörter konnten nicht geladen werden. Deine Daten wurden nicht verändert.");
+        if (engaged) message(LOAD_ERROR);
         return;
       }
       saved = new Set(state.entries.map(function (entry) { return entry.key; }));
@@ -267,18 +276,18 @@
         bulk.disabled = !readable || !visible.length || complete;
       }
       updatePopup();
-      message(store.canUndo() ? "Wort entfernt. " : "");
+      message(store.canUndo() ? REMOVED : "");
     }
     action.addEventListener("click", function () {
       if (!activeItem) return;
       const removing = saved.has(keyOf(activeItem));
       const result = removing ? store.remove(keyOf(activeItem)) : store.add(candidate(activeItem));
-      if (!result.ok) { message("Die Änderung konnte nicht gespeichert werden. Bitte versuche es erneut."); return; }
-      message(removing ? "Wort entfernt. " : "Wort gespeichert.");
+      if (!result.ok) { failed(); return; }
+      message(removing ? REMOVED : "Wort gespeichert.");
     });
     function undo() {
       const result = store.undo();
-      if (!result.ok) { message("Die Änderung konnte nicht gespeichert werden. Bitte versuche es erneut."); return; }
+      if (!result.ok) { failed(); return; }
       message("Wort wiederhergestellt.");
       // Inline undo remains usable after the popup has been dismissed. Never
       // focus a hidden popup control or leave focus on the now-hidden undo.
@@ -290,7 +299,7 @@
       const target = event.target.closest(".article-term");
       if (!target || !pageContent.contains(target)) return;
       const item = itemsById.get(target.dataset.termId); if (!item) return;
-      activeItem = item; activeTarget = target; engaged = true;
+      activeItem = item; activeTarget = target;
       refresh(store.read()); positionPopup(popup, target);
       (canSave ? action : close).focus();
     });

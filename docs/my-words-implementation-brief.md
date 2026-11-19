@@ -126,7 +126,7 @@ Artikel: Neue Regeln für …
 - Sorting does not mutate entries. Remember the choice only for the current page session in this release.
 - Export the full collection in the displayed order; no checkboxes or selection state.
 - On mobile, wrap controls and list content without horizontal scrolling.
-- Use semantic controls, visible focus, adequate touch targets, and accessible names such as `Genehmigung entfernen`.
+- Use semantic controls, visible focus, adequate touch targets, and accessible names such as `Genehmigung aus ‚Meine Wörter‘ entfernen` (popup) and `Genehmigung entfernen` (on the Meine Wörter page).
 
 Empty state:
 

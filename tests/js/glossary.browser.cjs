@@ -27,6 +27,11 @@ before(async () => {
     if (req.url.includes('invalid-url')) markup = markup.replace('data-article-url="/articles/test/"', 'data-article-url="http://["');
     if (req.url.includes('no-store')) markup = markup.replace('<script defer src="/assets/js/my-words-store.js"></script>', '');
     if (req.url.includes('case-variant-row')) markup = markup.replace('<strong>die Genehmigung</strong>', '<strong>Die Genehmigung</strong>');
+    if (req.url.includes('ambiguous-case-row')) {
+      const extra = [...words, { id: 'sie-lower', term: 'sie', english: 'she', explanation: 'Eine Frau.' }, { id: 'sie-formal', term: 'Sie', english: 'you (formal)', explanation: 'Höfliche Anrede.' }];
+      markup = markup.replace(JSON.stringify(words), JSON.stringify(extra)).replace('<li><strong>die Genehmigung</strong> - permission - Eine Erlaubnis.</li>', '<li><strong>die Genehmigung</strong> - permission - Eine Erlaubnis.</li><li><strong>SIE</strong> - she / you</li>');
+    }
+    if (req.url.includes('inflected-row')) markup = markup.replace('<li><strong>die Genehmigung</strong> - permission - Eine Erlaubnis.</li>', '<li><strong>die Genehmigung</strong> - permission - Eine Erlaubnis.</li><li><strong>beantragt</strong> - applied</li>');
     res.end(markup);
   });
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
@@ -46,7 +51,7 @@ test('save, reload, deduplicate, remove and undo additional word', async () => {
     assert.equal(await page.locator('li[data-my-words-added]').count(), 1);
     assert.equal(await page.locator('.article-term--default').count(), 3);
     await page.reload(); assert.equal(await page.locator('li[data-my-words-added]').count(), 1);
-    await open(page, 'three'); await page.getByRole('button', { name: 'beantragen entfernen', exact: true }).click();
+    await open(page, 'three'); await page.getByRole('button', { name: 'beantragen aus ‚Meine Wörter‘ entfernen', exact: true }).click();
     assert.equal((await saved(page)).length, 0); assert.equal(await page.locator('li[data-my-words-added]').count(), 0);
     assert.equal(await page.locator('.article-term--default').count(), 1);
     await page.locator('.article-glossary-popup').getByRole('button', { name: 'Rückgängig' }).click();
@@ -64,14 +69,23 @@ test('popup still explains words when the store script is missing', async () => 
     assert.equal(await page.getByRole('button', { name: 'Alle Wörter speichern' }).count(), 0);
   } finally { await context.close(); }
 });
-test('unreadable storage is not announced until the reader opens a word', async () => {
+test('blocked storage stays quiet while reading definitions and reports a save attempt', async () => {
   const { context, page } = await setup();
   try {
-    await page.evaluate(() => localStorage.setItem(BriefBerlin.words.STORAGE_KEY || 'briefberlin.myWords.v1', '{'));
+    await page.addInitScript(() => {
+      Object.defineProperty(window, 'localStorage', { configurable: true, get() { throw new DOMException('blocked', 'SecurityError'); } });
+    });
     await page.reload();
-    assert.equal((await page.locator('.page__content .my-words-status').innerText()).trim(), '');
+    const status = page.locator('.page__content .my-words-status');
+    const popup = page.locator('.article-glossary-popup');
+    assert.equal((await status.innerText()).trim(), '');
     await open(page, 'two');
-    assert.match(await page.locator('.page__content .my-words-status').innerText(), /nicht geladen/);
+    assert.match(await popup.innerText(), /to apply/);
+    assert.equal((await status.innerText()).trim(), '');
+    assert.doesNotMatch(await popup.innerText(), /nicht geladen/);
+    await page.getByRole('button', { name: 'beantragen speichern', exact: true }).click();
+    assert.match(await status.innerText(), /nicht geladen/);
+    assert.match(await popup.innerText(), /nicht geladen/);
   } finally { await context.close(); }
 });
 test('a case-variant vocabulary row still matches its hint', async () => {
@@ -82,13 +96,36 @@ test('a case-variant vocabulary row still matches its hint', async () => {
     assert.equal(await page.locator('li').count(), 1);
   } finally { await context.close(); }
 });
+test('ambiguous capitalization and distinct German forms are not guessed', async () => {
+  for (const route of ['ambiguous-case-row', 'inflected-row']) {
+    const { context, page } = await setup('/articles/' + route + '/');
+    try {
+      // An unmatched row means "save all" cannot know what it would save.
+      assert.equal(await page.getByRole('button', { name: 'Alle Wörter speichern' }).count(), 0, route);
+      assert.equal((await saved(page)).length, 0, route);
+    } finally { await context.close(); }
+  }
+});
+test('remove control names the collection in its visible and accessible label', async () => {
+  const { context, page } = await setup();
+  try {
+    await open(page, 'two'); await page.getByRole('button', { name: 'beantragen speichern', exact: true }).click();
+    const action = page.locator('.article-glossary-popup__add');
+    assert.equal(await action.textContent(), 'Aus ‚Meine Wörter‘ entfernen');
+    assert.equal(await action.getAttribute('aria-label'), 'beantragen aus ‚Meine Wörter‘ entfernen');
+    const snapshot = await page.locator('.article-glossary-popup').ariaSnapshot();
+    assert.match(snapshot, /button "beantragen aus ‚Meine Wörter‘ entfernen"/);
+    await action.click();
+    assert.match(await page.locator('.page__content .my-words-status').innerText(), /Aus ‚Meine Wörter‘ entfernt\./);
+  } finally { await context.close(); }
+});
 test('bulk saves visible glossary only; removing original retains editorial row', async () => {
   const { context, page } = await setup();
   try {
     await page.getByRole('button', { name: 'Alle Wörter speichern', exact: true }).click();
     assert.deepEqual((await saved(page)).map(e => e.term), ['die Genehmigung']);
     assert.equal(await page.getByRole('button', { name: 'Alle gespeichert ✓' }).isDisabled(), true);
-    await open(page, 'one'); await page.getByRole('button', { name: 'die Genehmigung entfernen', exact: true }).click();
+    await open(page, 'one'); await page.getByRole('button', { name: 'die Genehmigung aus ‚Meine Wörter‘ entfernen', exact: true }).click();
     assert.equal(await page.locator('li').count(), 1); assert.equal(await page.locator('.article-term--default').count(), 1);
     assert.equal(await page.getByRole('button', { name: 'Alle Wörter speichern', exact: true }).isEnabled(), true);
   } finally { await context.close(); }
@@ -98,7 +135,7 @@ test('dynamic empty glossary is removed; write failures never change presentatio
   try {
     await open(page, 'two'); await page.getByRole('button', { name: 'beantragen speichern', exact: true }).click();
     assert.equal(await page.locator('h2').count(), 1);
-    await page.getByRole('button', { name: 'beantragen entfernen', exact: true }).click(); assert.equal(await page.locator('h2').count(), 0);
+    await page.getByRole('button', { name: 'beantragen aus ‚Meine Wörter‘ entfernen', exact: true }).click(); assert.equal(await page.locator('h2').count(), 0);
     await page.evaluate(() => { Storage.prototype.setItem = () => { throw new Error('quota'); }; });
     await page.getByRole('button', { name: 'beantragen speichern', exact: true }).click();
     assert.equal((await saved(page)).length, 0); assert.equal(await page.locator('h2').count(), 0);
@@ -110,7 +147,7 @@ test('inline undo returns focus to the article after popup dismissal', async () 
   const { context, page } = await setup();
   try {
     await open(page, 'two'); await page.getByRole('button', { name: 'beantragen speichern', exact: true }).click();
-    await page.getByRole('button', { name: 'beantragen entfernen', exact: true }).click();
+    await page.getByRole('button', { name: 'beantragen aus ‚Meine Wörter‘ entfernen', exact: true }).click();
     await page.keyboard.press('Escape');
     await page.locator('.page__content .my-words-status').getByRole('button', { name: 'Rückgängig' }).click();
     assert.equal((await saved(page)).length, 1);
@@ -122,9 +159,9 @@ test('another tab reconciles added rows, original rows, and open popup state', a
   try {
     await other.goto(origin + '/articles/test/'); await open(other, 'two');
     await open(page, 'two'); await page.getByRole('button', { name: 'beantragen speichern', exact: true }).click();
-    await other.getByRole('button', { name: 'beantragen entfernen', exact: true }).waitFor();
+    await other.getByRole('button', { name: 'beantragen aus ‚Meine Wörter‘ entfernen', exact: true }).waitFor();
     assert.equal(await other.locator('li[data-my-words-added]').count(), 1);
-    await page.getByRole('button', { name: 'beantragen entfernen', exact: true }).click();
+    await page.getByRole('button', { name: 'beantragen aus ‚Meine Wörter‘ entfernen', exact: true }).click();
     await other.getByRole('button', { name: 'beantragen speichern', exact: true }).waitFor();
     assert.equal(await other.locator('li[data-my-words-added]').count(), 0);
     assert.equal(await other.locator('li').count(), 1);
@@ -139,7 +176,7 @@ test('corrupt storage does not erase editorial content or overwrite saved bytes'
     assert.equal(await page.evaluate(() => localStorage.getItem('briefberlin.myWords.v1')), '{bad');
     assert.equal(await page.locator('li').count(), 1);
     assert.equal(await page.locator('li[data-my-words-added]').count(), 0);
-    assert.match(await page.locator('.article-glossary-popup').innerText(), /nicht gespeichert/);
+    assert.match(await page.locator('.article-glossary-popup').innerText(), /nicht geladen/);
   } finally { await context.close(); }
 });
 test('malformed hints and locale do not break valid word controls; invalid URL reports failure', async () => {
@@ -157,7 +194,7 @@ test('an original metadata word restored into a missing row survives personal re
   const { context, page } = await setup('/articles/missing-original-row/');
   try {
     await open(page, 'one'); await page.getByRole('button', { name: 'die Genehmigung speichern', exact: true }).click();
-    await page.getByRole('button', { name: 'die Genehmigung entfernen', exact: true }).click();
+    await page.getByRole('button', { name: 'die Genehmigung aus ‚Meine Wörter‘ entfernen', exact: true }).click();
     assert.equal((await saved(page)).length, 0);
     assert.equal(await page.locator('li').count(), 1);
     assert.equal(await page.locator('[data-term-id="one"]').evaluate(el => el.classList.contains('article-term--default')), true);
