@@ -17,7 +17,9 @@
       const items = JSON.parse(dataElement.textContent || "[]");
       if (!Array.isArray(items)) return new Map();
       return new Map(items.filter(function (item) {
-        return item && typeof item === "object" && typeof item.id === "string";
+        return item && typeof item === "object" && typeof item.id === "string" &&
+          typeof item.term === "string" && item.term.trim() !== "" &&
+          typeof item.english === "string" && typeof item.explanation === "string";
       }).map(function (item) {
         return [item.id, item];
       }));
@@ -103,27 +105,50 @@
     node.type = "button";
     return node;
   }
+  // Used when my-words-store.js is missing or failed to load: the popup still
+  // explains words, it just offers no saving.
+  function readOnlyStore() {
+    return {
+      read: function () { return { ok: true, entries: [] }; },
+      canUndo: function () { return false; },
+      subscribe: function () {},
+      wordKey: function (language, term) {
+        return JSON.stringify([language, term.normalize("NFC").trim().replace(/\s+/gu, " ")]);
+      },
+    };
+  }
   function initArticleGlossary(root) {
-    const store = window.BriefBerlin && window.BriefBerlin.words;
+    const sharedStore = window.BriefBerlin && window.BriefBerlin.words;
+    const canSave = !!sharedStore;
+    const store = sharedStore || readOnlyStore();
     const pageContent = root.querySelector(".page__content");
-    if (!store || !pageContent) return;
+    if (!pageContent) return;
     const itemsById = parseGlossaryData(root);
-    for (const [id, item] of itemsById) {
-      if (!item || typeof item.term !== "string" || !item.term.trim() ||
-          typeof item.id !== "string" || typeof item.english !== "string" || typeof item.explanation !== "string") itemsById.delete(id);
-    }
     if (!itemsById.size) return;
     const locale = glossaryLocale(pageContent);
     const language = locale.split(/[-_]/)[0];
     const keyOf = function (item) { return store.wordKey(language, item.term); };
     const itemsByKey = new Map();
     itemsById.forEach(function (item) { if (!itemsByKey.has(keyOf(item))) itemsByKey.set(keyOf(item), item); });
+    // Saved-word identity stays case-sensitive (sie/Sie), but list rows are
+    // matched to hints like the previous glossary did: by data-term-id, then
+    // exact term, then case-insensitive term.
+    function folded(text) { return text.normalize("NFC").trim().replace(/\s+/gu, " ").toLocaleLowerCase(locale); }
+    const keysByFoldedTerm = new Map();
+    itemsByKey.forEach(function (item, key) {
+      if (!keysByFoldedTerm.has(folded(item.term))) keysByFoldedTerm.set(folded(item.term), key);
+    });
     let list = findGlossaryList(pageContent, locale);
     let dynamicHeading = null;
     const originalKeys = new Set();
     function rowKey(row) {
+      const id = row.dataset.myWordsTermId || row.dataset.termId;
+      const byId = id && itemsById.get(id);
+      if (byId) return keyOf(byId);
       const term = row.querySelector("strong");
-      return term ? store.wordKey(language, term.textContent) : null;
+      if (!term) return null;
+      const exact = store.wordKey(language, term.textContent);
+      return itemsByKey.has(exact) ? exact : keysByFoldedTerm.get(folded(term.textContent)) || exact;
     }
     if (list) Array.from(list.children).forEach(function (row) { if (rowKey(row)) originalKeys.add(rowKey(row)); });
     itemsById.forEach(function (item) { if (item.defaultGlossary) originalKeys.add(keyOf(item)); });
@@ -140,7 +165,7 @@
     const term = element("div", "article-glossary-popup__term");
     const translation = element("div", "article-glossary-popup__english");
     const explanation = element("div", "article-glossary-popup__explanation");
-    const savedLabel = element("span", "my-words-saved", "Gespeichert ✓");
+    const savedLabel = element("span", "my-words-saved", "In Meine Wörter gespeichert ✓");
     const action = button("Wort speichern", "article-glossary-popup__add");
     const popupStatus = element("div", "my-words-status"); popupStatus.setAttribute("role", "status");
     const popupText = element("span"); const popupUndo = button("Rückgängig", "my-words-text-button"); popupUndo.hidden = true;
@@ -148,6 +173,10 @@
     inner.append(close, term, translation, explanation, savedLabel, action, popupStatus); popup.append(inner); document.body.append(popup);
     let activeItem = null, activeTarget = null;
     let saved = new Set(), readable = true, controls = null, bulk = null;
+    // Storage errors are reported only once the reader has used a word popup,
+    // not on every article for readers who never use Meine Wörter.
+    let engaged = false;
+    if (!canSave) { action.hidden = true; savedLabel.hidden = true; }
     function message(text) {
       statusText.textContent = text; popupText.textContent = text;
       undoButton.hidden = popupUndo.hidden = !store.canUndo();
@@ -173,7 +202,7 @@
       pageContent.insertBefore(dynamicHeading, before); pageContent.insertBefore(list, before);
     }
     function ensureControls() {
-      if (!list || controls) return;
+      if (!canSave || !list || controls) return;
       // An unmatched legacy row cannot be safely included in a 'save all' action.
       if (Array.from(list.children).some(function (row) { return !itemsByKey.has(rowKey(row)); })) return;
       controls = element("div", "my-words-glossary-controls");
@@ -181,17 +210,22 @@
       const link = element("a", "", "Meine Wörter →"); link.href = root.dataset.myWordsUrl || "/meine-woerter/";
       controls.append(bulk, link); list.before(controls);
       bulk.addEventListener("click", function () {
+        engaged = true;
+        // A successful write re-renders through the store subscription.
         const result = store.addMany(visibleItems().map(candidate));
         if (!result.ok) { message("Die Änderung konnte nicht gespeichert werden. Bitte versuche es erneut."); return; }
-        refresh(result); message("Alle Wörter gespeichert.");
+        message("Alle Wörter gespeichert.");
       });
     }
     function updatePopup() {
       if (!activeItem) return;
       const isSaved = saved.has(keyOf(activeItem));
       term.textContent = activeItem.term; translation.textContent = activeItem.english; explanation.textContent = activeItem.explanation;
+      if (!canSave) return;
       savedLabel.hidden = !isSaved;
-      action.textContent = isSaved ? "Entfernen" : "Wort speichern";
+      // Removing affects Meine Wörter only; a word from the article's own
+      // vocabulary list stays in that list.
+      action.textContent = isSaved ? "Aus Meine Wörter entfernen" : "Wort speichern";
       // The store rejects unreadable data; leave retry available after transient failures.
       action.setAttribute("aria-label", activeItem.term + (isSaved ? " entfernen" : " speichern"));
     }
@@ -199,7 +233,8 @@
       readable = state.ok;
       if (!state.ok) {
         if (bulk) bulk.disabled = true;
-        message("Deine gespeicherten Wörter konnten nicht geladen werden. Deine Daten wurden nicht verändert.");
+        updatePopup();
+        if (engaged) message("Deine gespeicherten Wörter konnten nicht geladen werden. Deine Daten wurden nicht verändert.");
         return;
       }
       saved = new Set(state.entries.map(function (entry) { return entry.key; }));
@@ -207,7 +242,7 @@
         if (saved.has(key)) {
           ensureList();
           if (!Array.from(list.children).some(function (row) { return rowKey(row) === key; })) {
-            const row = element("li"); row.dataset.myWordsAdded = "true";
+            const row = element("li"); row.dataset.myWordsAdded = "true"; row.dataset.myWordsTermId = item.id;
             row.append(element("strong", "", item.term), document.createTextNode(" - " + [item.english, item.explanation].filter(Boolean).join(" - ")));
             list.append(row);
           }
@@ -239,13 +274,12 @@
       const removing = saved.has(keyOf(activeItem));
       const result = removing ? store.remove(keyOf(activeItem)) : store.add(candidate(activeItem));
       if (!result.ok) { message("Die Änderung konnte nicht gespeichert werden. Bitte versuche es erneut."); return; }
-      refresh(result); message(removing ? "Wort entfernt. " : "Wort gespeichert.");
-      if (activeTarget) positionPopup(popup, activeTarget);
+      message(removing ? "Wort entfernt. " : "Wort gespeichert.");
     });
     function undo() {
       const result = store.undo();
       if (!result.ok) { message("Die Änderung konnte nicht gespeichert werden. Bitte versuche es erneut."); return; }
-      refresh(result); message("Wort wiederhergestellt.");
+      message("Wort wiederhergestellt.");
       // Inline undo remains usable after the popup has been dismissed. Never
       // focus a hidden popup control or leave focus on the now-hidden undo.
       if (!popup.hidden) action.focus();
@@ -256,7 +290,9 @@
       const target = event.target.closest(".article-term");
       if (!target || !pageContent.contains(target)) return;
       const item = itemsById.get(target.dataset.termId); if (!item) return;
-      activeItem = item; activeTarget = target; refresh(store.read()); updatePopup(); positionPopup(popup, target); action.focus();
+      activeItem = item; activeTarget = target; engaged = true;
+      refresh(store.read()); positionPopup(popup, target);
+      (canSave ? action : close).focus();
     });
     function hide(returnFocus) { popup.hidden = true; if (returnFocus && activeTarget) activeTarget.focus(); }
     close.addEventListener("click", function () { hide(true); });
@@ -264,7 +300,9 @@
     document.addEventListener("click", function (event) {
       if (!popup.hidden && !popup.contains(event.target) && !event.target.closest(".article-term")) hide(false);
     });
-    window.addEventListener("resize", function () { if (!popup.hidden) hide(true); });
+    // Mobile browsers fire resize while scrolling (address bar), so do not
+    // move focus here: focusing the term would scroll the page back to it.
+    window.addEventListener("resize", function () { if (!popup.hidden) hide(false); });
     store.subscribe(refresh); refresh(store.read());
   }
   document.addEventListener("DOMContentLoaded", function () {

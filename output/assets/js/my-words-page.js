@@ -13,7 +13,7 @@
     const undo = root.querySelector("[data-words-undo]");
     const retry = root.querySelector("[data-words-retry]");
     const collator = new Intl.Collator("de");
-    let entries = [], readable = false;
+    let entries = [], readable = false, lastRemovedKey = null;
     function ordered() {
       return entries.slice().sort(function (a, b) {
         const alphabetic = collator.compare(a.term, b.term) || a.key.localeCompare(b.key);
@@ -51,7 +51,8 @@
           const index = ordered().findIndex(function (item) { return item.key === entry.key; });
           const result = store.remove(entry.key);
           if (!result.ok) { mutationFailed(); return; }
-          refresh(result); message("Wort entfernt. ");
+          // The list was already re-rendered through the store subscription.
+          lastRemovedKey = entry.key; message("Wort entfernt. ");
           const buttons = list.querySelectorAll("button");
           const next = buttons[Math.min(index, buttons.length - 1)] || root.querySelector("[data-words-articles]");
           next.focus();
@@ -91,8 +92,11 @@
     undo.addEventListener("click", function () {
       const result = store.undo();
       if (!result.ok) { mutationFailed(); return; }
-      refresh(result); message("Wort wiederhergestellt.");
-      const target = list.querySelector("button") || root.querySelector("[data-words-articles]"); target.focus();
+      message("Wort wiederhergestellt.");
+      // Return focus to the restored word, not the top of the list.
+      const restored = Array.from(list.children).find(function (row) { return row.dataset.wordKey === lastRemovedKey; });
+      const target = (restored && restored.querySelector("button")) || list.querySelector("button") || root.querySelector("[data-words-articles]");
+      target.focus();
     });
     retry.addEventListener("click", function () {
       refresh(store.read());

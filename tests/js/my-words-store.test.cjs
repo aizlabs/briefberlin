@@ -48,11 +48,35 @@ test('undo does not overwrite an entry already restored elsewhere', () => {
   f.setRaw(JSON.stringify({ schemaVersion: 1, entries: [{ ...saved, explanation: 'Other tab' }] }));
   f.store.undo(); assert.equal(f.store.read().entries[0].explanation, 'Other tab');
 });
-test('corrupt, unsupported, invalid entries and duplicate keys are preserved', () => {
-  const f = fixture(); f.store.add(entry()); const saved = f.store.read().entries[0];
-  for (const raw of ['{', JSON.stringify({ schemaVersion: 2, entries: [] }), JSON.stringify({ schemaVersion: 1, entries: [{ ...saved, savedAt: 'no' }] }), JSON.stringify({ schemaVersion: 1, entries: [saved, saved] })]) {
+test('corrupt and unsupported collections are preserved and reported unreadable', () => {
+  const f = fixture();
+  for (const raw of ['{', JSON.stringify({ schemaVersion: 2, entries: [] })]) {
     f.setRaw(raw); assert.equal(f.store.read().ok, false); assert.equal(f.store.add(entry()).ok, false); assert.equal(f.raw(), raw);
   }
+});
+test('invalid entries and duplicate keys are skipped but kept verbatim on write', () => {
+  const f = fixture(); f.store.add(entry()); const saved = f.store.read().entries[0];
+  const invalid = { ...saved, term: 'kaputt', key: wordKey('de', 'kaputt'), savedAt: 'no' };
+  f.setRaw(JSON.stringify({ schemaVersion: 1, entries: [saved, invalid, saved] }));
+  assert.deepEqual(f.store.read().entries, [saved]);
+  assert.equal(f.store.add(entry('neu')).ok, true);
+  const written = JSON.parse(f.raw()).entries;
+  assert.deepEqual(written.map(e => e.term), ['die Genehmigung', 'neu', 'kaputt', 'die Genehmigung']);
+  assert.deepEqual(written[2], invalid);
+});
+test('removing a word also drops its preserved duplicates so it does not reappear', () => {
+  const f = fixture(); f.store.add(entry()); const saved = f.store.read().entries[0];
+  f.setRaw(JSON.stringify({ schemaVersion: 1, entries: [saved, saved] }));
+  assert.equal(f.store.remove(saved.key).ok, true);
+  assert.deepEqual(f.store.read().entries, []);
+});
+test('subscribers receive the committed state without another storage read', () => {
+  const f = fixture(); let reads = 0; const getItem = f.storage.getItem;
+  f.storage.getItem = (...args) => { reads++; return getItem(...args); };
+  let received = null; f.store.subscribe(state => { received = state; });
+  f.store.add(entry());
+  assert.equal(reads, 1);
+  assert.deepEqual(received.entries.map(e => e.term), ['die Genehmigung']);
 });
 test('access and quota failures do not report success or emit changes', () => {
   const denied = fixture({ storage: () => { throw Error('blocked'); } });
@@ -75,7 +99,9 @@ test('refresh events and mutations read latest storage', () => {
   f.setRaw(JSON.stringify({ schemaVersion: 1, entries: [other] })); f.store.add(entry('new'));
   assert.deepEqual(f.store.read().entries.map(e => e.term), ['other', 'new']);
   const event = new Event('storage'); event.key = STORAGE_KEY; events.dispatchEvent(event);
-  events.dispatchEvent(new Event('pageshow')); assert.equal(changes, 4);
+  events.dispatchEvent(new Event('pageshow')); assert.equal(changes, 3, 'a normal load pageshow does not re-render');
+  const restored = new Event('pageshow'); restored.persisted = true; events.dispatchEvent(restored);
+  assert.equal(changes, 4);
 });
 
 test('invalid batch inputs return explicit failure without writing', () => {
@@ -89,9 +115,9 @@ test('invalid calendar dates are rejected rather than silently normalized', () =
   const f = fixture(); f.store.add(entry()); const saved = f.store.read().entries[0];
   const raw = JSON.stringify({ schemaVersion: 1, entries: [{ ...saved, savedAt: '2026-02-30T10:00:00.000Z' }] });
   f.setRaw(raw);
-  assert.equal(f.store.read().ok, false);
-  assert.equal(f.store.add(entry('new')).ok, false);
-  assert.equal(f.raw(), raw);
+  assert.deepEqual(f.store.read().entries, []);
+  assert.equal(f.store.add(entry('new')).ok, true);
+  assert.equal(JSON.parse(f.raw()).entries[1].savedAt, '2026-02-30T10:00:00.000Z');
 });
 test('only public vocabulary fields are persisted', () => {
   const f = fixture();

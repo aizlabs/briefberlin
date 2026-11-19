@@ -30,33 +30,43 @@
           url.pathname.startsWith(articlePath) && url.pathname.length > articlePath.length;
       } catch (_) { return false; }
     }
+    // Invalid or duplicate entries are skipped, not fatal: one bad record (or a
+    // later change to the article URL contract) must not lock the whole list.
+    // They are kept verbatim in `preserved` and written back on every commit,
+    // so stored data is never silently discarded.
     function read() {
       try {
         const raw = options.storage().getItem(STORAGE_KEY);
-        if (raw === null) return { ok: true, entries: [] };
+        if (raw === null) return { ok: true, entries: [], preserved: [] };
         const data = JSON.parse(raw);
-        if (!data || data.schemaVersion !== 1 || !Array.isArray(data.entries) ||
-            !data.entries.every(valid) || new Set(data.entries.map(function (e) { return e.key; })).size !== data.entries.length) {
+        if (!data || data.schemaVersion !== 1 || !Array.isArray(data.entries)) {
           return { ok: false, error: "invalid-data" };
         }
-        return { ok: true, entries: data.entries };
+        const entries = [], preserved = [], keys = new Set();
+        data.entries.forEach(function (entry) {
+          if (valid(entry) && !keys.has(entry.key)) { entries.push(entry); keys.add(entry.key); }
+          else preserved.push(entry);
+        });
+        return { ok: true, entries: entries, preserved: preserved };
       } catch (_) { return { ok: false, error: "storage-read" }; }
     }
-    function notify() {
+    function notify(state) {
       // A rendering failure must not change the result of an already committed
       // write or prevent another view from receiving its notification.
+      const current = state || read();
       listeners.forEach(function (listener) {
-        try { listener(read()); }
+        try { listener(current); }
         catch (error) { if (root.console) root.console.error("Meine Wörter subscriber failed", error); }
       });
     }
-    function commit(entries, removed) {
+    function commit(entries, preserved, removed) {
       try {
-        options.storage().setItem(STORAGE_KEY, JSON.stringify({ schemaVersion: 1, entries: entries }));
+        options.storage().setItem(STORAGE_KEY, JSON.stringify({ schemaVersion: 1, entries: entries.concat(preserved) }));
       } catch (_) { return { ok: false, error: "storage-write" }; }
       undoEntry = removed || null;
-      notify();
-      return { ok: true, entries: entries };
+      const state = { ok: true, entries: entries, preserved: preserved };
+      notify(state);
+      return state;
     }
     function addMany(candidates) {
       if (!Array.isArray(candidates)) return { ok: false, error: "invalid-entry" };
@@ -76,23 +86,27 @@
         if (!valid(entry)) return { ok: false, error: "invalid-entry" };
         if (!keys.has(entry.key)) { entries.push(entry); keys.add(entry.key); }
       }
-      return entries.length === state.entries.length ? state : commit(entries);
+      return entries.length === state.entries.length ? state : commit(entries, state.preserved);
     }
     function remove(key) {
       const state = read();
       if (!state.ok) return state;
       const entry = state.entries.find(function (e) { return e.key === key; });
-      return entry ? commit(state.entries.filter(function (e) { return e.key !== key; }), entry) : state;
+      if (!entry) return state;
+      // Drop preserved duplicates of the removed word too, or the next read
+      // would promote one of them and the word would reappear.
+      const preserved = state.preserved.filter(function (e) { return !e || e.key !== key; });
+      return commit(state.entries.filter(function (e) { return e.key !== key; }), preserved, entry);
     }
     function undo() {
       const state = read();
       if (!state.ok || !undoEntry) return state;
       if (state.entries.some(function (e) { return e.key === undoEntry.key; })) {
         undoEntry = null;
-        notify();
+        notify(state);
         return state;
       }
-      return commit(state.entries.concat([undoEntry]));
+      return commit(state.entries.concat([undoEntry]), state.preserved);
     }
     if (options.events) {
       options.events.addEventListener("storage", function (event) {
@@ -101,7 +115,11 @@
         catch (_) { notify(); return; }
         if (event.key === STORAGE_KEY || event.key === null) { undoEntry = null; notify(); }
       });
-      options.events.addEventListener("pageshow", function () { undoEntry = null; notify(); });
+      // Only a back/forward-cache restore can show stale state; a normal load
+      // already renders from its own initial read.
+      options.events.addEventListener("pageshow", function (event) {
+        if (event.persisted) { undoEntry = null; notify(); }
+      });
     }
     return { read: read, addMany: addMany, add: function (entry) { return addMany([entry]); },
       remove: remove, undo: undo, canUndo: function () { return !!undoEntry; },

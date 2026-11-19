@@ -25,6 +25,8 @@ before(async () => {
     if (req.url.includes('invalid-locale')) markup = markup.replace('class="article-glossary-data"', 'class="article-glossary-data" data-glossary-locale="invalid_locale!"');
     if (req.url.includes('missing-original-row')) markup = markup.replace('<li><strong>die Genehmigung</strong> - permission - Eine Erlaubnis.</li>', '');
     if (req.url.includes('invalid-url')) markup = markup.replace('data-article-url="/articles/test/"', 'data-article-url="http://["');
+    if (req.url.includes('no-store')) markup = markup.replace('<script defer src="/assets/js/my-words-store.js"></script>', '');
+    if (req.url.includes('case-variant-row')) markup = markup.replace('<strong>die Genehmigung</strong>', '<strong>Die Genehmigung</strong>');
     res.end(markup);
   });
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
@@ -49,6 +51,35 @@ test('save, reload, deduplicate, remove and undo additional word', async () => {
     assert.equal(await page.locator('.article-term--default').count(), 1);
     await page.locator('.article-glossary-popup').getByRole('button', { name: 'Rückgängig' }).click();
     assert.equal((await saved(page)).length, 1);
+  } finally { await context.close(); }
+});
+test('popup still explains words when the store script is missing', async () => {
+  const { context, page } = await setup('/articles/no-store/');
+  try {
+    await open(page, 'two');
+    const popup = page.locator('.article-glossary-popup');
+    assert.equal(await popup.isVisible(), true);
+    assert.match(await popup.innerText(), /to apply/);
+    assert.equal(await popup.getByRole('button', { name: 'beantragen speichern' }).count(), 0);
+    assert.equal(await page.getByRole('button', { name: 'Alle Wörter speichern' }).count(), 0);
+  } finally { await context.close(); }
+});
+test('unreadable storage is not announced until the reader opens a word', async () => {
+  const { context, page } = await setup();
+  try {
+    await page.evaluate(() => localStorage.setItem(BriefBerlin.words.STORAGE_KEY || 'briefberlin.myWords.v1', '{'));
+    await page.reload();
+    assert.equal((await page.locator('.page__content .my-words-status').innerText()).trim(), '');
+    await open(page, 'two');
+    assert.match(await page.locator('.page__content .my-words-status').innerText(), /nicht geladen/);
+  } finally { await context.close(); }
+});
+test('a case-variant vocabulary row still matches its hint', async () => {
+  const { context, page } = await setup('/articles/case-variant-row/');
+  try {
+    await page.getByRole('button', { name: 'Alle Wörter speichern', exact: true }).click();
+    assert.deepEqual((await saved(page)).map(e => e.term), ['die Genehmigung']);
+    assert.equal(await page.locator('li').count(), 1);
   } finally { await context.close(); }
 });
 test('bulk saves visible glossary only; removing original retains editorial row', async () => {
