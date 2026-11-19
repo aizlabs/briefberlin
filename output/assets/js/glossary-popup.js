@@ -1,4 +1,5 @@
 (function () {
+  "use strict";
   function glossaryDataElement(root) {
     if (!root || !root.querySelector) {
       return null;
@@ -14,7 +15,10 @@
 
     try {
       const items = JSON.parse(dataElement.textContent || "[]");
-      return new Map(items.map(function (item) {
+      if (!Array.isArray(items)) return new Map();
+      return new Map(items.filter(function (item) {
+        return item && typeof item === "object" && typeof item.id === "string";
+      }).map(function (item) {
         return [item.id, item];
       }));
     } catch (error) {
@@ -33,35 +37,13 @@
     const article = pageContent.closest ? pageContent.closest("article.page") : null;
     const dataElement = glossaryDataElement(article);
     const configuredLocale = dataElement && dataElement.dataset.glossaryLocale;
-    return configuredLocale || document.documentElement.lang || "de";
+    const locale = configuredLocale || document.documentElement.lang || "de";
+    try { return Intl.getCanonicalLocales(locale)[0] || "de"; }
+    catch (_) { return "de"; }
   }
 
   function normalizedHeading(text, locale) {
     return text.trim().toLocaleLowerCase(locale);
-  }
-
-  function getOrCreatePopup() {
-    let popup = document.querySelector(".article-glossary-popup");
-    if (popup) {
-      return popup;
-    }
-
-    popup = document.createElement("div");
-    popup.className = "article-glossary-popup";
-    popup.hidden = true;
-    popup.innerHTML = [
-      '<div class="article-glossary-popup__inner" role="dialog" aria-modal="false" aria-live="polite">',
-      '  <button class="article-glossary-popup__close" type="button" aria-label="Schließen">',
-      '    <i class="fas fa-xmark" aria-hidden="true"></i>',
-      '  </button>',
-      '  <div class="article-glossary-popup__term"></div>',
-      '  <div class="article-glossary-popup__english"></div>',
-      '  <div class="article-glossary-popup__explanation"></div>',
-      '  <button class="article-glossary-popup__add" type="button">Zur Vokabelliste hinzufügen</button>',
-      '</div>',
-    ].join("");
-    document.body.appendChild(popup);
-    return popup;
   }
 
   function findGlossaryList(pageContent, locale) {
@@ -90,90 +72,6 @@
     return sibling && sibling.tagName === "UL" ? sibling : null;
   }
 
-  function createGlossaryList(pageContent) {
-    const heading = document.createElement("h2");
-    heading.textContent = glossaryHeadingText(pageContent);
-    const list = document.createElement("ul");
-    const divider = pageContent.querySelector("hr");
-
-    if (divider) {
-      pageContent.insertBefore(heading, divider);
-      pageContent.insertBefore(list, divider);
-    } else {
-      pageContent.appendChild(heading);
-      pageContent.appendChild(list);
-    }
-
-    return list;
-  }
-
-  function glossaryDefinition(item) {
-    return [item.english, item.explanation].filter(Boolean).join(" - ");
-  }
-
-  function glossaryKey(term, locale) {
-    return term.toLocaleLowerCase(locale);
-  }
-
-  function findGlossaryRow(list, item, locale) {
-    if (!list) {
-      return null;
-    }
-
-    const key = glossaryKey(item.term, locale);
-    return Array.from(list.querySelectorAll("li")).find(function (row) {
-      if (row.dataset.termId === item.id) {
-        return true;
-      }
-
-      const term = row.querySelector("strong");
-      return term && glossaryKey(term.textContent.trim(), locale) === key;
-    }) || null;
-  }
-
-  function setArticleTermSelected(pageContent, item, selected) {
-    pageContent.querySelectorAll('.article-term[data-term-id="' + item.id + '"]').forEach(function (term) {
-      term.classList.toggle("article-term--default", selected);
-    });
-  }
-
-  function addToGlossary(pageContent, item, selectedTerms, locale) {
-    const key = glossaryKey(item.term, locale);
-    if (selectedTerms.has(key)) {
-      return false;
-    }
-
-    const list = findGlossaryList(pageContent, locale) || createGlossaryList(pageContent);
-    const row = document.createElement("li");
-    row.dataset.termId = item.id;
-
-    const term = document.createElement("strong");
-    term.textContent = item.term;
-    row.appendChild(term);
-    row.appendChild(document.createTextNode(" - " + glossaryDefinition(item)));
-    list.appendChild(row);
-
-    selectedTerms.add(key);
-    setArticleTermSelected(pageContent, item, true);
-    return true;
-  }
-
-  function removeFromGlossary(pageContent, item, selectedTerms, locale) {
-    const key = glossaryKey(item.term, locale);
-    if (!selectedTerms.has(key)) {
-      return false;
-    }
-
-    const row = findGlossaryRow(findGlossaryList(pageContent, locale), item, locale);
-    if (row) {
-      row.remove();
-    }
-
-    selectedTerms.delete(key);
-    setArticleTermSelected(pageContent, item, false);
-    return true;
-  }
-
   function positionPopup(popup, target) {
     const rect = target.getBoundingClientRect();
     const margin = 12;
@@ -188,93 +86,187 @@
       top = Math.max(margin, rect.top - popupRect.height - margin);
     }
 
+    // The anchor can have scrolled out of view while this non-modal popup is open.
+    top = Math.max(margin, Math.min(top, window.innerHeight - popupRect.height - margin));
     popup.style.left = left + "px";
     popup.style.top = top + "px";
   }
 
-  function setPopupContent(popup, item, pageContent, selectedTerms, locale) {
-    popup.querySelector(".article-glossary-popup__term").textContent = item.term;
-    popup.querySelector(".article-glossary-popup__english").textContent = item.english || "";
-    popup.querySelector(".article-glossary-popup__explanation").textContent = item.explanation || "";
-
-    const addButton = popup.querySelector(".article-glossary-popup__add");
-    const key = glossaryKey(item.term, locale);
-    const selected = selectedTerms.has(key);
-    addButton.disabled = false;
-    addButton.textContent = selected ? "Aus Vokabelliste entfernen" : "Zur Vokabelliste hinzufügen";
-    addButton.onclick = function () {
-      if (selectedTerms.has(key)) {
-        removeFromGlossary(pageContent, item, selectedTerms, locale);
-      } else {
-        addToGlossary(pageContent, item, selectedTerms, locale);
-      }
-      setPopupContent(popup, item, pageContent, selectedTerms, locale);
-    };
+  function element(tag, className, text) {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text) node.textContent = text;
+    return node;
   }
-
+  function button(text, className) {
+    const node = element("button", className, text);
+    node.type = "button";
+    return node;
+  }
   function initArticleGlossary(root) {
+    const store = window.BriefBerlin && window.BriefBerlin.words;
     const pageContent = root.querySelector(".page__content");
-    if (!pageContent) {
-      return;
-    }
-
+    if (!store || !pageContent) return;
     const itemsById = parseGlossaryData(root);
-    if (!itemsById.size) {
-      return;
+    for (const [id, item] of itemsById) {
+      if (!item || typeof item.term !== "string" || !item.term.trim() ||
+          typeof item.id !== "string" || typeof item.english !== "string" || typeof item.explanation !== "string") itemsById.delete(id);
     }
-
-    const popup = getOrCreatePopup();
+    if (!itemsById.size) return;
     const locale = glossaryLocale(pageContent);
-    const selectedTerms = new Set(
-      Array.from(itemsById.values())
-        .filter(function (item) {
-          return item.defaultGlossary;
-        })
-        .map(function (item) {
-          return glossaryKey(item.term, locale);
-        })
-    );
-
+    const language = locale.split(/[-_]/)[0];
+    const keyOf = function (item) { return store.wordKey(language, item.term); };
+    const itemsByKey = new Map();
+    itemsById.forEach(function (item) { if (!itemsByKey.has(keyOf(item))) itemsByKey.set(keyOf(item), item); });
+    let list = findGlossaryList(pageContent, locale);
+    let dynamicHeading = null;
+    const originalKeys = new Set();
+    function rowKey(row) {
+      const term = row.querySelector("strong");
+      return term ? store.wordKey(language, term.textContent) : null;
+    }
+    if (list) Array.from(list.children).forEach(function (row) { if (rowKey(row)) originalKeys.add(rowKey(row)); });
+    itemsById.forEach(function (item) { if (item.defaultGlossary) originalKeys.add(keyOf(item)); });
+    const status = element("div", "my-words-status");
+    status.setAttribute("role", "status"); status.setAttribute("aria-live", "polite");
+    const statusText = element("span");
+    const undoButton = button("Rückgängig", "my-words-text-button");
+    undoButton.hidden = true; status.append(statusText, undoButton);
+    pageContent.append(status);
+    const popup = element("div", "article-glossary-popup"); popup.hidden = true;
+    const inner = element("div", "article-glossary-popup__inner");
+    inner.setAttribute("role", "dialog"); inner.setAttribute("aria-label", "Worterklärung");
+    const close = button("×", "article-glossary-popup__close"); close.setAttribute("aria-label", "Schließen");
+    const term = element("div", "article-glossary-popup__term");
+    const translation = element("div", "article-glossary-popup__english");
+    const explanation = element("div", "article-glossary-popup__explanation");
+    const savedLabel = element("span", "my-words-saved", "Gespeichert ✓");
+    const action = button("Wort speichern", "article-glossary-popup__add");
+    const popupStatus = element("div", "my-words-status"); popupStatus.setAttribute("role", "status");
+    const popupText = element("span"); const popupUndo = button("Rückgängig", "my-words-text-button"); popupUndo.hidden = true;
+    popupStatus.append(popupText, popupUndo);
+    inner.append(close, term, translation, explanation, savedLabel, action, popupStatus); popup.append(inner); document.body.append(popup);
+    let activeItem = null, activeTarget = null;
+    let saved = new Set(), readable = true, controls = null, bulk = null;
+    function message(text) {
+      statusText.textContent = text; popupText.textContent = text;
+      undoButton.hidden = popupUndo.hidden = !store.canUndo();
+      // Errors, undo, and cross-tab updates can change the popup height.
+      if (!popup.hidden && activeTarget) positionPopup(popup, activeTarget);
+    }
+    function candidate(item) {
+      let articleUrl = "";
+      try { articleUrl = new URL(root.dataset.articleUrl || "", location.origin).href; }
+      catch (_) { /* The store will reject missing/invalid public metadata. */ }
+      return { language: language, term: item.term, translation: item.english, explanation: item.explanation,
+        articleTitle: root.dataset.articleTitle || "", articleUrl: articleUrl };
+    }
+    function visibleItems() {
+      if (!list) return [];
+      return Array.from(list.children).map(function (row) { return itemsByKey.get(rowKey(row)); }).filter(Boolean);
+    }
+    function ensureList() {
+      if (list) return;
+      dynamicHeading = element("h2", "", glossaryHeadingText(pageContent));
+      list = element("ul");
+      const before = pageContent.querySelector("hr") || status;
+      pageContent.insertBefore(dynamicHeading, before); pageContent.insertBefore(list, before);
+    }
+    function ensureControls() {
+      if (!list || controls) return;
+      // An unmatched legacy row cannot be safely included in a 'save all' action.
+      if (Array.from(list.children).some(function (row) { return !itemsByKey.has(rowKey(row)); })) return;
+      controls = element("div", "my-words-glossary-controls");
+      bulk = button("Alle Wörter speichern", "my-words-button");
+      const link = element("a", "", "Meine Wörter →"); link.href = root.dataset.myWordsUrl || "/meine-woerter/";
+      controls.append(bulk, link); list.before(controls);
+      bulk.addEventListener("click", function () {
+        const result = store.addMany(visibleItems().map(candidate));
+        if (!result.ok) { message("Die Änderung konnte nicht gespeichert werden. Bitte versuche es erneut."); return; }
+        refresh(result); message("Alle Wörter gespeichert.");
+      });
+    }
+    function updatePopup() {
+      if (!activeItem) return;
+      const isSaved = saved.has(keyOf(activeItem));
+      term.textContent = activeItem.term; translation.textContent = activeItem.english; explanation.textContent = activeItem.explanation;
+      savedLabel.hidden = !isSaved;
+      action.textContent = isSaved ? "Entfernen" : "Wort speichern";
+      // The store rejects unreadable data; leave retry available after transient failures.
+      action.setAttribute("aria-label", activeItem.term + (isSaved ? " entfernen" : " speichern"));
+    }
+    function refresh(state) {
+      readable = state.ok;
+      if (!state.ok) {
+        if (bulk) bulk.disabled = true;
+        message("Deine gespeicherten Wörter konnten nicht geladen werden. Deine Daten wurden nicht verändert.");
+        return;
+      }
+      saved = new Set(state.entries.map(function (entry) { return entry.key; }));
+      itemsByKey.forEach(function (item, key) {
+        if (saved.has(key)) {
+          ensureList();
+          if (!Array.from(list.children).some(function (row) { return rowKey(row) === key; })) {
+            const row = element("li"); row.dataset.myWordsAdded = "true";
+            row.append(element("strong", "", item.term), document.createTextNode(" - " + [item.english, item.explanation].filter(Boolean).join(" - ")));
+            list.append(row);
+          }
+        }
+      });
+      if (list) Array.from(list.children).forEach(function (row) {
+        if (row.dataset.myWordsAdded && !originalKeys.has(rowKey(row)) && !saved.has(rowKey(row))) row.remove();
+      });
+      pageContent.querySelectorAll(".article-term[data-term-id]").forEach(function (node) {
+        const item = itemsById.get(node.dataset.termId);
+        if (item) node.classList.toggle("article-term--default", originalKeys.has(keyOf(item)) || saved.has(keyOf(item)));
+      });
+      if (list && !list.children.length && dynamicHeading) {
+        list.remove(); dynamicHeading.remove(); if (controls) controls.remove();
+        list = dynamicHeading = controls = bulk = null;
+      }
+      ensureControls();
+      if (bulk) {
+        const visible = visibleItems();
+        const complete = visible.length > 0 && visible.every(function (item) { return saved.has(keyOf(item)); });
+        bulk.textContent = complete ? "Alle gespeichert ✓" : "Alle Wörter speichern";
+        bulk.disabled = !readable || !visible.length || complete;
+      }
+      updatePopup();
+      message(store.canUndo() ? "Wort entfernt. " : "");
+    }
+    action.addEventListener("click", function () {
+      if (!activeItem) return;
+      const removing = saved.has(keyOf(activeItem));
+      const result = removing ? store.remove(keyOf(activeItem)) : store.add(candidate(activeItem));
+      if (!result.ok) { message("Die Änderung konnte nicht gespeichert werden. Bitte versuche es erneut."); return; }
+      refresh(result); message(removing ? "Wort entfernt. " : "Wort gespeichert.");
+      if (activeTarget) positionPopup(popup, activeTarget);
+    });
+    function undo() {
+      const result = store.undo();
+      if (!result.ok) { message("Die Änderung konnte nicht gespeichert werden. Bitte versuche es erneut."); return; }
+      refresh(result); message("Wort wiederhergestellt.");
+      // Inline undo remains usable after the popup has been dismissed. Never
+      // focus a hidden popup control or leave focus on the now-hidden undo.
+      if (!popup.hidden) action.focus();
+      else if (activeTarget && activeTarget.isConnected) activeTarget.focus();
+    }
+    undoButton.addEventListener("click", undo); popupUndo.addEventListener("click", undo);
     pageContent.addEventListener("click", function (event) {
       const target = event.target.closest(".article-term");
-      if (!target || !pageContent.contains(target)) {
-        return;
-      }
-
-      const item = itemsById.get(target.dataset.termId);
-      if (!item) {
-        return;
-      }
-
-      setPopupContent(popup, item, pageContent, selectedTerms, locale);
-      positionPopup(popup, target);
+      if (!target || !pageContent.contains(target)) return;
+      const item = itemsById.get(target.dataset.termId); if (!item) return;
+      activeItem = item; activeTarget = target; refresh(store.read()); updatePopup(); positionPopup(popup, target); action.focus();
     });
-
-    popup.querySelector(".article-glossary-popup__close").addEventListener("click", function () {
-      popup.hidden = true;
-    });
-
+    function hide(returnFocus) { popup.hidden = true; if (returnFocus && activeTarget) activeTarget.focus(); }
+    close.addEventListener("click", function () { hide(true); });
+    document.addEventListener("keydown", function (event) { if (event.key === "Escape" && !popup.hidden) hide(true); });
     document.addEventListener("click", function (event) {
-      if (popup.hidden) {
-        return;
-      }
-      if (event.target.closest(".article-glossary-popup") || event.target.closest(".article-term")) {
-        return;
-      }
-      popup.hidden = true;
+      if (!popup.hidden && !popup.contains(event.target) && !event.target.closest(".article-term")) hide(false);
     });
-
-    document.addEventListener("keydown", function (event) {
-      if (event.key === "Escape") {
-        popup.hidden = true;
-      }
-    });
-
-    window.addEventListener("resize", function () {
-      popup.hidden = true;
-    });
+    window.addEventListener("resize", function () { if (!popup.hidden) hide(true); });
+    store.subscribe(refresh); refresh(store.read());
   }
-
   document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll("article.page").forEach(initArticleGlossary);
   });

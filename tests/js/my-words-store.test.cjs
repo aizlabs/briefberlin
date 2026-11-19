@@ -1,0 +1,130 @@
+const { test } = require('node:test');
+const assert = require('node:assert/strict');
+const { createStore, wordKey, STORAGE_KEY } = require('../../output/assets/js/my-words-store.js');
+function fixture(overrides = {}) {
+  let raw = null, writes = 0;
+  const storage = { getItem: () => raw, setItem: (_, value) => { raw = value; writes++; } };
+  const store = createStore({ storage: () => storage, origin: 'https://briefberlin.de', now: () => '2026-11-19T10:00:00.000Z', ...overrides });
+  return { store, storage, raw: () => raw, setRaw: value => raw = value, writes: () => writes };
+}
+function entry(term = 'die Genehmigung', overrides = {}) {
+  return { term, language: 'de', translation: 'permission', explanation: 'Eine Erlaubnis.', articleTitle: 'Neue Regeln', articleUrl: 'https://briefberlin.de/articles/neue-regeln/', ...overrides };
+}
+test('normalizes identity without merging capitalization or inflections', () => {
+  assert.equal(wordKey('de', '  scho\u0308n   sein '), wordKey('de', 'schön sein'));
+  assert.notEqual(wordKey('de', 'sie'), wordKey('de', 'Sie'));
+  assert.notEqual(wordKey('de', 'beantragen'), wordKey('de', 'beantragt'));
+});
+test('starts empty, saves exact content, deduplicates and preserves first save', () => {
+  const f = fixture();
+  assert.deepEqual(f.store.read().entries, []);
+  assert.equal(f.store.add(entry()).ok, true);
+  const first = f.raw();
+  f.store.add(entry('die Genehmigung', { explanation: 'Different', articleUrl: 'https://briefberlin.de/articles/other/' }));
+  assert.equal(f.raw(), first);
+  assert.equal(f.writes(), 1);
+  assert.equal(JSON.parse(first).schemaVersion, 1);
+  assert.equal(f.store.read().entries[0].savedAt, '2026-11-19T10:00:00.000Z');
+});
+test('batch is deduplicated, atomic and emits one change', () => {
+  const f = fixture(); let events = 0;
+  f.store.subscribe(() => events++);
+  f.store.addMany([entry(), entry(), entry('beantragen')]);
+  assert.equal(f.writes(), 1); assert.equal(events, 1);
+  assert.equal(f.store.read().entries.length, 2);
+  const original = f.raw();
+  assert.equal(f.store.addMany([entry('neu'), entry('bad', { articleUrl: 'https://evil.test/articles/x/' })]).ok, false);
+  assert.equal(f.raw(), original);
+});
+test('remove and undo restore full entry; new mutation clears undo', () => {
+  const f = fixture(); f.store.add(entry());
+  const saved = f.store.read().entries[0];
+  f.store.remove(saved.key); assert.equal(f.store.canUndo(), true);
+  f.store.undo(); assert.deepEqual(f.store.read().entries, [saved]);
+  f.store.remove(saved.key); f.store.add(entry('neu')); assert.equal(f.store.canUndo(), false);
+});
+test('undo does not overwrite an entry already restored elsewhere', () => {
+  const f = fixture(); f.store.add(entry()); const saved = f.store.read().entries[0]; f.store.remove(saved.key);
+  f.setRaw(JSON.stringify({ schemaVersion: 1, entries: [{ ...saved, explanation: 'Other tab' }] }));
+  f.store.undo(); assert.equal(f.store.read().entries[0].explanation, 'Other tab');
+});
+test('corrupt, unsupported, invalid entries and duplicate keys are preserved', () => {
+  const f = fixture(); f.store.add(entry()); const saved = f.store.read().entries[0];
+  for (const raw of ['{', JSON.stringify({ schemaVersion: 2, entries: [] }), JSON.stringify({ schemaVersion: 1, entries: [{ ...saved, savedAt: 'no' }] }), JSON.stringify({ schemaVersion: 1, entries: [saved, saved] })]) {
+    f.setRaw(raw); assert.equal(f.store.read().ok, false); assert.equal(f.store.add(entry()).ok, false); assert.equal(f.raw(), raw);
+  }
+});
+test('access and quota failures do not report success or emit changes', () => {
+  const denied = fixture({ storage: () => { throw Error('blocked'); } });
+  assert.equal(denied.store.add(entry()).ok, false);
+  const f = fixture(); let events = 0; f.store.subscribe(() => events++);
+  f.storage.setItem = () => { throw Error('quota'); };
+  assert.equal(f.store.add(entry()).ok, false); assert.equal(events, 0); assert.equal(f.raw(), null);
+});
+test('validates same-origin public URLs and configured base path', () => {
+  const f = fixture({ basePath: '/preview' });
+  for (const url of ['https://briefberlin.de/articles/a/', 'https://briefberlin.de/private-input/a', 'javascript:alert(1)', 'https://briefberlin.de/preview/articles/a/#secret', 'https://briefberlin.de/preview/articles/a/?secret=x']) {
+    assert.equal(f.store.add(entry('word', { articleUrl: url })).ok, false);
+  }
+  assert.equal(f.store.add(entry('word', { articleUrl: 'https://briefberlin.de/preview/articles/a/' })).ok, true);
+});
+test('refresh events and mutations read latest storage', () => {
+  const events = new EventTarget(); const f = fixture({ events }); let changes = 0;
+  f.store.subscribe(() => changes++); f.store.add(entry());
+  const other = { ...entry('other'), key: wordKey('de', 'other'), savedAt: '2026-11-18T10:00:00.000Z' };
+  f.setRaw(JSON.stringify({ schemaVersion: 1, entries: [other] })); f.store.add(entry('new'));
+  assert.deepEqual(f.store.read().entries.map(e => e.term), ['other', 'new']);
+  const event = new Event('storage'); event.key = STORAGE_KEY; events.dispatchEvent(event);
+  events.dispatchEvent(new Event('pageshow')); assert.equal(changes, 4);
+});
+
+test('invalid batch inputs return explicit failure without writing', () => {
+  const f = fixture();
+  for (const input of [null, undefined, {}, 'word']) {
+    assert.deepEqual(f.store.addMany(input), { ok: false, error: 'invalid-entry' });
+  }
+  assert.equal(f.writes(), 0);
+});
+test('invalid calendar dates are rejected rather than silently normalized', () => {
+  const f = fixture(); f.store.add(entry()); const saved = f.store.read().entries[0];
+  const raw = JSON.stringify({ schemaVersion: 1, entries: [{ ...saved, savedAt: '2026-02-30T10:00:00.000Z' }] });
+  f.setRaw(raw);
+  assert.equal(f.store.read().ok, false);
+  assert.equal(f.store.add(entry('new')).ok, false);
+  assert.equal(f.raw(), raw);
+});
+test('only public vocabulary fields are persisted', () => {
+  const f = fixture();
+  assert.equal(f.store.add(entry('word', { privateSource: 'confidential', draft: 'unpublished' })).ok, true);
+  assert.equal(f.raw().includes('confidential'), false);
+  assert.equal(f.raw().includes('unpublished'), false);
+});
+test('subscriber failure cannot turn a committed write into a failure or block other subscribers', () => {
+  const f = fixture(); let notifications = 0;
+  const original = console.error;
+  console.error = () => {};
+  try {
+    f.store.subscribe(() => { throw Error('render failed'); });
+    f.store.subscribe(() => notifications++);
+    assert.equal(f.store.add(entry()).ok, true);
+    assert.equal(f.store.read().entries.length, 1);
+    assert.equal(notifications, 1);
+  } finally { console.error = original; }
+});
+test('unrelated session storage events do not clear pending undo', () => {
+  const events = new EventTarget(); const f = fixture({ events });
+  f.store.add(entry()); f.store.remove(f.store.read().entries[0].key);
+  const unrelated = new Event('storage'); unrelated.key = STORAGE_KEY; unrelated.storageArea = {};
+  events.dispatchEvent(unrelated);
+  assert.equal(f.store.canUndo(), true);
+  const matching = new Event('storage'); matching.key = STORAGE_KEY; matching.storageArea = f.storage;
+  events.dispatchEvent(matching);
+  assert.equal(f.store.canUndo(), false);
+});
+test('rejects encoded traversal and separators while allowing Unicode article slugs', () => {
+  const f = fixture();
+  for (const suffix of ['%2F..%2Fprivate-input%2Fsecret/', '%5C..%5Cprivate/', '%252e%252e/private/', '%ZZ/']) {
+    assert.equal(f.store.add(entry('word', { articleUrl: 'https://briefberlin.de/articles/' + suffix })).ok, false);
+  }
+  assert.equal(f.store.add(entry('word', { articleUrl: 'https://briefberlin.de/articles/%C3%A4nderungen/' })).ok, true);
+});

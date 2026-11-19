@@ -4,7 +4,7 @@ layout: default
 
 {% assign article_author = site.data.authors[page.author] %}
 {% assign t = site.data.ui-briefberlin.de %}
-<article class="page" itemscope itemtype="https://schema.org/NewsArticle">
+<article class="page" data-article-title="{{ page.title | escape }}" data-article-url="{{ page.url | relative_url | escape }}" data-my-words-url="{{ '/meine-woerter/' | relative_url }}" itemscope itemtype="https://schema.org/NewsArticle">
   {% if page.title %}<meta itemprop="headline" content="{{ page.title | markdownify | strip_html | strip_newlines | escape_once }}">{% endif %}
   {% if page.date %}<meta itemprop="datePublished" content="{{ page.date | date_to_xmlschema }}">{% endif %}
   {% if page.last_modified_at %}

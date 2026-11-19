@@ -3,6 +3,8 @@ main:
     url: /
   - title: "Niveaus"
     url: /levels/
+  - title: "Meine Wörter"
+    url: /meine-woerter/
   - title: "Über uns"
     url: /about/
   - title: "Redaktion"

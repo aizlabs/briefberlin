@@ -1,0 +1,44 @@
+---
+permalink: /meine-woerter/
+title: "Meine Wörter"
+excerpt: "Deine gespeicherten Wörter aus BriefBerlin."
+layout: single
+lang: de
+noindex: true
+sitemap: false
+my_words: true
+---
+
+<div class="my-words" data-my-words-page>
+  <p class="my-words-count" data-words-count hidden></p>
+  <p class="my-words-notice">Deine Wörter werden nur in diesem Browser gespeichert.<br>Wenn du die Websitedaten löschst, wird auch diese Liste gelöscht.</p>
+  <noscript><p>Für Meine Wörter brauchst du JavaScript. Du kannst die Artikel weiterhin lesen.</p><a href="{{ '/' | relative_url }}">Zu den Artikeln</a></noscript>
+  <div class="my-words-status" role="status" aria-live="polite">
+    <span data-words-status></span>
+    <button type="button" class="my-words-text-button" data-words-undo hidden>Rückgängig</button>
+  </div>
+  <button type="button" class="my-words-text-button" data-words-retry hidden>Erneut versuchen</button>
+  <div class="my-words-toolbar" data-words-toolbar hidden>
+    <label for="my-words-sort">Sortieren:
+      <select id="my-words-sort" data-words-sort>
+        <option value="alphabetical">Alphabetisch</option>
+        <option value="newest">Zuletzt hinzugefügt</option>
+      </select>
+    </label>
+    <details class="my-words-export" data-words-export>
+      <summary>Exportieren</summary>
+      <div class="my-words-export__options">
+        <button type="button" class="my-words-text-button" data-words-download="csv">CSV herunterladen</button>
+        <button type="button" class="my-words-text-button" data-words-download="anki">Für Anki herunterladen</button>
+        <p>In Anki importieren: erste Spalte → Vorderseite, zweite → Rückseite. Wähle einen passenden Kartentyp und aktiviere HTML. Beim erneuten Import vorhandene Notizen aktualisieren.</p>
+        <p>Exportiert alle Wörter für andere Programme. Ein Rückimport in Meine Wörter ist nicht möglich.</p>
+      </div>
+    </details>
+  </div>
+  <div data-words-empty hidden>
+    <p><strong>Noch keine Wörter gespeichert.</strong></p>
+    <p>Tippe in einem Artikel auf ein Wort und wähle „Wort speichern“. Du kannst auch alle Wörter einer Vokabelliste speichern.</p>
+    <a href="{{ '/' | relative_url }}" data-words-articles>Zu den Artikeln</a>
+  </div>
+  <ul class="my-words-list" data-words-list aria-label="Gespeicherte Wörter"></ul>
+</div>

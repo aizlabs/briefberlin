@@ -86,15 +86,12 @@ def test_interactive_glossary_reuses_existing_vocabulary_section():
 def test_interactive_glossary_toggles_vocabulary_terms():
     script = Path("output/assets/js/glossary-popup.js").read_text(encoding="utf-8")
 
-    assert "selectedTerms" in script
-    assert "const locale = glossaryLocale(pageContent)" in script
-    assert "function addToGlossary(pageContent, item, selectedTerms, locale)" in script
-    assert "function removeFromGlossary(pageContent, item, selectedTerms, locale)" in script
-    assert "setArticleTermSelected(pageContent, item, true)" in script
-    assert "setArticleTermSelected(pageContent, item, false)" in script
-    assert "Aus Vokabelliste entfernen" in script
-    assert "Zur Vokabelliste hinzufügen" in script
-    assert "addButton.disabled = false" in script
+    assert "window.BriefBerlin.words" in script
+    assert "originalKeys" in script
+    assert "row.dataset.myWordsAdded" in script
+    assert "Alle Wörter speichern" in script
+    assert "Wort speichern" in script
+    assert "store.subscribe(refresh)" in script
 
 
 def test_selected_glossary_terms_are_bold_not_underlined():
@@ -167,3 +164,31 @@ def test_audio_highlighting_ignores_typographic_quotes():
     assert "function foldQuotes" in script
     assert "sameText(paragraphs[index].textContent, block.text)" in script
     assert "return sameText(target.textContent, block.text);" in script
+
+
+def test_my_words_script_order_and_page_only_assets():
+    head = Path("output/_includes/head/custom.html").read_text(encoding="utf-8")
+    assert head.index("my-words-store.js") < head.index("glossary-popup.js")
+    page_block = head.split("{% if page.my_words %}", 1)[1].split("{% endif %}", 1)[0]
+    assert page_block.index("my-words-export.js") < page_block.index("my-words-page.js")
+    assert 'name="briefberlin-base-path"' in head
+
+
+def test_my_words_page_and_public_metadata_contract():
+    import yaml
+
+    page = Path("output/_pages/meine-woerter.html").read_text(encoding="utf-8")
+    frontmatter = yaml.safe_load(page.split("---", 2)[1])
+    assert frontmatter["permalink"] == "/meine-woerter/"
+    assert frontmatter["lang"] == "de"
+    assert frontmatter["noindex"] is True
+    assert frontmatter["sitemap"] is False
+    assert "<noscript>" in page
+    assert "data-words-empty hidden" in page
+    assert "CSV herunterladen" in page
+    assert "Für Anki herunterladen" in page
+    layout = Path("output/_layouts/post.html").read_text(encoding="utf-8")
+    assert 'data-article-title="{{ page.title | escape }}"' in layout
+    assert 'data-article-url="{{ page.url | relative_url | escape }}"' in layout
+    navigation = yaml.safe_load(Path("output/_data/navigation.yml").read_text(encoding="utf-8"))
+    assert {"title": "Meine Wörter", "url": "/meine-woerter/"} in navigation["main"]
