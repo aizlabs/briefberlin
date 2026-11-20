@@ -37,7 +37,9 @@ test('empty, list content, German sorting and original article links', async () 
     await seed(page);
     assert.equal(await page.locator('[data-words-count]').innerText(), '3 gespeicherte Wörter');
     assert.deepEqual(await page.locator('.my-words-entry strong').allTextContents(), ['Änderung', 'beantragen', 'Zug']);
-    await page.locator('[data-words-sort]').selectOption('newest');
+    await page.getByRole('button', { name: 'Neueste zuerst' }).click();
+    assert.equal(await page.getByRole('button', { name: 'Neueste zuerst' }).getAttribute('aria-pressed'), 'true');
+    assert.equal(await page.getByRole('button', { name: 'A–Z: alphabetisch sortieren' }).getAttribute('aria-pressed'), 'false');
     const entries = await page.evaluate(() => BriefBerlin.words.read().entries);
     const expected = entries.slice().sort((a,b) => Date.parse(b.savedAt)-Date.parse(a.savedAt) || new Intl.Collator('de').compare(a.term,b.term)).map(e=>e.term);
     assert.deepEqual(await page.locator('.my-words-entry strong').allTextContents(), expected);
@@ -50,7 +52,9 @@ test('remove focuses next row, undo restores record and sorting preserves undo',
     await seed(page); const original = await page.evaluate(() => BriefBerlin.words.read().entries.find(e => e.term === 'Änderung'));
     await page.getByRole('button', { name: 'Änderung entfernen', exact: true }).click();
     assert.equal(await page.evaluate(() => document.activeElement.getAttribute('aria-label')), 'beantragen entfernen');
-    await page.locator('[data-words-sort]').selectOption('newest');
+    await page.getByRole('button', { name: 'Neueste zuerst' }).click();
+    assert.equal(await page.getByRole('button', { name: 'Neueste zuerst' }).getAttribute('aria-pressed'), 'true');
+    assert.equal(await page.getByRole('button', { name: 'A–Z: alphabetisch sortieren' }).getAttribute('aria-pressed'), 'false');
     await page.getByRole('button', { name: 'Rückgängig', exact: true }).click();
     assert.deepEqual(await page.evaluate(() => BriefBerlin.words.read().entries.find(e => e.term === 'Änderung')), original);
     for (const word of ['Änderung','beantragen','Zug']) await page.getByRole('button', { name: word + ' entfernen', exact: true }).click();
@@ -125,7 +129,7 @@ test('CSV and Anki downloads contain all words in displayed order and preserve u
     await seed(page); await page.getByRole('button', { name: 'Zug entfernen', exact: true }).click();
     const before = await page.evaluate(() => JSON.stringify(BriefBerlin.words.read().entries));
     for (const [format, label] of [['csv','CSV herunterladen'],['anki','Für Anki herunterladen']]) {
-      await page.locator('[data-words-export] summary').click();
+      await page.locator('[data-words-export] > summary').click();
       const downloadPromise = page.waitForEvent('download'); await page.getByRole('button', { name: label, exact: true }).click();
       const download = await downloadPromise; const text = fs.readFileSync(await download.path(), 'utf8');
       assert.ok(text.indexOf('Änderung') < text.indexOf('beantragen')); assert.ok(!text.includes('Zug'));
@@ -139,7 +143,7 @@ test('export rechecks current storage and restores focus when it becomes unreada
   const { context, page } = await setup();
   try {
     await seed(page);
-    await page.locator('[data-words-export] summary').click();
+    await page.locator('[data-words-export] > summary').click();
     await page.evaluate(() => localStorage.setItem('briefberlin.myWords.v1', '{'));
     await page.getByRole('button', { name: 'CSV herunterladen', exact: true }).click();
     assert.equal(await page.locator('[data-words-toolbar]').isVisible(), false);
@@ -173,5 +177,25 @@ test('outdated links stay listed without a link; unreadable records are reported
     assert.match(await page.locator('[data-words-hidden]').innerText(), /^1 gespeicherter Eintrag kann nicht angezeigt werden/);
     await page.getByRole('button', { name: 'Zug entfernen', exact: true }).click();
     assert.equal(await page.evaluate(() => JSON.parse(localStorage.getItem('briefberlin.myWords.v1')).entries.some(e => e.term === 'kaputt')), true);
+  } finally { await context.close(); }
+});
+
+test('export keeps guidance optional and dismisses with Escape or outside interaction', async () => {
+  const { context, page } = await setup();
+  try {
+    await seed(page);
+    const summary = page.locator('[data-words-export] > summary');
+    const panel = page.locator('[data-words-export]');
+    await summary.click();
+    assert.equal(await page.locator('.my-words-export__help').getAttribute('open'), null);
+    await page.locator('.my-words-export__help summary').click();
+    assert.equal(await page.locator('.my-words-export__help p').first().isVisible(), true);
+    await page.keyboard.press('Escape');
+    assert.equal(await panel.getAttribute('open'), null);
+    assert.equal(await summary.evaluate(el => el === document.activeElement), true);
+    await summary.click();
+    await page.getByRole('button', { name: 'Neueste zuerst' }).click();
+    assert.equal(await panel.getAttribute('open'), null);
+    assert.equal(await page.getByRole('button', { name: 'Neueste zuerst' }).getAttribute('aria-pressed'), 'true');
   } finally { await context.close(); }
 });

@@ -8,17 +8,17 @@
     const count = root.querySelector("[data-words-count]");
     const toolbar = root.querySelector("[data-words-toolbar]");
     const empty = root.querySelector("[data-words-empty]");
-    const sort = root.querySelector("[data-words-sort]");
+    const sortButtons = root.querySelectorAll("[data-words-sort]");
     const status = root.querySelector("[data-words-status]");
     const undo = root.querySelector("[data-words-undo]");
     const retry = root.querySelector("[data-words-retry]");
     const hiddenNotice = root.querySelector("[data-words-hidden]");
     const collator = new Intl.Collator("de");
-    let entries = [], readable = false, lastRemovedKey = null;
+    let entries = [], readable = false, lastRemovedKey = null, sortOrder = "alphabetical";
     function ordered() {
       return entries.slice().sort(function (a, b) {
         const alphabetic = collator.compare(a.term, b.term) || a.key.localeCompare(b.key);
-        return sort.value === "newest" ? Date.parse(b.savedAt) - Date.parse(a.savedAt) || alphabetic : alphabetic;
+        return sortOrder === "newest" ? Date.parse(b.savedAt) - Date.parse(a.savedAt) || alphabetic : alphabetic;
       });
     }
     function textElement(tag, text, className) {
@@ -113,7 +113,31 @@
       refresh(store.read());
       if (readable) (list.querySelector("button") || root.querySelector("[data-words-articles]")).focus();
     });
-    sort.addEventListener("change", render);
+    sortButtons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        sortOrder = button.dataset.wordsSort;
+        sortButtons.forEach(function (option) {
+          option.setAttribute("aria-pressed", String(option === button));
+        });
+        render();
+      });
+    });
+    const exportDetails = root.querySelector("[data-words-export]");
+    function closeExport(returnFocus) {
+      exportDetails.open = false;
+      if (returnFocus) exportDetails.querySelector("summary").focus();
+    }
+    document.addEventListener("click", function (event) {
+      if (exportDetails.open && !exportDetails.contains(event.target)) closeExport(false);
+    });
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && exportDetails.open) {
+        event.preventDefault(); closeExport(true);
+      }
+    });
+    exportDetails.addEventListener("focusout", function (event) {
+      if (event.relatedTarget && !exportDetails.contains(event.relatedTarget)) closeExport(false);
+    });
     root.querySelectorAll("[data-words-download]").forEach(function (button) {
       button.addEventListener("click", function () {
         const state = store.read();
@@ -125,8 +149,7 @@
             return store.linkable(entry) ? entry : Object.assign({}, entry, { articleUrl: "" });
           });
           window.BriefBerlin.wordExport.download(exported, button.dataset.wordsDownload);
-          const details = root.querySelector("[data-words-export]");
-          details.open = false; details.querySelector("summary").focus();
+          closeExport(true);
         } catch (_) { message("Die Datei konnte nicht erstellt werden. Bitte versuche es erneut."); }
       });
     });
