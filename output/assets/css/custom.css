@@ -1501,7 +1501,7 @@ body {
   padding: 0.85rem 0.95rem 0.95rem;
   background: var(--paper);
   border: 1px solid var(--rule-firm);
-  border-radius: 4px;
+  border-radius: 12px;
   box-shadow: 0 16px 42px rgba(22, 21, 15, 0.16);
 }
 
@@ -1553,39 +1553,38 @@ body {
   line-height: 1.45;
 }
 
-.article-glossary-popup__add {
-  display: inline-flex;
+.article-glossary-popup__add,
+.article-glossary-popup__remove {
+  display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  min-height: 2.35rem;
-  margin-top: 0.8rem;
-  padding: 0.5rem 0.7rem;
-  border: 1px solid var(--ink);
-  border-radius: 3px;
-  background: var(--ink);
-  color: var(--paper);
+  min-height: 44px;
+  padding: 0.55rem 0.7rem;
+  border: 0;
+  border-radius: 8px;
   font-family: var(--sans);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.4;
   cursor: pointer;
 }
 
-.article-glossary-popup__add:hover,
-.article-glossary-popup__add:focus-visible {
+.article-glossary-popup__add {
+  margin-top: 0.85rem;
   background: var(--accent);
-  border-color: var(--accent);
-  outline: none;
+  color: var(--paper);
 }
 
-.article-glossary-popup__add:disabled {
-  background: var(--paper-sunk);
-  border-color: var(--rule);
-  color: var(--ink-mute);
-  cursor: default;
+.article-glossary-popup__add:hover { background: var(--ink); }
+
+.article-glossary-popup__remove {
+  margin-top: 0.25rem;
+  background: transparent;
+  color: var(--ink-soft);
 }
+
+.article-glossary-popup__remove:hover { background: var(--paper-sunk); }
 
 /* ==========================================================================
    Pagination
@@ -1720,7 +1719,7 @@ body {
   padding: 0.6rem;
   background: var(--paper);
   border: 1px solid var(--rule-firm);
-  border-radius: 4px;
+  border-radius: 12px;
   box-shadow: 0 16px 42px rgba(22, 21, 15, 0.16);
 }
 

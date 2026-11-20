@@ -90,7 +90,7 @@ def test_interactive_glossary_toggles_vocabulary_terms():
     assert "originalKeys" in script
     assert "row.dataset.myWordsAdded" in script
     assert "Alle Wörter speichern" in script
-    assert "Wort speichern" in script
+    assert "Zu meinen Wörtern hinzufügen" in script
     assert "store.subscribe(refresh)" in script
 
 

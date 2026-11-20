@@ -44,11 +44,12 @@ The original article glossary is editorial content. The personal collection is e
 
 | State | Article presentation | Popup |
 | --- | --- | --- |
-| Original glossary word, not saved | Present in glossary and bold | Wort speichern |
-| Additional vocabulary word, not saved | Existing clickable presentation | Wort speichern |
-| Saved word available in this article | Present in glossary and bold | Gespeichert ✓ and Entfernen |
-| Original glossary word removed from collection | Remains in glossary and bold | Wort speichern |
-| Additional word removed from collection | Added row disappears; original styling returns | Wort speichern |
+| Highlighted word, not saved | Present in glossary and bold | Zu meinen Wörtern hinzufügen; Aus Glossar entfernen |
+| Additional vocabulary word, not saved | Underlined | Zu meinen Wörtern hinzufügen |
+| Highlighted, saved word | Present in glossary and bold | ✓ In meinen Wörtern; Aus Glossar entfernen |
+| Unmarked, saved word | Underlined, absent from glossary | ✓ In meinen Wörtern |
+
+`Aus Glossar entfernen` removes article highlighting and the corresponding glossary row, including preselected entries. It never deletes a saved word. A page-local exclusion overrides automatic highlighting from saved keys, including cross-tab updates. Exclusions reset on reload; they are not stored in the collection.
 
 On every article load, derive presentation from original membership plus current saved keys. A saved key matching another article's available vocabulary is saved there too. Reconcile only existing vocabulary metadata and marked occurrences; do not scan arbitrary prose or infer new matches.
 
@@ -58,11 +59,11 @@ Use each article's own definition in its displayed glossary. The personal collec
 
 1. The reader opens the existing word popup.
 2. The popup displays its existing term, translation, and explanation.
-3. The reader chooses `Wort speichern`.
+3. The reader chooses `Zu meinen Wörtern hinzufügen`.
 4. Persist the entry before reporting success.
 5. Add a missing glossary row and bold all marked occurrences associated with the matching word.
-6. Update the popup to `Gespeichert ✓`, with an `Entfernen` action.
-7. Announce the outcome without moving focus, navigating, or opening a modal.
+6. Replace the save button with the quiet status `✓ In meinen Wörtern` and show the secondary `Aus Glossar entfernen` action.
+7. Announce the outcome without duplicating the success text in the popup. Move focus to the close control when the save button disappears.
 
 Saving an existing key is a no-op: it does not duplicate the entry, replace its definition/source, or make it newest again. If duplicate article-local metadata entries share a word key, update all matching marked occurrences and render only one added glossary row.
 
@@ -81,16 +82,18 @@ Vokabeln
 - Persist the batch in one write; do not report partial success.
 - When every visible entry is saved, disable the button and show `Alle gespeichert ✓`.
 - Recompute this state after saves, removals, undo, and changes from another tab.
-- Removing an original glossary word re-enables the button. Removing a personally added word also removes its row, so it no longer belongs to the visible batch.
+- Unmarking any word removes its row from the visible batch. Disable bulk saving when no rows remain.
 - Never add save buttons beside individual glossary rows.
 
-If saving a word creates a glossary section, create its controls at the same time. Remove this dynamically created section when its final row disappears. Preserve original glossary headings and content.
+If saving a word creates a glossary section, create its controls at the same time. Remove this dynamically created section when its final row disappears. Preserve original glossary headings; original rows can be explicitly unmarked and restored.
 
 If a legacy article lacks usable structured vocabulary metadata, preserve its existing content and do not offer a misleading bulk-save control. Do not parse arbitrary glossary prose into invented structured definitions.
 
 ### Removal and undo
 
-Removal is available from the popup and from the collection page. Persist first, then reconcile every affected view. Preserve original glossary words; remove only personally added membership and styling.
+Article unmarking is available in the popup. Show `Aus Glossar entfernt. Rückgängig` and retain the latest unmarking for Undo, restoring exact row content and position. Focus Undo after unmarking; return focus to the close button or article term after Undo. A subsequent unmarking replaces the previous Undo. Saving that same word clears its pending unmark Undo.
+
+Collection deletion is available only on the Meine Wörter page. Persist first, then reconcile affected views. Original glossary membership remains intact unless explicitly unmarked in that page visit.
 
 Show `Wort entfernt. Rückgängig` in a small accessible status area near the relevant controls. Retain the latest removal for undo until the next successful collection mutation or navigation; sorting and exporting do not invalidate it. Undo restores the complete original entry, including its timestamp and article link. If another tab has already restored the key, do not overwrite that entry.
 
@@ -126,13 +129,13 @@ Artikel: Neue Regeln für …
 - Sorting does not mutate entries. Remember the choice only for the current page session in this release.
 - Export the full collection in the displayed order; no checkboxes or selection state.
 - On mobile, wrap controls and list content without horizontal scrolling.
-- Use semantic controls, visible focus, adequate touch targets, and accessible names such as `Genehmigung aus ‚Meine Wörter‘ entfernen` (popup) and `Genehmigung entfernen` (on the Meine Wörter page).
+- Use semantic controls, visible focus, adequate touch targets, and accessible names such as `Aus Glossar entfernen: Genehmigung` (popup) and `Genehmigung entfernen` (on the Meine Wörter page).
 
 Empty state:
 
 > Noch keine Wörter gespeichert.
 >
-> Tippe in einem Artikel auf ein Wort und wähle „Wort speichern“. Du kannst auch alle Wörter einer Vokabelliste speichern.
+> Tippe in einem Artikel auf ein Wort und wähle „Zu meinen Wörtern hinzufügen“. Du kannst auch alle Wörter einer Vokabelliste speichern.
 
 Provide `Zu den Artikeln`. Hide sorting and export controls when empty. Provide a German `<noscript>` message explaining that this feature needs JavaScript; articles remain readable.
 
@@ -215,7 +218,7 @@ Depends on Phase 1. Refactor `output/assets/js/glossary-popup.js` around origina
 
 Deliver popup saving/removal, state restoration, bulk glossary saving, dynamic-section cleanup, undo, and reconciliation after storage events/page restoration. Preserve the existing publisher JSON format; generation changes should not be necessary.
 
-Exit criterion: an additional word can be saved, survive reload, become bold and appear in the glossary, then be removed/undone correctly. Original glossary entries remain intact throughout.
+Exit criterion: an additional word can be saved, survive reload, become bold and appear in the glossary, then be removed/undone correctly. Original glossary entries can be unmarked and restored without changing the saved collection.
 
 ### Phase 3 Collection page and discoverability
 

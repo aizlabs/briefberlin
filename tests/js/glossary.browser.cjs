@@ -42,17 +42,17 @@ after(async () => { if (browser) await browser.close(); if (server) await new Pr
 async function setup(url = '/articles/test/') { const context = await browser.newContext(); const page = await context.newPage(); page.setDefaultTimeout(5000); page.on('pageerror', error => console.error('PAGE ERROR', error)); await page.goto(origin + url); return { context, page }; }
 async function open(page, id) { await page.locator(`[data-term-id="${id}"]`).click(); }
 async function saved(page) { return page.evaluate(() => BriefBerlin.words.read().entries); }
-test('save, reload, deduplicate, remove and undo additional word', async () => {
+test('save, reload, unmark and undo without deleting the saved word', async () => {
   const { context, page } = await setup();
   try {
     assert.equal((await saved(page)).length, 0);
-    await open(page, 'two'); await page.getByRole('button', { name: 'beantragen speichern', exact: true }).click();
+    await open(page, 'two'); await page.getByRole('button', { name: 'Zu meinen Wörtern hinzufügen: beantragen', exact: true }).click();
     assert.equal((await saved(page)).length, 1);
     assert.equal(await page.locator('li[data-my-words-added]').count(), 1);
     assert.equal(await page.locator('.article-term--default').count(), 3);
     await page.reload(); assert.equal(await page.locator('li[data-my-words-added]').count(), 1);
-    await open(page, 'three'); await page.getByRole('button', { name: 'beantragen aus ‚Meine Wörter‘ entfernen', exact: true }).click();
-    assert.equal((await saved(page)).length, 0); assert.equal(await page.locator('li[data-my-words-added]').count(), 0);
+    await open(page, 'three'); await page.getByRole('button', { name: 'Aus Glossar entfernen: beantragen', exact: true }).click();
+    assert.equal((await saved(page)).length, 1); assert.equal(await page.locator('li[data-my-words-added]').count(), 0);
     assert.equal(await page.locator('.article-term--default').count(), 1);
     await page.locator('.article-glossary-popup').getByRole('button', { name: 'Rückgängig' }).click();
     assert.equal((await saved(page)).length, 1);
@@ -65,7 +65,7 @@ test('popup still explains words when the store script is missing', async () => 
     const popup = page.locator('.article-glossary-popup');
     assert.equal(await popup.isVisible(), true);
     assert.match(await popup.innerText(), /to apply/);
-    assert.equal(await popup.getByRole('button', { name: 'beantragen speichern' }).count(), 0);
+    assert.equal(await popup.getByRole('button', { name: 'Zu meinen Wörtern hinzufügen: beantragen' }).count(), 0);
     assert.equal(await page.getByRole('button', { name: 'Alle Wörter speichern' }).count(), 0);
   } finally { await context.close(); }
 });
@@ -83,7 +83,7 @@ test('blocked storage stays quiet while reading definitions and reports a save a
     assert.match(await popup.innerText(), /to apply/);
     assert.equal((await status.innerText()).trim(), '');
     assert.doesNotMatch(await popup.innerText(), /nicht geladen/);
-    await page.getByRole('button', { name: 'beantragen speichern', exact: true }).click();
+    await page.getByRole('button', { name: 'Zu meinen Wörtern hinzufügen: beantragen', exact: true }).click();
     assert.match(await status.innerText(), /nicht geladen/);
     assert.match(await popup.innerText(), /nicht geladen/);
   } finally { await context.close(); }
@@ -106,39 +106,53 @@ test('ambiguous capitalization and distinct German forms are not guessed', async
     } finally { await context.close(); }
   }
 });
-test('remove control names the collection in its visible and accessible label', async () => {
+test('saved state is quiet and unmarking keeps collection data and stays unmarked on reopen', async () => {
   const { context, page } = await setup();
   try {
-    await open(page, 'two'); await page.getByRole('button', { name: 'beantragen speichern', exact: true }).click();
-    const action = page.locator('.article-glossary-popup__add');
-    assert.equal(await action.textContent(), 'Aus ‚Meine Wörter‘ entfernen');
-    assert.equal(await action.getAttribute('aria-label'), 'beantragen aus ‚Meine Wörter‘ entfernen');
-    const snapshot = await page.locator('.article-glossary-popup').ariaSnapshot();
-    assert.match(snapshot, /button "beantragen aus ‚Meine Wörter‘ entfernen"/);
-    await action.click();
-    assert.match(await page.locator('.page__content .my-words-status').innerText(), /Aus ‚Meine Wörter‘ entfernt\./);
+    await open(page, 'two');
+    assert.equal(await page.locator('.article-glossary-popup__remove').isVisible(), false);
+    await page.getByRole('button', { name: 'Zu meinen Wörtern hinzufügen: beantragen', exact: true }).click();
+    assert.equal(await page.locator('.article-glossary-popup__add').isVisible(), false);
+    assert.equal(await page.locator('.my-words-saved').innerText(), '✓ In meinen Wörtern');
+    await page.getByRole('button', { name: 'Aus Glossar entfernen: beantragen', exact: true }).click();
+    await page.keyboard.press('Escape'); await open(page, 'three');
+    assert.equal(await page.locator('.article-glossary-popup__add').isVisible(), false);
+    assert.equal(await page.locator('.article-glossary-popup__remove').isVisible(), false);
+    assert.equal(await page.locator('li[data-my-words-added]').count(), 0);
+    assert.equal((await saved(page)).length, 1);
   } finally { await context.close(); }
 });
-test('bulk saves visible glossary only; removing original retains editorial row', async () => {
+test('preselected words can be unmarked, undone exactly, and excluded from bulk save', async () => {
   const { context, page } = await setup();
   try {
-    await page.getByRole('button', { name: 'Alle Wörter speichern', exact: true }).click();
-    assert.deepEqual((await saved(page)).map(e => e.term), ['die Genehmigung']);
-    assert.equal(await page.getByRole('button', { name: 'Alle gespeichert ✓' }).isDisabled(), true);
-    await open(page, 'one'); await page.getByRole('button', { name: 'die Genehmigung aus ‚Meine Wörter‘ entfernen', exact: true }).click();
-    assert.equal(await page.locator('li').count(), 1); assert.equal(await page.locator('.article-term--default').count(), 1);
-    assert.equal(await page.getByRole('button', { name: 'Alle Wörter speichern', exact: true }).isEnabled(), true);
+    const original = await page.locator('li').innerHTML();
+    await open(page, 'one');
+    await page.getByRole('button', { name: 'Aus Glossar entfernen: die Genehmigung', exact: true }).click();
+    assert.equal(await page.locator('li').count(), 0);
+    assert.equal(await page.locator('.article-term--default').count(), 0);
+    assert.equal(await page.getByRole('button', { name: 'Alle Wörter speichern', exact: true }).isEnabled(), false);
+    await page.locator('.article-glossary-popup').getByRole('button', { name: 'Rückgängig' }).click();
+    assert.equal(await page.locator('li').innerHTML(), original);
+    assert.equal((await saved(page)).length, 0);
+    await page.getByRole('button', { name: 'Aus Glossar entfernen: die Genehmigung', exact: true }).click();
+    await open(page, 'two'); await page.locator('.article-glossary-popup__add').click();
+    assert.deepEqual((await saved(page)).map(e => e.term), ['beantragen']);
+    assert.equal(await page.locator('li').count(), 1);
+    await open(page, 'one'); await page.locator('.article-glossary-popup__add').click();
+    assert.equal(await page.locator('li').count(), 2);
+    assert.equal(await page.locator('.article-term--default').count(), 3);
   } finally { await context.close(); }
 });
 test('dynamic empty glossary is removed; write failures never change presentation', async () => {
   const { context, page } = await setup('/articles/empty/');
   try {
-    await open(page, 'two'); await page.getByRole('button', { name: 'beantragen speichern', exact: true }).click();
+    await open(page, 'two'); await page.getByRole('button', { name: 'Zu meinen Wörtern hinzufügen: beantragen', exact: true }).click();
     assert.equal(await page.locator('h2').count(), 1);
-    await page.getByRole('button', { name: 'beantragen aus ‚Meine Wörter‘ entfernen', exact: true }).click(); assert.equal(await page.locator('h2').count(), 0);
+    await page.getByRole('button', { name: 'Aus Glossar entfernen: beantragen', exact: true }).click(); assert.equal(await page.locator('h2').count(), 0);
+    await open(page, 'four');
     await page.evaluate(() => { Storage.prototype.setItem = () => { throw new Error('quota'); }; });
-    await page.getByRole('button', { name: 'beantragen speichern', exact: true }).click();
-    assert.equal((await saved(page)).length, 0); assert.equal(await page.locator('h2').count(), 0);
+    await page.getByRole('button', { name: 'Zu meinen Wörtern hinzufügen: verborgen', exact: true }).click();
+    assert.equal((await saved(page)).length, 1); assert.equal(await page.locator('h2').count(), 0);
     assert.match(await page.locator('.article-glossary-popup').innerText(), /nicht gespeichert/);
   } finally { await context.close(); }
 });
@@ -146,25 +160,31 @@ test('dynamic empty glossary is removed; write failures never change presentatio
 test('inline undo returns focus to the article after popup dismissal', async () => {
   const { context, page } = await setup();
   try {
-    await open(page, 'two'); await page.getByRole('button', { name: 'beantragen speichern', exact: true }).click();
-    await page.getByRole('button', { name: 'beantragen aus ‚Meine Wörter‘ entfernen', exact: true }).click();
+    await open(page, 'two'); await page.getByRole('button', { name: 'Zu meinen Wörtern hinzufügen: beantragen', exact: true }).click();
+    await page.getByRole('button', { name: 'Aus Glossar entfernen: beantragen', exact: true }).click();
     await page.keyboard.press('Escape');
     await page.locator('.page__content .my-words-status').getByRole('button', { name: 'Rückgängig' }).click();
     assert.equal((await saved(page)).length, 1);
     assert.equal(await page.locator('[data-term-id="two"]').evaluate(el => document.activeElement === el), true);
   } finally { await context.close(); }
 });
-test('another tab reconciles added rows, original rows, and open popup state', async () => {
+test('cross-tab collection updates respect local unmarking and undo', async () => {
   const { context, page } = await setup(); const other = await context.newPage();
   try {
     await other.goto(origin + '/articles/test/'); await open(other, 'two');
-    await open(page, 'two'); await page.getByRole('button', { name: 'beantragen speichern', exact: true }).click();
-    await other.getByRole('button', { name: 'beantragen aus ‚Meine Wörter‘ entfernen', exact: true }).waitFor();
-    assert.equal(await other.locator('li[data-my-words-added]').count(), 1);
-    await page.getByRole('button', { name: 'beantragen aus ‚Meine Wörter‘ entfernen', exact: true }).click();
-    await other.getByRole('button', { name: 'beantragen speichern', exact: true }).waitFor();
-    assert.equal(await other.locator('li[data-my-words-added]').count(), 0);
-    assert.equal(await other.locator('li').count(), 1);
+    await open(page, 'two'); await page.locator('.article-glossary-popup__add').click();
+    await other.locator('.my-words-saved').waitFor({ state: 'visible' });
+    await other.locator('.article-glossary-popup__remove').click();
+    await open(page, 'four'); await page.locator('.article-glossary-popup__add').click();
+    await other.locator('li[data-my-words-term-id="four"]').waitFor();
+    assert.equal(await other.locator('li[data-my-words-term-id="two"]').count(), 0);
+    assert.equal((await saved(other)).length, 2);
+    await other.locator('.article-glossary-popup').getByRole('button', { name: 'Rückgängig' }).click();
+    assert.equal(await other.locator('li[data-my-words-term-id="two"]').count(), 1);
+    // Collection deletion is available on Meine Wörter, not in the article popup.
+    await page.evaluate(() => BriefBerlin.words.remove(BriefBerlin.words.wordKey('de', 'beantragen')));
+    await other.locator('.article-glossary-popup__add').waitFor({ state: 'visible' });
+    assert.equal(await other.locator('li[data-my-words-term-id="two"]').count(), 0);
   } finally { await context.close(); }
 });
 test('corrupt storage does not erase editorial content or overwrite saved bytes', async () => {
@@ -172,7 +192,7 @@ test('corrupt storage does not erase editorial content or overwrite saved bytes'
   try {
     await page.evaluate(() => localStorage.setItem('briefberlin.myWords.v1', '{bad'));
     await page.reload(); await open(page, 'two');
-    await page.getByRole('button', { name: 'beantragen speichern', exact: true }).click();
+    await page.getByRole('button', { name: 'Zu meinen Wörtern hinzufügen: beantragen', exact: true }).click();
     assert.equal(await page.evaluate(() => localStorage.getItem('briefberlin.myWords.v1')), '{bad');
     assert.equal(await page.locator('li').count(), 1);
     assert.equal(await page.locator('li[data-my-words-added]').count(), 0);
@@ -183,21 +203,21 @@ test('malformed hints and locale do not break valid word controls; invalid URL r
   for (const route of ['mixed-hints', 'invalid-locale', 'invalid-url']) {
     const { context, page } = await setup('/articles/' + route + '/');
     try {
-      await open(page, 'two'); await page.getByRole('button', { name: 'beantragen speichern', exact: true }).click();
+      await open(page, 'two'); await page.getByRole('button', { name: 'Zu meinen Wörtern hinzufügen: beantragen', exact: true }).click();
       assert.equal((await saved(page)).length, route === 'invalid-url' ? 0 : 1);
       if (route === 'invalid-url') assert.match(await page.locator('.article-glossary-popup').innerText(), /nicht gespeichert/);
     } finally { await context.close(); }
   }
 });
 
-test('an original metadata word restored into a missing row survives personal removal', async () => {
+test('a restored metadata row can be unmarked without deleting the saved word', async () => {
   const { context, page } = await setup('/articles/missing-original-row/');
   try {
-    await open(page, 'one'); await page.getByRole('button', { name: 'die Genehmigung speichern', exact: true }).click();
-    await page.getByRole('button', { name: 'die Genehmigung aus ‚Meine Wörter‘ entfernen', exact: true }).click();
-    assert.equal((await saved(page)).length, 0);
-    assert.equal(await page.locator('li').count(), 1);
-    assert.equal(await page.locator('[data-term-id="one"]').evaluate(el => el.classList.contains('article-term--default')), true);
+    await open(page, 'one'); await page.getByRole('button', { name: 'Zu meinen Wörtern hinzufügen: die Genehmigung', exact: true }).click();
+    await page.getByRole('button', { name: 'Aus Glossar entfernen: die Genehmigung', exact: true }).click();
+    assert.equal((await saved(page)).length, 1);
+    assert.equal(await page.locator('li').count(), 0);
+    assert.equal(await page.locator('[data-term-id="one"]').evaluate(el => el.classList.contains('article-term--default')), false);
   } finally { await context.close(); }
 });
 test('popup remains in the mobile viewport when a save error expands its content', async () => {
@@ -214,8 +234,27 @@ test('popup remains in the mobile viewport when a save error expands its content
       Storage.prototype.setItem = () => { throw new Error('quota'); };
     }, height);
     await open(page, 'two');
-    await page.getByRole('button', { name: 'beantragen speichern', exact: true }).click();
+    await page.getByRole('button', { name: 'Zu meinen Wörtern hinzufügen: beantragen', exact: true }).click();
     const box = await popup.boundingBox();
     assert.ok(box.y >= 0 && box.y + box.height <= 420, `expanded popup is outside viewport: ${JSON.stringify(box)}`);
+  } finally { await context.close(); }
+});
+
+test('unmarking remains available with blocked storage and reload resets article choices', async () => {
+  const { context, page } = await setup();
+  try {
+    await page.addInitScript(() => {
+      Object.defineProperty(window, 'localStorage', { configurable: true, get() { throw new DOMException('blocked', 'SecurityError'); } });
+    });
+    await page.reload(); await open(page, 'one');
+    await page.locator('.article-glossary-popup__remove').click();
+    assert.equal(await page.locator('li').count(), 0);
+    assert.doesNotMatch(await page.locator('.article-glossary-popup').innerText(), /nicht geladen/);
+    await page.locator('.article-glossary-popup').getByRole('button', { name: 'Rückgängig' }).click();
+    assert.equal(await page.locator('li').count(), 1);
+    await page.locator('.article-glossary-popup__remove').click();
+    await page.reload();
+    assert.equal(await page.locator('li').count(), 1);
+    assert.equal(await page.locator('.article-term--default').count(), 1);
   } finally { await context.close(); }
 });

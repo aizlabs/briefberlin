@@ -143,6 +143,9 @@
     let list = findGlossaryList(pageContent, locale);
     let dynamicHeading = null;
     const originalKeys = new Set();
+    // Article-only choices last for this page visit, independently of saved words.
+    const unmarkedKeys = new Set();
+    let lastUnmarked = null;
     function rowKey(row) {
       const id = row.dataset.myWordsTermId || row.dataset.termId;
       const byId = id && itemsById.get(id);
@@ -167,12 +170,13 @@
     const term = element("div", "article-glossary-popup__term");
     const translation = element("div", "article-glossary-popup__english");
     const explanation = element("div", "article-glossary-popup__explanation");
-    const savedLabel = element("span", "my-words-saved", "In ‚Meine Wörter‘ gespeichert ✓");
-    const action = button("Wort speichern", "article-glossary-popup__add");
+    const savedLabel = element("span", "my-words-saved", "✓ In meinen Wörtern");
+    const action = button("Zu meinen Wörtern hinzufügen", "article-glossary-popup__add");
+    const unmark = button("Aus Glossar entfernen", "article-glossary-popup__remove");
     const popupStatus = element("div", "my-words-status"); popupStatus.setAttribute("role", "status");
     const popupText = element("span"); const popupUndo = button("Rückgängig", "my-words-text-button"); popupUndo.hidden = true;
     popupStatus.append(popupText, popupUndo);
-    inner.append(close, term, translation, explanation, savedLabel, action, popupStatus); popup.append(inner); document.body.append(popup);
+    inner.append(close, term, translation, explanation, savedLabel, action, unmark, popupStatus); popup.append(inner); document.body.append(popup);
     let activeItem = null, activeTarget = null;
     let saved = new Set(), readable = true, controls = null, bulk = null;
     // Storage errors are reported only after the reader tries to change their
@@ -180,15 +184,15 @@
     // core reading aid and stays quiet even when storage is unavailable.
     let engaged = false;
     const LOAD_ERROR = "Deine gespeicherten Wörter konnten nicht geladen werden. Deine Daten wurden nicht verändert.";
-    const REMOVED = "Aus ‚Meine Wörter‘ entfernt. ";
+    const REMOVED = "Aus Glossar entfernt. ";
     function failed() {
       engaged = true;
       message(store.read().ok ? "Die Änderung konnte nicht gespeichert werden. Bitte versuche es erneut." : LOAD_ERROR);
     }
     if (!canSave) { action.hidden = true; savedLabel.hidden = true; }
-    function message(text) {
-      statusText.textContent = text; popupText.textContent = text;
-      undoButton.hidden = popupUndo.hidden = !store.canUndo();
+    function message(text, quietPopup) {
+      statusText.textContent = text; popupText.textContent = quietPopup ? "" : text;
+      undoButton.hidden = popupUndo.hidden = !lastUnmarked;
       // Errors, undo, and cross-tab updates can change the popup height.
       if (!popup.hidden && activeTarget) positionPopup(popup, activeTarget);
     }
@@ -229,26 +233,24 @@
       if (!activeItem) return;
       const isSaved = saved.has(keyOf(activeItem));
       term.textContent = activeItem.term; translation.textContent = activeItem.english; explanation.textContent = activeItem.explanation;
-      if (!canSave) return;
-      savedLabel.hidden = !isSaved;
-      // Removing affects Meine Wörter only; a word from the article's own
-      // vocabulary list stays in that list.
-      action.textContent = isSaved ? "Aus ‚Meine Wörter‘ entfernen" : "Wort speichern";
-      // The accessible name must carry the same meaning as the visible label.
-      // The store rejects unreadable data; leave retry available after transient failures.
-      action.setAttribute("aria-label", activeItem.term + (isSaved ? " aus ‚Meine Wörter‘ entfernen" : " speichern"));
+      const marked = !unmarkedKeys.has(keyOf(activeItem)) && (originalKeys.has(keyOf(activeItem)) || isSaved);
+      savedLabel.hidden = !canSave || !isSaved;
+      action.hidden = !canSave || isSaved;
+      action.setAttribute("aria-label", "Zu meinen Wörtern hinzufügen: " + activeItem.term);
+      unmark.hidden = !marked;
+      unmark.setAttribute("aria-label", "Aus Glossar entfernen: " + activeItem.term);
     }
+
     function refresh(state) {
       readable = state.ok;
       if (!state.ok) {
         if (bulk) bulk.disabled = true;
-        updatePopup();
         if (engaged) message(LOAD_ERROR);
-        return;
+      } else {
+        saved = new Set(state.entries.map(function (entry) { return entry.key; }));
       }
-      saved = new Set(state.entries.map(function (entry) { return entry.key; }));
       itemsByKey.forEach(function (item, key) {
-        if (saved.has(key)) {
+        if (saved.has(key) && !unmarkedKeys.has(key)) {
           ensureList();
           if (!Array.from(list.children).some(function (row) { return rowKey(row) === key; })) {
             const row = element("li"); row.dataset.myWordsAdded = "true"; row.dataset.myWordsTermId = item.id;
@@ -258,11 +260,11 @@
         }
       });
       if (list) Array.from(list.children).forEach(function (row) {
-        if (row.dataset.myWordsAdded && !originalKeys.has(rowKey(row)) && !saved.has(rowKey(row))) row.remove();
+        if (unmarkedKeys.has(rowKey(row)) || (row.dataset.myWordsAdded && !originalKeys.has(rowKey(row)) && !saved.has(rowKey(row)))) row.remove();
       });
       pageContent.querySelectorAll(".article-term[data-term-id]").forEach(function (node) {
         const item = itemsById.get(node.dataset.termId);
-        if (item) node.classList.toggle("article-term--default", originalKeys.has(keyOf(item)) || saved.has(keyOf(item)));
+        if (item) node.classList.toggle("article-term--default", !unmarkedKeys.has(keyOf(item)) && (originalKeys.has(keyOf(item)) || saved.has(keyOf(item))));
       });
       if (list && !list.children.length && dynamicHeading) {
         list.remove(); dynamicHeading.remove(); if (controls) controls.remove();
@@ -276,22 +278,45 @@
         bulk.disabled = !readable || !visible.length || complete;
       }
       updatePopup();
-      message(store.canUndo() ? REMOVED : "");
+      if (readable || !engaged) message(lastUnmarked ? REMOVED : "");
     }
     action.addEventListener("click", function () {
       if (!activeItem) return;
-      const removing = saved.has(keyOf(activeItem));
-      const result = removing ? store.remove(keyOf(activeItem)) : store.add(candidate(activeItem));
-      if (!result.ok) { failed(); return; }
-      message(removing ? REMOVED : "Wort gespeichert.");
+      if (saved.has(keyOf(activeItem))) return;
+      const key = keyOf(activeItem);
+      const wasUnmarked = unmarkedKeys.delete(key);
+      const result = store.add(candidate(activeItem));
+      if (!result.ok) {
+        if (wasUnmarked) unmarkedKeys.add(key);
+        failed(); return;
+      }
+      if (lastUnmarked && lastUnmarked.key === key) lastUnmarked = null;
+      message("Wort gespeichert.", true);
+      close.focus();
+    });
+    unmark.addEventListener("click", function () {
+      if (!activeItem) return;
+      const key = keyOf(activeItem);
+      const rows = list ? Array.from(list.children).filter(function (row) { return rowKey(row) === key; }) : [];
+      lastUnmarked = { key: key, rows: rows.map(function (row) { return { node: row, next: row.nextSibling }; }) };
+      unmarkedKeys.add(key);
+      refresh(store.read());
+      message(REMOVED);
+      popupUndo.focus();
     });
     function undo() {
-      const result = store.undo();
-      if (!result.ok) { failed(); return; }
-      message("Wort wiederhergestellt.");
-      // Inline undo remains usable after the popup has been dismissed. Never
-      // focus a hidden popup control or leave focus on the now-hidden undo.
-      if (!popup.hidden) action.focus();
+      if (!lastUnmarked) return;
+      const removed = lastUnmarked; lastUnmarked = null;
+      unmarkedKeys.delete(removed.key);
+      if (removed.rows.length) {
+        ensureList();
+        removed.rows.slice().reverse().forEach(function (row) {
+          list.insertBefore(row.node, row.next && row.next.parentNode === list ? row.next : null);
+        });
+      }
+      refresh(store.read());
+      message("Im Glossar wiederhergestellt.");
+      if (!popup.hidden) close.focus();
       else if (activeTarget && activeTarget.isConnected) activeTarget.focus();
     }
     undoButton.addEventListener("click", undo); popupUndo.addEventListener("click", undo);
@@ -301,7 +326,7 @@
       const item = itemsById.get(target.dataset.termId); if (!item) return;
       activeItem = item; activeTarget = target;
       refresh(store.read()); positionPopup(popup, target);
-      (canSave ? action : close).focus();
+      (!action.hidden ? action : !unmark.hidden ? unmark : close).focus();
     });
     function hide(returnFocus) { popup.hidden = true; if (returnFocus && activeTarget) activeTarget.focus(); }
     close.addEventListener("click", function () { hide(true); });

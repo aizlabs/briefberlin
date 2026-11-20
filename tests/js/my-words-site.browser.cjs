@@ -47,7 +47,11 @@ run('built article to collection journey, keyboard popup, back navigation and do
     });
     assert.ok(item); const word = page.locator(`[data-term-id="${item.id}"]`).first();
     await word.focus(); await page.keyboard.press('Enter');
-    await page.getByRole('button', { name: item.term + ' speichern', exact: true }).click();
+    if (process.env.BRIEFBERLIN_SCREENSHOT_DIR) {
+      fs.mkdirSync(process.env.BRIEFBERLIN_SCREENSHOT_DIR, { recursive: true });
+      await page.screenshot({ path: path.join(process.env.BRIEFBERLIN_SCREENSHOT_DIR, 'glossary-desktop.png') });
+    }
+    await page.getByRole('button', { name: 'Zu meinen Wörtern hinzufügen: ' + item.term, exact: true }).click();
     await page.keyboard.press('Escape');
     assert.equal(await word.evaluate(el=>el===document.activeElement), true);
     assert.ok((await word.getAttribute('class')).includes('article-term--default'));
@@ -81,6 +85,10 @@ run('built mobile layouts fit and popup remains in viewport', async () => {
     await page.locator('.article-term').first().click();
     const popup = page.locator('.article-glossary-popup'); const box = await popup.boundingBox();
     assert.ok(box.x >= 0 && box.x + box.width <= 375 && box.y >= 0 && box.y + box.height <= 812);
+    if (process.env.BRIEFBERLIN_SCREENSHOT_DIR) {
+      fs.mkdirSync(process.env.BRIEFBERLIN_SCREENSHOT_DIR, { recursive: true });
+      await page.screenshot({ path: path.join(process.env.BRIEFBERLIN_SCREENSHOT_DIR, 'glossary-mobile.png') });
+    }
     await popup.locator('.article-glossary-popup__add').click(); await page.keyboard.press('Escape');
     await page.locator('.my-words-glossary-controls a').click();
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
