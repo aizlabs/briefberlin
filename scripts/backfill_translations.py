@@ -21,7 +21,7 @@ from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 import yaml
 
-from scripts.config import load_config
+from scripts.config import load_translation_config
 from scripts.glossary_sections import split_at_glossary_heading
 from scripts.logger import setup_logger
 from scripts.models import AdaptedArticle, VocabularyItem
@@ -192,12 +192,12 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
 
 def main(argv: Sequence[str] | None = None) -> int:
     args = parse_args(argv)
-    config = load_config(args.environment or "local")
+    # Translation-only loading boundary: applies the explicit --model override
+    # last (before validating the active-model requirement), forces
+    # translations on, and waives only unrelated cloud credentials for an
+    # Ollama-only run. Cloud backfill still validates its cloud credentials.
+    config = load_translation_config(args.environment or "local", args.model)
     logger = setup_logger(config.logging or {"name": "backfill-translations"}, "backfill-translations")
-
-    if args.model:
-        config.translations.model = args.model
-    config.translations.enabled = True
 
     translations_dir = Path(args.translations_dir or config.translations.output_path)
     posts_dir = Path(args.posts_dir)
