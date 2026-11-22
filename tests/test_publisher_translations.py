@@ -176,3 +176,24 @@ def test_translation_write_failure_does_not_fail_the_german_post(publisher, arti
     monkeypatch.setattr(publisher, "save_translations", boom)
 
     assert publisher.save_article(article, timestamp=TIMESTAMP) is True
+
+
+def test_translated_description_prefers_seo_description(publisher, article, tmp_path):
+    seo = "The Left becomes the strongest party in Berlin and puts the government under pressure."
+    article.translations[0] = article.translations[0].model_copy(update={"seo_description": seo})
+    publisher.save_article(article, timestamp=TIMESTAMP)
+    ref = publisher._post_ref(article, TIMESTAMP)
+    text = (tmp_path / "_translations" / ref / "en.md").read_text("utf-8")
+
+    assert f'description: "{seo}"' in text
+    assert 'summary: "A translated summary of the article."' in text
+
+
+def test_translated_description_falls_back_to_summary_and_names_the_city(
+    publisher, article, tmp_path
+):
+    publisher.save_article(article, timestamp=TIMESTAMP)
+    ref = publisher._post_ref(article, TIMESTAMP)
+    text = (tmp_path / "_translations" / ref / "ar.md").read_text("utf-8")
+
+    assert 'description: "أخبار برلين: A translated summary of the article."' in text

@@ -20,6 +20,7 @@ from scripts.models import (
     VocabularyItem,
     coerce_vocabulary_items,
 )
+from scripts.seo_description import finalize_seo_description
 from scripts.text_utils import normalize_vocabulary_term, slugify_text
 from scripts.topic_utils import sanitize_topic_keywords
 from scripts.translation_hints import hint_id, publishable_translation_hints
@@ -306,6 +307,9 @@ class Publisher:
             or (getattr(article.topic, "description", None) if article.topic else None)
             or getattr(article, "summary", "")
         )
+        description = finalize_seo_description(
+            description, self.config.language.target_language_code
+        )
         description_frontmatter = (
             f'description: "{self._escape_yaml_string(description)}"\n'
             if description
@@ -532,7 +536,10 @@ reading_time: {article.reading_time}
         ).strip()
         author_line = f'author: "{esc(author)}"\n' if author else ""
         summary_line = f'summary: "{esc(translation.summary)}"\n' if translation.summary else ""
-        description = translation.summary or translation.title
+        description = finalize_seo_description(
+            translation.seo_description or translation.summary or translation.title,
+            translation.lang,
+        )
         news_sitemap_line = "" if news_sitemap else "news_sitemap: false\n"
 
         frontmatter = (

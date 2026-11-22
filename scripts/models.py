@@ -320,6 +320,10 @@ class ArticleTranslation(BaseModel):
     # whole language for that article.
     title: str = Field(..., min_length=1, description="Translated title")
     summary: str = Field(default="", description="Translated summary")
+    seo_description: str = Field(
+        default="",
+        description="Search-result snippet; publisher falls back to summary when empty",
+    )
     content: str = Field(..., min_length=20, description="Translated body, plain text")
     vocabulary: List[TranslatedVocabularyItem] = Field(default_factory=list)
     reading_time: int = Field(

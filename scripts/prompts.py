@@ -1038,6 +1038,15 @@ RULES
    Write natural {language.name}. Do not insert directional control characters and do
    not mirror punctuation by hand; page direction is handled by the template.
 
+8. SEO DESCRIPTION.
+   `seo_description` is the snippet shown under the page in search results, for a
+   reader searching for Berlin news in {language.name}. Write one or two natural
+   {language.name} sentences, 120-155 characters, most important fact first. It
+   MUST name the city in {language.name} (for example "in Berlin", "в Берлине",
+   "في برلين", "en Berlín", "a Berlino"), even if the German only names a district.
+   No transliteration brackets, no quotes, no "..." at the end. Facts come only
+   from the article.
+
 GERMAN TITLE:
 {article.title}
 

@@ -84,7 +84,10 @@ TASK:
 1. Write a concise topic title in the same language as the source material.
 2. Choose 3-7 short public keywords focusing on main named entities (locations, organizations, key topic terms).
 3. Choose a public news category (e.g., "Verkehr", "Politik", "Kultur", "Stadtleben", "Wirtschaft", "Wissenschaft", "Sport").
-4. Write a concise 1-2 sentence public news description (140-160 characters) summarizing the core story.
+4. Write a concise 1-2 sentence public news description (120-155 characters) summarizing the core story.
+   It is the search-result snippet, so it must name Berlin explicitly ("in Berlin",
+   "Berliner ...", or the district followed by "in Berlin", e.g. "in Neukölln in Berlin").
+   Put the most important fact first. Never end with "..." or an unfinished sentence.
 5. Avoid private identifiers, source names, URLs, generic language labels, and filler terms.
 6. Never use private proper nouns, person names, internal project names, client names,
    confidential codenames, or unusually specific identifiers as keywords.

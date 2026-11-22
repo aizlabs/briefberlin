@@ -49,6 +49,12 @@ class TranslationVocabularyResponse(BaseModel):
 class TranslationResponse(BaseModel):
     title: str = Field(..., description="Translated title")
     summary: str = Field(..., description="Translated summary")
+    # Defaulted: a missing snippet must not cost the whole language; the
+    # publisher falls back to the summary.
+    seo_description: str = Field(
+        default="",
+        description="Search-result snippet in the target language, 120-155 characters",
+    )
     content: str = Field(..., description="Translated body, plain text, same paragraph count")
     vocabulary: List[TranslationVocabularyResponse] = Field(default_factory=list)
 
@@ -230,6 +236,7 @@ class ArticleTranslator:
             glossary_heading=language.glossary_heading,
             title=self._clean_inline(response.title) or article.title,
             summary=self._clean_inline(response.summary),
+            seo_description=self._clean_inline(response.seo_description),
             content=content,
             vocabulary=self._align_vocabulary(response.vocabulary, glossary),
             reading_time=article.reading_time,
