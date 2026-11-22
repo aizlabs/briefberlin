@@ -361,6 +361,13 @@ def test_rendered_issue_escapes_content_and_filters_links():
     assert "evil" not in issue.text
     assert 'href="{{ unsubscribe }}">Hier abmelden.</a>' in issue.html
     assert "Newsletter abbestellen: {{ unsubscribe }}" in issue.text
+    for removed_text in (
+        "BriefBerlin LLC", "1201 North Orange Street", "Wilmington, DE", "Kontakt", "Datenschutz",
+    ):
+        assert removed_text not in issue.html
+        assert removed_text not in issue.text
+    assert 'href="https://briefberlin.de/"' not in issue.html
+    assert "https://briefberlin.de/" not in issue.text.split()
 
 
 def test_subject_is_german_and_truncated():

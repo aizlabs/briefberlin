@@ -247,8 +247,7 @@ workflow; see workflow comments).
       inbox action has no redirect. Fresh DOI resubscription verified.
 - [x] Test campaign (list 4): delivered mail shows DKIM pass with
       `d=briefberlin.de`, DMARC pass, `List-Unsubscribe` AND
-      `List-Unsubscribe-Post` headers, visible unsubscribe link, publisher
-      footer with `/contact/` and `/privacy/` links.
+      `List-Unsubscribe-Post` headers, and a visible unsubscribe link.
 - [x] Inspect delivered campaign tracking markup and contact statistics;
       retain restrictive consent settings. Accepted limitation below.
 - [x] Delivered campaign has a usable plain-text part and German unsubscribe URL.

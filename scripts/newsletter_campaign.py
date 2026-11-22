@@ -351,13 +351,6 @@ class RenderedIssue:
     window_end: datetime
 
 
-PUBLISHER_LINES = (
-    "BriefBerlin LLC",
-    "1201 North Orange Street, Suite 740",
-    "Wilmington, DE 19801, United States",
-)
-
-
 def render_issue(
     articles: Sequence[NewsletterArticle],
     issue_date: datetime,
@@ -373,7 +366,6 @@ def render_issue(
             continue
         safe_articles.append((article, safe_link))
 
-    base = site_base_url.rstrip("/")
     subject = build_subject([article for article, _ in safe_articles], issue_date)
     date_line = html_module.escape(format_german_long_date(issue_date))
 
@@ -408,24 +400,12 @@ def render_issue(
     )
     text_parts.extend([levels_note, ""])
 
-    publisher_html = "<br>".join(html_module.escape(line) for line in PUBLISHER_LINES)
-    footer_html = (
-        f'<p style="color:#888888;font-size:12px;border-top:1px solid #dddddd;padding-top:14px;">'
-        f"{publisher_html}<br>"
-        f'<a href="{html_module.escape(base + "/", quote=True)}">briefberlin.de</a> · '
-        f'<a href="{html_module.escape(base + "/contact/", quote=True)}">Kontakt</a> · '
-        f'<a href="{html_module.escape(base + "/privacy/", quote=True)}">Datenschutz</a><br>'
+    html_parts.append(
+        '<p style="color:#888888;font-size:12px;border-top:1px solid #dddddd;padding-top:14px;">'
         'Du möchtest den Newsletter abbestellen? <a href="{{ unsubscribe }}">'
         'Hier abmelden.</a></p>'
     )
-    html_parts.append(footer_html)
-    text_parts.extend(
-        list(PUBLISHER_LINES)
-        + [
-            f"{base}/  ·  Kontakt: {base}/contact/  ·  Datenschutz: {base}/privacy/",
-            "Newsletter abbestellen: {{ unsubscribe }}",
-        ]
-    )
+    text_parts.append("Newsletter abbestellen: {{ unsubscribe }}")
 
     html = (
         '<!DOCTYPE html><html lang="de"><head><meta charset="utf-8">'
