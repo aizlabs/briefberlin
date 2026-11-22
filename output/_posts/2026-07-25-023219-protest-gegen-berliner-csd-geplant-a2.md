@@ -10,8 +10,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260725-023219-prot
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Kultur
-description: Am 25. Juli findet in Berlin der Christopher Street Day statt. Bei diesem
-  großen Zug wollen Menschen gleiche Rechte für lesbische, schwule, bisexuelle und...
+description: "Am 25. Juli findet in Berlin der Christopher Street Day statt."
 keywords: *id001
 ---
 

@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Kultur"
 summary: "Wszystkie windy w Amerika-Gedenkbibliothek są zepsute, dlatego salon jest zamknięty, a biblioteka chce przenieść się na Alexanderplatz."
-description: "Wszystkie windy w Amerika-Gedenkbibliothek są zepsute, dlatego salon jest zamknięty, a biblioteka chce przenieść się na Alexanderplatz."
+description: "Wiadomości z Berlina: Wszystkie windy w Amerika-Gedenkbibliothek są zepsute, dlatego salon jest zamknięty, a biblioteka chce przenieść się na…"
 source_title: "Alle Aufzüge kaputt: Berliner Bibliothek schließt ihren Salon"
 reading_time: 2
 translations:

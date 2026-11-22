@@ -4,7 +4,7 @@ date: 2026-07-29 12:09:46
 author: "clara-becker"
 level: B1
 category: "Wissenschaft"
-description: "Kreatin gilt nicht mehr nur als Sport-Supplement: Studien prüfen Nutzen für Muskeln, Schlafmangel, Immunsystem und Gesundheit ab 55."
+description: "Berlin aktuell: Kreatin gilt nicht mehr nur als Sport-Supplement: Studien prüfen Nutzen für Muskeln, Schlafmangel, Immunsystem und Gesundheit ab 55."
 topics: ["Kreatin", "Nahrungserg\u00e4nzung", "Kraftsport", "Gesundheit ab 55", "Muskeln", "Studien", "Mit\u00adtel"]
 keywords: ["Kreatin", "Nahrungserg\u00e4nzung", "Kraftsport", "Gesundheit ab 55", "Muskeln", "Studien", "Mit\u00adtel"]
 sources: []

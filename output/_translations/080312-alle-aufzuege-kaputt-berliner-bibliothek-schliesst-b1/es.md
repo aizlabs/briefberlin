@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Kultur"
 summary: "Como todos los ascensores están averiados, la Amerika-Gedenkbibliothek de Berlín-Kreuzberg ha cerrado su salón. Debido a los numerosos problemas del edificio, la dirección pide un traslado rápido a Alexanderplatz."
-description: "Como todos los ascensores están averiados, la Amerika-Gedenkbibliothek de Berlín-Kreuzberg ha cerrado su salón. Debido a los numerosos problemas del edificio, la dirección pide un traslado rápido a Alexanderplatz."
+description: "Como todos los ascensores están averiados, la Amerika-Gedenkbibliothek de Berlín-Kreuzberg ha cerrado su salón."
 source_title: "Alle Aufzüge kaputt: Berliner Bibliothek schließt ihren beliebten Salon"
 reading_time: 3
 translations:

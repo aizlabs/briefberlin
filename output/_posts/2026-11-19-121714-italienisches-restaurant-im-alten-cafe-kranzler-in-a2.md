@@ -6,8 +6,7 @@ level: A2
 story: 20261119-121609-italienisches-restaurant-ersetzt-das-fru
 category: Stadtleben
 summary: Im alten Café Kranzler in Berlin öffnet jetzt ein großes italienisches Restaurant.
-description: Im ehemaligen Café Kranzler am Ku'damm öffnet ein italienisches Restaurant
-  auf drei Etagen, während das Kranzler Eck mit neuen Mietern umgebaut wird.
+description: "Berlin aktuell: Im ehemaligen Café Kranzler am Ku'damm öffnet ein italienisches Restaurant auf drei Etagen, während das Kranzler Eck mit neuen Mietern…"
 topics:
 - Café Kranzler
 - Kurfürstendamm

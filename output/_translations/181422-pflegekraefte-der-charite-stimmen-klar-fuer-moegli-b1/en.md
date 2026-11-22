@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Gesundheit"
 summary: "Charité nursing staff have voted clearly for a possible indefinite strike, while the dispute over relief and money continues."
-description: "Charité nursing staff have voted clearly for a possible indefinite strike, while the dispute over relief and money continues."
+description: "Berlin news: Charité nursing staff have voted clearly for a possible indefinite strike, while the dispute over relief and money continues."
 source_title: "Pflegekräfte der Charité stimmen klar für möglichen Dauerstreik"
 reading_time: 3
 translations:

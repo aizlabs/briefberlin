@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260705-090000-berl
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Stadtleben
-description: In Berlin können Mieterinnen und Mieter ab jetzt zu hohe Mieten online
-  melden. Das geht über die Internet-Seite der Stadt für Dienste. Die Meldung kommt...
+description: "In Berlin können Mieterinnen und Mieter ab jetzt zu hohe Mieten online melden. Das geht über die Internet-Seite der Stadt für Dienste."
 keywords: *id001
 ---
 

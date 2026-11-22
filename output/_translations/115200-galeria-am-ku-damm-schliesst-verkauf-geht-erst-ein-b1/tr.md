@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Wirtschaft"
 summary: "Galeria, Berlin'deki Ku'damm'da bulunan tanınmış büyük mağazasını kapatıyor. Çalışanlar hayal kırıklığı yaşarken mülk sahibi, arazide konutların ve dükkânların yer alacağı yüksek bir bina planlıyor."
-description: "Galeria, Berlin'deki Ku'damm'da bulunan tanınmış büyük mağazasını kapatıyor. Çalışanlar hayal kırıklığı yaşarken mülk sahibi, arazide konutların ve dükkânların yer alacağı yüksek bir bina planlıyor."
+description: "Galeria, Berlin'deki Ku'damm'da bulunan tanınmış büyük mağazasını kapatıyor. Çalışanlar hayal kırıklığı yaşarken mülk sahibi, arazide konutların ve…"
 source_title: "Galeria am Ku'damm schließt: Verkauf geht erst einmal weiter"
 reading_time: 3
 translations:

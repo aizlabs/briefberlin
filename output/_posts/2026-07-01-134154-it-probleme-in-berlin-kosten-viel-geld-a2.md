@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260701-134154-it-p
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Wirtschaft
-description: In Berlin gibt es große Probleme mit der IT. Viele Computer haben noch
-  nicht das neue Windows 11. Das kostet Berlin viel Geld, weil sie Hilfe von Microsoft...
+description: "In Berlin gibt es große Probleme mit der IT. Viele Computer haben noch nicht das neue Windows 11."
 keywords: *id001
 ---
 

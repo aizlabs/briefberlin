@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260711-161834-wegn
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Politik
-description: Kai Wegner ist Berlins Regierungschef und Mitglied der CDU. Er führt
-  die CDU nicht mehr als wichtigster Kandidat in die Wahl. Die Wahl für das Berliner...
+description: "Kai Wegner ist Berlins Regierungschef und Mitglied der CDU. Er führt die CDU nicht mehr als wichtigster Kandidat in die Wahl."
 keywords: *id001
 ---
 

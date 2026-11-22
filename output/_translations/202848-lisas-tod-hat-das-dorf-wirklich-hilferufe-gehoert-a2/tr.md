@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Nachrichten"
 summary: "Medya şöyle yazdı: Altglietzen köyü Lisa'nın yardım çığlıklarını duydu, ama köyde neredeyse hiç kimse çığlık duymadı."
-description: "Medya şöyle yazdı: Altglietzen köyü Lisa'nın yardım çığlıklarını duydu, ama köyde neredeyse hiç kimse çığlık duymadı."
+description: "Berlin haberleri: Medya şöyle yazdı: Altglietzen köyü Lisa'nın yardım çığlıklarını duydu, ama köyde neredeyse hiç kimse çığlık duymadı."
 source_title: "Lisas Tod: Hat das Dorf wirklich Hilferufe gehört?"
 reading_time: 2
 translations:

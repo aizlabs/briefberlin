@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Politik"
 summary: "Berlin has banned the Neukölln mosque association “El-Irschad” and three associated organisations because they allegedly supported the terrorist organisation Hisbollah with money and propaganda."
-description: "Berlin has banned the Neukölln mosque association “El-Irschad” and three associated organisations because they allegedly supported the terrorist organisation Hisbollah with money and propaganda."
+description: "Berlin has banned the Neukölln mosque association “El-Irschad” and three associated organisations because they allegedly supported the terrorist…"
 source_title: "Berlin verbietet Moscheeverein in Neukölln wegen Nähe zur Hisbollah"
 reading_time: 3
 translations:

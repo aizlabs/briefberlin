@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260706-090000-miet
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Nachrichten
-description: In der Wrangelstraße 70 in Berlin-Kreuzberg protestierten Mieterinnen
-  und Mieter öffentlich gegen die Zustände in ihrem Haus. Unterstützer aus der...
+description: "In der Wrangelstraße 70 in Berlin-Kreuzberg protestierten Mieterinnen und Mieter öffentlich gegen die Zustände in ihrem Haus."
 keywords: *id001
 ---
 

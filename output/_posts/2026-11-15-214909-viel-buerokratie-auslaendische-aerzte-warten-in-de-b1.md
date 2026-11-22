@@ -7,8 +7,7 @@ story: 20261115-214548-lange-anerkennungsverfahren-bremsen-ausl
 category: Gesellschaft
 summary: Deutschland braucht dringend ausländische Ärzte, doch lange und teure Anerkennungsverfahren
   halten viele von ihnen jahrelang von ihrer Arbeit ab.
-description: Deutschland braucht dringend Ärzte aus dem Ausland, doch Mediziner aus
-  Nicht-EU-Staaten warten oft jahrelang auf die Anerkennung ihrer Abschlüsse.
+description: "Berlin aktuell: Deutschland braucht dringend Ärzte aus dem Ausland, doch Mediziner aus Nicht-EU-Staaten warten oft jahrelang auf die Anerkennung ihrer…"
 topics:
 - Ärztemangel
 - Anerkennung

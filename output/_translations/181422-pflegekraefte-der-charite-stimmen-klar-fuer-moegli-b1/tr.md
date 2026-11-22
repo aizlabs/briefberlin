@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Gesundheit"
 summary: "Charité bakım personeli, iş yükünün azaltılması ve para konusundaki anlaşmazlık sürerken olası süresiz grev için açıkça oy verdi."
-description: "Charité bakım personeli, iş yükünün azaltılması ve para konusundaki anlaşmazlık sürerken olası süresiz grev için açıkça oy verdi."
+description: "Berlin haberleri: Charité bakım personeli, iş yükünün azaltılması ve para konusundaki anlaşmazlık sürerken olası süresiz grev için açıkça oy verdi."
 source_title: "Pflegekräfte der Charité stimmen klar für möglichen Dauerstreik"
 reading_time: 3
 translations:

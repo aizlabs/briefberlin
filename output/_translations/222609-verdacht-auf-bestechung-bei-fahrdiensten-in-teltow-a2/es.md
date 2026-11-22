@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Verkehr"
 summary: "Dos empleados del distrito de Teltow-Fläming quizá recibieron dinero por licencias para coches de alquiler con conductor."
-description: "Dos empleados del distrito de Teltow-Fläming quizá recibieron dinero por licencias para coches de alquiler con conductor."
+description: "Noticias de Berlín: Dos empleados del distrito de Teltow-Fläming quizá recibieron dinero por licencias para coches de alquiler con conductor."
 source_title: "Verdacht auf Bestechung bei Fahrdiensten in Teltow-Fläming"
 reading_time: 2
 translations:

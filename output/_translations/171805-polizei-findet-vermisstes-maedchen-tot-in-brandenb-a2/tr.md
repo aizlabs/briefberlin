@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Kriminalität"
 summary: "Polis, kayıp Lisa'yı Brandenburg'da ölü buldu ve olayı araştırıyor."
-description: "Polis, kayıp Lisa'yı Brandenburg'da ölü buldu ve olayı araştırıyor."
+description: "Berlin haberleri: Polis, kayıp Lisa'yı Brandenburg'da ölü buldu ve olayı araştırıyor."
 source_title: "Polizei findet vermisstes Mädchen tot in Brandenburg"
 reading_time: 2
 translations:

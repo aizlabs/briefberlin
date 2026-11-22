@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Wirtschaft"
 summary: "Una pareja ucraniana vende cruasanes artesanales por 6,80 euros en Berlín-Wilmersdorf y explica el alto precio principalmente por los buenos ingredientes, el mucho trabajo manual y el aumento de los costes de personal, alquiler y electricidad."
-description: "Una pareja ucraniana vende cruasanes artesanales por 6,80 euros en Berlín-Wilmersdorf y explica el alto precio principalmente por los buenos ingredientes, el mucho trabajo manual y el aumento de los costes de personal, alquiler y electricidad."
+description: "Una pareja ucraniana vende cruasanes artesanales por 6,80 euros en Berlín-Wilmersdorf y explica el alto precio principalmente por los buenos…"
 source_title: "Warum ein Croissant in Berlin-Wilmersdorf 6,80 Euro kostet"
 reading_time: 3
 translations:

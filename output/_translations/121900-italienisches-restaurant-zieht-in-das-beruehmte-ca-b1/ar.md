@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Stadtleben"
 summary: "يفتتح مطعم «Circolo Popolare (تشيركولو بوبولاري)» الإيطالي في مبنى Café Kranzler (كافيه كرانتسلر) السابق بشارع Kurfürstendamm (كورفورستندام) في برلين، فيما يشهد مجمع Kranzler Eck (كرانتسلر إك) بأكمله تغييرات."
-description: "يفتتح مطعم «Circolo Popolare (تشيركولو بوبولاري)» الإيطالي في مبنى Café Kranzler (كافيه كرانتسلر) السابق بشارع Kurfürstendamm (كورفورستندام) في برلين، فيما يشهد مجمع Kranzler Eck (كرانتسلر إك) بأكمله تغييرات."
+description: "يفتتح مطعم «Circolo Popolare (تشيركولو بوبولاري)» الإيطالي في مبنى Café Kranzler (كافيه كرانتسلر) السابق بشارع Kurfürstendamm (كورفورستندام) في برلين،…"
 source_title: "Italienisches Restaurant zieht in das berühmte Café Kranzler"
 reading_time: 3
 translations:

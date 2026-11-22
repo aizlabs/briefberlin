@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Gesellschaft"
 summary: "Germany needs doctors from abroad, but they often wait years for permission to work."
-description: "Germany needs doctors from abroad, but they often wait years for permission to work."
+description: "Berlin news: Germany needs doctors from abroad, but they often wait years for permission to work."
 source_title: "Ausländische Ärzte warten in Deutschland lange auf Arbeit"
 reading_time: 2
 translations:

@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260703-090000-bvg-
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Verkehr
-description: Die BVG und Uniqlo starten eine Modeaktion in Berlin. Die BVG fährt Busse,
-  U-Bahnen und Straßenbahnen in der Stadt. Seit Donnerstag können Kunden T-Shirts...
+description: "Die BVG und Uniqlo starten eine Modeaktion in Berlin. Die BVG fährt Busse, U-Bahnen und Straßenbahnen in der Stadt."
 keywords: *id001
 ---
 

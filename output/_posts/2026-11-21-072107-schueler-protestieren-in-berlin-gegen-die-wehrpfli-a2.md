@@ -7,9 +7,7 @@ story: 20261121-071959-tausende-jugendliche-protestieren-in-ber
 category: Politik
 summary: Am Freitag haben in Berlin und anderen Städten Tausende Jugendliche friedlich
   gegen die Wehrpflicht protestiert.
-description: In Berlin und weiteren Städten demonstrierten Tausende junge Menschen
-  gegen die Wehrpflicht und für mehr Geld für Bildung, Klimaschutz und bezahlbares
-  Leben.
+description: "In Berlin und weiteren Städten demonstrierten Tausende junge Menschen gegen die Wehrpflicht und für mehr Geld für Bildung, Klimaschutz und bezahlbares…"
 topics:
 - Wehrpflicht
 - Schulstreik

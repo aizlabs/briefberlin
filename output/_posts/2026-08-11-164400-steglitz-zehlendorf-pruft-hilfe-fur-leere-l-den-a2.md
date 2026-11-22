@@ -4,7 +4,7 @@ date: 2026-08-11 16:44:00
 author: "clara-becker"
 level: A2
 category: "Stadtleben"
-description: "Steglitz-Zehlendorf prüft einen digitalen Leerstandsmelder, um freie Gewerbeflächen zu erfassen und Einkaufsstraßen zu beleben."
+description: "Berlin aktuell: Steglitz-Zehlendorf prüft einen digitalen Leerstandsmelder, um freie Gewerbeflächen zu erfassen und Einkaufsstraßen zu beleben."
 topics: ["Steglitz-Zehlendorf", "Berlin", "Leerstandsmelder", "Gewerbefl\u00e4chen", "Einkaufsstra\u00dfen", "Schlo\u00dfstra\u00dfe", "leben\u00addig blei\u00adben"]
 keywords: ["Steglitz-Zehlendorf", "Berlin", "Leerstandsmelder", "Gewerbefl\u00e4chen", "Einkaufsstra\u00dfen", "Schlo\u00dfstra\u00dfe", "leben\u00addig blei\u00adben"]
 sources: []

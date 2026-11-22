@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Gesellschaft"
 summary: "Alemania necesita médicos del extranjero, pero ellos suelen esperar años para recibir el permiso de trabajo."
-description: "Alemania necesita médicos del extranjero, pero ellos suelen esperar años para recibir el permiso de trabajo."
+description: "Noticias de Berlín: Alemania necesita médicos del extranjero, pero ellos suelen esperar años para recibir el permiso de trabajo."
 source_title: "Ausländische Ärzte warten in Deutschland lange auf Arbeit"
 reading_time: 2
 translations:

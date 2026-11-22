@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260703-090000-bvg-
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Verkehr
-description: Die Berliner Verkehrsbetriebe, kurz BVG, arbeiten mit Uniqlo zusammen.
-  Seit Donnerstag können Kundinnen und Kunden im Berliner Hauptgeschäft der japanischen...
+description: "Die Berliner Verkehrsbetriebe, kurz BVG, arbeiten mit Uniqlo zusammen."
 keywords: *id001
 ---
 

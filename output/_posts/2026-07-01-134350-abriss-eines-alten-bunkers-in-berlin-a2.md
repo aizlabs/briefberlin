@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260701-134350-abri
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Stadtleben
-description: In Berlin soll ein alter Bunker **abgerissen** werden. Der Bunker steht
-  in Berlin-Mitte. Er ist der letzte Vorkriegsbunker aus der NS-Zeit. An seiner Stelle...
+description: "In Berlin soll ein alter Bunker abgerissen werden. Der Bunker steht in Berlin-Mitte. Er ist der letzte Vorkriegsbunker aus der NS-Zeit."
 keywords: *id001
 ---
 

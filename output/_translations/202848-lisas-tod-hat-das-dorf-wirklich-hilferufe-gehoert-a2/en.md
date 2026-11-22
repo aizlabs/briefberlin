@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Nachrichten"
 summary: "The media wrote that the village of Altglietzen heard Lisa’s cries for help, but almost no one in the village heard screams."
-description: "The media wrote that the village of Altglietzen heard Lisa’s cries for help, but almost no one in the village heard screams."
+description: "Berlin news: The media wrote that the village of Altglietzen heard Lisa’s cries for help, but almost no one in the village heard screams."
 source_title: "Lisas Tod: Hat das Dorf wirklich Hilferufe gehört?"
 reading_time: 2
 translations:

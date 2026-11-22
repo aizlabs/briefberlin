@@ -8,9 +8,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260629-181118-stre
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Politik
-description: Die Bundesagentur für Arbeit hat neue Regeln eingeführt, die ab Juli
-  in ganz Deutschland gelten. Wenn jemand, der Arbeitslosengeld erhält, betrunken
-  oder...
+description: "Berlin aktuell: Die Bundesagentur für Arbeit hat neue Regeln eingeführt, die ab Juli in ganz Deutschland gelten."
 keywords: *id001
 ---
 

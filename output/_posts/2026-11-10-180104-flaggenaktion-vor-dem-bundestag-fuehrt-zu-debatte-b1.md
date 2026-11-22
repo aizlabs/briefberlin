@@ -6,7 +6,7 @@ level: B1
 story: "20261110-175813-flaggenprotest-vor-dem-bundestag"
 category: "Politik"
 summary: "Nach einer Flaggenaktion vor dem Bundestag ermittelt die Polizei, während Politiker über besseren Schutz und strengere Protestregeln sprechen."
-description: "Nach einer Protestaktion vor dem Bundestag weht die deutsche Flagge wieder. Zuvor war eine Palästinaflagge gehisst worden; die Polizei prüft ihren Einsatz."
+description: "Berlin aktuell: Nach einer Protestaktion vor dem Bundestag weht die deutsche Flagge wieder. Zuvor war eine Palästinaflagge gehisst worden; die Polizei…"
 topics: ["Bundestag", "Berlin", "Pal\u00e4stinaflagge", "Protestaktion", "his\u00adsen", "wer\u00adfen", "Kon\u00adse\u00adquen\u00adzen"]
 keywords: ["Bundestag", "Berlin", "Pal\u00e4stinaflagge", "Protestaktion", "his\u00adsen", "wer\u00adfen", "Kon\u00adse\u00adquen\u00adzen"]
 sources: []

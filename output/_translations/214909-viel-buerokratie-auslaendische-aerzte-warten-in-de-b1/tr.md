@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Gesellschaft"
 summary: "Almanya'nın yurt dışından gelen doktorlara acilen ihtiyacı var, ancak uzun ve pahalı denklik işlemleri birçok doktorun yıllarca çalışmasını engelliyor."
-description: "Almanya'nın yurt dışından gelen doktorlara acilen ihtiyacı var, ancak uzun ve pahalı denklik işlemleri birçok doktorun yıllarca çalışmasını engelliyor."
+description: "Berlin haberleri: Almanya'nın yurt dışından gelen doktorlara acilen ihtiyacı var, ancak uzun ve pahalı denklik işlemleri birçok doktorun yıllarca…"
 source_title: "Viel Bürokratie: Ausländische Ärzte warten in Deutschland jahrelang auf Anerkennung"
 reading_time: 3
 translations:

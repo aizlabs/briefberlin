@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Gesellschaft"
 summary: "Niemcy potrzebują lekarzy z zagranicy, ale często czekają oni latami na pozwolenie na pracę."
-description: "Niemcy potrzebują lekarzy z zagranicy, ale często czekają oni latami na pozwolenie na pracę."
+description: "Wiadomości z Berlina: Niemcy potrzebują lekarzy z zagranicy, ale często czekają oni latami na pozwolenie na pracę."
 source_title: "Ausländische Ärzte warten in Deutschland lange auf Arbeit"
 reading_time: 2
 translations:

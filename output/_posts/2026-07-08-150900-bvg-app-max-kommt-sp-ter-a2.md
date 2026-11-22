@@ -9,9 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260708-150900-bvg-
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Verkehr
-description: Die neue BVG-App Max kommt später nach Berlin. Die BVG ist die Firma
-  für U-Bahn, Bus und Tram in Berlin. Die Menschen sollen dann Max statt der alten
-  App...
+description: "Die neue BVG-App Max kommt später nach Berlin. Die BVG ist die Firma für U-Bahn, Bus und Tram in Berlin."
 keywords: *id001
 ---
 

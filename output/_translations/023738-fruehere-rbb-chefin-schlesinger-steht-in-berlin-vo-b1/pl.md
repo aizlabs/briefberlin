@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Medien"
 summary: "W Berlinie rozpoczyna się proces Patricii Schlesinger i trzech innych byłych osób odpowiedzialnych za RBB. Zarzuca się im spowodowanie strat finansowych dla stacji."
-description: "W Berlinie rozpoczyna się proces Patricii Schlesinger i trzech innych byłych osób odpowiedzialnych za RBB. Zarzuca się im spowodowanie strat finansowych dla stacji."
+description: "W Berlinie rozpoczyna się proces Patricii Schlesinger i trzech innych byłych osób odpowiedzialnych za RBB."
 source_title: "Frühere RBB-Chefin Schlesinger steht in Berlin vor Gericht"
 reading_time: 3
 translations:

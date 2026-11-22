@@ -7,8 +7,7 @@ sources: []
 audio: null
 reading_time: 3
 category: Nachrichten
-description: Nach den tödlichen Schüssen in einer Jugendhilfeeinrichtung in Stade
-  prüft die Polizei ein mögliches Motiv. Die Ermittler sehen immer mehr Hinweise auf...
+description: "Berlin aktuell: Nach den tödlichen Schüssen in einer Jugendhilfeeinrichtung in Stade prüft die Polizei ein mögliches Motiv."
 keywords: *id001
 ---
 

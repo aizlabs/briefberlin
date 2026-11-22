@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Stadtleben"
 summary: "Yenilemeden kısa süre sonra Stadtbad Schöneberg’de yeniden teknik sorunlar, kapatılan alanlar ve konuklardan eleştiriler var."
-description: "Yenilemeden kısa süre sonra Stadtbad Schöneberg’de yeniden teknik sorunlar, kapatılan alanlar ve konuklardan eleştiriler var."
+description: "Berlin haberleri: Yenilemeden kısa süre sonra Stadtbad Schöneberg’de yeniden teknik sorunlar, kapatılan alanlar ve konuklardan eleştiriler var."
 source_title: "Stadtbad Schöneberg hat kurz nach Sanierung wieder Technikprobleme"
 reading_time: 3
 translations:

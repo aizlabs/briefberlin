@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Nachrichten"
 summary: "13 yaşındaki Lisa T.'nin ölümünün ardından, bir çift çığlıklar duyduğunu söylese de Altglietzen köyünün tamamına yöneltilen suçlamanın doğru olmadığı ortaya çıktı."
-description: "13 yaşındaki Lisa T.'nin ölümünün ardından, bir çift çığlıklar duyduğunu söylese de Altglietzen köyünün tamamına yöneltilen suçlamanın doğru olmadığı ortaya çıktı."
+description: "Berlin haberleri: 13 yaşındaki Lisa T.'nin ölümünün ardından, bir çift çığlıklar duyduğunu söylese de Altglietzen köyünün tamamına yöneltilen suçlamanın…"
 source_title: "Fall Lisa T.: Haben Nachbarn in Altglietzen wirklich Hilferufe ignoriert?"
 reading_time: 3
 translations:

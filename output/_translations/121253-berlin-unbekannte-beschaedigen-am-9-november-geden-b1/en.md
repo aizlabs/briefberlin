@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Stadtleben"
 summary: "Around November 9, unknown people in Berlin damaged stumbling stones and a memorial poster for Jewish victims of the Nazis. RIAS sees these as targeted antisemitic attacks on remembrance."
-description: "Around November 9, unknown people in Berlin damaged stumbling stones and a memorial poster for Jewish victims of the Nazis. RIAS sees these as targeted antisemitic attacks on remembrance."
+description: "Around November 9, unknown people in Berlin damaged stumbling stones and a memorial poster for Jewish victims of the Nazis."
 source_title: "Berlin: Unbekannte beschädigen am 9. November Gedenkorte für NS-Opfer"
 reading_time: 3
 translations:

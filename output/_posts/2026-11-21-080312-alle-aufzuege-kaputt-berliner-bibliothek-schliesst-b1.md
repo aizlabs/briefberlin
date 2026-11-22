@@ -8,8 +8,7 @@ category: Kultur
 summary: Weil alle Aufzüge kaputt sind, hat die Amerika-Gedenkbibliothek in Berlin-Kreuzberg
   ihren Salon geschlossen, und die Leitung fordert wegen vieler Mängel einen schnellen
   Umzug an den Alexanderplatz.
-description: Wegen ausgefallener Aufzüge schließt die Amerika-Gedenkbibliothek in
-  Kreuzberg ihren Salon. Die Leitung warnt vor Schließung und fordert einen Neubau.
+description: "Berlin aktuell: Wegen ausgefallener Aufzüge schließt die Amerika-Gedenkbibliothek in Kreuzberg ihren Salon."
 topics:
 - Amerika-Gedenkbibliothek
 - Berlin-Kreuzberg

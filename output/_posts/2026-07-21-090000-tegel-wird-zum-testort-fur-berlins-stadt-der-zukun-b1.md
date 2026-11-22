@@ -10,8 +10,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260721-090000-tege
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Verkehr
-description: Auf dem früheren Flughafen Tegel in Berlin entsteht seit 2020 ein neues
-  Stadtgebiet. Damals endete der Passagierbetrieb. Seitdem baut Berlin das rund 500...
+description: "Auf dem früheren Flughafen Tegel in Berlin entsteht seit 2020 ein neues Stadtgebiet. Damals endete der Passagierbetrieb."
 keywords: *id001
 ---
 

@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Kultur"
 summary: "Tüm asansörler bozuk olduğu için Berlin-Kreuzberg'deki Amerika-Gedenkbibliothek salonunu kapattı. Yönetim, çok sayıda sorun nedeniyle kütüphanenin hızla Alexanderplatz'a taşınmasını istiyor."
-description: "Tüm asansörler bozuk olduğu için Berlin-Kreuzberg'deki Amerika-Gedenkbibliothek salonunu kapattı. Yönetim, çok sayıda sorun nedeniyle kütüphanenin hızla Alexanderplatz'a taşınmasını istiyor."
+description: "Tüm asansörler bozuk olduğu için Berlin-Kreuzberg'deki Amerika-Gedenkbibliothek salonunu kapattı."
 source_title: "Alle Aufzüge kaputt: Berliner Bibliothek schließt ihren beliebten Salon"
 reading_time: 3
 translations:

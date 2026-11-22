@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Gesundheit"
 summary: "Медсестри й медбрати Charité чітко проголосували за можливий безстроковий страйк, тоді як суперечка щодо розвантаження і грошей триває."
-description: "Медсестри й медбрати Charité чітко проголосували за можливий безстроковий страйк, тоді як суперечка щодо розвантаження і грошей триває."
+description: "Новини Берліна: Медсестри й медбрати Charité чітко проголосували за можливий безстроковий страйк, тоді як суперечка щодо розвантаження і грошей триває."
 source_title: "Pflegekräfte der Charité stimmen klar für möglichen Dauerstreik"
 reading_time: 3
 translations:

@@ -4,7 +4,7 @@ date: 2026-08-13 13:58:43
 author: "clara-becker"
 level: B1
 category: "Stadtleben"
-description: "Senat, Bezirk und Eigentümer einigen sich auf Pläne für das RAW-Gelände: Kulturorte bleiben vorerst, Neubau und Wohnungen sind auch vorgesehen."
+description: "Berlin aktuell: Senat, Bezirk und Eigentümer einigen sich auf Pläne für das RAW-Gelände: Kulturorte bleiben vorerst, Neubau und Wohnungen sind auch…"
 topics: ["RAW-Gel\u00e4nde", "Friedrichshain", "Berliner Senat", "Bebauungsplan", "Wohnungsbau", "Kulturorte", "RAW-Clubs"]
 keywords: ["RAW-Gel\u00e4nde", "Friedrichshain", "Berliner Senat", "Bebauungsplan", "Wohnungsbau", "Kulturorte", "RAW-Clubs"]
 sources: []

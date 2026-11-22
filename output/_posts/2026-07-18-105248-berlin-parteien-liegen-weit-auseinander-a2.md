@@ -10,9 +10,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260718-105248-berl
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Nachrichten
-description: Eine neue Umfrage zeigt die politische Lage in Berlin. Es geht um das
-  Abgeordnetenhaus, also das Parlament der Stadt. Die Umfrage zeigt aktuelle Werte
-  für...
+description: "Eine neue Umfrage zeigt die politische Lage in Berlin. Es geht um das Abgeordnetenhaus, also das Parlament der Stadt."
 keywords: *id001
 ---
 

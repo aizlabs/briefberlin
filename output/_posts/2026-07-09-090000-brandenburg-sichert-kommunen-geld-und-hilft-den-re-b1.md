@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260709-090000-bran
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Wirtschaft
-description: Die Landesregierung von Brandenburg hat sich mit Landkreisen, Städten
-  und Gemeinden auf sichere Finanzen bis 2030 geeinigt. Das teilte das Land nach...
+description: "Berlin aktuell: Die Landesregierung von Brandenburg hat sich mit Landkreisen, Städten und Gemeinden auf sichere Finanzen bis 2030 geeinigt."
 keywords: *id001
 ---
 

@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Kriminalität"
 summary: "عثرت الشرطة على Lisa المفقودة ميتة في براندنبورغ، وهي تحقق في القضية."
-description: "عثرت الشرطة على Lisa المفقودة ميتة في براندنبورغ، وهي تحقق في القضية."
+description: "أخبار برلين: عثرت الشرطة على Lisa المفقودة ميتة في براندنبورغ، وهي تحقق في القضية."
 source_title: "Polizei findet vermisstes Mädchen tot in Brandenburg"
 reading_time: 2
 translations:

@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Politik"
 summary: "Berlin zakazał działalności stowarzyszenia meczetu „El-Irschad” w Neukölln i trzech powiązanych z nim organizacji, ponieważ miały one wspierać organizację terrorystyczną Hisbollah pieniędzmi i propagandą."
-description: "Berlin zakazał działalności stowarzyszenia meczetu „El-Irschad” w Neukölln i trzech powiązanych z nim organizacji, ponieważ miały one wspierać organizację terrorystyczną Hisbollah pieniędzmi i propagandą."
+description: "Berlin zakazał działalności stowarzyszenia meczetu „El-Irschad” w Neukölln i trzech powiązanych z nim organizacji, ponieważ miały one wspierać…"
 source_title: "Berlin verbietet Moscheeverein in Neukölln wegen Nähe zur Hisbollah"
 reading_time: 3
 translations:

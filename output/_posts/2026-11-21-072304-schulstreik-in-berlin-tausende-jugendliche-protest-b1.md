@@ -8,9 +8,7 @@ category: Politik
 summary: Am Freitag haben in Berlin und vielen anderen Städten Tausende Jugendliche
   friedlich gegen die Wehrpflicht und für mehr Geld für Bildung, Gesundheit und Klimaschutz
   demonstriert.
-description: In Berlin und weiteren Städten demonstrierten Tausende junge Menschen
-  gegen die Wehrpflicht und für mehr Geld für Bildung, Klimaschutz und bezahlbares
-  Leben.
+description: "In Berlin und weiteren Städten demonstrierten Tausende junge Menschen gegen die Wehrpflicht und für mehr Geld für Bildung, Klimaschutz und bezahlbares…"
 topics:
 - Wehrpflicht
 - Schulstreik

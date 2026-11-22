@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Kultur"
 summary: "Todos los ascensores de la Amerika-Gedenkbibliothek están averiados, por eso el salón está cerrado y la biblioteca quiere trasladarse a Alexanderplatz."
-description: "Todos los ascensores de la Amerika-Gedenkbibliothek están averiados, por eso el salón está cerrado y la biblioteca quiere trasladarse a Alexanderplatz."
+description: "Noticias de Berlín: Todos los ascensores de la Amerika-Gedenkbibliothek están averiados, por eso el salón está cerrado y la biblioteca quiere trasladarse…"
 source_title: "Alle Aufzüge kaputt: Berliner Bibliothek schließt ihren Salon"
 reading_time: 2
 translations:

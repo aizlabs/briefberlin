@@ -10,8 +10,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260717-090000-viel
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Stadtleben
-description: 'In Berlin gibt es neue Zahlen zu großen Wohnungsfirmen. Viele Menschen
-  wollen: Die Stadt soll Wohnungen von großen privaten Firmen übernehmen. 1021 Berliner...'
+description: "In Berlin gibt es neue Zahlen zu großen Wohnungsfirmen. Viele Menschen wollen: Die Stadt soll Wohnungen von großen privaten Firmen übernehmen."
 keywords: *id001
 ---
 

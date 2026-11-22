@@ -4,7 +4,7 @@ date: 2026-08-13 14:10:29
 author: "clara-becker"
 level: A2
 category: "Kultur"
-description: "Ein historischer Tanzsaal in Tegel soll als Kulturort erhalten bleiben. Ein neuer Verein sucht Unterstützer für Sanierung und Nutzung des Baudenkmals."
+description: "Berlin aktuell: Ein historischer Tanzsaal in Tegel soll als Kulturort erhalten bleiben. Ein neuer Verein sucht Unterstützer für Sanierung und Nutzung des…"
 topics: ["Tegel", "Tanzsaal", "Baudenkmal", "Kulturort", "Denkmalschutz", "F\u00f6rdermitglieder", "Bau\u00addenk\u00admal"]
 keywords: ["Tegel", "Tanzsaal", "Baudenkmal", "Kulturort", "Denkmalschutz", "F\u00f6rdermitglieder", "Bau\u00addenk\u00admal"]
 sources: []

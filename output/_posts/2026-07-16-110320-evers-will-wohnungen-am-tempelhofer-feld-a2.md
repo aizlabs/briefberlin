@@ -10,8 +10,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260716-110320-ever
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Politik
-description: Stefan Evers ist der wichtigste Kandidat der CDU, einer politischen Partei
-  in Berlin. Er macht das Tempelhofer Feld zu einem wichtigen Thema vor der Wahl....
+description: "Stefan Evers ist der wichtigste Kandidat der CDU, einer politischen Partei in Berlin. Er macht das Tempelhofer Feld zu einem wichtigen Thema vor der Wahl."
 keywords: *id001
 ---
 

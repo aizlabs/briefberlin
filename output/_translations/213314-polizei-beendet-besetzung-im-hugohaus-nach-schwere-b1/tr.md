@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Stadtleben"
 summary: "Polis, inşaat çalışmaları nedeniyle çıkan çatışmaların ardından Hugohaus’un işgalini sona erdirdi; protesto ve hukuki sorular ise sürüyor."
-description: "Polis, inşaat çalışmaları nedeniyle çıkan çatışmaların ardından Hugohaus’un işgalini sona erdirdi; protesto ve hukuki sorular ise sürüyor."
+description: "Berlin haberleri: Polis, inşaat çalışmaları nedeniyle çıkan çatışmaların ardından Hugohaus’un işgalini sona erdirdi; protesto ve hukuki sorular ise…"
 source_title: "Polizei beendet Besetzung im Hugohaus nach schweren Konflikten"
 reading_time: 3
 translations:

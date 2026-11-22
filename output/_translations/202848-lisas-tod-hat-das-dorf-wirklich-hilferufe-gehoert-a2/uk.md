@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Nachrichten"
 summary: "ЗМІ писали: у селі Altglietzen (Альтгліцен) чули крики Lisa (Ліза) про допомогу, але майже ніхто в селі не чув криків."
-description: "ЗМІ писали: у селі Altglietzen (Альтгліцен) чули крики Lisa (Ліза) про допомогу, але майже ніхто в селі не чув криків."
+description: "Новини Берліна: ЗМІ писали: у селі Altglietzen (Альтгліцен) чули крики Lisa (Ліза) про допомогу, але майже ніхто в селі не чув криків."
 source_title: "Lisas Tod: Hat das Dorf wirklich Hilferufe gehört?"
 reading_time: 2
 translations:

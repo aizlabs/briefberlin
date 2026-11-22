@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260710-213129-temp
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Stadtleben
-description: Auf dem Tempelhofer Feld in Berlin könnten viele neue Wohnungen entstehen.
-  Die Investitionsbank Berlin hat jetzt einen Entwurf für eine Randbebauung...
+description: "Auf dem Tempelhofer Feld in Berlin könnten viele neue Wohnungen entstehen."
 keywords: *id001
 ---
 

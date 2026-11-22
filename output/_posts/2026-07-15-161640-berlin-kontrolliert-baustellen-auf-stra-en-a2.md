@@ -10,8 +10,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260715-161640-berl
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Nachrichten
-description: Berlin kontrolliert jetzt Baustellen auf Straßen in der Stadt genauer.
-  Eine neue Gruppe aus Verkehrsamt, Polizei und Bezirken prüft die Arbeiten. In den...
+description: "Berlin kontrolliert jetzt Baustellen auf Straßen in der Stadt genauer. Eine neue Gruppe aus Verkehrsamt, Polizei und Bezirken prüft die Arbeiten."
 keywords: *id001
 ---
 

@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Kriminalität"
 summary: "La policía ha encontrado muerta en Brandeburgo a Lisa, que estaba desaparecida, e investiga el caso."
-description: "La policía ha encontrado muerta en Brandeburgo a Lisa, que estaba desaparecida, e investiga el caso."
+description: "Noticias de Berlín: La policía ha encontrado muerta en Brandeburgo a Lisa, que estaba desaparecida, e investiga el caso."
 source_title: "Polizei findet vermisstes Mädchen tot in Brandenburg"
 reading_time: 2
 translations:

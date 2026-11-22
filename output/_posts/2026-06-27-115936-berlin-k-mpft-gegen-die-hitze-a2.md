@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260627-095922-berl
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Politik
-description: Berlin hat ein **heißes Wochenende** vor sich. Die Temperaturen können
-  bis zu 41 Grad steigen. Das ist sehr heiß. Der bisherige Rekord liegt bei 41,2 Grad....
+description: "Berlin hat ein heißes Wochenende vor sich. Die Temperaturen können bis zu 41 Grad steigen. Das ist sehr heiß. Der bisherige Rekord liegt bei 41,2 Grad."
 keywords: *id001
 ---
 

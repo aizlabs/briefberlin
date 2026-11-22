@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260707-090000-viel
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Nachrichten
-description: Zurzeit wächst in mehreren Berliner Außenbezirken der Ärger über abgestellte
-  Bootsanhänger. Bootsanhänger, auch Trailer genannt, transportieren Boote auf...
+description: "Zurzeit wächst in mehreren Berliner Außenbezirken der Ärger über abgestellte Bootsanhänger."
 keywords: *id001
 ---
 

@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Politik"
 summary: "Після акції з прапором перед Bundestag поліція проводить розслідування, а політики говорять про кращий захист і суворіші правила проведення протестів."
-description: "Після акції з прапором перед Bundestag поліція проводить розслідування, а політики говорять про кращий захист і суворіші правила проведення протестів."
+description: "Новини Берліна: Після акції з прапором перед Bundestag поліція проводить розслідування, а політики говорять про кращий захист і суворіші правила…"
 source_title: "Flaggenaktion vor dem Bundestag führt zu Debatte über Sicherheit"
 reading_time: 3
 translations:

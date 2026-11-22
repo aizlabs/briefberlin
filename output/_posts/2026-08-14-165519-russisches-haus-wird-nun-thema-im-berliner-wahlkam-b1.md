@@ -4,7 +4,7 @@ date: 2026-08-14 16:55:19
 author: "clara-becker"
 level: B1
 category: "Politik"
-description: "Die Debatte über mögliche Schließung des Russischen Hauses in Berlin wegen Propaganda- und Sicherheitsvorwürfen gewinnt im Wahlkampf an politischer Bedeutung."
+description: "Die Debatte über mögliche Schließung des Russischen Hauses in Berlin wegen Propaganda- und Sicherheitsvorwürfen gewinnt im Wahlkampf an politischer…"
 topics: ["Berlin", "Russisches Haus", "Friedrichstra\u00dfe", "Propaganda", "EU-Sanktionen", "Wahlkampf", "Putin-Pro\u00adpa\u00adganda mit\u00adten"]
 keywords: ["Berlin", "Russisches Haus", "Friedrichstra\u00dfe", "Propaganda", "EU-Sanktionen", "Wahlkampf", "Putin-Pro\u00adpa\u00adganda mit\u00adten"]
 sources: []

@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Kriminalität"
 summary: "Zaginioną Lisę T. znaleziono martwą w Brandenburgii; ranny mężczyzna jest poważnie podejrzewany o zbrodnię."
-description: "Zaginioną Lisę T. znaleziono martwą w Brandenburgii; ranny mężczyzna jest poważnie podejrzewany o zbrodnię."
+description: "Wiadomości z Berlina: Zaginioną Lisę T. znaleziono martwą w Brandenburgii; ranny mężczyzna jest poważnie podejrzewany o zbrodnię."
 source_title: "Vermisste Jugendliche aus Berlin tot in Brandenburg gefunden"
 reading_time: 3
 translations:

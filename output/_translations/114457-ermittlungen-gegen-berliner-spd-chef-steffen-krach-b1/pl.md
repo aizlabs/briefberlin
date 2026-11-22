@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Politik"
 summary: "Przewodnicząca berlińskiego parlamentu zgodziła się, aby prokuratura w Hanowerze kontynuowała śledztwo przeciwko szefowi berlińskiej SPD Steffen Krach w sprawie sprzedaży terenu szpitalnego w Lehrte."
-description: "Przewodnicząca berlińskiego parlamentu zgodziła się, aby prokuratura w Hanowerze kontynuowała śledztwo przeciwko szefowi berlińskiej SPD Steffen Krach w sprawie sprzedaży terenu szpitalnego w Lehrte."
+description: "Przewodnicząca berlińskiego parlamentu zgodziła się, aby prokuratura w Hanowerze kontynuowała śledztwo przeciwko szefowi berlińskiej SPD Steffen Krach w…"
 source_title: "Ermittlungen gegen Berliner SPD-Chef Steffen Krach können weitergehen"
 reading_time: 3
 translations:

@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Politik"
 summary: "El autor islamista del atentado contra el CSD de Berlín recibió durante meses una prestación social en 2025, aunque estaba en prisión en el Líbano, porque la oficina de empleo no lo sabía."
-description: "El autor islamista del atentado contra el CSD de Berlín recibió durante meses una prestación social en 2025, aunque estaba en prisión en el Líbano, porque la oficina de empleo no lo sabía."
+description: "El autor islamista del atentado contra el CSD de Berlín recibió durante meses una prestación social en 2025, aunque estaba en prisión en el Líbano…"
 source_title: "Attentäter vom Berliner CSD bekam Bürgergeld auch im Gefängnis"
 reading_time: 3
 translations:

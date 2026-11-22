@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Wirtschaft"
 summary: "Galeria is closing its well-known department store on Berlin’s Ku'damm, its employees are disappointed, and the owner is planning a high-rise with apartments and shops on the site."
-description: "Galeria is closing its well-known department store on Berlin’s Ku'damm, its employees are disappointed, and the owner is planning a high-rise with apartments and shops on the site."
+description: "Galeria is closing its well-known department store on Berlin’s Ku'damm, its employees are disappointed, and the owner is planning a high-rise with…"
 source_title: "Galeria am Ku'damm schließt: Verkauf geht erst einmal weiter"
 reading_time: 3
 translations:

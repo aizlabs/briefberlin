@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260710-213411-neue
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Verkehr
-description: Berlin hat eine neue sehr lange Straßenbahn. Seit Mittwoch fährt der
-  Urbanliner auf der Linie M4. Die Strecke geht vom Hackeschen Markt bis zur Sulzfelder...
+description: "Berlin hat eine neue sehr lange Straßenbahn. Seit Mittwoch fährt der Urbanliner auf der Linie M4."
 keywords: *id001
 ---
 

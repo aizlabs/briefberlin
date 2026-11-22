@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Politik"
 summary: "Bundestag önündeki bir bayrak eyleminin ardından polis soruşturma yürütürken, siyasetçiler daha iyi koruma ve protestolar için daha sıkı kurallar üzerinde konuşuyor."
-description: "Bundestag önündeki bir bayrak eyleminin ardından polis soruşturma yürütürken, siyasetçiler daha iyi koruma ve protestolar için daha sıkı kurallar üzerinde konuşuyor."
+description: "Berlin haberleri: Bundestag önündeki bir bayrak eyleminin ardından polis soruşturma yürütürken, siyasetçiler daha iyi koruma ve protestolar için daha…"
 source_title: "Flaggenaktion vor dem Bundestag führt zu Debatte über Sicherheit"
 reading_time: 3
 translations:

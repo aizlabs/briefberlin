@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260706-090000-neue
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Stadtleben
-description: Auf dem Gelände der früheren Victoriaspeicher in Friedrichshain-Kreuzberg
-  soll in den nächsten Jahren ein neues Stadtquartier entstehen. Geplant sind rund...
+description: "Berlin aktuell: Auf dem Gelände der früheren Victoriaspeicher in Friedrichshain-Kreuzberg soll in den nächsten Jahren ein neues Stadtquartier entstehen."
 keywords: *id001
 ---
 

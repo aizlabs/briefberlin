@@ -10,8 +10,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260715-160852-leer
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Politik
-description: In Berlin diskutieren Politik, Verwaltung und Firmen aus der Wohnungsbranche
-  stärker über leere Büros. Sie sollen künftig öfter zu Wohnungen werden. Der...
+description: "In Berlin diskutieren Politik, Verwaltung und Firmen aus der Wohnungsbranche stärker über leere Büros. Sie sollen künftig öfter zu Wohnungen werden."
 keywords: *id001
 ---
 

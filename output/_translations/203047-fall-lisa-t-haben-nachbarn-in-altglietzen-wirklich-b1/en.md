@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Nachrichten"
 summary: "After the death of 13-year-old Lisa T., it has become clear that the accusation against the entire village of Altglietzen is not true, although a married couple say they heard screams."
-description: "After the death of 13-year-old Lisa T., it has become clear that the accusation against the entire village of Altglietzen is not true, although a married couple say they heard screams."
+description: "Berlin news: After the death of 13-year-old Lisa T., it has become clear that the accusation against the entire village of Altglietzen is not true…"
 source_title: "Fall Lisa T.: Haben Nachbarn in Altglietzen wirklich Hilferufe ignoriert?"
 reading_time: 3
 translations:

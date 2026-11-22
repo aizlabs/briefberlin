@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Kriminalität"
 summary: "Kaybolan Lisa T. Brandenburg'da ölü bulundu; yaralı bir adam güçlü şüphe altında."
-description: "Kaybolan Lisa T. Brandenburg'da ölü bulundu; yaralı bir adam güçlü şüphe altında."
+description: "Berlin haberleri: Kaybolan Lisa T. Brandenburg'da ölü bulundu; yaralı bir adam güçlü şüphe altında."
 source_title: "Vermisste Jugendliche aus Berlin tot in Brandenburg gefunden"
 reading_time: 3
 translations:

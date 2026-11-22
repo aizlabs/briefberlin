@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Politik"
 summary: "Германии нужно больше совместной работы и больше простой помощи для доступного жилья."
-description: "Германии нужно больше совместной работы и больше простой помощи для доступного жилья."
+description: "Новости Берлина: Германии нужно больше совместной работы и больше простой помощи для доступного жилья."
 source_title: "Mehr Hilfe für bezahlbare Wohnungen"
 reading_time: 2
 translations:

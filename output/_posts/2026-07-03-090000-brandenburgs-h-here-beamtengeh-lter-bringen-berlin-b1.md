@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260703-090000-bran
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Nachrichten
-description: Brandenburg will die Gehälter seiner rund 30.000 Landesbeamten deutlich
-  erhöhen. Das gilt rückwirkend ab dem 1. Januar 2026, also auch für diese Zeit...
+description: "Berlin aktuell: Brandenburg will die Gehälter seiner rund 30.000 Landesbeamten deutlich erhöhen. Das gilt rückwirkend ab dem 1."
 keywords: *id001
 ---
 

@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260629-175528-pop-
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Nachrichten
-description: Das Pop Inn war eine bekannte Disco für Jugendliche in Berlin-Steglitz.
-  Es wurde in den 1960er Jahren gegründet und bot jungen Menschen ab 14 Jahren einen...
+description: "Das Pop Inn war eine bekannte Disco für Jugendliche in Berlin-Steglitz."
 keywords: *id001
 ---
 

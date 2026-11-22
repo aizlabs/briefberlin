@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Nachrichten"
 summary: "بعد وفاة Lisa T. (ليزا ت.) البالغة من العمر 13 عامًا، تبيّن أن الاتهام الموجّه إلى قرية Altglietzen (ألتغليتسن) بأكملها غير صحيح، رغم أن زوجين يقولان إنهما سمعا صراخًا."
-description: "بعد وفاة Lisa T. (ليزا ت.) البالغة من العمر 13 عامًا، تبيّن أن الاتهام الموجّه إلى قرية Altglietzen (ألتغليتسن) بأكملها غير صحيح، رغم أن زوجين يقولان إنهما سمعا صراخًا."
+description: "أخبار برلين: بعد وفاة Lisa T. (ليزا ت.) البالغة من العمر 13 عامًا، تبيّن أن الاتهام الموجّه إلى قرية Altglietzen (ألتغليتسن) بأكملها غير صحيح، رغم أن…"
 source_title: "Fall Lisa T.: Haben Nachbarn in Altglietzen wirklich Hilferufe ignoriert?"
 reading_time: 3
 translations:

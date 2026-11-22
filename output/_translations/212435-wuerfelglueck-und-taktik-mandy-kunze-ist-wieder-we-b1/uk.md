@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Stadtleben"
 summary: "На четвертому чемпіонаті світу з гри «Mensch ärgere dich nicht» (Менш ерґере діх ніхт) у Берліні Mandy Kunze (Манді Кунце) з Thiendorf (Тіндорф) вдруге здобула титул."
-description: "На четвертому чемпіонаті світу з гри «Mensch ärgere dich nicht» (Менш ерґере діх ніхт) у Берліні Mandy Kunze (Манді Кунце) з Thiendorf (Тіндорф) вдруге здобула титул."
+description: "На четвертому чемпіонаті світу з гри «Mensch ärgere dich nicht» (Менш ерґере діх ніхт) у Берліні Mandy Kunze (Манді Кунце) з Thiendorf (Тіндорф) вдруге…"
 source_title: "Würfelglück und Taktik: Mandy Kunze ist wieder Weltmeisterin"
 reading_time: 3
 translations:

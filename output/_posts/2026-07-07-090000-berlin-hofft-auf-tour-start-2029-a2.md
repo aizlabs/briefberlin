@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260707-090000-berl
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Kultur
-description: Berlin kann 2029 vielleicht den Start der Tour de France haben. Die Tour
-  de France ist ein sehr großes Radrennen. Eine deutsche Gruppe hat nun Interesse...
+description: "Berlin kann 2029 vielleicht den Start der Tour de France haben. Die Tour de France ist ein sehr großes Radrennen."
 keywords: *id001
 ---
 

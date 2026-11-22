@@ -10,8 +10,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260717-090000-berl
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Nachrichten
-description: 'Eine Mehrheit der Berliner Wahlberechtigten unterstützt weiter eine
-  Vergesellschaftung großer privater Wohnungsbestände. Das bedeutet: Wohnungen großer...'
+description: "Eine Mehrheit der Berliner Wahlberechtigten unterstützt weiter eine Vergesellschaftung großer privater Wohnungsbestände."
 keywords: *id001
 ---
 

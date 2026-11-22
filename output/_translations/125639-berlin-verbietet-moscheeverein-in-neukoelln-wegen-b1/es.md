@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Politik"
 summary: "Berlín ha prohibido la asociación de mezquita «El-Irschad» de Neukölln y tres organizaciones vinculadas a ella, porque presuntamente apoyaron con dinero y propaganda a la organización terrorista Hisbollah."
-description: "Berlín ha prohibido la asociación de mezquita «El-Irschad» de Neukölln y tres organizaciones vinculadas a ella, porque presuntamente apoyaron con dinero y propaganda a la organización terrorista Hisbollah."
+description: "Berlín ha prohibido la asociación de mezquita «El-Irschad» de Neukölln y tres organizaciones vinculadas a ella, porque presuntamente apoyaron con dinero…"
 source_title: "Berlin verbietet Moscheeverein in Neukölln wegen Nähe zur Hisbollah"
 reading_time: 3
 translations:

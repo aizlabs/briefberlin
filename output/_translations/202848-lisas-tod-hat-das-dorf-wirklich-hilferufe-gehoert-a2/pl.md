@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Nachrichten"
 summary: "Media pisały: Wieś Altglietzen słyszała, jak Lisa wołała o pomoc, ale prawie nikt we wsi nie słyszał krzyków."
-description: "Media pisały: Wieś Altglietzen słyszała, jak Lisa wołała o pomoc, ale prawie nikt we wsi nie słyszał krzyków."
+description: "Wiadomości z Berlina: Media pisały: Wieś Altglietzen słyszała, jak Lisa wołała o pomoc, ale prawie nikt we wsi nie słyszał krzyków."
 source_title: "Lisas Tod: Hat das Dorf wirklich Hilferufe gehört?"
 reading_time: 2
 translations:

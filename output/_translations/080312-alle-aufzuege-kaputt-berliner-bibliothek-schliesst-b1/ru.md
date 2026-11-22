@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Kultur"
 summary: "Из-за поломки всех лифтов Amerika-Gedenkbibliothek (Америка-Геденкбиблиотек) в берлинском районе Kreuzberg (Кройцберг) закрыла свой салон. Из-за множества проблем руководство библиотеки требует скорейшего переезда на Alexanderplatz (Александерплац)."
-description: "Из-за поломки всех лифтов Amerika-Gedenkbibliothek (Америка-Геденкбиблиотек) в берлинском районе Kreuzberg (Кройцберг) закрыла свой салон. Из-за множества проблем руководство библиотеки требует скорейшего переезда на Alexanderplatz (Александерплац)."
+description: "Из-за поломки всех лифтов Amerika-Gedenkbibliothek (Америка-Геденкбиблиотек) в берлинском районе Kreuzberg (Кройцберг) закрыла свой салон."
 source_title: "Alle Aufzüge kaputt: Berliner Bibliothek schließt ihren beliebten Salon"
 reading_time: 3
 translations:

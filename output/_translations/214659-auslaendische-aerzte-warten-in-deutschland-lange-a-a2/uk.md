@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Gesellschaft"
 summary: "Німеччині потрібні лікарі з-за кордону, але вони часто роками чекають на дозвіл працювати."
-description: "Німеччині потрібні лікарі з-за кордону, але вони часто роками чекають на дозвіл працювати."
+description: "Новини Берліна: Німеччині потрібні лікарі з-за кордону, але вони часто роками чекають на дозвіл працювати."
 source_title: "Ausländische Ärzte warten in Deutschland lange auf Arbeit"
 reading_time: 2
 translations:

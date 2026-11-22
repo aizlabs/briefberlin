@@ -10,9 +10,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260725-023413-jung
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Kultur
-description: Eine Gruppe junger Neonazis hat für den Berliner Christopher Street Day,
-  kurz CSD, am Samstag, 25. Juli, einen Gegenprotest angekündigt. Der Protest soll
-  in...
+description: "Eine Gruppe junger Neonazis hat für den Berliner Christopher Street Day, kurz CSD, am Samstag, 25. Juli, einen Gegenprotest angekündigt."
 keywords: *id001
 ---
 

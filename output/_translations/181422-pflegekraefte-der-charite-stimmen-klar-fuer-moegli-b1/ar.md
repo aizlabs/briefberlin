@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Gesundheit"
 summary: "صوّت ممرضو Charité بوضوح لصالح إضراب محتمل غير محدود المدة، بينما يستمر الخلاف حول تخفيف الأعباء والمال."
-description: "صوّت ممرضو Charité بوضوح لصالح إضراب محتمل غير محدود المدة، بينما يستمر الخلاف حول تخفيف الأعباء والمال."
+description: "أخبار برلين: صوّت ممرضو Charité بوضوح لصالح إضراب محتمل غير محدود المدة، بينما يستمر الخلاف حول تخفيف الأعباء والمال."
 source_title: "Pflegekräfte der Charité stimmen klar für möglichen Dauerstreik"
 reading_time: 3
 translations:

@@ -10,8 +10,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260719-172124-neue
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Nachrichten
-description: Die Ermittlungen zu Angriffen auf die Berliner Stromversorgung kommen
-  offenbar voran. Es geht um mehrere Fälle in Berlin. Im Mittelpunkt steht ein Anschlag...
+description: "Die Ermittlungen zu Angriffen auf die Berliner Stromversorgung kommen offenbar voran. Es geht um mehrere Fälle in Berlin."
 keywords: *id001
 ---
 

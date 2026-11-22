@@ -10,9 +10,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260722-090000-norw
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Nachrichten
-description: Fünfzehn Jahre nach den rechtsextremen Anschlägen vom 22. Juli 2011 ringt
-  Norwegen weiter um die Erinnerung. Es geht auch um die politische Bedeutung und
-  um...
+description: "Berlin aktuell: Fünfzehn Jahre nach den rechtsextremen Anschlägen vom 22. Juli 2011 ringt Norwegen weiter um die Erinnerung."
 keywords: *id001
 ---
 

@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Stadtleben"
 summary: "في مسبح Stadtbad Schöneberg توجد بعد وقت قصير من الافتتاح مشاكل في بعض الأماكن والمصعد والهواء."
-description: "في مسبح Stadtbad Schöneberg توجد بعد وقت قصير من الافتتاح مشاكل في بعض الأماكن والمصعد والهواء."
+description: "أخبار برلين: في مسبح Stadtbad Schöneberg توجد بعد وقت قصير من الافتتاح مشاكل في بعض الأماكن والمصعد والهواء."
 source_title: "Probleme im Stadtbad Schöneberg"
 reading_time: 2
 translations:

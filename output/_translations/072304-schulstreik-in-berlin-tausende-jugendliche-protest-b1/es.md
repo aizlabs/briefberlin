@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Politik"
 summary: "El viernes, miles de jóvenes se manifestaron pacíficamente en Berlín y en muchas otras ciudades contra el servicio militar obligatorio y a favor de más dinero para la educación, la salud y la protección del clima."
-description: "El viernes, miles de jóvenes se manifestaron pacíficamente en Berlín y en muchas otras ciudades contra el servicio militar obligatorio y a favor de más dinero para la educación, la salud y la protección del clima."
+description: "El viernes, miles de jóvenes se manifestaron pacíficamente en Berlín y en muchas otras ciudades contra el servicio militar obligatorio y a favor de más…"
 source_title: "Schulstreik in Berlin: Tausende Jugendliche protestieren gegen die Wehrpflicht"
 reading_time: 3
 translations:

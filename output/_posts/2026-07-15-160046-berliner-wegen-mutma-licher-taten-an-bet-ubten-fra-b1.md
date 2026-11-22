@@ -10,9 +10,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260715-160046-berl
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Nachrichten
-description: Die Berliner Staatsanwaltschaft hat einen 68-jährigen Mann angeklagt.
-  Sie wirft ihm 22 mutmaßliche Taten gegen 14 Frauen vor. Die Taten sollen zwischen
-  2016...
+description: "Die Berliner Staatsanwaltschaft hat einen 68-jährigen Mann angeklagt. Sie wirft ihm 22 mutmaßliche Taten gegen 14 Frauen vor."
 keywords: *id001
 ---
 

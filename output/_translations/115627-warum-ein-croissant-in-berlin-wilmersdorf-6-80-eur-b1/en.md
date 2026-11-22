@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Wirtschaft"
 summary: "A Ukrainian couple sells handmade croissants for 6.80 euros in Berlin-Wilmersdorf. They explain the high price mainly by pointing to good ingredients, a lot of work by hand, and rising costs for staff, rent and electricity."
-description: "A Ukrainian couple sells handmade croissants for 6.80 euros in Berlin-Wilmersdorf. They explain the high price mainly by pointing to good ingredients, a lot of work by hand, and rising costs for staff, rent and electricity."
+description: "A Ukrainian couple sells handmade croissants for 6.80 euros in Berlin-Wilmersdorf. They explain the high price mainly by pointing to good ingredients, a…"
 source_title: "Warum ein Croissant in Berlin-Wilmersdorf 6,80 Euro kostet"
 reading_time: 3
 translations:

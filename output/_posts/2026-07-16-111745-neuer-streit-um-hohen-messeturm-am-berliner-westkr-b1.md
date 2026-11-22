@@ -10,8 +10,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260716-111745-neue
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Nachrichten
-description: Am westlichen Rand des Berliner Messegeländes gibt es neuen Streit um
-  ein sehr hohes Gebäude. Es soll am Westkreuz in Halensee entstehen, auf dem Grundstück...
+description: "Am westlichen Rand des Berliner Messegeländes gibt es neuen Streit um ein sehr hohes Gebäude."
 keywords: *id001
 ---
 

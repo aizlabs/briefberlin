@@ -10,9 +10,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260716-110546-ever
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Politik
-description: Im Berliner Wahlkampf wird das Tempelhofer Feld wieder ein wichtiges
-  Thema. CDU-Spitzenkandidat Stefan Evers will dort Wohnungen am Rand möglich machen.
-  Die...
+description: "Im Berliner Wahlkampf wird das Tempelhofer Feld wieder ein wichtiges Thema. CDU-Spitzenkandidat Stefan Evers will dort Wohnungen am Rand möglich machen."
 keywords: *id001
 ---
 

@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Stadtleben"
 summary: "At Stadtbad Schöneberg, shortly after opening, there are problems with areas, the elevator, and the air."
-description: "At Stadtbad Schöneberg, shortly after opening, there are problems with areas, the elevator, and the air."
+description: "Berlin news: At Stadtbad Schöneberg, shortly after opening, there are problems with areas, the elevator, and the air."
 source_title: "Probleme im Stadtbad Schöneberg"
 reading_time: 2
 translations:

@@ -10,8 +10,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260717-090000-viel
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Wirtschaft
-description: Neue Zahlen zeigen die Löhne in Berlin und Brandenburg. Die Zahlen kommen
-  aus dem April 2025. In Berlin verdienen viele Menschen mehr als in Brandenburg,...
+description: "Neue Zahlen zeigen die Löhne in Berlin und Brandenburg. Die Zahlen kommen aus dem April 2025."
 keywords: *id001
 ---
 

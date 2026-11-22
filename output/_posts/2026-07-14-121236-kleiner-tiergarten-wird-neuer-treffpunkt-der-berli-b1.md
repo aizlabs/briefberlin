@@ -10,8 +10,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260714-121236-klei
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Nachrichten
-description: Seit Monaten verändert sich die Lage im Kleinen Tiergarten in Berlin-Moabit.
-  Rund um den U-Bahnhof Turmstraße treffen sich regelmäßig Gruppen von Menschen,...
+description: "Seit Monaten verändert sich die Lage im Kleinen Tiergarten in Berlin-Moabit."
 keywords: *id001
 ---
 

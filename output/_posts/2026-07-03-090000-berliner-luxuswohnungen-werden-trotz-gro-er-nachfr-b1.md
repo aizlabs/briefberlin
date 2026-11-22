@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260703-090000-berl
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Stadtleben
-description: Luxuswohnungen in Berlin werden günstiger, obwohl viele Menschen weiter
-  Interesse an solchen Wohnungen haben. Das zeigt eine aktuelle Auswertung von...
+description: "Luxuswohnungen in Berlin werden günstiger, obwohl viele Menschen weiter Interesse an solchen Wohnungen haben."
 keywords: *id001
 ---
 

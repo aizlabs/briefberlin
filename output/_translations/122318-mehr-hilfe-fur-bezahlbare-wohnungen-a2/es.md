@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Politik"
 summary: "Alemania necesita más cooperación y más ayuda sencilla para viviendas asequibles."
-description: "Alemania necesita más cooperación y más ayuda sencilla para viviendas asequibles."
+description: "Noticias de Berlín: Alemania necesita más cooperación y más ayuda sencilla para viviendas asequibles."
 source_title: "Mehr Hilfe für bezahlbare Wohnungen"
 reading_time: 2
 translations:

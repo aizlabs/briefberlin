@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Kultur"
 summary: "كل المصاعد في Amerika-Gedenkbibliothek (أمريكا غيدينكببليوتيك) معطلة، لذلك أُغلقت الصالة وتريد المكتبة الانتقال إلى Alexanderplatz (ألكسندر بلاتس)."
-description: "كل المصاعد في Amerika-Gedenkbibliothek (أمريكا غيدينكببليوتيك) معطلة، لذلك أُغلقت الصالة وتريد المكتبة الانتقال إلى Alexanderplatz (ألكسندر بلاتس)."
+description: "أخبار برلين: كل المصاعد في Amerika-Gedenkbibliothek (أمريكا غيدينكببليوتيك) معطلة، لذلك أُغلقت الصالة وتريد المكتبة الانتقال إلى Alexanderplatz (ألكسندر…"
 source_title: "Alle Aufzüge kaputt: Berliner Bibliothek schließt ihren Salon"
 reading_time: 2
 translations:

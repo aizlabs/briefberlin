@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Wirtschaft"
 summary: "Galeria chiude il suo famoso grande magazzino sul Ku'damm di Berlino, i dipendenti sono delusi e il proprietario progetta di costruire sull'area un grattacielo con appartamenti e negozi."
-description: "Galeria chiude il suo famoso grande magazzino sul Ku'damm di Berlino, i dipendenti sono delusi e il proprietario progetta di costruire sull'area un grattacielo con appartamenti e negozi."
+description: "Galeria chiude il suo famoso grande magazzino sul Ku'damm di Berlino, i dipendenti sono delusi e il proprietario progetta di costruire sull'area un…"
 source_title: "Galeria am Ku'damm schließt: Verkauf geht erst einmal weiter"
 reading_time: 3
 translations:

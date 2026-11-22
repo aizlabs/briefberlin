@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260706-090000-berl
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Politik
-description: Die Bundesregierung plant ein neues Gesetz. Es soll Ländern wie Berlin
-  etwas verbieten. Sie sollen Firmen mit sehr vielen Wohnungen nicht in öffentliches...
+description: "Die Bundesregierung plant ein neues Gesetz. Es soll Ländern wie Berlin etwas verbieten."
 keywords: *id001
 ---
 

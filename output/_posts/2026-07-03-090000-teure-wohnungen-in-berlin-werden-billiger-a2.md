@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260703-090000-teur
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Stadtleben
-description: Viele Menschen bauen in Berlin weiter sehr teure Wohnungen. Aber die
-  Preise für solche Wohnungen sinken. Ein neues Projekt entsteht in Dahlem, in der...
+description: "Viele Menschen bauen in Berlin weiter sehr teure Wohnungen. Aber die Preise für solche Wohnungen sinken."
 keywords: *id001
 ---
 

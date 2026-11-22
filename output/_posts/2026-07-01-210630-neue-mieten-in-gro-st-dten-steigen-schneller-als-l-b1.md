@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260701-210630-neue
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Stadtleben
-description: Die Wohnungssuche in deutschen Großstädten wird für viele Menschen immer
-  schwieriger. Wer jetzt eine neue Wohnung sucht, muss oft deutlich höhere Mieten...
+description: "Berlin aktuell: Die Wohnungssuche in deutschen Großstädten wird für viele Menschen immer schwieriger."
 keywords: *id001
 ---
 

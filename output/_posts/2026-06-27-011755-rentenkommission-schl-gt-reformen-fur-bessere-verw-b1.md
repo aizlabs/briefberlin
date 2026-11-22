@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260627-011755-rent
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Wirtschaft
-description: Die **Rentenkommission** hat in einem Bericht die **Deutsche Rentenversicherung**
-  kritisiert und Reformen vorgeschlagen. Die Experten sagen, dass die...
+description: "Berlin aktuell: Die Rentenkommission hat in einem Bericht die Deutsche Rentenversicherung kritisiert und Reformen vorgeschlagen."
 keywords: *id001
 ---
 

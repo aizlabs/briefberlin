@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260706-090000-neue
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Nachrichten
-description: In Berlin-Friedrichshain-Kreuzberg soll in den nächsten Jahren ein neues
-  Stadtviertel entstehen. Es liegt an der Spree, bei der Schillingbrücke und der...
+description: "In Berlin-Friedrichshain-Kreuzberg soll in den nächsten Jahren ein neues Stadtviertel entstehen."
 keywords: *id001
 ---
 

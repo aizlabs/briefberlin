@@ -10,8 +10,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260718-105018-tesl
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Wirtschaft
-description: Teslas Fabrik in Grünheide bei Berlin hat 2025 mehr Gewinn gemacht. Das
-  passierte, obwohl Tesla weltweit weniger Autos verkaufte und in Brandenburg weniger...
+description: "Teslas Fabrik in Grünheide bei Berlin hat 2025 mehr Gewinn gemacht."
 keywords: *id001
 ---
 

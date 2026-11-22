@@ -9,9 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260627-095837-refo
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Politik
-description: Die Bau­mi­ni­sterin Verena Hubertz plant eine Reform des Wohn­geldes,
-  die viele Diskussionen auslöst. Ziel ist es, die Ausgaben des Bundes zu senken.
-  Im...
+description: "Berlin aktuell: Die Bau­mi­ni­sterin Verena Hubertz plant eine Reform des Wohn­geldes, die viele Diskussionen auslöst."
 keywords: *id001
 ---
 

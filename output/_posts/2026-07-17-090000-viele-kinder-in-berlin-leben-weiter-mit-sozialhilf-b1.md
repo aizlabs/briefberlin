@@ -10,8 +10,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260717-090000-viel
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Wirtschaft
-description: In Berlin wachsen weiterhin fast 140.000 Kinder und Jugendliche in Familien
-  auf, die Geld vom Staat brauchen. Die Zahlen beziehen sich auf das Jahresende...
+description: "In Berlin wachsen weiterhin fast 140.000 Kinder und Jugendliche in Familien auf, die Geld vom Staat brauchen."
 keywords: *id001
 ---
 

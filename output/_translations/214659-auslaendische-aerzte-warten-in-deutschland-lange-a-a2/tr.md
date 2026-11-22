@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Gesellschaft"
 summary: "Almanya'nın yurt dışından gelen doktorlara ihtiyacı var, ama onlar çalışma izni için sık sık yıllarca bekliyor."
-description: "Almanya'nın yurt dışından gelen doktorlara ihtiyacı var, ama onlar çalışma izni için sık sık yıllarca bekliyor."
+description: "Berlin haberleri: Almanya'nın yurt dışından gelen doktorlara ihtiyacı var, ama onlar çalışma izni için sık sık yıllarca bekliyor."
 source_title: "Ausländische Ärzte warten in Deutschland lange auf Arbeit"
 reading_time: 2
 translations:

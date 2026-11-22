@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Politik"
 summary: "Bundestag önündeki bayrak eyleminden sonra siyasetçiler daha fazla güvenliği tartışıyor."
-description: "Bundestag önündeki bayrak eyleminden sonra siyasetçiler daha fazla güvenliği tartışıyor."
+description: "Berlin haberleri: Bundestag önündeki bayrak eyleminden sonra siyasetçiler daha fazla güvenliği tartışıyor."
 source_title: "Flaggenaktion vor dem Bundestag: Diskussion über Sicherheit"
 reading_time: 2
 translations:

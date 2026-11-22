@@ -9,9 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260709-090000-bran
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Politik
-description: Die Regierung von Brandenburg hilft Städten, Gemeinden und Landkreisen.
-  Sie hat mit ihnen neue Regeln für Geld beschlossen. Diese Regeln gelten bis zum
-  Jahr...
+description: "Berlin aktuell: Die Regierung von Brandenburg hilft Städten, Gemeinden und Landkreisen. Sie hat mit ihnen neue Regeln für Geld beschlossen."
 keywords: *id001
 ---
 

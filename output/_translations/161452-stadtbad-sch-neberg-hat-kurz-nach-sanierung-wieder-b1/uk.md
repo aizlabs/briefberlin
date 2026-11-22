@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Stadtleben"
 summary: "Невдовзі після ремонту в басейні Stadtbad Schöneberg знову є технічні проблеми, закриті зони та критика від відвідувачів."
-description: "Невдовзі після ремонту в басейні Stadtbad Schöneberg знову є технічні проблеми, закриті зони та критика від відвідувачів."
+description: "Новини Берліна: Невдовзі після ремонту в басейні Stadtbad Schöneberg знову є технічні проблеми, закриті зони та критика від відвідувачів."
 source_title: "Stadtbad Schöneberg hat kurz nach Sanierung wieder Technikprobleme"
 reading_time: 3
 translations:

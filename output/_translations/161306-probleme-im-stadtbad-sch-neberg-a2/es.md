@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Stadtleben"
 summary: "En la piscina municipal Schöneberg hay problemas con zonas, ascensor y aire poco después de la apertura."
-description: "En la piscina municipal Schöneberg hay problemas con zonas, ascensor y aire poco después de la apertura."
+description: "Noticias de Berlín: En la piscina municipal Schöneberg hay problemas con zonas, ascensor y aire poco después de la apertura."
 source_title: "Probleme im Stadtbad Schöneberg"
 reading_time: 2
 translations:

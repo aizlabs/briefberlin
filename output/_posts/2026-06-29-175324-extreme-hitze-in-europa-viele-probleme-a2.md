@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260629-175324-extr
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Nachrichten
-description: Europa hat eine sehr starke **Hitzewelle**. Diese Hitze macht viele Menschen
-  krank. In Frankreich sind etwa 1000 Menschen mehr gestorben. Meistens sind alte...
+description: "Berlin aktuell: Europa hat eine sehr starke Hitzewelle. Diese Hitze macht viele Menschen krank. In Frankreich sind etwa 1000 Menschen mehr gestorben."
 keywords: *id001
 ---
 

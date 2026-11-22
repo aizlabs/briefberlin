@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Politik"
 summary: "بعد رفع علم أمام Bundestag، تحقق الشرطة في الواقعة، بينما يتحدث سياسيون عن حماية أفضل وقواعد أشد للاحتجاجات."
-description: "بعد رفع علم أمام Bundestag، تحقق الشرطة في الواقعة، بينما يتحدث سياسيون عن حماية أفضل وقواعد أشد للاحتجاجات."
+description: "أخبار برلين: بعد رفع علم أمام Bundestag، تحقق الشرطة في الواقعة، بينما يتحدث سياسيون عن حماية أفضل وقواعد أشد للاحتجاجات."
 source_title: "Flaggenaktion vor dem Bundestag führt zu Debatte über Sicherheit"
 reading_time: 3
 translations:

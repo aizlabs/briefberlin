@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Politik"
 summary: "После акции с флагом перед Bundestag политики говорят о том, как сделать это место безопаснее."
-description: "После акции с флагом перед Bundestag политики говорят о том, как сделать это место безопаснее."
+description: "Новости Берлина: После акции с флагом перед Bundestag политики говорят о том, как сделать это место безопаснее."
 source_title: "Flaggenaktion vor dem Bundestag: Diskussion über Sicherheit"
 reading_time: 2
 translations:

@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Verkehr"
 summary: "Two employees in the Teltow-Fläming district may have taken money for licences for hire cars."
-description: "Two employees in the Teltow-Fläming district may have taken money for licences for hire cars."
+description: "Berlin news: Two employees in the Teltow-Fläming district may have taken money for licences for hire cars."
 source_title: "Verdacht auf Bestechung bei Fahrdiensten in Teltow-Fläming"
 reading_time: 2
 translations:

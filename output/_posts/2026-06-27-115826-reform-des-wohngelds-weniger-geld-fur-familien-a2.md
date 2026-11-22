@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260627-095814-refo
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Politik
-description: Die Regierung will weniger Geld für das **Wohngeld** ausgeben. Das hat
-  die Ministerin Verena Hubertz gesagt. Im nächsten Jahr sollen 738 Millionen Euro...
+description: "Berlin aktuell: Die Regierung will weniger Geld für das Wohngeld ausgeben. Das hat die Ministerin Verena Hubertz gesagt."
 keywords: *id001
 ---
 

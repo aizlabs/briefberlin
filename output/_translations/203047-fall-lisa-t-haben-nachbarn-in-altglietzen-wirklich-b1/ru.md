@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Nachrichten"
 summary: "После смерти 13-летней Lisa T. (Лизы Т.) выяснилось, что обвинение в адрес всей деревни Altglietzen (Альтглитцен) не соответствует действительности, хотя одна супружеская пара утверждает, что слышала крики."
-description: "После смерти 13-летней Lisa T. (Лизы Т.) выяснилось, что обвинение в адрес всей деревни Altglietzen (Альтглитцен) не соответствует действительности, хотя одна супружеская пара утверждает, что слышала крики."
+description: "Новости Берлина: После смерти 13-летней Lisa T. (Лизы Т.) выяснилось, что обвинение в адрес всей деревни Altglietzen (Альтглитцен) не соответствует…"
 source_title: "Fall Lisa T.: Haben Nachbarn in Altglietzen wirklich Hilferufe ignoriert?"
 reading_time: 3
 translations:

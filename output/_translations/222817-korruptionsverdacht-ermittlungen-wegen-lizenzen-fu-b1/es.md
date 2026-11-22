@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Verkehr"
 summary: "Dos empleados de la administración del distrito de Teltow-Fläming habrían concedido ilegalmente permisos para servicios de transporte por aplicación a cambio de dinero. Por ello, la fiscalía de Neuruppin está investigando el caso."
-description: "Dos empleados de la administración del distrito de Teltow-Fläming habrían concedido ilegalmente permisos para servicios de transporte por aplicación a cambio de dinero. Por ello, la fiscalía de Neuruppin está investigando el caso."
+description: "Noticias de Berlín: Dos empleados de la administración del distrito de Teltow-Fläming habrían concedido ilegalmente permisos para servicios de transporte…"
 source_title: "Korruptionsverdacht: Ermittlungen wegen Lizenzen für Fahrdienste in Teltow-Fläming"
 reading_time: 3
 translations:

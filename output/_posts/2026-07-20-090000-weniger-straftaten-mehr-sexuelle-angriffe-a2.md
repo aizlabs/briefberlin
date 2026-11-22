@@ -10,8 +10,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260720-090000-weni
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Nachrichten
-description: 'In Berlin gibt es neue Zahlen zur Sicherheit im Nahverkehr. Das heißt:
-  Busse, Bahnen und Haltestellen in der Stadt. Im Jahr 2025 meldeten Polizei und...'
+description: "In Berlin gibt es neue Zahlen zur Sicherheit im Nahverkehr. Das heißt: Busse, Bahnen und Haltestellen in der Stadt."
 keywords: *id001
 ---
 

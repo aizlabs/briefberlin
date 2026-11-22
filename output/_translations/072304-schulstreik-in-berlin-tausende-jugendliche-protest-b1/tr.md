@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Politik"
 summary: "Cuma günü Berlin'de ve daha birçok şehirde binlerce genç, zorunlu askerliğe karşı ve eğitim, sağlık ile iklimin korunmasına daha fazla para ayrılması için barışçıl gösteriler düzenledi."
-description: "Cuma günü Berlin'de ve daha birçok şehirde binlerce genç, zorunlu askerliğe karşı ve eğitim, sağlık ile iklimin korunmasına daha fazla para ayrılması için barışçıl gösteriler düzenledi."
+description: "Cuma günü Berlin'de ve daha birçok şehirde binlerce genç, zorunlu askerliğe karşı ve eğitim, sağlık ile iklimin korunmasına daha fazla para ayrılması…"
 source_title: "Schulstreik in Berlin: Tausende Jugendliche protestieren gegen die Wehrpflicht"
 reading_time: 3
 translations:

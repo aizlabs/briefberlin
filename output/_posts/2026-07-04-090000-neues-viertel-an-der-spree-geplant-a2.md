@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260704-090000-neue
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Nachrichten
-description: Berlin plant ein neues Viertel an der Spree. Es soll in den nächsten
-  Jahren in Friedrichshain-Kreuzberg entstehen. Dort liegen die alten Victoriaspeicher...
+description: "Berlin plant ein neues Viertel an der Spree. Es soll in den nächsten Jahren in Friedrichshain-Kreuzberg entstehen."
 keywords: *id001
 ---
 

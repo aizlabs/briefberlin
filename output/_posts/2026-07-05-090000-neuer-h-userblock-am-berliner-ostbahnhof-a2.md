@@ -9,9 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260705-090000-neue
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Stadtleben
-description: Am Berliner Ostbahnhof entsteht jetzt ein neuer Häuserblock. Er heißt
-  B.YARD und liegt an der Straße der Pariser Kommune 20. Der Bau an diesem Ort hat
-  diese...
+description: "Am Berliner Ostbahnhof entsteht jetzt ein neuer Häuserblock. Er heißt B.YARD und liegt an der Straße der Pariser Kommune 20."
 keywords: *id001
 ---
 

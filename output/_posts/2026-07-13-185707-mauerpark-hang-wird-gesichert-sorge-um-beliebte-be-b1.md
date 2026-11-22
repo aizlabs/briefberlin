@@ -9,9 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260713-185707-maue
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Stadtleben
-description: Im Berliner Mauerpark ist ein Teil eines Hangs gesperrt. Er liegt am
-  früheren Gelände des Jahn-Sportparks, im Westen des alten Stadions. Das Stadion
-  wird...
+description: "Im Berliner Mauerpark ist ein Teil eines Hangs gesperrt. Er liegt am früheren Gelände des Jahn-Sportparks, im Westen des alten Stadions."
 keywords: *id001
 ---
 

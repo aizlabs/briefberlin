@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Politik"
 summary: "Berlin CSD'ye saldıran İslamcı, Lübnan'da cezaevinde olmasına rağmen 2025'te aylarca vatandaşlık yardımı aldı. Çünkü iş bulma kurumunun bundan haberi yoktu."
-description: "Berlin CSD'ye saldıran İslamcı, Lübnan'da cezaevinde olmasına rağmen 2025'te aylarca vatandaşlık yardımı aldı. Çünkü iş bulma kurumunun bundan haberi yoktu."
+description: "Berlin CSD'ye saldıran İslamcı, Lübnan'da cezaevinde olmasına rağmen 2025'te aylarca vatandaşlık yardımı aldı."
 source_title: "Attentäter vom Berliner CSD bekam Bürgergeld auch im Gefängnis"
 reading_time: 3
 translations:

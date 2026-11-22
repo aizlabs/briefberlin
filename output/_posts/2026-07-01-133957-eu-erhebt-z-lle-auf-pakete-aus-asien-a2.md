@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260701-133957-eu-e
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Wirtschaft
-description: Die Europäische Union erhebt jetzt **Zölle** auf kleine Pakete aus Asien.
-  Das Ziel ist, die vielen billigen Waren zu stoppen. Besonders betroffen sind...
+description: "Berlin aktuell: Die Europäische Union erhebt jetzt Zölle auf kleine Pakete aus Asien. Das Ziel ist, die vielen billigen Waren zu stoppen."
 keywords: *id001
 ---
 

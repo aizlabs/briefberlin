@@ -10,8 +10,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260716-111433-stre
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Nachrichten
-description: Am Berliner Westkreuz gibt es Streit um ein neues Hochhaus mit 178 bis
-  224 Metern Höhe. So kann es das höchste Haus in Berlin werden. Die Besitzer von...
+description: "Am Berliner Westkreuz gibt es Streit um ein neues Hochhaus mit 178 bis 224 Metern Höhe. So kann es das höchste Haus in Berlin werden."
 keywords: *id001
 ---
 

@@ -5,7 +5,7 @@ author: "clara-becker"
 level: B1
 category: "Politik"
 summary: "Die Wohnungskrise erhöht den Druck auf Politik und Gesellschaft, weil fehlbarer Wohnraum private Entscheidungen, Arbeit und sozialen Aufstieg beeinflusst."
-description: "Die Wohnungskrise belastet Großstädte und Politik. Experten warnen vor einfachen Lösungen und fordern neue Allianzen für Wohnraum."
+description: "Berlin aktuell: Die Wohnungskrise belastet Großstädte und Politik. Experten warnen vor einfachen Lösungen und fordern neue Allianzen für Wohnraum."
 topics: ["Wohnungskrise", "Berlin", "bezahlbarer Wohnraum", "Enteignung", "Wohnungspolitik", "Woh\u00adnungs\u00adnot", "Ber\u00adlin"]
 keywords: ["Wohnungskrise", "Berlin", "bezahlbarer Wohnraum", "Enteignung", "Wohnungspolitik", "Woh\u00adnungs\u00adnot", "Ber\u00adlin"]
 sources: []

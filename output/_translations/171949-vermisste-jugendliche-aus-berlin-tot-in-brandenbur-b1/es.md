@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Kriminalität"
 summary: "Lisa T., que estaba desaparecida, fue encontrada muerta en Brandeburgo; un hombre herido es el principal sospechoso."
-description: "Lisa T., que estaba desaparecida, fue encontrada muerta en Brandeburgo; un hombre herido es el principal sospechoso."
+description: "Noticias de Berlín: Lisa T., que estaba desaparecida, fue encontrada muerta en Brandeburgo; un hombre herido es el principal sospechoso."
 source_title: "Vermisste Jugendliche aus Berlin tot in Brandenburg gefunden"
 reading_time: 3
 translations:

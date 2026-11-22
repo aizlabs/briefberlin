@@ -4,7 +4,7 @@ date: 2026-07-27 14:54:42
 author: "clara-becker"
 level: A2
 category: "Wirtschaft"
-description: "Nach der Insolvenz des Betreibers einer Markthalle in Neukölln sollen zwölf Gastronomiebetriebe ihre Flächen vorerst direkt weiterführen können."
+description: "Berlin aktuell: Nach der Insolvenz des Betreibers einer Markthalle in Neukölln sollen zwölf Gastronomiebetriebe ihre Flächen vorerst direkt weiterführen…"
 topics: ["Neuk\u00f6lln", "Markthalle", "Insolvenz", "Gastronomie", "Mietstreit", "Tag eins kei\u00adnen Euro Miete", "Kalle Halle"]
 keywords: ["Neuk\u00f6lln", "Markthalle", "Insolvenz", "Gastronomie", "Mietstreit", "Tag eins kei\u00adnen Euro Miete", "Kalle Halle"]
 sources: []

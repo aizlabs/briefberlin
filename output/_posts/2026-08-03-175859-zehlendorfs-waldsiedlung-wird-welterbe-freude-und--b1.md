@@ -4,7 +4,7 @@ date: 2026-08-03 17:58:59
 author: "clara-becker"
 level: B1
 category: "Stadtleben"
-description: "Die Waldsiedlung Zehlendorf wird UNESCO-Welterbe. Bewohner schätzen die Architektur, kritisieren aber Mieten und den Verlust sozialer Ideen."
+description: "Berlin aktuell: Die Waldsiedlung Zehlendorf wird UNESCO-Welterbe. Bewohner schätzen die Architektur, kritisieren aber Mieten und den Verlust sozialer…"
 topics: ["Waldsiedlung Zehlendorf", "UNESCO-Welterbe", "Berlin-Zehlendorf", "Denkmalschutz", "Mieten", "Deutsche Wohnen", "Welt\u00adkul\u00adtur\u00aderbe!"]
 keywords: ["Waldsiedlung Zehlendorf", "UNESCO-Welterbe", "Berlin-Zehlendorf", "Denkmalschutz", "Mieten", "Deutsche Wohnen", "Welt\u00adkul\u00adtur\u00aderbe!"]
 sources: []

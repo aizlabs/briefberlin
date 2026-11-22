@@ -5,7 +5,7 @@ author: "clara-becker"
 level: A2
 category: "Politik"
 summary: "In Berlin gibt es Streit, weil Mitglieder der Familie Remmo Kontakt zu Politikern gesucht haben."
-description: "Fotos und Begegnungen mit Angehörigen einer bekannten Großfamilie werfen Fragen zu möglicher Nähe zwischen Politik und organisierter Kriminalität auf."
+description: "Berlin aktuell: Fotos und Begegnungen mit Angehörigen einer bekannten Großfamilie werfen Fragen zu möglicher Nähe zwischen Politik und organisierter…"
 topics: ["Berlin", "Neuk\u00f6lln", "Abgeordnetenhaus", "organisierte Kriminalit\u00e4t", "Wahlkampf", "Politik", "Par\u00adtei\u00adfeier"]
 keywords: ["Berlin", "Neuk\u00f6lln", "Abgeordnetenhaus", "organisierte Kriminalit\u00e4t", "Wahlkampf", "Politik", "Par\u00adtei\u00adfeier"]
 sources: []

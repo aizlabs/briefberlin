@@ -5,7 +5,7 @@ author: "clara-becker"
 level: A2
 category: "Politik"
 summary: "Deutschland braucht mehr Zusammenarbeit und mehr einfache Hilfe für bezahlbare Wohnungen."
-description: "Die Wohnungskrise belastet Großstädte und Politik. Experten warnen vor einfachen Lösungen und fordern neue Allianzen für Wohnraum."
+description: "Berlin aktuell: Die Wohnungskrise belastet Großstädte und Politik. Experten warnen vor einfachen Lösungen und fordern neue Allianzen für Wohnraum."
 topics: ["Wohnungskrise", "Berlin", "bezahlbarer Wohnraum", "Enteignung", "Wohnungspolitik", "Woh\u00adnungs\u00adnot", "Ber\u00adlin"]
 keywords: ["Wohnungskrise", "Berlin", "bezahlbarer Wohnraum", "Enteignung", "Wohnungspolitik", "Woh\u00adnungs\u00adnot", "Ber\u00adlin"]
 sources: []

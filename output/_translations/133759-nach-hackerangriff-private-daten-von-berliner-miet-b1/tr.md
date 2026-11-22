@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Politik"
 summary: "Berlin yönetimine yapılan bir siber saldırının ardından, kira yardımı başvurusunda bulunan 16.858 kişinin çok özel verileri karanlık ağda ortaya çıktı. Etkilenen kişiler şimdi tazminat talep edebilir."
-description: "Berlin yönetimine yapılan bir siber saldırının ardından, kira yardımı başvurusunda bulunan 16.858 kişinin çok özel verileri karanlık ağda ortaya çıktı. Etkilenen kişiler şimdi tazminat talep edebilir."
+description: "Berlin yönetimine yapılan bir siber saldırının ardından, kira yardımı başvurusunda bulunan 16.858 kişinin çok özel verileri karanlık ağda ortaya çıktı."
 source_title: "Nach Hackerangriff: Private Daten von Berliner Mietern im Darknet"
 reading_time: 3
 translations:

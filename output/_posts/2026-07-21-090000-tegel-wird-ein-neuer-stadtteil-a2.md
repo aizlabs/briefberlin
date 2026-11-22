@@ -10,8 +10,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260721-090000-tege
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Verkehr
-description: Der alte Flughafen Tegel in Berlin bekommt eine neue Aufgabe. Seit November
-  2020 fliegen dort keine normalen Passagiere mehr ab. Die Stadt macht aus dem...
+description: "Der alte Flughafen Tegel in Berlin bekommt eine neue Aufgabe. Seit November 2020 fliegen dort keine normalen Passagiere mehr ab."
 keywords: *id001
 ---
 

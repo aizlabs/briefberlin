@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Stadtleben"
 summary: "La policía puso fin a la ocupación del Hugohaus tras conflictos por obras, mientras continúan la protesta y las cuestiones legales."
-description: "La policía puso fin a la ocupación del Hugohaus tras conflictos por obras, mientras continúan la protesta y las cuestiones legales."
+description: "Noticias de Berlín: La policía puso fin a la ocupación del Hugohaus tras conflictos por obras, mientras continúan la protesta y las cuestiones legales."
 source_title: "Polizei beendet Besetzung im Hugohaus nach schweren Konflikten"
 reading_time: 3
 translations:

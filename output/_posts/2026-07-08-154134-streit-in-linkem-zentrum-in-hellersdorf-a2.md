@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260708-154134-stre
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Politik
-description: Am Wochenende gab es Gewalt in Berlin-Hellersdorf. Linke Gruppen stritten
-  über den Nahen Osten, also über Israel und Palästina. Der Streit passierte im...
+description: "Am Wochenende gab es Gewalt in Berlin-Hellersdorf. Linke Gruppen stritten über den Nahen Osten, also über Israel und Palästina."
 keywords: *id001
 ---
 

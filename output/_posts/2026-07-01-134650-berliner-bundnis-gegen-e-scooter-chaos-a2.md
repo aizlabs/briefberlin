@@ -9,9 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260701-134650-berl
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Verkehr
-description: In Berlin gibt es ein **Bündnis**. Es besteht aus **Blindenvereinen**,
-  **Senioren** und Umweltgruppen. Sie wollen das Chaos mit E-Scootern beenden. Bis
-  2027...
+description: "In Berlin gibt es ein Bündnis. Es besteht aus Blindenvereinen, Senioren und Umweltgruppen. Sie wollen das Chaos mit E-Scootern beenden."
 keywords: *id001
 ---
 

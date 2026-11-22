@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Stadtleben"
 summary: "Schöneberg şehir havuzunda açılıştan kısa süre sonra bazı alanlar, asansör ve hava ile ilgili sorunlar var."
-description: "Schöneberg şehir havuzunda açılıştan kısa süre sonra bazı alanlar, asansör ve hava ile ilgili sorunlar var."
+description: "Berlin haberleri: Schöneberg şehir havuzunda açılıştan kısa süre sonra bazı alanlar, asansör ve hava ile ilgili sorunlar var."
 source_title: "Probleme im Stadtbad Schöneberg"
 reading_time: 2
 translations:

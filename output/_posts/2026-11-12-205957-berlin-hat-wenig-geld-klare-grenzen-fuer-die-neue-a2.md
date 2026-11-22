@@ -6,7 +6,7 @@ level: A2
 story: "20261112-205851-berlins-finanzlage-belastet-koalitionsve"
 category: "Politik"
 summary: "SPD, Grüne und Linke wollen in Berlin regieren, aber das Land hat wenig Geld, deshalb braucht jedes neue Projekt eine sichere Finanzierung."
-description: "Berlins knappe Kassen erschweren die Koalitionsgespräche von SPD, Grünen und Linken: Neue Vorhaben müssen gegenfinanziert werden, rund 220 Millionen sind verplant."
+description: "Berlins knappe Kassen erschweren die Koalitionsgespräche von SPD, Grünen und Linken: Neue Vorhaben müssen gegenfinanziert werden, rund 220 Millionen sind…"
 topics: ["Berlin", "Koalitionsverhandlungen", "Landeshaushalt", "SPD", "Gr\u00fcne", "Linke", "Sondierungspapier"]
 keywords: ["Berlin", "Koalitionsverhandlungen", "Landeshaushalt", "SPD", "Gr\u00fcne", "Linke", "Sondierungspapier"]
 sources: []

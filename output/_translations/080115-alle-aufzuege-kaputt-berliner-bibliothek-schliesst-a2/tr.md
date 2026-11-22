@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Kultur"
 summary: "Amerika-Gedenkbibliothek'teki bütün asansörler bozuk, bu yüzden salon kapalı ve kütüphane Alexanderplatz'a taşınmak istiyor."
-description: "Amerika-Gedenkbibliothek'teki bütün asansörler bozuk, bu yüzden salon kapalı ve kütüphane Alexanderplatz'a taşınmak istiyor."
+description: "Berlin haberleri: Amerika-Gedenkbibliothek'teki bütün asansörler bozuk, bu yüzden salon kapalı ve kütüphane Alexanderplatz'a taşınmak istiyor."
 source_title: "Alle Aufzüge kaputt: Berliner Bibliothek schließt ihren Salon"
 reading_time: 2
 translations:

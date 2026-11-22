@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Kriminalität"
 summary: "Policja znalazła zaginioną Lisę martwą w Brandenburgii i bada sprawę."
-description: "Policja znalazła zaginioną Lisę martwą w Brandenburgii i bada sprawę."
+description: "Wiadomości z Berlina: Policja znalazła zaginioną Lisę martwą w Brandenburgii i bada sprawę."
 source_title: "Polizei findet vermisstes Mädchen tot in Brandenburg"
 reading_time: 2
 translations:

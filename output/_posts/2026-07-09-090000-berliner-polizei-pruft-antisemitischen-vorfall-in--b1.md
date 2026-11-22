@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260709-090000-berl
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Nachrichten
-description: Die Polizei in Berlin prüft einen vermutlich antisemitischen Vorfall
-  in Prenzlauer Berg. Er geschah am Freitagnachmittag gegen 15.30 Uhr in der Fehrbelliner...
+description: "Die Polizei in Berlin prüft einen vermutlich antisemitischen Vorfall in Prenzlauer Berg."
 keywords: *id001
 ---
 

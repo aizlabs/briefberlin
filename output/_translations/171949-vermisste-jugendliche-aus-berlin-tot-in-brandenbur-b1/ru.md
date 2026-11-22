@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Kriminalität"
 summary: "Пропавшую Лизу Т. нашли мёртвой в Бранденбурге; раненый мужчина находится под серьёзным подозрением."
-description: "Пропавшую Лизу Т. нашли мёртвой в Бранденбурге; раненый мужчина находится под серьёзным подозрением."
+description: "Новости Берлина: Пропавшую Лизу Т. нашли мёртвой в Бранденбурге; раненый мужчина находится под серьёзным подозрением."
 source_title: "Vermisste Jugendliche aus Berlin tot in Brandenburg gefunden"
 reading_time: 3
 translations:

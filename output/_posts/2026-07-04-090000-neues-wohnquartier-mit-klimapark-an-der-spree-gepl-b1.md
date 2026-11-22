@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260704-090000-neue
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Nachrichten
-description: Auf dem Gelände der früheren Victoriaspeicher in Friedrichshain-Kreuzberg
-  soll ein großes neues Stadtviertel entstehen. Es liegt zwischen Spreeufer,...
+description: "Berlin aktuell: Auf dem Gelände der früheren Victoriaspeicher in Friedrichshain-Kreuzberg soll ein großes neues Stadtviertel entstehen."
 keywords: *id001
 ---
 

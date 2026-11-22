@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Politik"
 summary: "After a flag protest outside the Bundestag, politicians are discussing more security."
-description: "After a flag protest outside the Bundestag, politicians are discussing more security."
+description: "Berlin news: After a flag protest outside the Bundestag, politicians are discussing more security."
 source_title: "Flaggenaktion vor dem Bundestag: Diskussion über Sicherheit"
 reading_time: 2
 translations:

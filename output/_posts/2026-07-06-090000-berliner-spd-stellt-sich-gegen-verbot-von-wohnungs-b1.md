@@ -9,9 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260706-090000-berl
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Politik
-description: 'Die Bundesregierung will künftig verhindern, dass Bundesländer große
-  private Wohnungsbestände in Gemeineigentum überführen. Das heißt: Die Wohnungen
-  würden...'
+description: "Berlin aktuell: Die Bundesregierung will künftig verhindern, dass Bundesländer große private Wohnungsbestände in Gemeineigentum überführen."
 keywords: *id001
 ---
 

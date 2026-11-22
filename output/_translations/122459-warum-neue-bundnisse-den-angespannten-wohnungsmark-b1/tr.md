@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Politik"
 summary: "Konut krizi, eksik uygun konutlar özel kararları, işi ve sosyal yükselmeyi etkilediği için siyaset ve toplum üzerindeki baskıyı artırıyor."
-description: "Konut krizi, eksik uygun konutlar özel kararları, işi ve sosyal yükselmeyi etkilediği için siyaset ve toplum üzerindeki baskıyı artırıyor."
+description: "Berlin haberleri: Konut krizi, eksik uygun konutlar özel kararları, işi ve sosyal yükselmeyi etkilediği için siyaset ve toplum üzerindeki baskıyı…"
 source_title: "Warum neue Bündnisse den angespannten Wohnungsmarkt entlasten sollen"
 reading_time: 3
 translations:

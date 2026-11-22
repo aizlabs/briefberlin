@@ -10,8 +10,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260714-114356-app-
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Verkehr
-description: Viele Menschen fahren in Berlin und Potsdam mit dem Fahrrad. Die App
-  SimRa zeigt gefährliche Stellen auf ihren Wegen. Die Daten kommen dabei von den...
+description: "Viele Menschen fahren in Berlin und Potsdam mit dem Fahrrad. Die App SimRa zeigt gefährliche Stellen auf ihren Wegen."
 keywords: *id001
 ---
 

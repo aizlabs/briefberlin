@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260708-145708-elte
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Nachrichten
-description: An der Rosa-Parks-Grundschule in Berlin-Kreuzberg gibt es Streit. Seit
-  Sonntagabend sind viele Eltern gegen einen Plan für das Gelände. Die Tannenhof-Schule...
+description: "An der Rosa-Parks-Grundschule in Berlin-Kreuzberg gibt es Streit. Seit Sonntagabend sind viele Eltern gegen einen Plan für das Gelände."
 keywords: *id001
 ---
 

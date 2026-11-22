@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Kultur"
 summary: "Через те, що всі ліфти зламалися, Amerika-Gedenkbibliothek (Америка-Геденкбібліотек) у берлінському районі Kreuzberg (Кройцберг) закрила свій салон, а керівництво через численні недоліки вимагає швидкого переїзду на Alexanderplatz (Александерплац)."
-description: "Через те, що всі ліфти зламалися, Amerika-Gedenkbibliothek (Америка-Геденкбібліотек) у берлінському районі Kreuzberg (Кройцберг) закрила свій салон, а керівництво через численні недоліки вимагає швидкого переїзду на Alexanderplatz (Александерплац)."
+description: "Через те, що всі ліфти зламалися, Amerika-Gedenkbibliothek (Америка-Геденкбібліотек) у берлінському районі Kreuzberg (Кройцберг) закрила свій салон, а…"
 source_title: "Alle Aufzüge kaputt: Berliner Bibliothek schließt ihren beliebten Salon"
 reading_time: 3
 translations:

@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260707-090000-berl
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Kultur
-description: Berlin hat bessere Chancen, im Jahr 2029 den Start der Tour de France
-  zu erleben. Die Stadt soll Schauplatz des Grand Départ werden, also des großen...
+description: "Berlin hat bessere Chancen, im Jahr 2029 den Start der Tour de France zu erleben."
 keywords: *id001
 ---
 

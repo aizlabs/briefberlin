@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Kriminalität"
 summary: "عُثر على Lisa T. المفقودة ميتة في براندنبورغ؛ وتوجد شبهات قوية ضد رجل مصاب."
-description: "عُثر على Lisa T. المفقودة ميتة في براندنبورغ؛ وتوجد شبهات قوية ضد رجل مصاب."
+description: "أخبار برلين: عُثر على Lisa T. المفقودة ميتة في براندنبورغ؛ وتوجد شبهات قوية ضد رجل مصاب."
 source_title: "Vermisste Jugendliche aus Berlin tot in Brandenburg gefunden"
 reading_time: 3
 translations:

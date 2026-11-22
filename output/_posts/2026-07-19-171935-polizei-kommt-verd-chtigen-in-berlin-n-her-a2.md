@@ -10,8 +10,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260719-171935-poli
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Nachrichten
-description: Die Polizei untersucht zwei Angriffe auf Strom in Berlin. Der erste Angriff
-  war im September 2025 in Adlershof, einem Ort mit vielen Technik-Firmen. Der...
+description: "Die Polizei untersucht zwei Angriffe auf Strom in Berlin. Der erste Angriff war im September 2025 in Adlershof, einem Ort mit vielen Technik-Firmen."
 keywords: *id001
 ---
 

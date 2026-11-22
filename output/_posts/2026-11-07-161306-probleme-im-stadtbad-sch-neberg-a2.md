@@ -5,7 +5,7 @@ author: "clara-becker"
 level: A2
 category: "Stadtleben"
 summary: "Im Stadtbad Schöneberg gibt es kurz nach der Öffnung Probleme mit Bereichen, Aufzug und Luft."
-description: "Kurz nach der Wiedereröffnung kämpft das Stadtbad Schöneberg mit Sperrungen, defektem Fahrstuhl und Nachbesserungen an der Technik."
+description: "Berlin aktuell: Kurz nach der Wiedereröffnung kämpft das Stadtbad Schöneberg mit Sperrungen, defektem Fahrstuhl und Nachbesserungen an der Technik."
 topics: ["Stadtbad Sch\u00f6neberg", "Berliner B\u00e4der-Betriebe", "Schwimmbad", "Sanierung", "Wasseraufbereitung", "Berlin", "Stadt\u00adbad Sch\u00f6\u00adne\u00adberg"]
 keywords: ["Stadtbad Sch\u00f6neberg", "Berliner B\u00e4der-Betriebe", "Schwimmbad", "Sanierung", "Wasseraufbereitung", "Berlin", "Stadt\u00adbad Sch\u00f6\u00adne\u00adberg"]
 sources: []

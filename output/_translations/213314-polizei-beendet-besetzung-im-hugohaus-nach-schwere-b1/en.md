@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Stadtleben"
 summary: "Police ended the occupation of the Hugohaus after conflicts over construction work, while protest and legal questions continue."
-description: "Police ended the occupation of the Hugohaus after conflicts over construction work, while protest and legal questions continue."
+description: "Berlin news: Police ended the occupation of the Hugohaus after conflicts over construction work, while protest and legal questions continue."
 source_title: "Polizei beendet Besetzung im Hugohaus nach schweren Konflikten"
 reading_time: 3
 translations:

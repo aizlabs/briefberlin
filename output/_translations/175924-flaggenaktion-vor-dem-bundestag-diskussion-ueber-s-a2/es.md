@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Politik"
 summary: "Tras una acción con una bandera ante el Bundestag, los políticos hablan de aumentar la seguridad."
-description: "Tras una acción con una bandera ante el Bundestag, los políticos hablan de aumentar la seguridad."
+description: "Noticias de Berlín: Tras una acción con una bandera ante el Bundestag, los políticos hablan de aumentar la seguridad."
 source_title: "Flaggenaktion vor dem Bundestag: Diskussion über Sicherheit"
 reading_time: 2
 translations:

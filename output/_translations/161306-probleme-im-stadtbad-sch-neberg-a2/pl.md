@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Stadtleben"
 summary: "W Stadtbad Schöneberg krótko po otwarciu są problemy ze strefami, windą i powietrzem."
-description: "W Stadtbad Schöneberg krótko po otwarciu są problemy ze strefami, windą i powietrzem."
+description: "Wiadomości z Berlina: W Stadtbad Schöneberg krótko po otwarciu są problemy ze strefami, windą i powietrzem."
 source_title: "Probleme im Stadtbad Schöneberg"
 reading_time: 2
 translations:

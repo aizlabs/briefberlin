@@ -4,7 +4,7 @@ date: 2026-08-17 18:34:12
 author: "clara-becker"
 level: B1
 category: "Stadtleben"
-description: "In Köpenick kann auf einer früheren Bahnfläche nach jahrzehntelanger Brache ein neues Quartier mit rund 1800 Wohnungen und Schulen entstehen."
+description: "Berlin aktuell: In Köpenick kann auf einer früheren Bahnfläche nach jahrzehntelanger Brache ein neues Quartier mit rund 1800 Wohnungen und Schulen…"
 topics: ["K\u00f6penick", "Berlin", "G\u00fcterbahnhof", "Wohnungsbau", "Stadtentwicklung", "Eisenbahn-Bundesamt", "Schu\u00adlen"]
 keywords: ["K\u00f6penick", "Berlin", "G\u00fcterbahnhof", "Wohnungsbau", "Stadtentwicklung", "Eisenbahn-Bundesamt", "Schu\u00adlen"]
 sources: []

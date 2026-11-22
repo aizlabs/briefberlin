@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Nachrichten"
 summary: "Tras la muerte de Lisa T., de 13 años, se ha sabido que la acusación contra todo el pueblo de Altglietzen no es cierta, aunque un matrimonio dice haber oído gritos."
-description: "Tras la muerte de Lisa T., de 13 años, se ha sabido que la acusación contra todo el pueblo de Altglietzen no es cierta, aunque un matrimonio dice haber oído gritos."
+description: "Noticias de Berlín: Tras la muerte de Lisa T., de 13 años, se ha sabido que la acusación contra todo el pueblo de Altglietzen no es cierta, aunque un…"
 source_title: "Fall Lisa T.: Haben Nachbarn in Altglietzen wirklich Hilferufe ignoriert?"
 reading_time: 3
 translations:

@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260628-133126-exkl
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Kultur
-description: Berlin ist bekannt für seine Kultur und Architektur. Im Sommer suchen
-  viele Menschen nach einer **Abkühlung**. Einige der besten Hotels in Berlin haben...
+description: "Berlin ist bekannt für seine Kultur und Architektur. Im Sommer suchen viele Menschen nach einer Abkühlung."
 keywords: *id001
 ---
 

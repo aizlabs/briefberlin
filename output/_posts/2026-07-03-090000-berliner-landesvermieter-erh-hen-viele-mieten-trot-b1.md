@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260703-090000-berl
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Stadtleben
-description: Seit Anfang 2024 haben die landeseigenen Wohnungsunternehmen in Berlin
-  viele Mieten erhöht. Diese Firmen gehören dem Land Berlin. Nach einer aktuellen...
+description: "Seit Anfang 2024 haben die landeseigenen Wohnungsunternehmen in Berlin viele Mieten erhöht. Diese Firmen gehören dem Land Berlin."
 keywords: *id001
 ---
 

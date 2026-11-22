@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260708-151119-neue
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Verkehr
-description: Die neue App „Max“ für den Berliner Nahverkehr startet später als erwartet.
-  Einen sicheren neuen Termin gibt es inzwischen nicht mehr. Das betrifft...
+description: "Die neue App „Max“ für den Berliner Nahverkehr startet später als erwartet. Einen sicheren neuen Termin gibt es inzwischen nicht mehr."
 keywords: *id001
 ---
 

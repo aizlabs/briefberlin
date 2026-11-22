@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Politik"
 summary: "Tras una acción con una bandera ante el Bundestag, la policía investiga mientras los políticos hablan de mejorar la protección y establecer normas más estrictas para las protestas."
-description: "Tras una acción con una bandera ante el Bundestag, la policía investiga mientras los políticos hablan de mejorar la protección y establecer normas más estrictas para las protestas."
+description: "Noticias de Berlín: Tras una acción con una bandera ante el Bundestag, la policía investiga mientras los políticos hablan de mejorar la protección y…"
 source_title: "Flaggenaktion vor dem Bundestag führt zu Debatte über Sicherheit"
 reading_time: 3
 translations:

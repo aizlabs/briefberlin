@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Verkehr"
 summary: "ربما أخذ موظفان في منطقة Teltow-Fläming (تيلتو-فليمينغ) أموالاً مقابل تراخيص لسيارات مع سائق."
-description: "ربما أخذ موظفان في منطقة Teltow-Fläming (تيلتو-فليمينغ) أموالاً مقابل تراخيص لسيارات مع سائق."
+description: "أخبار برلين: ربما أخذ موظفان في منطقة Teltow-Fläming (تيلتو-فليمينغ) أموالاً مقابل تراخيص لسيارات مع سائق."
 source_title: "Verdacht auf Bestechung bei Fahrdiensten in Teltow-Fläming"
 reading_time: 2
 translations:

@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Stadtleben"
 summary: "Poco después de la renovación, en el Stadtbad Schöneberg hay de nuevo problemas técnicos, cierres y críticas de los visitantes."
-description: "Poco después de la renovación, en el Stadtbad Schöneberg hay de nuevo problemas técnicos, cierres y críticas de los visitantes."
+description: "Noticias de Berlín: Poco después de la renovación, en el Stadtbad Schöneberg hay de nuevo problemas técnicos, cierres y críticas de los visitantes."
 source_title: "Stadtbad Schöneberg hat kurz nach Sanierung wieder Technikprobleme"
 reading_time: 3
 translations:

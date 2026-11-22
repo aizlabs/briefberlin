@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Wirtschaft"
 summary: "Galeria zamyka swój znany dom towarowy przy berlińskiej Ku'damm. Pracownicy są rozczarowani, a właściciel planuje na tym terenie wieżowiec z mieszkaniami i sklepami."
-description: "Galeria zamyka swój znany dom towarowy przy berlińskiej Ku'damm. Pracownicy są rozczarowani, a właściciel planuje na tym terenie wieżowiec z mieszkaniami i sklepami."
+description: "Galeria zamyka swój znany dom towarowy przy berlińskiej Ku'damm. Pracownicy są rozczarowani, a właściciel planuje na tym terenie wieżowiec z mieszkaniami…"
 source_title: "Galeria am Ku'damm schließt: Verkauf geht erst einmal weiter"
 reading_time: 3
 translations:

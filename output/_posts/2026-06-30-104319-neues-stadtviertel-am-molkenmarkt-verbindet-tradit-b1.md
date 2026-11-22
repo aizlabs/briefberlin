@@ -8,8 +8,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260630-104319-neue
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Stadtleben
-description: Ein neues Stadtviertel entsteht am Molkenmarkt in Berlin. Nach einem
-  **Architekturwettbewerb** sind die Pläne für das Viertel nun konkreter. Die Entwürfe...
+description: "Ein neues Stadtviertel entsteht am Molkenmarkt in Berlin. Nach einem Architekturwettbewerb sind die Pläne für das Viertel nun konkreter."
 keywords: *id001
 ---
 

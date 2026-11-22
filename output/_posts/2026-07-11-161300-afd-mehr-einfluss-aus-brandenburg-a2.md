@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260711-161300-afd-
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Politik
-description: Die AfD ist eine rechte Partei in Deutschland. Am Wochenende hat sie
-  sich in Erfurt getroffen. Dort haben Mitglieder einen neuen Vorstand für ganz...
+description: "Berlin aktuell: Die AfD ist eine rechte Partei in Deutschland. Am Wochenende hat sie sich in Erfurt getroffen."
 keywords: *id001
 ---
 

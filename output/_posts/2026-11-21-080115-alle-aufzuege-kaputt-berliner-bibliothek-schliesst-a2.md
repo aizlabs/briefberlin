@@ -7,8 +7,7 @@ story: 20261121-080004-aufzugsausfall-amerika-gedenkbibliothek
 category: Kultur
 summary: Alle Aufzüge in der Amerika-Gedenkbibliothek sind kaputt, deshalb ist der
   Salon geschlossen und die Bibliothek will an den Alexanderplatz ziehen.
-description: Wegen ausgefallener Aufzüge schließt die Amerika-Gedenkbibliothek in
-  Kreuzberg ihren Salon. Die Leitung warnt vor Schließung und fordert einen Neubau.
+description: "Berlin aktuell: Wegen ausgefallener Aufzüge schließt die Amerika-Gedenkbibliothek in Kreuzberg ihren Salon."
 topics:
 - Amerika-Gedenkbibliothek
 - Berlin-Kreuzberg

@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260628-133100-berl
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Nachrichten
-description: Im Sommer wird es in Berlin sehr heiß. Viele Menschen suchen dann nach
-  Abkühlung. Eine besondere Möglichkeit sind die Dachpools in der Stadt. Diese Pools...
+description: "Im Sommer wird es in Berlin sehr heiß. Viele Menschen suchen dann nach Abkühlung. Eine besondere Möglichkeit sind die Dachpools in der Stadt."
 keywords: *id001
 ---
 

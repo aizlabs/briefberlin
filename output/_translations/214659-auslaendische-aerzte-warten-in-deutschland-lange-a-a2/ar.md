@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Gesellschaft"
 summary: "تحتاج ألمانيا إلى أطباء من الخارج، لكنهم ينتظرون غالباً سنوات للحصول على إذن بالعمل."
-description: "تحتاج ألمانيا إلى أطباء من الخارج، لكنهم ينتظرون غالباً سنوات للحصول على إذن بالعمل."
+description: "أخبار برلين: تحتاج ألمانيا إلى أطباء من الخارج، لكنهم ينتظرون غالباً سنوات للحصول على إذن بالعمل."
 source_title: "Ausländische Ärzte warten in Deutschland lange auf Arbeit"
 reading_time: 2
 translations:

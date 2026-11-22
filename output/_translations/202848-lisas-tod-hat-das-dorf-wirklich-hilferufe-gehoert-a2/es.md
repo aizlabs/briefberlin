@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Nachrichten"
 summary: "Los medios escribieron: el pueblo de Altglietzen oyó los gritos de auxilio de Lisa, pero casi nadie en el pueblo oyó gritos."
-description: "Los medios escribieron: el pueblo de Altglietzen oyó los gritos de auxilio de Lisa, pero casi nadie en el pueblo oyó gritos."
+description: "Noticias de Berlín: Los medios escribieron: el pueblo de Altglietzen oyó los gritos de auxilio de Lisa, pero casi nadie en el pueblo oyó gritos."
 source_title: "Lisas Tod: Hat das Dorf wirklich Hilferufe gehört?"
 reading_time: 2
 translations:

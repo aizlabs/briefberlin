@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260629-181045-neue
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Politik
-description: Die Bundesagentur für Arbeit hat neue Regeln. Ab Juli gibt es strengere
-  **Sanktionen** für Menschen, die **Grundsicherung** bekommen. Wenn jemand betrunken...
+description: "Berlin aktuell: Die Bundesagentur für Arbeit hat neue Regeln. Ab Juli gibt es strengere Sanktionen für Menschen, die Grundsicherung bekommen."
 keywords: *id001
 ---
 

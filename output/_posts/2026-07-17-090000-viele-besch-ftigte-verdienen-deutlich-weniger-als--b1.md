@@ -10,9 +10,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260717-090000-viel
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Wirtschaft
-description: Die Löhne in Berlin und Brandenburg unterscheiden sich weiter stark.
-  Das zeigen Zahlen für April 2025. In beiden Ländern verdient aber ein großer Teil
-  der...
+description: "Die Löhne in Berlin und Brandenburg unterscheiden sich weiter stark. Das zeigen Zahlen für April 2025."
 keywords: *id001
 ---
 

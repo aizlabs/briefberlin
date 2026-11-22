@@ -10,8 +10,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260713-194703-mill
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Wirtschaft
-description: Das Berliner IT-Dienstleistungszentrum steht derzeit stark unter Druck.
-  Die öffentliche Einrichtung kümmert sich um Technik und digitale Dienste für die...
+description: "Das Berliner IT-Dienstleistungszentrum steht derzeit stark unter Druck."
 keywords: *id001
 ---
 

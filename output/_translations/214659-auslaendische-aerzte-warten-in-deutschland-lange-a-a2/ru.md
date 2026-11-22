@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Gesellschaft"
 summary: "Германии нужны врачи из других стран, но они часто годами ждут разрешения на работу."
-description: "Германии нужны врачи из других стран, но они часто годами ждут разрешения на работу."
+description: "Новости Берлина: Германии нужны врачи из других стран, но они часто годами ждут разрешения на работу."
 source_title: "Ausländische Ärzte warten in Deutschland lange auf Arbeit"
 reading_time: 2
 translations:

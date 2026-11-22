@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260627-114558-weni
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Stadtleben
-description: In Deutschland gibt es Streit über weniger Geld für Wohngeld. Ministerin
-  Verena Hubertz will weniger Geld ausgeben. Das betrifft viele Menschen, die wenig...
+description: "Berlin aktuell: In Deutschland gibt es Streit über weniger Geld für Wohngeld. Ministerin Verena Hubertz will weniger Geld ausgeben."
 keywords: *id001
 ---
 

@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260703-090000-berl
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Stadtleben
-description: Seit 2024 steigen viele Mieten bei Berlins Wohnungsfirmen der Stadt.
-  Diese Firmen gehören dem Land Berlin und vermieten etwa jede fünfte Wohnung. In...
+description: "Seit 2024 steigen viele Mieten bei Berlins Wohnungsfirmen der Stadt. Diese Firmen gehören dem Land Berlin und vermieten etwa jede fünfte Wohnung."
 keywords: *id001
 ---
 

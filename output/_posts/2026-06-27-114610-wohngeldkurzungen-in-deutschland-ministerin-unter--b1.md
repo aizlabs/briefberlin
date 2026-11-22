@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260627-114610-wohn
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Politik
-description: In Deutschland gibt es derzeit viele Diskussionen über geplante **Kürzungen**
-  beim Wohngeld. Die Bauministerin Verena Hubertz von der SPD hat einen...
+description: "Berlin aktuell: In Deutschland gibt es derzeit viele Diskussionen über geplante Kürzungen beim Wohngeld."
 keywords: *id001
 ---
 

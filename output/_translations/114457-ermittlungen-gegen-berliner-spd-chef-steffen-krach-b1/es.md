@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Politik"
 summary: "La presidenta del Berliner Abgeordnetenhaus ha dado su consentimiento para que la fiscalía de Hanóver continúe sus investigaciones contra el líder de la SPD en Berlín, Steffen Krach, por la venta de un terreno hospitalario en Lehrte."
-description: "La presidenta del Berliner Abgeordnetenhaus ha dado su consentimiento para que la fiscalía de Hanóver continúe sus investigaciones contra el líder de la SPD en Berlín, Steffen Krach, por la venta de un terreno hospitalario en Lehrte."
+description: "La presidenta del Berliner Abgeordnetenhaus ha dado su consentimiento para que la fiscalía de Hanóver continúe sus investigaciones contra el líder de la…"
 source_title: "Ermittlungen gegen Berliner SPD-Chef Steffen Krach können weitergehen"
 reading_time: 3
 translations:

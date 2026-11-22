@@ -4,7 +4,7 @@ date: 2026-08-12 08:09:48
 author: "clara-becker"
 level: B1
 category: "Wissenschaft"
-description: "Am 12. August 2026 ist in Berlin eine partielle Sonnenfinsternis zu sehen: Zum Maximum sind rund 85 Prozent der Sonne bedeckt, freie Horizontsicht ist nötig."
+description: "Am 12. August 2026 ist in Berlin eine partielle Sonnenfinsternis zu sehen: Zum Maximum sind rund 85 Prozent der Sonne bedeckt, freie Horizontsicht ist…"
 topics: ["Berlin", "Sonnenfinsternis", "partielle Finsternis", "Mond", "Sonne", "MESZ", "CEST"]
 keywords: ["Berlin", "Sonnenfinsternis", "partielle Finsternis", "Mond", "Sonne", "MESZ", "CEST"]
 sources: []

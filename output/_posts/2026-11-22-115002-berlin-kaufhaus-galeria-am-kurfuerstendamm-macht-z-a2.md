@@ -7,8 +7,7 @@ story: 20261122-114844-galeria-filiale-am-ku-damm-vor-dem-aus-b
 category: Wirtschaft
 summary: Das Kaufhaus Galeria am Kurfürstendamm in Berlin schließt, aber bis Februar
   ist es noch normal offen.
-description: Nach der angekündigten Schließung der Galeria-Filiale am Ku’damm blieb
-  das Haus einen Tag zu. Beschäftigte sind frustriert, Verdi kritisiert den Konzern.
+description: "Berlin aktuell: Nach der angekündigten Schließung der Galeria-Filiale am Ku’damm blieb das Haus einen Tag zu."
 topics:
 - Galeria
 - Kurfürstendamm

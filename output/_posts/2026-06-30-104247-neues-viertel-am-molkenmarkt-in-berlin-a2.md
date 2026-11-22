@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260630-104247-neue
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Stadtleben
-description: Der Molkenmarkt in Berlin wird neu gestaltet. Hier trifft Tradition auf
-  Moderne. Nach einem Wettbewerb stehen die neuen Pläne fest. Die Gebäude haben...
+description: "Der Molkenmarkt in Berlin wird neu gestaltet. Hier trifft Tradition auf Moderne. Nach einem Wettbewerb stehen die neuen Pläne fest."
 keywords: *id001
 ---
 

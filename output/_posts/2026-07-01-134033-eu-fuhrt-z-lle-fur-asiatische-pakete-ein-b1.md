@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260701-134033-eu-f
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Wirtschaft
-description: Die Europäische Union hat beschlossen, ab Mittwoch **Zölle** auf kleine
-  Pakete aus Nicht-EU-Ländern zu erheben. Damit will sie die steigende Menge an...
+description: "Berlin aktuell: Die Europäische Union hat beschlossen, ab Mittwoch Zölle auf kleine Pakete aus Nicht-EU-Ländern zu erheben."
 keywords: *id001
 ---
 

@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Politik"
 summary: "W piątek w Berlinie i wielu innych miastach tysiące młodych ludzi pokojowo demonstrowało przeciwko obowiązkowej służbie wojskowej oraz za większymi wydatkami na edukację, ochronę zdrowia i klimatu."
-description: "W piątek w Berlinie i wielu innych miastach tysiące młodych ludzi pokojowo demonstrowało przeciwko obowiązkowej służbie wojskowej oraz za większymi wydatkami na edukację, ochronę zdrowia i klimatu."
+description: "W piątek w Berlinie i wielu innych miastach tysiące młodych ludzi pokojowo demonstrowało przeciwko obowiązkowej służbie wojskowej oraz za większymi…"
 source_title: "Schulstreik in Berlin: Tausende Jugendliche protestieren gegen die Wehrpflicht"
 reading_time: 3
 translations:

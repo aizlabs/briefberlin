@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Politik"
 summary: "Поскольку у Берлина мало денег, Linke (Линке), Grüne (Грюне) и SPD на коалиционных переговорах должны найти надёжное финансирование для каждого нового проекта."
-description: "Поскольку у Берлина мало денег, Linke (Линке), Grüne (Грюне) и SPD на коалиционных переговорах должны найти надёжное финансирование для каждого нового проекта."
+description: "Поскольку у Берлина мало денег, Linke (Линке), Grüne (Грюне) и SPD на коалиционных переговорах должны найти надёжное финансирование для каждого нового…"
 source_title: "Wenig Geld in Berlin: Neue Koalition muss bei Plänen sparen"
 reading_time: 3
 translations:

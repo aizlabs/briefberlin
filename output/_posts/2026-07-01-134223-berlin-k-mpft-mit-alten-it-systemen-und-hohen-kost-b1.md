@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260701-134223-berl
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Wirtschaft
-description: In Berlin gibt es Probleme mit der alten IT-Infrastruktur der öffentlichen
-  Verwaltung. Diese **veralteten Systeme** verursachen hohe Kosten. Eigentlich...
+description: "In Berlin gibt es Probleme mit der alten IT-Infrastruktur der öffentlichen Verwaltung. Diese veralteten Systeme verursachen hohe Kosten."
 keywords: *id001
 ---
 

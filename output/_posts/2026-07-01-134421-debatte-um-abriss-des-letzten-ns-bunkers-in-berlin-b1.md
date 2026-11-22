@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260701-134421-deba
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Stadtleben
-description: In Berlin-Mitte gibt es eine Diskussion über den Abriss des letzten Vorkriegsbunkers
-  aus der NS-Zeit. Auf dem Gelände der ehemaligen Neuen Reichskanzlei...
+description: "In Berlin-Mitte gibt es eine Diskussion über den Abriss des letzten Vorkriegsbunkers aus der NS-Zeit."
 keywords: *id001
 ---
 

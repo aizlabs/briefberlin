@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Verkehr"
 summary: "Dwóch pracowników powiatu Teltow-Fläming mogło brać pieniądze za licencje na przewóz osób."
-description: "Dwóch pracowników powiatu Teltow-Fläming mogło brać pieniądze za licencje na przewóz osób."
+description: "Wiadomości z Berlina: Dwóch pracowników powiatu Teltow-Fläming mogło brać pieniądze za licencje na przewóz osób."
 source_title: "Verdacht auf Bestechung bei Fahrdiensten in Teltow-Fläming"
 reading_time: 2
 translations:

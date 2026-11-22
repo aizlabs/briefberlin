@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Politik"
 summary: "تزيد أزمة السكن الضغط على السياسة والمجتمع، لأن نقص المساكن يؤثر في القرارات الخاصة والعمل والصعود الاجتماعي."
-description: "تزيد أزمة السكن الضغط على السياسة والمجتمع، لأن نقص المساكن يؤثر في القرارات الخاصة والعمل والصعود الاجتماعي."
+description: "أخبار برلين: تزيد أزمة السكن الضغط على السياسة والمجتمع، لأن نقص المساكن يؤثر في القرارات الخاصة والعمل والصعود الاجتماعي."
 source_title: "Warum neue Bündnisse den angespannten Wohnungsmarkt entlasten sollen"
 reading_time: 3
 translations:

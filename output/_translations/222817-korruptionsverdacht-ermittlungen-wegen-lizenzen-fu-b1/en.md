@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Verkehr"
 summary: "Two employees of the Teltow-Fläming district administration are suspected of illegally granting permits to app-based ride services in exchange for money. The Neuruppin public prosecutor’s office is now investigating."
-description: "Two employees of the Teltow-Fläming district administration are suspected of illegally granting permits to app-based ride services in exchange for money. The Neuruppin public prosecutor’s office is now investigating."
+description: "Berlin news: Two employees of the Teltow-Fläming district administration are suspected of illegally granting permits to app-based ride services in…"
 source_title: "Korruptionsverdacht: Ermittlungen wegen Lizenzen für Fahrdienste in Teltow-Fläming"
 reading_time: 3
 translations:

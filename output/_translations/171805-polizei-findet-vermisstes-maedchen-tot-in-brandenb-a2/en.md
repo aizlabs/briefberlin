@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Kriminalität"
 summary: "The police have found the missing Lisa dead in Brandenburg and are looking into the case."
-description: "The police have found the missing Lisa dead in Brandenburg and are looking into the case."
+description: "Berlin news: The police have found the missing Lisa dead in Brandenburg and are looking into the case."
 source_title: "Polizei findet vermisstes Mädchen tot in Brandenburg"
 reading_time: 2
 translations:

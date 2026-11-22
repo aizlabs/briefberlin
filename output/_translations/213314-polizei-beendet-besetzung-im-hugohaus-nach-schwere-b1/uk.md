@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Stadtleben"
 summary: "Поліція припинила зайняття Hugohaus після конфліктів через будівельні роботи, тоді як протест і правові питання тривають."
-description: "Поліція припинила зайняття Hugohaus після конфліктів через будівельні роботи, тоді як протест і правові питання тривають."
+description: "Новини Берліна: Поліція припинила зайняття Hugohaus після конфліктів через будівельні роботи, тоді як протест і правові питання тривають."
 source_title: "Polizei beendet Besetzung im Hugohaus nach schweren Konflikten"
 reading_time: 3
 translations:

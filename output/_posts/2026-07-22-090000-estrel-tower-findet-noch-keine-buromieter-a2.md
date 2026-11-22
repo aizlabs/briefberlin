@@ -10,8 +10,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260722-090000-estr
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Nachrichten
-description: Der Estrel Tower steht in Berlin-Neukölln an der Sonnenallee. Das Hochhaus
-  ist 176 Meter hoch und hat 45 Etagen. Es soll das höchste Gebäude in Berlin sein.
+description: "Der Estrel Tower steht in Berlin-Neukölln an der Sonnenallee. Das Hochhaus ist 176 Meter hoch und hat 45 Etagen."
 keywords: *id001
 ---
 

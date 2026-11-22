@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Gesellschaft"
 summary: "تحتاج ألمانيا بشدة إلى أطباء أجانب، لكن إجراءات الاعتراف الطويلة والمكلفة تمنع كثيرين منهم من العمل لسنوات."
-description: "تحتاج ألمانيا بشدة إلى أطباء أجانب، لكن إجراءات الاعتراف الطويلة والمكلفة تمنع كثيرين منهم من العمل لسنوات."
+description: "أخبار برلين: تحتاج ألمانيا بشدة إلى أطباء أجانب، لكن إجراءات الاعتراف الطويلة والمكلفة تمنع كثيرين منهم من العمل لسنوات."
 source_title: "Viel Bürokratie: Ausländische Ärzte warten in Deutschland jahrelang auf Anerkennung"
 reading_time: 3
 translations:

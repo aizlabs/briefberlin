@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Politik"
 summary: "Almanya, uygun fiyatlı konutlar için daha fazla iş birliğine ve daha basit yardıma ihtiyaç duyuyor."
-description: "Almanya, uygun fiyatlı konutlar için daha fazla iş birliğine ve daha basit yardıma ihtiyaç duyuyor."
+description: "Berlin haberleri: Almanya, uygun fiyatlı konutlar için daha fazla iş birliğine ve daha basit yardıma ihtiyaç duyuyor."
 source_title: "Mehr Hilfe für bezahlbare Wohnungen"
 reading_time: 2
 translations:

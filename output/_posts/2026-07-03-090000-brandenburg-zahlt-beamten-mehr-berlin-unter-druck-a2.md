@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260703-090000-bran
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Politik
-description: Brandenburg will seinen Beamten deutlich mehr Geld zahlen. Beamte sind
-  Menschen im Staatsdienst. Dazu gehören zum Beispiel Polizisten und Lehrer. Das gilt...
+description: "Berlin aktuell: Brandenburg will seinen Beamten deutlich mehr Geld zahlen. Beamte sind Menschen im Staatsdienst."
 keywords: *id001
 ---
 

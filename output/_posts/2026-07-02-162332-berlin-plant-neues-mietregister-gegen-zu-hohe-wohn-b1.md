@@ -8,8 +8,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260702-162332-berl
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Nachrichten
-description: Berlin will als erstes Bundesland ein Mietenkataster einführen, also
-  ein zentrales Register für Mietdaten. Das Abgeordnetenhaus, das Berliner Parlament,...
+description: "Berlin will als erstes Bundesland ein Mietenkataster einführen, also ein zentrales Register für Mietdaten."
 keywords: *id001
 ---
 

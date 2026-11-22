@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260630-104517-umba
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Kultur
-description: Das Internationale Congress Centrum (ICC) in Berlin soll umgebaut werden.
-  Das Gebäude steht seit Jahren leer und soll jetzt ein **lebendiges Zentrum** für...
+description: "Das Internationale Congress Centrum (ICC) in Berlin soll umgebaut werden."
 keywords: *id001
 ---
 

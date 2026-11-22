@@ -4,7 +4,7 @@ date: 2026-08-03 17:52:55
 author: "clara-becker"
 level: B1
 category: "Stadtleben"
-description: "In Pankow soll 2026 ein erster Bauabschnitt auf der Elisabeth-Aue starten. Ein weiteres Großquartier in Buch verzögert sich wegen Artenschutz."
+description: "Berlin aktuell: In Pankow soll 2026 ein erster Bauabschnitt auf der Elisabeth-Aue starten. Ein weiteres Großquartier in Buch verzögert sich wegen…"
 topics: ["Pankow", "Elisabeth-Aue", "Buch", "Wohnungsbau", "Artenschutz", "Berlin", "Pan\u00adkow"]
 keywords: ["Pankow", "Elisabeth-Aue", "Buch", "Wohnungsbau", "Artenschutz", "Berlin", "Pan\u00adkow"]
 sources: []

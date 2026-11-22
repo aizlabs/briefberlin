@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Kriminalität"
 summary: "Поліція знайшла зниклу Лізу мертвою в Бранденбурзі та розслідує цю справу."
-description: "Поліція знайшла зниклу Лізу мертвою в Бранденбурзі та розслідує цю справу."
+description: "Новини Берліна: Поліція знайшла зниклу Лізу мертвою в Бранденбурзі та розслідує цю справу."
 source_title: "Polizei findet vermisstes Mädchen tot in Brandenburg"
 reading_time: 2
 translations:

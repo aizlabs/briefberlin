@@ -10,8 +10,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260715-162054-stre
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Politik
-description: In Berlin gibt es Streit über Arbeit für Bürgergeld-Empfänger. Bürgergeld
-  ist Geld vom Staat für Menschen ohne Arbeit. CDU-Politiker Stefan Evers will mehr...
+description: "In Berlin gibt es Streit über Arbeit für Bürgergeld-Empfänger. Bürgergeld ist Geld vom Staat für Menschen ohne Arbeit."
 keywords: *id001
 ---
 

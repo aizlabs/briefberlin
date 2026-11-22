@@ -4,7 +4,7 @@ date: 2026-07-29 00:52:03
 author: "clara-becker"
 level: A2
 category: "Kultur"
-description: "In der Techno- und Clubkultur rückt erstmals ein Generationswechsel näher: Gründer ziehen sich zurück, Festivals und Clubs werden professioneller."
+description: "Berlin aktuell: In der Techno- und Clubkultur rückt erstmals ein Generationswechsel näher: Gründer ziehen sich zurück, Festivals und Clubs werden…"
 topics: ["Techno", "Clubszene", "Festivals", "Berlin", "Brandenburg", "Generationenwechsel", "Club\u00adszene"]
 keywords: ["Techno", "Clubszene", "Festivals", "Berlin", "Brandenburg", "Generationenwechsel", "Club\u00adszene"]
 sources: []

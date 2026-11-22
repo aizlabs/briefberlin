@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Medien"
 summary: "The trial of Patricia Schlesinger and three other former RBB officials begins in Berlin over allegations that they caused financial harm to the broadcaster."
-description: "The trial of Patricia Schlesinger and three other former RBB officials begins in Berlin over allegations that they caused financial harm to the broadcaster."
+description: "The trial of Patricia Schlesinger and three other former RBB officials begins in Berlin over allegations that they caused financial harm to the…"
 source_title: "Frühere RBB-Chefin Schlesinger steht in Berlin vor Gericht"
 reading_time: 3
 translations:

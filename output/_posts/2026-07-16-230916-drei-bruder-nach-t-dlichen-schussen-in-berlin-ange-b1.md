@@ -10,9 +10,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260716-230916-drei
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Nachrichten
-description: Nach tödlichen Schüssen auf einen 44-jährigen Mann in Berlin-Weißensee
-  stehen drei Brüder im Mittelpunkt einer Anklage. Die Tat geschah am frühen Morgen
-  des...
+description: "Nach tödlichen Schüssen auf einen 44-jährigen Mann in Berlin-Weißensee stehen drei Brüder im Mittelpunkt einer Anklage."
 keywords: *id001
 ---
 

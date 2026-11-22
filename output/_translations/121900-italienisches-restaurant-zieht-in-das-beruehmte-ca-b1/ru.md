@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Stadtleben"
 summary: "В бывшем Café Kranzler (Кафе Кранцлер) на берлинском Kurfürstendamm (Курфюрстендамм) открывается итальянский ресторан Circolo Popolare (Чирколо Пополаре), а весь Kranzler Eck (Кранцлер Эк) меняется."
-description: "В бывшем Café Kranzler (Кафе Кранцлер) на берлинском Kurfürstendamm (Курфюрстендамм) открывается итальянский ресторан Circolo Popolare (Чирколо Пополаре), а весь Kranzler Eck (Кранцлер Эк) меняется."
+description: "В бывшем Café Kranzler (Кафе Кранцлер) на берлинском Kurfürstendamm (Курфюрстендамм) открывается итальянский ресторан Circolo Popolare (Чирколо…"
 source_title: "Italienisches Restaurant zieht in das berühmte Café Kranzler"
 reading_time: 3
 translations:

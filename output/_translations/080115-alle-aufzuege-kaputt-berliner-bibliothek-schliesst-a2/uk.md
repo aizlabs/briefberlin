@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Kultur"
 summary: "Усі ліфти в Amerika-Gedenkbibliothek (Америка-Геденкбібліотек) зламалися, тому салон закритий, а бібліотека хоче переїхати на Alexanderplatz (Александерплац)."
-description: "Усі ліфти в Amerika-Gedenkbibliothek (Америка-Геденкбібліотек) зламалися, тому салон закритий, а бібліотека хоче переїхати на Alexanderplatz (Александерплац)."
+description: "Новини Берліна: Усі ліфти в Amerika-Gedenkbibliothek (Америка-Геденкбібліотек) зламалися, тому салон закритий, а бібліотека хоче переїхати на…"
 source_title: "Alle Aufzüge kaputt: Berliner Bibliothek schließt ihren Salon"
 reading_time: 2
 translations:

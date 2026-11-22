@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Politik"
 summary: "Berliner Abgeordnetenhaus başkanı, Hannover savcılığının Berlin SPD Başkanı Steffen Krach hakkında Lehrte'deki bir hastane arazisinin satışıyla ilgili soruşturmaya devam etmesine onay verdi."
-description: "Berliner Abgeordnetenhaus başkanı, Hannover savcılığının Berlin SPD Başkanı Steffen Krach hakkında Lehrte'deki bir hastane arazisinin satışıyla ilgili soruşturmaya devam etmesine onay verdi."
+description: "Berliner Abgeordnetenhaus başkanı, Hannover savcılığının Berlin SPD Başkanı Steffen Krach hakkında Lehrte'deki bir hastane arazisinin satışıyla ilgili…"
 source_title: "Ermittlungen gegen Berliner SPD-Chef Steffen Krach können weitergehen"
 reading_time: 3
 translations:

@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260713-194437-prob
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Wirtschaft
-description: Das ITDZ in Berlin hat jetzt neue Probleme. Das ITDZ hilft den Berliner
-  Ämtern mit Computern und Technik. Im Mittelpunkt steht jetzt die Chefin Maria Borelli.
+description: "Das ITDZ in Berlin hat jetzt neue Probleme. Das ITDZ hilft den Berliner Ämtern mit Computern und Technik."
 keywords: *id001
 ---
 

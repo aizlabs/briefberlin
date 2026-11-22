@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260627-011935-zuku
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Politik
-description: Das Internationale Congress Centrum (ICC) in Berlin soll in ein **Zentrum
-  für Kultur und Wissenschaft** umgewandelt werden. Diese Pläne wurden von den neuen...
+description: "Das Internationale Congress Centrum (ICC) in Berlin soll in ein Zentrum für Kultur und Wissenschaft umgewandelt werden."
 keywords: *id001
 ---
 

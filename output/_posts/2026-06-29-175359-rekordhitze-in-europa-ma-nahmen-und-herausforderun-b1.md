@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260629-175359-reko
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Nachrichten
-description: In den letzten Tagen hat eine extreme **Hitzewelle** Europa getroffen.
-  In Frankreich gab es durch die Hitze etwa 1000 zusätzliche Todesfälle. Die genaue...
+description: "Berlin aktuell: In den letzten Tagen hat eine extreme Hitzewelle Europa getroffen. In Frankreich gab es durch die Hitze etwa 1000 zusätzliche Todesfälle."
 keywords: *id001
 ---
 

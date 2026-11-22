@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260627-011920-zuku
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Politik
-description: Das Internationale Congress Centrum (ICC) in Berlin soll **neu gestaltet**
-  werden. Der Bürgermeister Kai Wegner möchte das ICC zu einem Ort für Kultur und...
+description: "Das Internationale Congress Centrum (ICC) in Berlin soll neu gestaltet werden."
 keywords: *id001
 ---
 

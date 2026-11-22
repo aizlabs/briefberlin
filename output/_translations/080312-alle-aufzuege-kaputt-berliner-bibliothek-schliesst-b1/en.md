@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Kultur"
 summary: "Because all the lifts are broken, the Amerika-Gedenkbibliothek in Berlin-Kreuzberg has closed its salon, and its management is calling for a quick move to Alexanderplatz because of numerous defects."
-description: "Because all the lifts are broken, the Amerika-Gedenkbibliothek in Berlin-Kreuzberg has closed its salon, and its management is calling for a quick move to Alexanderplatz because of numerous defects."
+description: "Because all the lifts are broken, the Amerika-Gedenkbibliothek in Berlin-Kreuzberg has closed its salon, and its management is calling for a quick move…"
 source_title: "Alle Aufzüge kaputt: Berliner Bibliothek schließt ihren beliebten Salon"
 reading_time: 3
 translations:

@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Gesundheit"
 summary: "Медсёстры и медбратья Charité явно проголосовали за возможную бессрочную забастовку, пока спор о снижении нагрузки и деньгах продолжается."
-description: "Медсёстры и медбратья Charité явно проголосовали за возможную бессрочную забастовку, пока спор о снижении нагрузки и деньгах продолжается."
+description: "Новости Берлина: Медсёстры и медбратья Charité явно проголосовали за возможную бессрочную забастовку, пока спор о снижении нагрузки и деньгах продолжается."
 source_title: "Pflegekräfte der Charité stimmen klar für möglichen Dauerstreik"
 reading_time: 3
 translations:

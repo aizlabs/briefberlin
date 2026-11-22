@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260627-013520-berl
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Stadtleben
-description: Fast zwei Drittel der Berliner sind jetzt für den Bau von Wohnungen am
-  Rand des Tempelhofer Feldes. Das zeigt eine Umfrage der Industrie- und Handelskammer...
+description: "Fast zwei Drittel der Berliner sind jetzt für den Bau von Wohnungen am Rand des Tempelhofer Feldes."
 keywords: *id001
 ---
 

@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Politik"
 summary: "Kryzys mieszkaniowy zwiększa presję na politykę i społeczeństwo, ponieważ brakujące mieszkania wpływają na prywatne decyzje, pracę i awans społeczny."
-description: "Kryzys mieszkaniowy zwiększa presję na politykę i społeczeństwo, ponieważ brakujące mieszkania wpływają na prywatne decyzje, pracę i awans społeczny."
+description: "Wiadomości z Berlina: Kryzys mieszkaniowy zwiększa presję na politykę i społeczeństwo, ponieważ brakujące mieszkania wpływają na prywatne decyzje, pracę…"
 source_title: "Warum neue Bündnisse den angespannten Wohnungsmarkt entlasten sollen"
 reading_time: 3
 translations:

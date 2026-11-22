@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Politik"
 summary: "بعد إنزال علم أمام Bundestag، يناقش سياسيون زيادة الأمن."
-description: "بعد إنزال علم أمام Bundestag، يناقش سياسيون زيادة الأمن."
+description: "أخبار برلين: بعد إنزال علم أمام Bundestag، يناقش سياسيون زيادة الأمن."
 source_title: "Flaggenaktion vor dem Bundestag: Diskussion über Sicherheit"
 reading_time: 2
 translations:

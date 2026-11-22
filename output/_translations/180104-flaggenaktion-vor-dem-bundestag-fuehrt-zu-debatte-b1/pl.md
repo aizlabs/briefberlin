@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Politik"
 summary: "Po akcji z flagą przed Bundestagiem policja prowadzi dochodzenie, a politycy rozmawiają o lepszej ochronie i surowszych zasadach protestów."
-description: "Po akcji z flagą przed Bundestagiem policja prowadzi dochodzenie, a politycy rozmawiają o lepszej ochronie i surowszych zasadach protestów."
+description: "Wiadomości z Berlina: Po akcji z flagą przed Bundestagiem policja prowadzi dochodzenie, a politycy rozmawiają o lepszej ochronie i surowszych zasadach…"
 source_title: "Flaggenaktion vor dem Bundestag führt zu Debatte über Sicherheit"
 reading_time: 3
 translations:

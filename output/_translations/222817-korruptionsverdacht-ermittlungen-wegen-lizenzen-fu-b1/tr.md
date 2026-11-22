@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Verkehr"
 summary: "Teltow-Fläming ilçe yönetiminin iki çalışanının para karşılığında uygulama üzerinden yolcu taşımacılığı için yasa dışı izinler verdiği iddia ediliyor. Bu nedenle Neuruppin savcılığı soruşturma yürütüyor."
-description: "Teltow-Fläming ilçe yönetiminin iki çalışanının para karşılığında uygulama üzerinden yolcu taşımacılığı için yasa dışı izinler verdiği iddia ediliyor. Bu nedenle Neuruppin savcılığı soruşturma yürütüyor."
+description: "Berlin haberleri: Teltow-Fläming ilçe yönetiminin iki çalışanının para karşılığında uygulama üzerinden yolcu taşımacılığı için yasa dışı izinler verdiği…"
 source_title: "Korruptionsverdacht: Ermittlungen wegen Lizenzen für Fahrdienste in Teltow-Fläming"
 reading_time: 3
 translations:

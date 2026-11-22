@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260701-210441-miet
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Stadtleben
-description: Viele Menschen suchen in deutschen Großstädten eine neue Wohnung. Diese
-  Suche ist für viele Menschen sehr teuer. Besonders neue Mietwohnungen kosten seit...
+description: "Berlin aktuell: Viele Menschen suchen in deutschen Großstädten eine neue Wohnung. Diese Suche ist für viele Menschen sehr teuer."
 keywords: *id001
 ---
 

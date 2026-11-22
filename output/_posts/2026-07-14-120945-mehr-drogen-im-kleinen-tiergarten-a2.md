@@ -10,8 +10,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260714-120945-mehr
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Nachrichten
-description: Im Kleinen Tiergarten in Berlin-Mitte gibt es seit Monaten mehr Drogenprobleme.
-  Viele Menschen nehmen dort Drogen oder verkaufen sie offen. Früher sah man...
+description: "Im Kleinen Tiergarten in Berlin-Mitte gibt es seit Monaten mehr Drogenprobleme. Viele Menschen nehmen dort Drogen oder verkaufen sie offen."
 keywords: *id001
 ---
 

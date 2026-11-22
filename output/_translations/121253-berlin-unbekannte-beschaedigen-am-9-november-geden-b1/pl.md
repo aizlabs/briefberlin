@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Stadtleben"
 summary: "W okolicach 9 listopada nieznani sprawcy uszkodzili w Berlinie kamienie pamięci i plakat upamiętniający żydowskie ofiary nazizmu. RIAS widzi w tym celowe antysemickie ataki na pamięć o ofiarach."
-description: "W okolicach 9 listopada nieznani sprawcy uszkodzili w Berlinie kamienie pamięci i plakat upamiętniający żydowskie ofiary nazizmu. RIAS widzi w tym celowe antysemickie ataki na pamięć o ofiarach."
+description: "W okolicach 9 listopada nieznani sprawcy uszkodzili w Berlinie kamienie pamięci i plakat upamiętniający żydowskie ofiary nazizmu."
 source_title: "Berlin: Unbekannte beschädigen am 9. November Gedenkorte für NS-Opfer"
 reading_time: 3
 translations:

@@ -7,8 +7,7 @@ sources: []
 audio: null
 reading_time: 2
 category: Nachrichten
-description: In Deutschland sprechen viele Menschen über zwei sehr verschiedene Themen.
-  Zuerst geht es um Prada, eine teure Modemarke aus Italien. Außerdem geht es um...
+description: "Berlin aktuell: In Deutschland sprechen viele Menschen über zwei sehr verschiedene Themen. Zuerst geht es um Prada, eine teure Modemarke aus Italien."
 keywords: *id001
 ---
 

@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Gesellschaft"
 summary: "Niemcy pilnie potrzebują zagranicznych lekarzy, ale długie i kosztowne procedury uznawania kwalifikacji przez lata nie pozwalają wielu z nich pracować."
-description: "Niemcy pilnie potrzebują zagranicznych lekarzy, ale długie i kosztowne procedury uznawania kwalifikacji przez lata nie pozwalają wielu z nich pracować."
+description: "Wiadomości z Berlina: Niemcy pilnie potrzebują zagranicznych lekarzy, ale długie i kosztowne procedury uznawania kwalifikacji przez lata nie pozwalają…"
 source_title: "Viel Bürokratie: Ausländische Ärzte warten in Deutschland jahrelang auf Anerkennung"
 reading_time: 3
 translations:

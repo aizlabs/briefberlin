@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260706-090000-miet
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Nachrichten
-description: In der Wrangelstraße 70 in Berlin-Kreuzberg gibt es Streit um ein Wohnhaus.
-  Die Mieterinnen und Mieter protestieren gegen die LIRIK Group. Dieser Firma...
+description: "In der Wrangelstraße 70 in Berlin-Kreuzberg gibt es Streit um ein Wohnhaus. Die Mieterinnen und Mieter protestieren gegen die LIRIK Group."
 keywords: *id001
 ---
 

@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260705-090000-neue
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Stadtleben
-description: Am Berliner Ostbahnhof entsteht ein neues Projekt mit Wohnungen, Büros
-  und Geschäften. In der Straße der Pariser Kommune 20 legten die Beteiligten diese...
+description: "Am Berliner Ostbahnhof entsteht ein neues Projekt mit Wohnungen, Büros und Geschäften."
 keywords: *id001
 ---
 

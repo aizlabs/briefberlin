@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Politik"
 summary: "Germany needs more cooperation and more simple help for affordable homes."
-description: "Germany needs more cooperation and more simple help for affordable homes."
+description: "Berlin news: Germany needs more cooperation and more simple help for affordable homes."
 source_title: "Mehr Hilfe für bezahlbare Wohnungen"
 reading_time: 2
 translations:

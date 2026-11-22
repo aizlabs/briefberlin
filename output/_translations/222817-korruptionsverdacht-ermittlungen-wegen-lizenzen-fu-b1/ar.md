@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Verkehr"
 summary: "يُشتبه في أن موظفين اثنين في إدارة مقاطعة Teltow-Fläming (تيلتو-فليمينغ) منَحا تصاريح لخدمات النقل عبر التطبيقات بشكل غير قانوني مقابل المال، ولذلك تجري النيابة العامة في Neuruppin (نويوروبين) تحقيقات الآن."
-description: "يُشتبه في أن موظفين اثنين في إدارة مقاطعة Teltow-Fläming (تيلتو-فليمينغ) منَحا تصاريح لخدمات النقل عبر التطبيقات بشكل غير قانوني مقابل المال، ولذلك تجري النيابة العامة في Neuruppin (نويوروبين) تحقيقات الآن."
+description: "أخبار برلين: يُشتبه في أن موظفين اثنين في إدارة مقاطعة Teltow-Fläming (تيلتو-فليمينغ) منَحا تصاريح لخدمات النقل عبر التطبيقات بشكل غير قانوني مقابل…"
 source_title: "Korruptionsverdacht: Ermittlungen wegen Lizenzen für Fahrdienste in Teltow-Fläming"
 reading_time: 3
 translations:

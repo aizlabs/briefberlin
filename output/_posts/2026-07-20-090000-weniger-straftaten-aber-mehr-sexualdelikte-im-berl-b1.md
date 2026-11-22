@@ -10,8 +10,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260720-090000-weni
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Nachrichten
-description: Im Berliner Nahverkehr hat die Polizei im vergangenen Jahr weniger Straftaten
-  gezählt. Gleichzeitig gab es mehr Sexualdelikte in Bussen und Bahnen....
+description: "Im Berliner Nahverkehr hat die Polizei im vergangenen Jahr weniger Straftaten gezählt. Gleichzeitig gab es mehr Sexualdelikte in Bussen und Bahnen."
 keywords: *id001
 ---
 

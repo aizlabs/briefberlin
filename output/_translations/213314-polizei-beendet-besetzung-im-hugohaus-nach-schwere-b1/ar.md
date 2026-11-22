@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Stadtleben"
 summary: "أنهت الشرطة احتلال Hugohaus بعد نزاعات حول أعمال البناء، بينما تستمر الاحتجاجات والأسئلة القانونية."
-description: "أنهت الشرطة احتلال Hugohaus بعد نزاعات حول أعمال البناء، بينما تستمر الاحتجاجات والأسئلة القانونية."
+description: "أخبار برلين: أنهت الشرطة احتلال Hugohaus بعد نزاعات حول أعمال البناء، بينما تستمر الاحتجاجات والأسئلة القانونية."
 source_title: "Polizei beendet Besetzung im Hugohaus nach schweren Konflikten"
 reading_time: 3
 translations:

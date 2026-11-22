@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Stadtleben"
 summary: "بعد فترة قصيرة من التجديد، تظهر في Stadtbad Schöneberg من جديد مشكلات تقنية وإغلاقات وانتقادات من الزوار."
-description: "بعد فترة قصيرة من التجديد، تظهر في Stadtbad Schöneberg من جديد مشكلات تقنية وإغلاقات وانتقادات من الزوار."
+description: "أخبار برلين: بعد فترة قصيرة من التجديد، تظهر في Stadtbad Schöneberg من جديد مشكلات تقنية وإغلاقات وانتقادات من الزوار."
 source_title: "Stadtbad Schöneberg hat kurz nach Sanierung wieder Technikprobleme"
 reading_time: 3
 translations:

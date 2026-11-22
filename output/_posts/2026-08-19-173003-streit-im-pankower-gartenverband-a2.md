@@ -4,7 +4,7 @@ date: 2026-08-19 17:30:03
 author: "clara-becker"
 level: A2
 category: "Stadtleben"
-description: "Im Pankower Kleingartenverband droht neuer Streit: Ein abberufenes Vorstandsmitglied widerspricht dem Beschluss und erwägt eine Klage."
+description: "Berlin aktuell: Im Pankower Kleingartenverband droht neuer Streit: Ein abberufenes Vorstandsmitglied widerspricht dem Beschluss und erwägt eine Klage."
 topics: ["Pankow", "Kleingartenverband", "Bezirksverband", "Rechtsstreit", "Vorstand", "Kleing\u00e4rten", "Klein\u00adgar\u00adten\u00adver\u00adband"]
 keywords: ["Pankow", "Kleingartenverband", "Bezirksverband", "Rechtsstreit", "Vorstand", "Kleing\u00e4rten", "Klein\u00adgar\u00adten\u00adver\u00adband"]
 sources: []

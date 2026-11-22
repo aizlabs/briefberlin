@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Stadtleben"
 summary: "В Stadtbad Schöneberg вскоре после открытия есть проблемы с зонами, лифтом и воздухом."
-description: "В Stadtbad Schöneberg вскоре после открытия есть проблемы с зонами, лифтом и воздухом."
+description: "Новости Берлина: В Stadtbad Schöneberg вскоре после открытия есть проблемы с зонами, лифтом и воздухом."
 source_title: "Probleme im Stadtbad Schöneberg"
 reading_time: 2
 translations:

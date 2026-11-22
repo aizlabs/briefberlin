@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Verkehr"
 summary: "Два сотрудника округа Teltow-Fläming (Тельтов-Флеминг), возможно, брали деньги за разрешения на работу машин с водителем."
-description: "Два сотрудника округа Teltow-Fläming (Тельтов-Флеминг), возможно, брали деньги за разрешения на работу машин с водителем."
+description: "Новости Берлина: Два сотрудника округа Teltow-Fläming (Тельтов-Флеминг), возможно, брали деньги за разрешения на работу машин с водителем."
 source_title: "Verdacht auf Bestechung bei Fahrdiensten in Teltow-Fläming"
 reading_time: 2
 translations:

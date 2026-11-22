@@ -10,8 +10,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260715-161838-neue
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Nachrichten
-description: Berlins neue Kontrollgruppe für Baustellen auf Straßen hat bei ihren
-  ersten Einsätzen viele Probleme gefunden. Sie prüfte mehr als 30 Baustellen in zwei...
+description: "Berlins neue Kontrollgruppe für Baustellen auf Straßen hat bei ihren ersten Einsätzen viele Probleme gefunden."
 keywords: *id001
 ---
 

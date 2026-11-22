@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260712-143148-stre
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Politik
-description: Beim Berliner Stromausfall im Januar gibt es neue Widersprüche. Der Streit
-  betrifft das Krisenmanagement von Kai Wegner, dem Regierenden Bürgermeister von...
+description: "Beim Berliner Stromausfall im Januar gibt es neue Widersprüche."
 keywords: *id001
 ---
 

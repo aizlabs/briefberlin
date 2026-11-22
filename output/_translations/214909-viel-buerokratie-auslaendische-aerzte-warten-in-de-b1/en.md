@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Gesellschaft"
 summary: "Germany urgently needs foreign doctors, but long and costly recognition procedures keep many of them from working for years."
-description: "Germany urgently needs foreign doctors, but long and costly recognition procedures keep many of them from working for years."
+description: "Berlin news: Germany urgently needs foreign doctors, but long and costly recognition procedures keep many of them from working for years."
 source_title: "Viel Bürokratie: Ausländische Ärzte warten in Deutschland jahrelang auf Anerkennung"
 reading_time: 3
 translations:

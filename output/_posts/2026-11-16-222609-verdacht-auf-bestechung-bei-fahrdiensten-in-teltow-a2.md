@@ -7,8 +7,7 @@ story: 20261116-222450-korruptionsverdacht-bei-zulassungen-von
 category: Verkehr
 summary: Zwei Mitarbeiter im Landkreis Teltow-Fläming haben vielleicht Geld für Lizenzen
   für Mietwagen genommen.
-description: Die Staatsanwaltschaft Neuruppin ermittelt gegen zwei Kreismitarbeiter
-  in Teltow-Fläming wegen Bestechlichkeit bei Zulassungen von Uber- und Bolt-Fahrdiensten.
+description: "Berlin aktuell: Die Staatsanwaltschaft Neuruppin ermittelt gegen zwei Kreismitarbeiter in Teltow-Fläming wegen Bestechlichkeit bei Zulassungen von Uber…"
 topics:
 - Teltow-Fläming
 - Uber

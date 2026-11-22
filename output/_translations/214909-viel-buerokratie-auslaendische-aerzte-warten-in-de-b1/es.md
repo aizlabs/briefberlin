@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Gesellschaft"
 summary: "Alemania necesita urgentemente médicos extranjeros, pero los largos y costosos trámites de reconocimiento impiden que muchos de ellos trabajen durante años."
-description: "Alemania necesita urgentemente médicos extranjeros, pero los largos y costosos trámites de reconocimiento impiden que muchos de ellos trabajen durante años."
+description: "Noticias de Berlín: Alemania necesita urgentemente médicos extranjeros, pero los largos y costosos trámites de reconocimiento impiden que muchos de ellos…"
 source_title: "Viel Bürokratie: Ausländische Ärzte warten in Deutschland jahrelang auf Anerkennung"
 reading_time: 3
 translations:

@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Politik"
 summary: "Islamistyczny zamachowiec z berlińskiego CSD przez wiele miesięcy w 2025 roku otrzymywał zasiłek, choć siedział w więzieniu w Libanie. Urząd pracy o tym nie wiedział."
-description: "Islamistyczny zamachowiec z berlińskiego CSD przez wiele miesięcy w 2025 roku otrzymywał zasiłek, choć siedział w więzieniu w Libanie. Urząd pracy o tym nie wiedział."
+description: "Islamistyczny zamachowiec z berlińskiego CSD przez wiele miesięcy w 2025 roku otrzymywał zasiłek, choć siedział w więzieniu w Libanie."
 source_title: "Attentäter vom Berliner CSD bekam Bürgergeld auch im Gefängnis"
 reading_time: 3
 translations:

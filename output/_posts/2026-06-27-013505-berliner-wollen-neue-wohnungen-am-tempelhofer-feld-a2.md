@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260627-013505-berl
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Stadtleben
-description: In Berlin gibt es eine neue Meinung über das Tempelhofer Feld. Eine **Umfrage**
-  zeigt, dass viele Berliner neue Wohnungen **am Rand des Feldes** wollen....
+description: "In Berlin gibt es eine neue Meinung über das Tempelhofer Feld. Eine Umfrage zeigt, dass viele Berliner neue Wohnungen am Rand des Feldes wollen."
 keywords: *id001
 ---
 

@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Kultur"
 summary: "All the elevators in the Amerika-Gedenkbibliothek are broken, so the lounge is closed and the library wants to move to Alexanderplatz."
-description: "All the elevators in the Amerika-Gedenkbibliothek are broken, so the lounge is closed and the library wants to move to Alexanderplatz."
+description: "Berlin news: All the elevators in the Amerika-Gedenkbibliothek are broken, so the lounge is closed and the library wants to move to Alexanderplatz."
 source_title: "Alle Aufzüge kaputt: Berliner Bibliothek schließt ihren Salon"
 reading_time: 2
 translations:

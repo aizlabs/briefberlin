@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Politik"
 summary: "On Friday, thousands of young people demonstrated peacefully in Berlin and many other cities against compulsory military service and for more money for education, health and climate protection."
-description: "On Friday, thousands of young people demonstrated peacefully in Berlin and many other cities against compulsory military service and for more money for education, health and climate protection."
+description: "On Friday, thousands of young people demonstrated peacefully in Berlin and many other cities against compulsory military service and for more money for…"
 source_title: "Schulstreik in Berlin: Tausende Jugendliche protestieren gegen die Wehrpflicht"
 reading_time: 3
 translations:

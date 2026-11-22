@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Politik"
 summary: "The president of the Berliner Abgeordnetenhaus has agreed that the Hanover public prosecutor’s office may continue its investigation into Berlin SPD leader Steffen Krach over the sale of a hospital site in Lehrte."
-description: "The president of the Berliner Abgeordnetenhaus has agreed that the Hanover public prosecutor’s office may continue its investigation into Berlin SPD leader Steffen Krach over the sale of a hospital site in Lehrte."
+description: "The president of the Berliner Abgeordnetenhaus has agreed that the Hanover public prosecutor’s office may continue its investigation into Berlin SPD…"
 source_title: "Ermittlungen gegen Berliner SPD-Chef Steffen Krach können weitergehen"
 reading_time: 3
 translations:

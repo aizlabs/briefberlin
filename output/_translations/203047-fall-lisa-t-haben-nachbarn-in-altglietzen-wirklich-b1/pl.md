@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Nachrichten"
 summary: "Po śmierci 13-latki o imieniu Lisa T. okazuje się, że zarzut wobec całej wsi Altglietzen jest nieprawdziwy, choć pewne małżeństwo twierdzi, że słyszało krzyki."
-description: "Po śmierci 13-latki o imieniu Lisa T. okazuje się, że zarzut wobec całej wsi Altglietzen jest nieprawdziwy, choć pewne małżeństwo twierdzi, że słyszało krzyki."
+description: "Wiadomości z Berlina: Po śmierci 13-latki o imieniu Lisa T. okazuje się, że zarzut wobec całej wsi Altglietzen jest nieprawdziwy, choć pewne małżeństwo…"
 source_title: "Fall Lisa T.: Haben Nachbarn in Altglietzen wirklich Hilferufe ignoriert?"
 reading_time: 3
 translations:

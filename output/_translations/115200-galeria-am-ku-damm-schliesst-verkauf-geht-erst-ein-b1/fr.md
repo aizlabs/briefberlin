@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Wirtschaft"
 summary: "Galeria ferme son célèbre grand magasin sur le Ku'damm à Berlin. Les employés sont déçus et le propriétaire prévoit de construire sur le terrain une tour avec des logements et des commerces."
-description: "Galeria ferme son célèbre grand magasin sur le Ku'damm à Berlin. Les employés sont déçus et le propriétaire prévoit de construire sur le terrain une tour avec des logements et des commerces."
+description: "Galeria ferme son célèbre grand magasin sur le Ku'damm à Berlin. Les employés sont déçus et le propriétaire prévoit de construire sur le terrain une tour…"
 source_title: "Galeria am Ku'damm schließt: Verkauf geht erst einmal weiter"
 reading_time: 3
 translations:

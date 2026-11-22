@@ -9,9 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260710-212925-neue
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Stadtleben
-description: Die Stadt Berlin prüft neue Wohnungen am Tempelhofer Feld. Das ist eine
-  große freie Fläche in Berlin. Eine neue Rechnung zeigt jetzt Kosten und mögliche
-  Mieten.
+description: "Die Stadt Berlin prüft neue Wohnungen am Tempelhofer Feld. Das ist eine große freie Fläche in Berlin."
 keywords: *id001
 ---
 

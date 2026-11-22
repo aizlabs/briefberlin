@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Politik"
 summary: "После акции с флагом перед Bundestag полиция проводит расследование, а политики обсуждают усиление охраны и ужесточение правил проведения протестов."
-description: "После акции с флагом перед Bundestag полиция проводит расследование, а политики обсуждают усиление охраны и ужесточение правил проведения протестов."
+description: "Новости Берлина: После акции с флагом перед Bundestag полиция проводит расследование, а политики обсуждают усиление охраны и ужесточение правил…"
 source_title: "Flaggenaktion vor dem Bundestag führt zu Debatte über Sicherheit"
 reading_time: 3
 translations:

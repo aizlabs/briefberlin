@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Politik"
 summary: "تحتاج ألمانيا إلى تعاون أكثر ومساعدة بسيطة أكثر من أجل مساكن بأسعار مقبولة."
-description: "تحتاج ألمانيا إلى تعاون أكثر ومساعدة بسيطة أكثر من أجل مساكن بأسعار مقبولة."
+description: "أخبار برلين: تحتاج ألمانيا إلى تعاون أكثر ومساعدة بسيطة أكثر من أجل مساكن بأسعار مقبولة."
 source_title: "Mehr Hilfe für bezahlbare Wohnungen"
 reading_time: 2
 translations:

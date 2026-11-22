@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260627-011742-refo
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Politik
-description: Die Deutsche **Rentenversicherung** soll reformiert werden. Eine **Kommission**
-  hat das empfohlen. Sie sagt, die **Rentenversicherung** ist zu kompliziert...
+description: "Berlin aktuell: Die Deutsche Rentenversicherung soll reformiert werden. Eine Kommission hat das empfohlen."
 keywords: *id001
 ---
 

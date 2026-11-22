@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Politik"
 summary: "The Islamist attacker from Berlin CSD received welfare benefits for months in 2025, even though he was in prison in Lebanon, because the job centre did not know about it."
-description: "The Islamist attacker from Berlin CSD received welfare benefits for months in 2025, even though he was in prison in Lebanon, because the job centre did not know about it."
+description: "The Islamist attacker from Berlin CSD received welfare benefits for months in 2025, even though he was in prison in Lebanon, because the job centre did…"
 source_title: "Attentäter vom Berliner CSD bekam Bürgergeld auch im Gefängnis"
 reading_time: 3
 translations:

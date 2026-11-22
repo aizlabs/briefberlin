@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Politik"
 summary: "حظرت برلين جمعية مسجد El-Irschad (إل إرشاد) في Neukölln (نويكولن) وثلاث منظمات تابعة لها، لأنها يُشتبه في أنها دعمت منظمة Hisbollah (حزب الله) الإرهابية بالمال والدعاية."
-description: "حظرت برلين جمعية مسجد El-Irschad (إل إرشاد) في Neukölln (نويكولن) وثلاث منظمات تابعة لها، لأنها يُشتبه في أنها دعمت منظمة Hisbollah (حزب الله) الإرهابية بالمال والدعاية."
+description: "حظرت برلين جمعية مسجد El-Irschad (إل إرشاد) في Neukölln (نويكولن) وثلاث منظمات تابعة لها، لأنها يُشتبه في أنها دعمت منظمة Hisbollah (حزب الله) الإرهابية…"
 source_title: "Berlin verbietet Moscheeverein in Neukölln wegen Nähe zur Hisbollah"
 reading_time: 3
 translations:

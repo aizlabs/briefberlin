@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Gesundheit"
 summary: "Pielęgniarki i pielęgniarze z Charité zdecydowanie poparli możliwy strajk bezterminowy, podczas gdy spór o odciążenie i pieniądze trwa dalej."
-description: "Pielęgniarki i pielęgniarze z Charité zdecydowanie poparli możliwy strajk bezterminowy, podczas gdy spór o odciążenie i pieniądze trwa dalej."
+description: "Wiadomości z Berlina: Pielęgniarki i pielęgniarze z Charité zdecydowanie poparli możliwy strajk bezterminowy, podczas gdy spór o odciążenie i pieniądze…"
 source_title: "Pflegekräfte der Charité stimmen klar für möglichen Dauerstreik"
 reading_time: 3
 translations:

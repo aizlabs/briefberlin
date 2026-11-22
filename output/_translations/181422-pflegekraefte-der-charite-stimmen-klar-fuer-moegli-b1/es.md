@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Gesundheit"
 summary: "El personal de enfermería de Charité ha votado claramente a favor de una posible huelga indefinida, mientras continúa el conflicto por el alivio de la carga de trabajo y el dinero."
-description: "El personal de enfermería de Charité ha votado claramente a favor de una posible huelga indefinida, mientras continúa el conflicto por el alivio de la carga de trabajo y el dinero."
+description: "Noticias de Berlín: El personal de enfermería de Charité ha votado claramente a favor de una posible huelga indefinida, mientras continúa el conflicto…"
 source_title: "Pflegekräfte der Charité stimmen klar für möglichen Dauerstreik"
 reading_time: 3
 translations:

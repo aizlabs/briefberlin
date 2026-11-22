@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260708-154404-stre
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Politik
-description: Ein Streit über Nahostpolitik hat am Wochenende in Berlin-Hellersdorf
-  zu Gewalt geführt. Betroffen sind das Wohnprojekt AJZ Kita und der Veranstaltungsort...
+description: "Ein Streit über Nahostpolitik hat am Wochenende in Berlin-Hellersdorf zu Gewalt geführt."
 keywords: *id001
 ---
 

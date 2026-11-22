@@ -8,8 +8,7 @@ category: Wirtschaft
 summary: Galeria schließt sein bekanntes Kaufhaus am Berliner Ku'damm, die Mitarbeiter
   sind enttäuscht, und der Eigentümer plant auf dem Gelände ein Hochhaus mit Wohnungen
   und Geschäften.
-description: Nach der angekündigten Schließung der Galeria-Filiale am Ku’damm blieb
-  das Haus einen Tag zu. Beschäftigte sind frustriert, Verdi kritisiert den Konzern.
+description: "Berlin aktuell: Nach der angekündigten Schließung der Galeria-Filiale am Ku’damm blieb das Haus einen Tag zu."
 topics:
 - Galeria
 - Kurfürstendamm

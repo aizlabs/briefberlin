@@ -7,8 +7,7 @@ story: 20261119-121609-italienisches-restaurant-ersetzt-das-fru
 category: Stadtleben
 summary: Im ehemaligen Café Kranzler am Berliner Kurfürstendamm eröffnet das italienische
   Restaurant „Circolo Popolare“, während sich das ganze Kranzler Eck verändert.
-description: Im ehemaligen Café Kranzler am Ku'damm öffnet ein italienisches Restaurant
-  auf drei Etagen, während das Kranzler Eck mit neuen Mietern umgebaut wird.
+description: "Berlin aktuell: Im ehemaligen Café Kranzler am Ku'damm öffnet ein italienisches Restaurant auf drei Etagen, während das Kranzler Eck mit neuen Mietern…"
 topics:
 - Café Kranzler
 - Kurfürstendamm

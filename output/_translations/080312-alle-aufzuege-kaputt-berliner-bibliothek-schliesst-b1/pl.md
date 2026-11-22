@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Kultur"
 summary: "Ponieważ wszystkie windy są zepsute, Amerika-Gedenkbibliothek w berlińskiej dzielnicy Kreuzberg zamknęła swój salon, a jej dyrekcja domaga się szybkiej przeprowadzki na Alexanderplatz z powodu licznych usterek."
-description: "Ponieważ wszystkie windy są zepsute, Amerika-Gedenkbibliothek w berlińskiej dzielnicy Kreuzberg zamknęła swój salon, a jej dyrekcja domaga się szybkiej przeprowadzki na Alexanderplatz z powodu licznych usterek."
+description: "Ponieważ wszystkie windy są zepsute, Amerika-Gedenkbibliothek w berlińskiej dzielnicy Kreuzberg zamknęła swój salon, a jej dyrekcja domaga się szybkiej…"
 source_title: "Alle Aufzüge kaputt: Berliner Bibliothek schließt ihren beliebten Salon"
 reading_time: 3
 translations:

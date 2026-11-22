@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260702-153926-pank
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Politik
-description: Der Berliner Bezirk Pankow kritisiert ein neues Gesetz für Restaurants
-  und Kneipen. Das Gesetz soll in Berlin neue Ausgehviertel möglich machen. Dort dürfen...
+description: "Der Berliner Bezirk Pankow kritisiert ein neues Gesetz für Restaurants und Kneipen. Das Gesetz soll in Berlin neue Ausgehviertel möglich machen."
 keywords: *id001
 ---
 

@@ -9,9 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260710-213919-berl
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Verkehr
-description: Berlin hat seit Mittwoch eine neue sehr lange Straßenbahn im normalen
-  Fahrgastbetrieb. Der „Urbanliner“ fährt auf der Linie M4 zwischen Hackeschem Markt
-  und...
+description: "Berlin hat seit Mittwoch eine neue sehr lange Straßenbahn im normalen Fahrgastbetrieb."
 keywords: *id001
 ---
 

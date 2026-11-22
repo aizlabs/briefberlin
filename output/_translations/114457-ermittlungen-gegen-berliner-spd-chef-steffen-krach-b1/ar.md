@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Politik"
 summary: "وافقت رئيسة Abgeordnetenhaus (أبغوردنتنهاوس) في برلين على أن تواصل نيابة هانوفر تحقيقاتها ضد زعيم SPD في برلين Steffen Krach (شتيفن كراخ) بشأن بيع أرض مستشفى في Lehrte (ليرته)."
-description: "وافقت رئيسة Abgeordnetenhaus (أبغوردنتنهاوس) في برلين على أن تواصل نيابة هانوفر تحقيقاتها ضد زعيم SPD في برلين Steffen Krach (شتيفن كراخ) بشأن بيع أرض مستشفى في Lehrte (ليرته)."
+description: "وافقت رئيسة Abgeordnetenhaus (أبغوردنتنهاوس) في برلين على أن تواصل نيابة هانوفر تحقيقاتها ضد زعيم SPD في برلين Steffen Krach (شتيفن كراخ) بشأن بيع أرض…"
 source_title: "Ermittlungen gegen Berliner SPD-Chef Steffen Krach können weitergehen"
 reading_time: 3
 translations:

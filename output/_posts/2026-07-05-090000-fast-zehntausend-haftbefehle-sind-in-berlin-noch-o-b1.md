@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260705-090000-fast
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Nachrichten
-description: In Berlin sind zurzeit 9459 Haftbefehle offen, zeigt eine aktuelle Übersicht
-  der Behörden. Ein Haftbefehl bedeutet, dass die Polizei eine Person festnehmen...
+description: "In Berlin sind zurzeit 9459 Haftbefehle offen, zeigt eine aktuelle Übersicht der Behörden."
 keywords: *id001
 ---
 

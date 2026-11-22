@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Politik"
 summary: "Оскільки в Берліні мало грошей, Linke (Лінке), Grüne (Грюне) та SPD під час коаліційних переговорів мають знайти надійне фінансування для кожного нового проєкту."
-description: "Оскільки в Берліні мало грошей, Linke (Лінке), Grüne (Грюне) та SPD під час коаліційних переговорів мають знайти надійне фінансування для кожного нового проєкту."
+description: "Оскільки в Берліні мало грошей, Linke (Лінке), Grüne (Грюне) та SPD під час коаліційних переговорів мають знайти надійне фінансування для кожного нового…"
 source_title: "Wenig Geld in Berlin: Neue Koalition muss bei Plänen sparen"
 reading_time: 3
 translations:

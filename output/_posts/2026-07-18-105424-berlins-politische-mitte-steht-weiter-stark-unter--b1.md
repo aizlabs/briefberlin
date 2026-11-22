@@ -10,8 +10,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260718-105424-berl
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Politik
-description: 'Die politische Lage in Berlin verändert sich weiter. Eine neue Umfrage
-  zeigt: Die Linke liegt mit 22 Prozent erstmals klar vorn. Die CDU hat zwar ihren...'
+description: "Die politische Lage in Berlin verändert sich weiter. Eine neue Umfrage zeigt: Die Linke liegt mit 22 Prozent erstmals klar vorn."
 keywords: *id001
 ---
 

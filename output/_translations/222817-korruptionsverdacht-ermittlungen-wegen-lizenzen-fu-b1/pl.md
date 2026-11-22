@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Verkehr"
 summary: "Dwaj pracownicy administracji powiatu Teltow-Fläming mieli nielegalnie wydawać za pieniądze zezwolenia na przewozy zamawiane przez aplikacje. Sprawę bada teraz prokuratura w Neuruppin."
-description: "Dwaj pracownicy administracji powiatu Teltow-Fläming mieli nielegalnie wydawać za pieniądze zezwolenia na przewozy zamawiane przez aplikacje. Sprawę bada teraz prokuratura w Neuruppin."
+description: "Wiadomości z Berlina: Dwaj pracownicy administracji powiatu Teltow-Fläming mieli nielegalnie wydawać za pieniądze zezwolenia na przewozy zamawiane przez…"
 source_title: "Korruptionsverdacht: Ermittlungen wegen Lizenzen für Fahrdienste in Teltow-Fläming"
 reading_time: 3
 translations:

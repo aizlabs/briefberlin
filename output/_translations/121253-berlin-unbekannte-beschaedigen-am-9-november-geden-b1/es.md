@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Stadtleben"
 summary: "En torno al 9 de noviembre, desconocidos dañaron en Berlín piedras conmemorativas y un cartel en memoria de víctimas judías del nazismo. RIAS considera que son ataques antisemitas intencionados contra la memoria."
-description: "En torno al 9 de noviembre, desconocidos dañaron en Berlín piedras conmemorativas y un cartel en memoria de víctimas judías del nazismo. RIAS considera que son ataques antisemitas intencionados contra la memoria."
+description: "En torno al 9 de noviembre, desconocidos dañaron en Berlín piedras conmemorativas y un cartel en memoria de víctimas judías del nazismo."
 source_title: "Berlin: Unbekannte beschädigen am 9. November Gedenkorte für NS-Opfer"
 reading_time: 3
 translations:

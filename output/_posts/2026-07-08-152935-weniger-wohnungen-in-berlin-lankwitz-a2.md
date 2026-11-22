@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260708-152935-weni
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Politik
-description: Der Berliner Senat plant weniger neue Wohnungen in Berlin-Lankwitz. Der
-  Senat ist die Stadtregierung von Berlin. Es geht um ein großes Grundstück an der...
+description: "Der Berliner Senat plant weniger neue Wohnungen in Berlin-Lankwitz. Der Senat ist die Stadtregierung von Berlin."
 keywords: *id001
 ---
 

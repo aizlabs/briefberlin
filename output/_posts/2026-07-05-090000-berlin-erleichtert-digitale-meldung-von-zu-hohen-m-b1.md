@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260705-090000-berl
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Stadtleben
-description: Berliner Mieterinnen und Mieter können zu hohe Mieten künftig online
-  melden. Zuständig ist das Bezirksamt in ihrem Bezirk. Die Meldung läuft über das...
+description: "Berliner Mieterinnen und Mieter können zu hohe Mieten künftig online melden. Zuständig ist das Bezirksamt in ihrem Bezirk."
 keywords: *id001
 ---
 

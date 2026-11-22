@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260711-162235-kai-
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Politik
-description: Berlins Regierender Bürgermeister Kai Wegner zieht sich als CDU-Spitzenkandidat
-  für die Wahl zum Abgeordnetenhaus zurück. Wenige Wochen zuvor hatte seine...
+description: "Berlins Regierender Bürgermeister Kai Wegner zieht sich als CDU-Spitzenkandidat für die Wahl zum Abgeordnetenhaus zurück."
 keywords: *id001
 ---
 

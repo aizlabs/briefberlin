@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Wirtschaft"
 summary: "Galeria cierra sus conocidos grandes almacenes en Ku'damm, en Berlín. Los trabajadores están decepcionados y el propietario planea construir en el terreno un edificio alto con viviendas y comercios."
-description: "Galeria cierra sus conocidos grandes almacenes en Ku'damm, en Berlín. Los trabajadores están decepcionados y el propietario planea construir en el terreno un edificio alto con viviendas y comercios."
+description: "Galeria cierra sus conocidos grandes almacenes en Ku'damm, en Berlín. Los trabajadores están decepcionados y el propietario planea construir en el…"
 source_title: "Galeria am Ku'damm schließt: Verkauf geht erst einmal weiter"
 reading_time: 3
 translations:

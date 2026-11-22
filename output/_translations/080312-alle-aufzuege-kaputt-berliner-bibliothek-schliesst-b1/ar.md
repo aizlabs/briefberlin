@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Kultur"
 summary: "بسبب تعطل جميع المصاعد، أغلقت مكتبة Amerika-Gedenkbibliothek (أمريكا-غيدينكبيبل يوتيك) في حي Kreuzberg (كرويتسبيرغ) ببرلين صالونها، وتطالب الإدارة بالانتقال سريعًا إلى Alexanderplatz (ألكسندر بلاتس) بسبب كثرة العيوب."
-description: "بسبب تعطل جميع المصاعد، أغلقت مكتبة Amerika-Gedenkbibliothek (أمريكا-غيدينكبيبل يوتيك) في حي Kreuzberg (كرويتسبيرغ) ببرلين صالونها، وتطالب الإدارة بالانتقال سريعًا إلى Alexanderplatz (ألكسندر بلاتس) بسبب كثرة العيوب."
+description: "بسبب تعطل جميع المصاعد، أغلقت مكتبة Amerika-Gedenkbibliothek (أمريكا-غيدينكبيبل يوتيك) في حي Kreuzberg (كرويتسبيرغ) ببرلين صالونها، وتطالب الإدارة…"
 source_title: "Alle Aufzüge kaputt: Berliner Bibliothek schließt ihren beliebten Salon"
 reading_time: 3
 translations:

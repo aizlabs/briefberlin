@@ -9,9 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260707-090000-boot
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Nachrichten
-description: In mehreren Außenbezirken von Berlin gibt es Ärger. Seit Wochen stehen
-  dort viele Bootsanhänger am Straßenrand. Mit solchen Anhängern bringen Menschen
-  Boote...
+description: "In mehreren Außenbezirken von Berlin gibt es Ärger. Seit Wochen stehen dort viele Bootsanhänger am Straßenrand."
 keywords: *id001
 ---
 

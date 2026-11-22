@@ -10,9 +10,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260722-090000-estr
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Nachrichten
-description: Der Estrel Tower in Berlin-Neukölln soll Berlins erstes Hochhaus mit
-  klar internationalem Anspruch werden. Doch ausgerechnet bei den geplanten Büros
-  kommt...
+description: "Der Estrel Tower in Berlin-Neukölln soll Berlins erstes Hochhaus mit klar internationalem Anspruch werden."
 keywords: *id001
 ---
 

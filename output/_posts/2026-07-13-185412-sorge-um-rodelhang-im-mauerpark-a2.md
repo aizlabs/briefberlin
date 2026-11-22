@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260713-185412-sorg
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Stadtleben
-description: Im Berliner Mauerpark gibt es Sorge um einen Hügel. Der Hügel heißt Sonnenhügel
-  und liegt neben dem Jahn-Sportpark. Dort arbeiten Firmen seit kurzer Zeit am...
+description: "Im Berliner Mauerpark gibt es Sorge um einen Hügel. Der Hügel heißt Sonnenhügel und liegt neben dem Jahn-Sportpark."
 keywords: *id001
 ---
 

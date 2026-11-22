@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Nachrichten"
 summary: "كتبت وسائل الإعلام: سمعت قرية Altglietzen (ألتغليتسن) نداءات استغاثة Lisa (ليزا)، لكن لم يسمع أحد تقريبًا في القرية صراخًا."
-description: "كتبت وسائل الإعلام: سمعت قرية Altglietzen (ألتغليتسن) نداءات استغاثة Lisa (ليزا)، لكن لم يسمع أحد تقريبًا في القرية صراخًا."
+description: "أخبار برلين: كتبت وسائل الإعلام: سمعت قرية Altglietzen (ألتغليتسن) نداءات استغاثة Lisa (ليزا)، لكن لم يسمع أحد تقريبًا في القرية صراخًا."
 source_title: "Lisas Tod: Hat das Dorf wirklich Hilferufe gehört?"
 reading_time: 2
 translations:

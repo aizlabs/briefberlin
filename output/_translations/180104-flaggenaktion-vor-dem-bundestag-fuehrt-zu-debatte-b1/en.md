@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Politik"
 summary: "After a flag protest outside the Bundestag, police are investigating while politicians discuss better security and stricter protest rules."
-description: "After a flag protest outside the Bundestag, police are investigating while politicians discuss better security and stricter protest rules."
+description: "Berlin news: After a flag protest outside the Bundestag, police are investigating while politicians discuss better security and stricter protest rules."
 source_title: "Flaggenaktion vor dem Bundestag führt zu Debatte über Sicherheit"
 reading_time: 3
 translations:

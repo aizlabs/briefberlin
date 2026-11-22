@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Politik"
 summary: "La crisis de la vivienda aumenta la presión sobre la política y la sociedad, porque la falta de vivienda disponible influye en decisiones privadas, el trabajo y el ascenso social."
-description: "La crisis de la vivienda aumenta la presión sobre la política y la sociedad, porque la falta de vivienda disponible influye en decisiones privadas, el trabajo y el ascenso social."
+description: "Noticias de Berlín: La crisis de la vivienda aumenta la presión sobre la política y la sociedad, porque la falta de vivienda disponible influye en…"
 source_title: "Warum neue Bündnisse den angespannten Wohnungsmarkt entlasten sollen"
 reading_time: 3
 translations:

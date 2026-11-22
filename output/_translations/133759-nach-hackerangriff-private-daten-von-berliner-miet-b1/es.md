@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Politik"
 summary: "Tras un ciberataque a la administración de Berlín, han aparecido en la red oscura datos muy privados de 16.858 personas que habían solicitado una ayuda para el alquiler, y los afectados podrían reclamar ahora una indemnización."
-description: "Tras un ciberataque a la administración de Berlín, han aparecido en la red oscura datos muy privados de 16.858 personas que habían solicitado una ayuda para el alquiler, y los afectados podrían reclamar ahora una indemnización."
+description: "Tras un ciberataque a la administración de Berlín, han aparecido en la red oscura datos muy privados de 16.858 personas que habían solicitado una ayuda…"
 source_title: "Nach Hackerangriff: Private Daten von Berliner Mietern im Darknet"
 reading_time: 3
 translations:

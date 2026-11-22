@@ -10,8 +10,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260722-090000-norw
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Nachrichten
-description: Norwegen erinnert sich 15 Jahre nach dem 22. Juli 2011 an zwei Angriffe.
-  Ein Mann mit sehr rechten Ideen hat in Oslo und auf Utøya 77 Menschen getötet....
+description: "Berlin aktuell: Norwegen erinnert sich 15 Jahre nach dem 22. Juli 2011 an zwei Angriffe. Ein Mann mit sehr rechten Ideen hat in Oslo und auf Utøya 77…"
 keywords: *id001
 ---
 

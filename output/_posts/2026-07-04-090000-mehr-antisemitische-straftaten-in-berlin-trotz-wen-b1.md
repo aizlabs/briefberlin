@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260704-090000-mehr
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Nachrichten
-description: Berlin meldet für 2025 mehr Ermittlungsverfahren wegen antisemitischer
-  Straftaten. Ermittlungsverfahren sind Fälle, die Polizei und Staatsanwaltschaft...
+description: "Berlin meldet für 2025 mehr Ermittlungsverfahren wegen antisemitischer Straftaten."
 keywords: *id001
 ---
 

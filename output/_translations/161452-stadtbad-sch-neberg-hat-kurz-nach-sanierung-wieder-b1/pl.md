@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Stadtleben"
 summary: "Krótko po remoncie w Stadtbad Schöneberg znów są problemy techniczne, zamknięte części obiektu i krytyka ze strony gości."
-description: "Krótko po remoncie w Stadtbad Schöneberg znów są problemy techniczne, zamknięte części obiektu i krytyka ze strony gości."
+description: "Wiadomości z Berlina: Krótko po remoncie w Stadtbad Schöneberg znów są problemy techniczne, zamknięte części obiektu i krytyka ze strony gości."
 source_title: "Stadtbad Schöneberg hat kurz nach Sanierung wieder Technikprobleme"
 reading_time: 3
 translations:

@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Politik"
 summary: "Po akcji z flagą przed Bundestagiem politycy rozmawiają o większym bezpieczeństwie."
-description: "Po akcji z flagą przed Bundestagiem politycy rozmawiają o większym bezpieczeństwie."
+description: "Wiadomości z Berlina: Po akcji z flagą przed Bundestagiem politycy rozmawiają o większym bezpieczeństwie."
 source_title: "Flaggenaktion vor dem Bundestag: Diskussion über Sicherheit"
 reading_time: 2
 translations:

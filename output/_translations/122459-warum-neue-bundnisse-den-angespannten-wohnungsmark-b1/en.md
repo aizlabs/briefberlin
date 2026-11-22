@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Politik"
 summary: "The housing crisis is increasing pressure on politics and society because a lack of housing affects private decisions, work, and social advancement."
-description: "The housing crisis is increasing pressure on politics and society because a lack of housing affects private decisions, work, and social advancement."
+description: "Berlin news: The housing crisis is increasing pressure on politics and society because a lack of housing affects private decisions, work, and social…"
 source_title: "Warum neue Bündnisse den angespannten Wohnungsmarkt entlasten sollen"
 reading_time: 3
 translations:

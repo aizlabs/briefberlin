@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260708-150032-elte
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Nachrichten
-description: An der Rosa-Parks-Grundschule in Berlin-Kreuzberg gibt es Streit um neue
-  Räume für die Tannenhof-Schule. Diese Schule unterstützt Jugendliche und...
+description: "An der Rosa-Parks-Grundschule in Berlin-Kreuzberg gibt es Streit um neue Räume für die Tannenhof-Schule."
 keywords: *id001
 ---
 

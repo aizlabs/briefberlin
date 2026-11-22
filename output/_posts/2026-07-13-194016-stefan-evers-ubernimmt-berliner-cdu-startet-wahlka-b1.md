@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260713-194016-stef
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Politik
-description: Zehn Wochen vor der Wahl zum Berliner Abgeordnetenhaus, dem Landesparlament,
-  wechselt die CDU ihren Spitzenkandidaten. Finanzsenator Stefan Evers übernimmt...
+description: "Zehn Wochen vor der Wahl zum Berliner Abgeordnetenhaus, dem Landesparlament, wechselt die CDU ihren Spitzenkandidaten."
 keywords: *id001
 ---
 

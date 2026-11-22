@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260711-161451-bran
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Politik
-description: Nach der Wahl von drei Politikern aus Brandenburg verändert sich die
-  AfD auf Bundesebene sichtbar. Dennis Hohloch, Jean-Pascal Hohm und Hannes Gnauck...
+description: "Berlin aktuell: Nach der Wahl von drei Politikern aus Brandenburg verändert sich die AfD auf Bundesebene sichtbar."
 keywords: *id001
 ---
 

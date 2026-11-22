@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Politik"
 summary: "Голова берлінського Abgeordnetenhaus (Абгеорднетенгаус) погодилася, щоб прокуратура Ганновера продовжила розслідування щодо голови берлінської SPD Steffen Krach (Штеффен Крах) через продаж території клініки в Лерте."
-description: "Голова берлінського Abgeordnetenhaus (Абгеорднетенгаус) погодилася, щоб прокуратура Ганновера продовжила розслідування щодо голови берлінської SPD Steffen Krach (Штеффен Крах) через продаж території клініки в Лерте."
+description: "Голова берлінського Abgeordnetenhaus (Абгеорднетенгаус) погодилася, щоб прокуратура Ганновера продовжила розслідування щодо голови берлінської SPD…"
 source_title: "Ermittlungen gegen Berliner SPD-Chef Steffen Krach können weitergehen"
 reading_time: 3
 translations:

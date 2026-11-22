@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Kriminalität"
 summary: "The missing girl Lisa T. was found dead in Brandenburg; an injured man is a prime suspect."
-description: "The missing girl Lisa T. was found dead in Brandenburg; an injured man is a prime suspect."
+description: "Berlin news: The missing girl Lisa T. was found dead in Brandenburg; an injured man is a prime suspect."
 source_title: "Vermisste Jugendliche aus Berlin tot in Brandenburg gefunden"
 reading_time: 3
 translations:

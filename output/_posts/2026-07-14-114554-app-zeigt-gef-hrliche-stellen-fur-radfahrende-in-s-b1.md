@@ -10,8 +10,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260714-114554-app-
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Nachrichten
-description: Radfahren gehört in Berlin und Potsdam für viele Menschen zum Alltag.
-  Doch an vielen Stellen bleibt es gefährlich, besonders bei engen Straßen, parkenden...
+description: "Radfahren gehört in Berlin und Potsdam für viele Menschen zum Alltag."
 keywords: *id001
 ---
 

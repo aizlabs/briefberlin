@@ -10,9 +10,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260715-162259-arbe
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Nachrichten
-description: In Berlin gibt es erneut eine Diskussion über Arbeit für Menschen, die
-  staatliche Leistungen bekommen. Ein Vorschlag sieht vor, diese Menschen stärker
-  für...
+description: "In Berlin gibt es erneut eine Diskussion über Arbeit für Menschen, die staatliche Leistungen bekommen."
 keywords: *id001
 ---
 

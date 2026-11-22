@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260702-154202-pank
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Nachrichten
-description: In Berlin sorgt das neue Gaststättengesetz für Streit. Das Bezirksamt
-  Pankow hat sich deutlich kritisch geäußert. Pankow ist der einwohnerstärkste Bezirk...
+description: "In Berlin sorgt das neue Gaststättengesetz für Streit. Das Bezirksamt Pankow hat sich deutlich kritisch geäußert."
 keywords: *id001
 ---
 

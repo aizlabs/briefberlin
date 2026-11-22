@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Stadtleben"
 summary: "Berlin'de kimliği belirsiz kişiler, 9 Kasım civarında Yahudi Nazi kurbanlarını anan tökezleme taşlarına ve bir anma afişine zarar verdi. RIAS bunları hafızayı hedef alan antisemitik saldırılar olarak görüyor."
-description: "Berlin'de kimliği belirsiz kişiler, 9 Kasım civarında Yahudi Nazi kurbanlarını anan tökezleme taşlarına ve bir anma afişine zarar verdi. RIAS bunları hafızayı hedef alan antisemitik saldırılar olarak görüyor."
+description: "Berlin'de kimliği belirsiz kişiler, 9 Kasım civarında Yahudi Nazi kurbanlarını anan tökezleme taşlarına ve bir anma afişine zarar verdi."
 source_title: "Berlin: Unbekannte beschädigen am 9. November Gedenkorte für NS-Opfer"
 reading_time: 3
 translations:

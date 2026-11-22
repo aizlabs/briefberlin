@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260701-134728-berl
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Verkehr
-description: In Berlin gibt es ein **Bündnis** aus Blindenvereinen, Umweltgruppen
-  und Seniorenvertretungen. Sie sind gegen das Chaos durch **falsch geparkte E-Scooter**....
+description: "In Berlin gibt es ein Bündnis aus Blindenvereinen, Umweltgruppen und Seniorenvertretungen. Sie sind gegen das Chaos durch falsch geparkte E-Scooter."
 keywords: *id001
 ---
 

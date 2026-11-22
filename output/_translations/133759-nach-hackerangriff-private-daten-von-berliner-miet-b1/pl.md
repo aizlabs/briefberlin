@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Politik"
 summary: "Po ataku hakerów na berlińską administrację w darknecie pojawiły się bardzo prywatne dane 16 858 osób, które złożyły wniosek o dopłatę do czynszu. Osoby te mogą teraz mieć prawo do odszkodowania."
-description: "Po ataku hakerów na berlińską administrację w darknecie pojawiły się bardzo prywatne dane 16 858 osób, które złożyły wniosek o dopłatę do czynszu. Osoby te mogą teraz mieć prawo do odszkodowania."
+description: "Po ataku hakerów na berlińską administrację w darknecie pojawiły się bardzo prywatne dane 16 858 osób, które złożyły wniosek o dopłatę do czynszu."
 source_title: "Nach Hackerangriff: Private Daten von Berliner Mietern im Darknet"
 reading_time: 3
 translations:

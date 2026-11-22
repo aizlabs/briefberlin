@@ -8,8 +8,7 @@ category: Verkehr
 summary: Zwei Mitarbeiter der Kreisverwaltung Teltow-Fläming sollen gegen Geld illegal
   Genehmigungen für App-Fahrdienste vergeben haben, deshalb ermittelt jetzt die Staatsanwaltschaft
   Neuruppin.
-description: Die Staatsanwaltschaft Neuruppin ermittelt gegen zwei Kreismitarbeiter
-  in Teltow-Fläming wegen Bestechlichkeit bei Zulassungen von Uber- und Bolt-Fahrdiensten.
+description: "Berlin aktuell: Die Staatsanwaltschaft Neuruppin ermittelt gegen zwei Kreismitarbeiter in Teltow-Fläming wegen Bestechlichkeit bei Zulassungen von Uber…"
 topics:
 - Teltow-Fläming
 - Uber

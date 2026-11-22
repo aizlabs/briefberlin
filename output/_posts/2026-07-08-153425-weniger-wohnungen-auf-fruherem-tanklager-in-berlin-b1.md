@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260708-153425-weni
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 3
 category: Stadtleben
-description: Auf dem früheren Tanklager in Berlin-Lankwitz sollen weniger Wohnungen
-  entstehen als gehofft. Das Gelände an der Kaiser-Wilhelm-Straße ist 122.000...
+description: "Auf dem früheren Tanklager in Berlin-Lankwitz sollen weniger Wohnungen entstehen als gehofft."
 keywords: *id001
 ---
 

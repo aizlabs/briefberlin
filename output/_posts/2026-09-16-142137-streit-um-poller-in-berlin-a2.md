@@ -5,7 +5,7 @@ author: "clara-becker"
 level: A2
 category: "Verkehr"
 summary: "In Berlin streiten Bezirke und Senat über neue Regeln für Poller auf kleinen Straßen."
-description: "Berliner Bezirke kritisieren geplante Vorgaben gegen Poller: Sie sehen rechtliche Probleme und mehr Bürokratie bei der Verkehrsberuhigung im lokalen Straßennetz."
+description: "Berliner Bezirke kritisieren geplante Vorgaben gegen Poller: Sie sehen rechtliche Probleme und mehr Bürokratie bei der Verkehrsberuhigung im lokalen…"
 topics: ["Berlin", "Bezirke", "Poller", "Verkehrsberuhigung", "StVO", "Senatsverwaltung", "Senats\u00adent\u00adwurf"]
 keywords: ["Berlin", "Bezirke", "Poller", "Verkehrsberuhigung", "StVO", "Senatsverwaltung", "Senats\u00adent\u00adwurf"]
 sources: []

@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Politik"
 summary: "Niemcy potrzebują więcej współpracy i więcej prostej pomocy dla tanich mieszkań."
-description: "Niemcy potrzebują więcej współpracy i więcej prostej pomocy dla tanich mieszkań."
+description: "Wiadomości z Berlina: Niemcy potrzebują więcej współpracy i więcej prostej pomocy dla tanich mieszkań."
 source_title: "Mehr Hilfe für bezahlbare Wohnungen"
 reading_time: 2
 translations:

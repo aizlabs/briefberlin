@@ -9,8 +9,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/07/20260713-193755-ever
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Politik
-description: In zehn Wochen wählen die Menschen das Berliner Parlament. Die CDU in
-  Berlin ändert kurz davor ihre Pläne. Kai Wegner will nicht mehr der wichtigste...
+description: "In zehn Wochen wählen die Menschen das Berliner Parlament. Die CDU in Berlin ändert kurz davor ihre Pläne."
 keywords: *id001
 ---
 

@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Politik"
 summary: "After a cyberattack on Berlin’s administration, highly private data belonging to 16,858 people who had applied for a rent subsidy appeared on the dark web. Those affected may now be able to claim compensation."
-description: "After a cyberattack on Berlin’s administration, highly private data belonging to 16,858 people who had applied for a rent subsidy appeared on the dark web. Those affected may now be able to claim compensation."
+description: "After a cyberattack on Berlin’s administration, highly private data belonging to 16,858 people who had applied for a rent subsidy appeared on the dark…"
 source_title: "Nach Hackerangriff: Private Daten von Berliner Mietern im Darknet"
 reading_time: 3
 translations:

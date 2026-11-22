@@ -8,8 +8,7 @@ audio: {url: 'https://media.briefberlin.de/articles/2026/06/20260629-175454-pop-
   format: mp3, mime_type: audio/mpeg, provider: openai, voice: alloy}
 reading_time: 2
 category: Kultur
-description: In Berlin-Steglitz gibt es ein neues Projekt. Der alte **Jugendclub**
-  Pop Inn wird **wiederbelebt**. Früher war er ein wichtiger **Treffpunkt** für...
+description: "In Berlin-Steglitz gibt es ein neues Projekt. Der alte Jugendclub Pop Inn wird wiederbelebt."
 keywords: *id001
 ---
 

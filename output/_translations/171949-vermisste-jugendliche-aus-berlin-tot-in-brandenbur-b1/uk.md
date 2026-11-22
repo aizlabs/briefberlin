@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Kriminalität"
 summary: "Зниклу Лізу Т. знайшли мертвою в Бранденбурзі; тяжко пораненого чоловіка серйозно підозрюють у злочині."
-description: "Зниклу Лізу Т. знайшли мертвою в Бранденбурзі; тяжко пораненого чоловіка серйозно підозрюють у злочині."
+description: "Новини Берліна: Зниклу Лізу Т. знайшли мертвою в Бранденбурзі; тяжко пораненого чоловіка серйозно підозрюють у злочині."
 source_title: "Vermisste Jugendliche aus Berlin tot in Brandenburg gefunden"
 reading_time: 3
 translations:

@@ -7,7 +7,7 @@ author: "clara-becker"
 level: B1
 category: "Politik"
 summary: "Берлін заборонив об’єднання мечеті El-Irschad (Ель-Іршад) у Neukölln (Нойкельн) і три пов’язані з ним організації, оскільки вони, ймовірно, підтримували терористичну організацію Hisbollah (Гісболла) грошима та пропагандою."
-description: "Берлін заборонив об’єднання мечеті El-Irschad (Ель-Іршад) у Neukölln (Нойкельн) і три пов’язані з ним організації, оскільки вони, ймовірно, підтримували терористичну організацію Hisbollah (Гісболла) грошима та пропагандою."
+description: "Берлін заборонив об’єднання мечеті El-Irschad (Ель-Іршад) у Neukölln (Нойкельн) і три пов’язані з ним організації, оскільки вони, ймовірно, підтримували…"
 source_title: "Berlin verbietet Moscheeverein in Neukölln wegen Nähe zur Hisbollah"
 reading_time: 3
 translations:

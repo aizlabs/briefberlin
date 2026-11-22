@@ -7,7 +7,7 @@ author: "clara-becker"
 level: A2
 category: "Verkehr"
 summary: "Teltow-Fläming ilçesindeki iki çalışan, şoförlü kiralık araç ruhsatları için para almış olabilir."
-description: "Teltow-Fläming ilçesindeki iki çalışan, şoförlü kiralık araç ruhsatları için para almış olabilir."
+description: "Berlin haberleri: Teltow-Fläming ilçesindeki iki çalışan, şoförlü kiralık araç ruhsatları için para almış olabilir."
 source_title: "Verdacht auf Bestechung bei Fahrdiensten in Teltow-Fläming"
 reading_time: 2
 translations:
