@@ -94,6 +94,8 @@ translations:
     - { code: uk, name: Ukrainian, glossary_heading: "Словник" }
     - { code: pl, name: Polish,    glossary_heading: "Słowniczek" }
     - { code: es, name: Spanish,   glossary_heading: "Vocabulario" }
+    - { code: fr, name: French,    glossary_heading: "Vocabulaire" }
+    - { code: it, name: Italian,   glossary_heading: "Vocabolario" }
 
 language:
   target_language: German

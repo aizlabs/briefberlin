@@ -479,7 +479,7 @@ def test_telegram_env_respects_explicit_alerts_disabled(monkeypatch):
 class TestTranslationsConfig:
     """Reader-language translation settings (config `translations:`)."""
 
-    def test_base_yaml_defines_the_seven_launch_languages(self):
+    def test_base_yaml_defines_the_translation_languages(self):
         import yaml
 
         with open("config/base.yaml", encoding="utf-8") as handle:
@@ -487,7 +487,7 @@ class TestTranslationsConfig:
 
         config = TranslationsConfig(**raw["translations"])
         assert config.enabled is True
-        assert [lang.code for lang in config.languages] == ["en", "tr", "ru", "ar", "uk", "pl", "es"]
+        assert [lang.code for lang in config.languages] == ["en", "tr", "ru", "ar", "uk", "pl", "es", "fr", "it"]
         # Headings are per-language, never language.glossary_heading.
         assert {lang.glossary_heading for lang in config.languages} != {"Vokabeln"}
 

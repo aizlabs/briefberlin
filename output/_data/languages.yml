@@ -35,6 +35,22 @@
   og_locale: es_ES
   homepage_pitch: "Noticias de Berlín en alemán fácil, cada artículo también en español."
 
+- code: fr
+  html_lang: "fr"
+  endonym: "Français"
+  english: "French"
+  dir: ltr
+  og_locale: fr_FR
+  homepage_pitch: "L'actualité de Berlin en allemand facile – chaque article aussi en français."
+
+- code: it
+  html_lang: "it"
+  endonym: "Italiano"
+  english: "Italian"
+  dir: ltr
+  og_locale: it_IT
+  homepage_pitch: "Notizie da Berlino in tedesco facile – ogni articolo anche in italiano."
+
 - code: pl
   html_lang: "pl"
   endonym: "Polski"
