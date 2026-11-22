@@ -42,7 +42,7 @@ after(async () => { if (browser) await browser.close(); if (server) await new Pr
 async function setup(url = '/articles/test/') { const context = await browser.newContext(); const page = await context.newPage(); page.setDefaultTimeout(5000); page.on('pageerror', error => console.error('PAGE ERROR', error)); await page.goto(origin + url); return { context, page }; }
 async function open(page, id) { await page.locator(`[data-term-id="${id}"]`).click(); }
 async function saved(page) { return page.evaluate(() => BriefBerlin.words.read().entries); }
-test('save, reload, unmark and undo without deleting the saved word', async () => {
+test('save, reload and unmark without deleting the saved word', async () => {
   const { context, page } = await setup();
   try {
     assert.equal((await saved(page)).length, 0);
@@ -54,8 +54,10 @@ test('save, reload, unmark and undo without deleting the saved word', async () =
     await open(page, 'three'); await page.getByRole('button', { name: 'Aus Glossar entfernen: beantragen', exact: true }).click();
     assert.equal((await saved(page)).length, 1); assert.equal(await page.locator('li[data-my-words-added]').count(), 0);
     assert.equal(await page.locator('.article-term--default').count(), 1);
-    await page.locator('.article-glossary-popup').getByRole('button', { name: 'Rückgängig' }).click();
-    assert.equal((await saved(page)).length, 1);
+    assert.equal(await page.locator('.article-glossary-popup').isHidden(), true);
+    assert.equal(await page.locator('[data-term-id="three"]').evaluate(el => document.activeElement === el), true);
+    assert.equal(await page.getByRole('button', { name: 'Rückgängig' }).count(), 0);
+    assert.equal(await page.locator('.page__content .my-words-status').innerText(), 'Aus Glossar entfernt.');
   } finally { await context.close(); }
 });
 test('popup still explains words when the store script is missing', async () => {
@@ -115,26 +117,22 @@ test('saved state is quiet and unmarking keeps collection data and stays unmarke
     assert.equal(await page.locator('.article-glossary-popup__add').isVisible(), false);
     assert.equal(await page.locator('.my-words-saved').innerText(), '✓ In meinen Wörtern');
     await page.getByRole('button', { name: 'Aus Glossar entfernen: beantragen', exact: true }).click();
-    await page.keyboard.press('Escape'); await open(page, 'three');
+    await open(page, 'three');
     assert.equal(await page.locator('.article-glossary-popup__add').isVisible(), false);
     assert.equal(await page.locator('.article-glossary-popup__remove').isVisible(), false);
     assert.equal(await page.locator('li[data-my-words-added]').count(), 0);
     assert.equal((await saved(page)).length, 1);
   } finally { await context.close(); }
 });
-test('preselected words can be unmarked, undone exactly, and excluded from bulk save', async () => {
+test('preselected words can be unmarked and excluded from bulk save', async () => {
   const { context, page } = await setup();
   try {
-    const original = await page.locator('li').innerHTML();
     await open(page, 'one');
     await page.getByRole('button', { name: 'Aus Glossar entfernen: die Genehmigung', exact: true }).click();
     assert.equal(await page.locator('li').count(), 0);
     assert.equal(await page.locator('.article-term--default').count(), 0);
     assert.equal(await page.getByRole('button', { name: 'Alle Wörter speichern', exact: true }).isEnabled(), false);
-    await page.locator('.article-glossary-popup').getByRole('button', { name: 'Rückgängig' }).click();
-    assert.equal(await page.locator('li').innerHTML(), original);
     assert.equal((await saved(page)).length, 0);
-    await page.getByRole('button', { name: 'Aus Glossar entfernen: die Genehmigung', exact: true }).click();
     await open(page, 'two'); await page.locator('.article-glossary-popup__add').click();
     assert.deepEqual((await saved(page)).map(e => e.term), ['beantragen']);
     assert.equal(await page.locator('li').count(), 1);
@@ -157,18 +155,7 @@ test('dynamic empty glossary is removed; write failures never change presentatio
   } finally { await context.close(); }
 });
 
-test('inline undo returns focus to the article after popup dismissal', async () => {
-  const { context, page } = await setup();
-  try {
-    await open(page, 'two'); await page.getByRole('button', { name: 'Zu meinen Wörtern hinzufügen: beantragen', exact: true }).click();
-    await page.getByRole('button', { name: 'Aus Glossar entfernen: beantragen', exact: true }).click();
-    await page.keyboard.press('Escape');
-    await page.locator('.page__content .my-words-status').getByRole('button', { name: 'Rückgängig' }).click();
-    assert.equal((await saved(page)).length, 1);
-    assert.equal(await page.locator('[data-term-id="two"]').evaluate(el => document.activeElement === el), true);
-  } finally { await context.close(); }
-});
-test('cross-tab collection updates respect local unmarking and undo', async () => {
+test('cross-tab collection updates respect local unmarking', async () => {
   const { context, page } = await setup(); const other = await context.newPage();
   try {
     await other.goto(origin + '/articles/test/'); await open(other, 'two');
@@ -179,8 +166,7 @@ test('cross-tab collection updates respect local unmarking and undo', async () =
     await other.locator('li[data-my-words-term-id="four"]').waitFor();
     assert.equal(await other.locator('li[data-my-words-term-id="two"]').count(), 0);
     assert.equal((await saved(other)).length, 2);
-    await other.locator('.article-glossary-popup').getByRole('button', { name: 'Rückgängig' }).click();
-    assert.equal(await other.locator('li[data-my-words-term-id="two"]').count(), 1);
+    await open(other, 'two');
     // Collection deletion is available on Meine Wörter, not in the article popup.
     await page.evaluate(() => BriefBerlin.words.remove(BriefBerlin.words.wordKey('de', 'beantragen')));
     await other.locator('.article-glossary-popup__add').waitFor({ state: 'visible' });
@@ -249,10 +235,7 @@ test('unmarking remains available with blocked storage and reload resets article
     await page.reload(); await open(page, 'one');
     await page.locator('.article-glossary-popup__remove').click();
     assert.equal(await page.locator('li').count(), 0);
-    assert.doesNotMatch(await page.locator('.article-glossary-popup').innerText(), /nicht geladen/);
-    await page.locator('.article-glossary-popup').getByRole('button', { name: 'Rückgängig' }).click();
-    assert.equal(await page.locator('li').count(), 1);
-    await page.locator('.article-glossary-popup__remove').click();
+    assert.equal(await page.locator('.article-glossary-popup').isHidden(), true);
     await page.reload();
     assert.equal(await page.locator('li').count(), 1);
     assert.equal(await page.locator('.article-term--default').count(), 1);
