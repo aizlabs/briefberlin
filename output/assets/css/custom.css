@@ -2061,7 +2061,7 @@ a.level-switch__other::before {
 }
 
 @media (pointer: coarse) {
-  a.level-switch__other {
+  .level-switch .level-badge {
     padding-block: 0.45em;
   }
 }
