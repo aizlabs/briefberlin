@@ -1,6 +1,6 @@
 ---
 title: 'Galeria am Ku''damm schließt: Verkauf geht erst einmal weiter'
-date: 2026-11-22 11:52:00
+date: 2026-11-22 11:52:00+01:00
 author: clara-becker
 level: B1
 story: 20261122-114844-galeria-filiale-am-ku-damm-vor-dem-aus-b

@@ -3,6 +3,7 @@ from argparse import Namespace
 from datetime import datetime
 from pathlib import Path
 from unittest.mock import ANY, MagicMock, patch
+from zoneinfo import ZoneInfo
 
 from scripts.manual_pipeline import load_private_sources, run_manual_pipeline
 from scripts.models import QualityResult
@@ -222,6 +223,7 @@ def test_run_manual_pipeline_reuses_publish_timestamp_for_audio(
     result = run_manual_pipeline(args)
 
     assert result == 0
+    mock_datetime.now.assert_called_with(ZoneInfo("Europe/Berlin"))
     mock_audio.prepare_for_publish.assert_called_once_with(
         with_story(sample_a2_text_article),
         timestamp=publish_timestamp,

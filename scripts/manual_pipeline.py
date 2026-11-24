@@ -18,7 +18,7 @@ from scripts.generation_trace import GenerationTrace
 from scripts.glossary_generator import GlossaryGenerator
 from scripts.logger import setup_logger
 from scripts.models import AdaptedArticle, QualityResult, SourceArticle, Topic
-from scripts.publisher import Publisher
+from scripts.publisher import PUBLICATION_ZONE, Publisher
 from scripts.quality_gate import QualityGate
 from scripts.text_utils import slugify_text
 from scripts.topic_metadata_extractor import TopicMetadataExtractor, TopicMetadataResponse
@@ -223,7 +223,9 @@ def _execute_manual_pipeline(
 
     published: list[tuple[str, str, float]] = []
     failed = 0
-    story_id = make_story_id(topic.title, publish_timestamp_override or datetime.now())
+    story_id = make_story_id(
+        topic.title, publish_timestamp_override or datetime.now(PUBLICATION_ZONE)
+    )
 
     for level in levels:
         logger.info("-" * 60)
@@ -258,7 +260,7 @@ def _execute_manual_pipeline(
         if requested_author:
             final_article = final_article.model_copy(update={"author": requested_author})
         final_article = final_article.model_copy(update={"story": story_id})
-        publish_timestamp = publish_timestamp_override or datetime.now()
+        publish_timestamp = publish_timestamp_override or datetime.now(PUBLICATION_ZONE)
 
         if config.audio.enabled and not dry_run:
             final_article = audio_pipeline.prepare_for_publish(

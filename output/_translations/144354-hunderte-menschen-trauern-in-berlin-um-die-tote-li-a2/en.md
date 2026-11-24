@@ -2,7 +2,7 @@
 lang: en
 ref: 144354-hunderte-menschen-trauern-in-berlin-um-die-tote-li-a2
 title: "Hundreds of people mourn Lisa in Berlin"
-date: 2026-11-23 14:43:54
+date: 2026-11-23 14:43:54+01:00
 author: "clara-becker"
 level: A2
 category: "Stadtleben"

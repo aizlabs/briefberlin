@@ -2,7 +2,7 @@
 lang: es
 ref: 144617-hunderte-menschen-trauern-in-berlin-marzahn-um-die-b1
 title: "Cientos de personas lloran en Berlín-Marzahn la muerte de Lisa"
-date: 2026-11-23 14:46:17
+date: 2026-11-23 14:46:17+01:00
 author: "clara-becker"
 level: B1
 category: "Stadtleben"

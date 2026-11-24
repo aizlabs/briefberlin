@@ -7,11 +7,12 @@ Saves approved articles as Jekyll markdown files with YAML frontmatter.
 import json
 import logging
 import re
-from datetime import datetime
+from datetime import datetime, timezone
 from html import escape as html_escape
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 from urllib.parse import urlparse
+from zoneinfo import ZoneInfo
 
 from scripts.config import AppConfig
 from scripts.models import (
@@ -24,6 +25,16 @@ from scripts.seo_description import finalize_seo_description
 from scripts.text_utils import normalize_vocabulary_term, slugify_text
 from scripts.topic_utils import sanitize_topic_keywords
 from scripts.translation_hints import hint_id, publishable_translation_hints
+
+PUBLICATION_ZONE = ZoneInfo("Europe/Berlin")
+
+
+def format_publication_date(timestamp: datetime) -> str:
+    # Jekyll reads historical offset-free YAML dates as UTC. Preserve that instant
+    # for explicit naive overrides and translations backfilled from older posts.
+    if timestamp.tzinfo is None:
+        timestamp = timestamp.replace(tzinfo=timezone.utc)
+    return timestamp.isoformat(sep=" ", timespec="seconds")
 
 
 class Publisher:
@@ -63,7 +74,7 @@ class Publisher:
         """
         try:
             # Generate timestamp once for consistency between filename and frontmatter.
-            timestamp = timestamp or datetime.now()
+            timestamp = timestamp or datetime.now(PUBLICATION_ZONE)
 
             # Generate filename
             filename = self._generate_filename(article, timestamp)
@@ -286,8 +297,7 @@ class Publisher:
         escaped_title = self._escape_yaml_string(article.title)
 
         # YAML frontmatter
-        # Use Jekyll-compatible date format (without microseconds)
-        date_str = timestamp.strftime("%Y-%m-%d %H:%M:%S")
+        date_str = format_publication_date(timestamp)
         author = str(
             article.author or self.config.output.get("default_author") or ""
         ).strip()
@@ -547,7 +557,7 @@ reading_time: {article.reading_time}
             f"lang: {translation.lang}\n"
             f"ref: {ref}\n"
             f'title: "{esc(translation.title)}"\n'
-            f"date: {timestamp.strftime('%Y-%m-%d %H:%M:%S')}\n"
+            f"date: {format_publication_date(timestamp)}\n"
             f"{author_line}"
             f"level: {article.level}\n"
             f'category: "{esc(category)}"\n'

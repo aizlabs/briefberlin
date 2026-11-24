@@ -2,7 +2,7 @@
 lang: ar
 ref: 143312-freenow-aendert-seine-strategie-wieder-mietwagen-m-b1
 title: "Freenow تغيّر استراتيجيتها: عودة السيارات المستأجرة مع سائق إلى برلين"
-date: 2026-11-23 14:33:12
+date: 2026-11-23 14:33:12+01:00
 author: "clara-becker"
 level: B1
 category: "Verkehr"

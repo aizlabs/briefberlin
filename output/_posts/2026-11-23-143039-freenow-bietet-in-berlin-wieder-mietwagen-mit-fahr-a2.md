@@ -1,6 +1,6 @@
 ---
 title: Freenow bietet in Berlin wieder Mietwagen mit Fahrer an
-date: 2026-11-23 14:30:39
+date: 2026-11-23 14:30:39+01:00
 author: clara-becker
 level: A2
 story: 20261123-142915-freenow-will-wieder-mietwagen-mit-fahrer

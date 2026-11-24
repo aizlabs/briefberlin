@@ -2,7 +2,7 @@
 lang: uk
 ref: 115200-galeria-am-ku-damm-schliesst-verkauf-geht-erst-ein-b1
 title: "Galeria на Ku'damm зачиняється: продаж поки що триватиме"
-date: 2026-11-22 11:52:00
+date: 2026-11-22 11:52:00+01:00
 author: "clara-becker"
 level: B1
 category: "Wirtschaft"

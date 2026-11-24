@@ -1,6 +1,6 @@
 ---
 title: 'Freenow ändert seine Strategie: Wieder Mietwagen mit Fahrer in Berlin'
-date: 2026-11-23 14:33:12
+date: 2026-11-23 14:33:12+01:00
 author: clara-becker
 level: B1
 story: 20261123-142915-freenow-will-wieder-mietwagen-mit-fahrer

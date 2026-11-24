@@ -2,7 +2,7 @@
 lang: fr
 ref: 115002-berlin-kaufhaus-galeria-am-kurfuerstendamm-macht-z-a2
 title: "Berlin : le grand magasin Galeria du Kurfürstendamm ferme"
-date: 2026-11-22 11:50:02
+date: 2026-11-22 11:50:02+01:00
 author: "clara-becker"
 level: A2
 category: "Wirtschaft"

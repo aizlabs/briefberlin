@@ -1,6 +1,6 @@
 ---
 title: Hunderte Menschen trauern in Berlin-Marzahn um die getötete Lisa
-date: 2026-11-23 14:46:17
+date: 2026-11-23 14:46:17+01:00
 author: clara-becker
 level: B1
 story: 20261123-144233-trauerfeier-fuer-getoetete-13-jaehrige-i

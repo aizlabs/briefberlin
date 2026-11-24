@@ -2,7 +2,7 @@
 lang: fr
 ref: 143039-freenow-bietet-in-berlin-wieder-mietwagen-mit-fahr-a2
 title: "Freenow propose à nouveau des voitures avec chauffeur à Berlin"
-date: 2026-11-23 14:30:39
+date: 2026-11-23 14:30:39+01:00
 author: "clara-becker"
 level: A2
 category: "Verkehr"

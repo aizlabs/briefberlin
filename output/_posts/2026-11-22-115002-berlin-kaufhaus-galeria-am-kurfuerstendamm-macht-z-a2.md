@@ -1,6 +1,6 @@
 ---
 title: 'Berlin: Kaufhaus Galeria am Kurfürstendamm macht zu'
-date: 2026-11-22 11:50:02
+date: 2026-11-22 11:50:02+01:00
 author: clara-becker
 level: A2
 story: 20261122-114844-galeria-filiale-am-ku-damm-vor-dem-aus-b

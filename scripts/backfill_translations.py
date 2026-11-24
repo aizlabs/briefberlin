@@ -16,6 +16,7 @@ import argparse
 import json
 import re
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence, Tuple
 
@@ -254,10 +255,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         # sitemap because that date does not establish when a translation first ran.
         target = translations_dir / ref
         target.mkdir(parents=True, exist_ok=True)
-        from datetime import datetime
-
         stamp = data.get("date")
-        timestamp = stamp if isinstance(stamp, datetime) else datetime.now()
+        timestamp = stamp if isinstance(stamp, datetime) else datetime.now(timezone.utc)
         for translation in article.translations:
             (target / f"{translation.lang}.md").write_text(
                 publisher._generate_translation_markdown(

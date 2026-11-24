@@ -3,6 +3,7 @@
 from datetime import datetime
 
 import pytest
+import yaml
 
 from scripts.models import (
     AdaptedArticle,
@@ -77,6 +78,26 @@ def test_writes_one_file_per_language_under_the_ref_directory(publisher, article
     ref = publisher._post_ref(article, TIMESTAMP)
     base = tmp_path / "_translations" / ref
     assert sorted(p.name for p in base.glob("*.md")) == ["ar.md", "en.md"]
+
+
+@pytest.mark.parametrize(
+    ("wall_time", "expected_utc"),
+    [
+        ("2026-11-23T14:33:12+01:00", "2026-11-23T13:33:12Z"),
+        ("2026-07-03T09:00:00+02:00", "2026-07-03T07:00:00Z"),
+        ("2026-07-03T00:30:00-05:00", "2026-07-03T05:30:00Z"),
+        ("2026-07-03T09:00:00", "2026-07-03T09:00:00Z"),
+    ],
+)
+def test_post_and_translations_preserve_publication_instant(
+    publisher, article, tmp_path, wall_time, expected_utc
+):
+    assert publisher.save_article(article, timestamp=datetime.fromisoformat(wall_time))
+    files = list(tmp_path.rglob("*.md"))
+    assert len(files) == 3
+    for path in files:
+        frontmatter = yaml.safe_load(path.read_text().split("---", 2)[1])
+        assert frontmatter["date"] == datetime.fromisoformat(expected_utc)
 
 
 def test_arabic_title_still_yields_an_ascii_path(publisher, article, tmp_path):

@@ -1,6 +1,6 @@
 ---
 title: Hunderte Menschen trauern in Berlin um die tote Lisa
-date: 2026-11-23 14:43:54
+date: 2026-11-23 14:43:54+01:00
 author: clara-becker
 level: A2
 story: 20261123-144233-trauerfeier-fuer-getoetete-13-jaehrige-i
