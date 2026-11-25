@@ -209,6 +209,12 @@ stories)
   need_pending
   "$UV" run python "$HERE/bb_images.py" stories $(posts)
   ;;
+illustrate)
+  # Usage: bb illustrate STORY "English image prompt" "German alt text". Generates and attaches one image.
+  need_pending
+  [ $# -eq 4 ] || { echo "usage: bb illustrate STORY PROMPT ALT"; exit 2; }
+  "$UV" run python "$HERE/bb_images.py" illustrate "$2" "$3" "$4" -- $(posts)
+  ;;
 add-image)
   # Usage: bb add-image STORY FILE "German alt text" ["caption"]. Validates and records the image.
   need_pending
@@ -223,6 +229,6 @@ status)
   if [ -f "$STATE" ]; then echo "WAITING: $(posts | wc -l) posts for review"; else echo "IDLE"; fi
   ;;
 *)
-  echo "usage: bb generate <file> | stories | add-image STORY FILE ALT | preview | publish [id] | discard [id] | status"; exit 2
+  echo "usage: bb generate <file> | stories | illustrate STORY PROMPT ALT | preview | publish [id] | discard [id] | status"; exit 2
   ;;
 esac

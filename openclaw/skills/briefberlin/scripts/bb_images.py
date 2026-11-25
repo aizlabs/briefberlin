@@ -4,6 +4,7 @@ Runs inside the briefberlin venv from the repo root, like bb_preview.py.
 
   bb_images.py stories POST...                       print each waiting story's public text
   bb_images.py add STORY FILE ALT [CAPTION] -- POST... attach an image to a waiting story
+  bb_images.py illustrate STORY PROMPT ALT -- POST...  generate one image with OpenAI and attach it
   bb_images.py list POST...                           print the visuals of the waiting stories
 
 Only the public post text is printed. Images are validated (WebP or SVG, size and
@@ -13,12 +14,19 @@ output/_data/story_illustrations/<story>.yml, the files the post layout reads.
 
 from __future__ import annotations
 
+import base64
+import json
+import os
 import re
 import shutil
 import sys
+import tempfile
+import urllib.error
+import urllib.request
 from pathlib import Path
 
 import yaml
+from dotenv import dotenv_values
 
 from scripts.publish_telegram_channel import parse_jekyll_post
 
@@ -28,6 +36,17 @@ MAX_VISUALS = 3
 MAX_BYTES = 800_000
 MIN_WIDTH = 800
 STORY_RE = re.compile(r"^[0-9]{8}-[0-9]{6}-[a-z0-9-]+$")
+# Same settings as the published story images: 1280x720 WebP, medium quality.
+IMAGE_REQUEST = {
+    "model": "gpt-image-2",
+    "size": "1280x720",
+    "quality": "medium",
+    "output_format": "webp",
+    "output_compression": 80,
+    "n": 1,
+}
+# gpt-image-2 list prices per 1M tokens (text input, image output), for the cost line only.
+PRICE_IN, PRICE_OUT = 5.0, 30.0
 
 
 def front_matter(path: Path) -> dict:
@@ -141,6 +160,64 @@ def cmd_add(story: str, src: str, alt: str, caption: str, posts: list[str]) -> i
     return 0
 
 
+def openai_image(prompt: str, out: Path) -> str:
+    """Generates one image into `out`; returns a short usage/cost note. Raises RuntimeError."""
+    key = os.environ.get("OPENAI_API_KEY") or dotenv_values(".env").get("OPENAI_API_KEY")
+    if not key:
+        raise RuntimeError("OPENAI_API_KEY is not set in the repo .env")
+    if "no text" not in prompt.lower():
+        prompt = prompt.rstrip(". ") + ". No text, no logos."
+    body = json.dumps({**IMAGE_REQUEST, "prompt": prompt}).encode()
+    last = ""
+    for _attempt in range(2):
+        request = urllib.request.Request(
+            "https://api.openai.com/v1/images/generations",
+            data=body,
+            headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
+        )
+        try:
+            with urllib.request.urlopen(request, timeout=240) as response:
+                result = json.load(response)
+            break
+        except urllib.error.HTTPError as err:
+            try:
+                last = json.load(err).get("error", {}).get("message", "")
+            except ValueError:
+                last = ""
+            last = f"OpenAI HTTP {err.code}: {last}"
+            if err.code < 500:
+                raise RuntimeError(last) from None
+        except (urllib.error.URLError, TimeoutError) as err:
+            last = f"OpenAI unreachable: {getattr(err, 'reason', err)}"
+    else:
+        raise RuntimeError(last)
+    out.write_bytes(base64.b64decode(result["data"][0]["b64_json"]))
+    usage = result.get("usage") or {}
+    tin, tout = usage.get("input_tokens", 0), usage.get("output_tokens", 0)
+    return f"{tin} in / {tout} out tokens, about ${(tin * PRICE_IN + tout * PRICE_OUT) / 1e6:.3f}"
+
+
+def cmd_illustrate(story: str, prompt: str, alt: str, posts: list[str]) -> int:
+    if story not in stories_of(posts):
+        print(f"ERROR: {story} is not one of the waiting stories")
+        return 3
+    if not 5 <= len(alt.strip()) <= 200:
+        print("ERROR: alt text must be one German sentence of 5-200 characters")
+        return 2
+    if len(prompt.strip()) < 20:
+        print("ERROR: the prompt is too short; describe the scene, medium and light")
+        return 2
+    with tempfile.TemporaryDirectory() as tmp:
+        out = Path(tmp) / "image.webp"
+        try:
+            note = openai_image(prompt.strip(), out)
+        except RuntimeError as err:
+            print(f"ERROR: image generation failed: {err}")
+            return 5
+        print(f"IMAGE GENERATED: gpt-image-2 medium 1280x720 ({note})")
+        return cmd_add(story, str(out), alt, "", posts)
+
+
 def cmd_list(posts: list[str]) -> int:
     for story in stories_of(posts):
         for visual in load_record(story)["visuals"]:
@@ -157,6 +234,10 @@ def main(argv: list[str]) -> int:
         return cmd_stories(rest)
     if command == "list":
         return cmd_list(rest)
+    if command == "illustrate" and "--" in rest:
+        i = rest.index("--")
+        if i == 3:
+            return cmd_illustrate(rest[0], rest[1], rest[2], rest[i + 1:])
     if command == "add" and "--" in rest:
         i = rest.index("--")
         head, posts = rest[:i], rest[i + 1:]

@@ -61,7 +61,7 @@ def main(paths: list[str]) -> int:
     sent = 0
     for image, alt in story_images(paths):
         try:
-            send_photo(str(image), f"Bild: {alt}")
+            send_photo(str(image), f"Image: {alt}")
         except (OSError, RuntimeError) as err:
             print(f"WARNING: could not send image {image.name}: {err}")
             continue
