@@ -2,10 +2,15 @@
   <figure class="story-visual">
     <img itemprop="image" src="{{ include.visual.path | relative_url | escape }}" alt="{{ include.visual.alt | escape }}" style="display: block; width: 100%; height: auto;">
     {% if include.visual.caption %}
-      <figcaption>
-        {{ include.visual.caption | escape }}
-        {% if include.visual.source_url %}<a href="{{ include.visual.source_url | escape }}">{{ include.visual.credit | escape }}</a>{% endif %}
-        {% if include.visual.license_url %} · <a rel="license" href="{{ include.visual.license_url | escape }}">{{ include.visual.license | escape }}</a>{% endif %}
+      <figcaption class="story-visual__info">
+        <details>
+          <summary aria-label="Bildinfo"><span aria-hidden="true">ⓘ</span></summary>
+          <div class="story-visual__panel">
+            {{ include.visual.caption | escape }}
+            {% if include.visual.source_url %}<a href="{{ include.visual.source_url | escape }}">{{ include.visual.credit | escape }}</a>{% endif %}
+            {% if include.visual.license_url %} · <a rel="license" href="{{ include.visual.license_url | escape }}">{{ include.visual.license | escape }}</a>{% endif %}
+          </div>
+        </details>
       </figcaption>
     {% endif %}
   </figure>

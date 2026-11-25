@@ -2333,3 +2333,45 @@ a.level-switch__other::before {
   cursor: pointer;
 }
 .my-words-export__help p { padding: 0 0.75rem; font-size: 0.75rem; line-height: 1.5; margin: 0.5rem 0 0.75rem; }
+
+.story-visual { position: relative; }
+.story-visual > .story-visual__info {
+  position: absolute;
+  inset: auto 4px 4px auto;
+  margin: 0;
+  z-index: 1;
+}
+.story-visual__info summary {
+  display: grid;
+  place-items: center;
+  margin-inline-start: auto;
+  width: 28px;
+  height: 28px;
+  list-style: none;
+  cursor: pointer;
+}
+.story-visual__info summary::-webkit-details-marker { display: none; }
+.story-visual__info summary span {
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  color: #222;
+  font: 16px/1 sans-serif;
+}
+.story-visual__panel {
+  position: absolute;
+  inset: auto 0 100% auto;
+  width: min(21rem, 78vw);
+  padding: 0.7rem;
+  border-radius: 6px;
+  background: #fff;
+  color: #222;
+  box-shadow: 0 2px 12px #0003;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  text-align: start;
+}
+.story-visual__panel a { color: #184d77; }
