@@ -1,0 +1,6 @@
+{% if include.visual.path and include.visual.alt %}
+  <figure class="story-visual">
+    <img itemprop="image" src="{{ include.visual.path | relative_url | escape }}" alt="{{ include.visual.alt | escape }}" style="display: block; width: 100%; height: auto;">
+    {% if include.visual.caption %}<figcaption>{{ include.visual.caption | escape }}</figcaption>{% endif %}
+  </figure>
+{% endif %}

@@ -56,6 +56,11 @@ layout: default
       </header>
     {% endunless %}
 
+    {% assign story_visuals = site.data.story_illustrations[page.story].visuals %}
+    {% for visual in story_visuals limit:1 %}
+      {% include story-visual.html visual=visual %}
+    {% endfor %}
+
     <section class="page__content" itemprop="text">
       {% if page.correction and page.correction.note %}
         <aside class="article-correction" role="note" aria-label="{{ t.correction_aria }}">
@@ -65,6 +70,9 @@ layout: default
       {% endif %}
       {% include article-audio.html t=t %}
       {{ content }}
+      {% for visual in story_visuals offset:1 limit:2 %}
+        {% include story-visual.html visual=visual %}
+      {% endfor %}
       {% if page.link %}<div><a href="{{ page.link }}" class="btn btn--primary">{{ site.data.ui-text[site.locale].ext_link_label | default: "Direct Link" }}</a></div>{% endif %}
     </section>
 

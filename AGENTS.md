@@ -40,3 +40,6 @@
 - Private source files must stay under ignored paths such as `private-input/`, `input/private/`, or `*.source.txt`.
 - Lower thresholds locally (e.g., `min_score: 6.0`) to iterate faster; revert before committing.
 - Public generated posts must not include private source URLs, private source text, base article drafts, logs, or metrics.
+
+## Article illustrations
+For agent-driven article generation, after the manual pipeline writes quality-approved German posts and before committing them, follow [briefberlin-illustrate](skills/briefberlin-illustrate/SKILL.md). Use the same skill for an explicitly requested illustration of an existing story.
