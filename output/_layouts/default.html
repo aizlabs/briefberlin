@@ -19,6 +19,19 @@
 {%- assign page_html_lang = page_langdef.html_lang | default: site.locale | default: "en" -%}
 <html lang="{{ page_html_lang }}" dir="{{ page_dir }}" class="no-js">
   <head>
+    {%- assign image_page = page -%}
+    {%- if page.collection == "translations" and page.ref -%}
+      {%- assign original_url = "/articles/" | append: page.ref | append: "/" -%}
+      {%- assign image_page = site.posts | where: "url", original_url | first | default: page -%}
+    {%- endif -%}
+    {%- assign story_key = page.story | default: image_page.story -%}
+    {%- assign lead_visual = site.data.story_illustrations[story_key].visuals | first -%}
+    {%- assign social_image = page.image | default: page.header.og_image -%}
+    {%- assign social_image_alt = page.image_alt -%}
+    {%- if lead_visual.path and lead_visual.alt -%}
+      {%- assign social_image = lead_visual.path -%}
+      {%- assign social_image_alt = lead_visual.alt -%}
+    {%- endif -%}
     {% include head.html %}
     {% include head/custom.html %}
   </head>

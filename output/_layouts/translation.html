@@ -57,7 +57,7 @@ layout: default
         {% if page.date %}
           <span class="article-date">
             <i class="far fa-calendar-alt" aria-hidden="true"></i>
-            <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: t.date_format }}</time>
+            <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: t.date_format }}, {{ page.date | date: "%H:%M" }}</time>
           </span>
         {% endif %}
 

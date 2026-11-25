@@ -25,7 +25,7 @@
   {%- assign author_twitter = author.twitter | replace: "@", "" -%}
 {%- endif -%}
 
-{%- assign page_large_image = page.header.og_image | default: page.header.overlay_image | default: page.header.image | absolute_url | escape -%}
+{%- assign page_large_image = social_image | default: page.header.og_image | default: page.header.overlay_image | default: page.header.image | absolute_url | escape -%}
 {%- assign page_teaser_image = page.header.teaser | default: site.og_image | absolute_url | escape -%}
 {%- assign site_og_image = site.og_image | absolute_url | escape -%}
 
@@ -48,8 +48,8 @@
 <meta property="og:type" content="{{ og_type }}">
 {%- comment -%}
   BriefBerlin change vs minimal-mistakes-jekyll 4.27.3: og:locale is page-aware and
-  og:locale:alternate is emitted for every sibling translation. Everything else in
-  this file is the gem verbatim - re-diff on any theme bump.
+  og:locale:alternate is emitted for every sibling translation. Social previews
+  also use the article image resolved by the default layout.
 {%- endcomment -%}
 {%- assign bb_lang = page.lang | default: site.lang | default: "de" -%}
 {%- assign bb_langdef = site.data.languages | where: "code", bb_lang | first -%}
