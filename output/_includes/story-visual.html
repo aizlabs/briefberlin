@@ -1,6 +1,12 @@
 {% if include.visual.path and include.visual.alt %}
   <figure class="story-visual">
     <img itemprop="image" src="{{ include.visual.path | relative_url | escape }}" alt="{{ include.visual.alt | escape }}" style="display: block; width: 100%; height: auto;">
-    {% if include.visual.caption %}<figcaption>{{ include.visual.caption | escape }}</figcaption>{% endif %}
+    {% if include.visual.caption %}
+      <figcaption>
+        {{ include.visual.caption | escape }}
+        {% if include.visual.source_url %}<a href="{{ include.visual.source_url | escape }}">{{ include.visual.credit | escape }}</a>{% endif %}
+        {% if include.visual.license_url %} · <a rel="license" href="{{ include.visual.license_url | escape }}">{{ include.visual.license | escape }}</a>{% endif %}
+      </figcaption>
+    {% endif %}
   </figure>
 {% endif %}
