@@ -6,7 +6,7 @@ set -u
 REPO=${BB_REPO:-/opt/openclaw/work/briefberlin}
 STATE=${BB_STATE:-/opt/openclaw/work/.bb-pending}
 UV=${BB_UV:-/opt/openclaw/.local/bin/uv}
-PATHS=(output/_posts output/_translations)
+PATHS=(output/_posts output/_translations output/_data/story_illustrations output/assets/images/stories)
 export GIT_TERMINAL_PROMPT=0 AUDIO_ENABLED=false AUDIO_UPLOAD_ENABLED=false
 export XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR:-/run/user/$(id -u)}
 export DBUS_SESSION_BUS_ADDRESS=${DBUS_SESSION_BUS_ADDRESS:-unix:path=$XDG_RUNTIME_DIR/bus}
@@ -161,7 +161,7 @@ Audio added to both articles."
   fi
   mapfile -t URLS < <(post_urls $(posts | sort))
   git add -- "${PATHS[@]}"
-  if git diff --cached --name-only | grep -qvE '^output/(_posts|_translations)/'; then
+  if git diff --cached --name-only | grep -qvE '^output/(_posts|_translations|_data/story_illustrations|assets/images/stories)/'; then
     git reset -q
     notify "Publish FAILED: unexpected files were about to be committed, so I stopped. Nothing was published."
     echo "ERROR: unexpected files staged. Nothing published."; exit 3
@@ -204,10 +204,25 @@ discard)
   notify "Discarded: both articles and the saved source were deleted. Nothing was published."
   echo "DISCARDED: article and source deleted."
   ;;
+stories)
+  # Prints the waiting story id(s) and the public A2/B1 text, for choosing an illustration.
+  need_pending
+  "$UV" run python "$HERE/bb_images.py" stories $(posts)
+  ;;
+add-image)
+  # Usage: bb add-image STORY FILE "German alt text" ["caption"]. Validates and records the image.
+  need_pending
+  [ $# -ge 4 ] || { echo "usage: bb add-image STORY FILE ALT [CAPTION]"; exit 2; }
+  if [ $# -ge 5 ]; then
+    "$UV" run python "$HERE/bb_images.py" add "$2" "$3" "$4" "$5" -- $(posts)
+  else
+    "$UV" run python "$HERE/bb_images.py" add "$2" "$3" "$4" -- $(posts)
+  fi
+  ;;
 status)
   if [ -f "$STATE" ]; then echo "WAITING: $(posts | wc -l) posts for review"; else echo "IDLE"; fi
   ;;
 *)
-  echo "usage: bb generate <file> | preview | publish [id] | discard [id] | status"; exit 2
+  echo "usage: bb generate <file> | stories | add-image STORY FILE ALT | preview | publish [id] | discard [id] | status"; exit 2
   ;;
 esac

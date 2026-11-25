@@ -13,5 +13,10 @@ install_one() {
 }
 install_one SKILL.md 644
 for f in bb bb_setkey bb_tg.py bb_watch.sh; do install_one "scripts/$f" 700; done
-for f in bb_preview.py bb_report.py; do install_one "scripts/$f" 600; done
+for f in bb_preview.py bb_report.py bb_images.py; do install_one "scripts/$f" 600; done
+ILL_SRC="$SRC/../briefberlin-illustrate"
+ILL_DEST="$(dirname "$DEST")/briefberlin-illustrate"
+mkdir -p "$ILL_DEST"
+[ -f "$ILL_DEST/SKILL.md" ] && cp -p "$ILL_DEST/SKILL.md" "$ILL_DEST/SKILL.md.prev"
+install -m 644 "$ILL_SRC/SKILL.md" "$ILL_DEST/SKILL.md" && echo "installed briefberlin-illustrate/SKILL.md"
 bash -n "$DEST/scripts/bb" && echo "bb syntax ok"

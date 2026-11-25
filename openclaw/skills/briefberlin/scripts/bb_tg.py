@@ -19,6 +19,7 @@ import re
 import sys
 import urllib.error
 import urllib.request
+import uuid
 
 CONFIG = "/opt/openclaw/.openclaw/openclaw.json"
 TARGET = "/opt/openclaw/work/.bb-telegram-target"
@@ -72,6 +73,53 @@ def send(text: str, buttons: list[tuple[str, str]] | None = None, markdown: bool
         raise RuntimeError(f"Telegram API unreachable: {err.reason}") from None
     if not result.get("ok"):
         raise RuntimeError(f"Telegram API error: {result.get('description')}")
+    return int(result["result"]["message_id"])
+
+
+def _call(method: str, data: bytes, content_type: str) -> dict:
+    request = urllib.request.Request(
+        f"https://api.telegram.org/bot{_token()}/{method}",
+        data=data,
+        headers={"Content-Type": content_type},
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=60) as response:
+            result = json.load(response)
+    except urllib.error.HTTPError as err:
+        try:
+            description = json.load(err).get("description", "")
+        except ValueError:
+            description = ""
+        raise RuntimeError(f"Telegram API HTTP {err.code}: {description}") from None
+    except urllib.error.URLError as err:
+        raise RuntimeError(f"Telegram API unreachable: {err.reason}") from None
+    if not result.get("ok"):
+        raise RuntimeError(f"Telegram API error: {result.get('description')}")
+    return result
+
+
+def send_photo(path: str, caption: str = "") -> int:
+    """Sends an image file (WebP/PNG/JPEG) as a photo; returns the Telegram message id."""
+    with open(TARGET, encoding="utf-8") as f:
+        chat = f.read().strip()
+    with open(path, "rb") as f:
+        image = f.read()
+    boundary = uuid.uuid4().hex
+    fields = {"chat_id": chat}
+    if caption:
+        fields["caption"] = caption[:1000]
+    parts = []
+    for name, value in fields.items():
+        parts.append(
+            f'--{boundary}\r\nContent-Disposition: form-data; name="{name}"\r\n\r\n{value}\r\n'.encode()
+        )
+    filename = path.rsplit("/", 1)[-1]
+    parts.append(
+        f'--{boundary}\r\nContent-Disposition: form-data; name="photo"; filename="{filename}"\r\n'
+        "Content-Type: application/octet-stream\r\n\r\n".encode()
+    )
+    body = b"".join(parts) + image + f"\r\n--{boundary}--\r\n".encode()
+    result = _call("sendPhoto", body, f"multipart/form-data; boundary={boundary}")
     return int(result["result"]["message_id"])
 
 

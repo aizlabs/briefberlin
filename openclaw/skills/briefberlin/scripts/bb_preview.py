@@ -9,7 +9,8 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-from bb_tg import TARGET, send
+import yaml
+from bb_tg import TARGET, send, send_photo
 
 from scripts.publish_telegram_channel import parse_jekyll_post
 
@@ -36,11 +37,35 @@ def render(path: Path) -> list[str]:
     return messages
 
 
+def story_images(paths: list[str]) -> list[tuple[Path, str]]:
+    """Images recorded for the stories of the waiting posts, in reading order."""
+    seen, images = set(), []
+    for raw in paths:
+        head = Path(raw).read_text(encoding="utf-8").split("---\n", 2)
+        story = (yaml.safe_load(head[1]) or {}).get("story") if len(head) == 3 else None
+        record = Path(f"output/_data/story_illustrations/{story}.yml")
+        if not story or story in seen or not record.exists():
+            continue
+        seen.add(story)
+        for visual in (yaml.safe_load(record.read_text(encoding="utf-8")) or {}).get("visuals", []):
+            image = Path("output") / str(visual.get("path", "")).lstrip("/")
+            if image.suffix == ".webp" and image.exists():
+                images.append((image, str(visual.get("alt", ""))))
+    return images
+
+
 def main(paths: list[str]) -> int:
     if not Path(TARGET).exists():
         print("ERROR: no Telegram chat configured for previews")
         return 4
     sent = 0
+    for image, alt in story_images(paths):
+        try:
+            send_photo(str(image), f"Bild: {alt}")
+        except (OSError, RuntimeError) as err:
+            print(f"WARNING: could not send image {image.name}: {err}")
+            continue
+        sent += 1
     for raw in sorted(paths, key=lambda p: (not p.endswith("-a2.md"), p)):
         for text in render(Path(raw)):
             try:
