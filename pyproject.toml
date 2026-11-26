@@ -34,6 +34,7 @@ dev = [
 ]
 
 [project.scripts]
+briefberlin-editorial = "scripts.editorial.__main__:main"
 briefberlin-manual = "scripts.manual_pipeline:main"
 briefberlin-audio-post = "scripts.post_audio:main"
 briefberlin-publish-source = "scripts.publish_source:main"
@@ -48,6 +49,9 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["scripts"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"config/civic_sources.json" = "scripts/editorial/civic_sources.json"
 
 [tool.hatch.metadata]
 allow-direct-references = true

@@ -1,0 +1,2673 @@
+{
+  "schema_version": 1,
+  "editorial_policy": {
+    "scoring_unit": "story",
+    "event_matching_scope": "all_sources"
+  },
+  "sources": [
+    {
+      "id": "presse-und-informationsamt-des-landes-berlin",
+      "publisher": "Presse- und Informationsamt des Landes Berlin",
+      "category": "Senate / state government",
+      "coverage": "Cabinet decisions, interdepartmental projects, mayoral announcements",
+      "channel": "Press search + RSS",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Presse-+und+Informationsamt+des+Landes+Berlin",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=Presse-+und+Informationsamt+des+Landes+Berlin",
+      "poll": {
+        "endpoint_id": "presse-und-informationsamt-des-landes-berlin-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "senatsverwaltung-fur-bildung-jugend-und-familie",
+      "publisher": "Senatsverwaltung für Bildung, Jugend und Familie",
+      "category": "Senate / state government",
+      "coverage": "Schools, childcare, family services, education policy",
+      "channel": "Press search + RSS",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Senatsverwaltung+f%C3%BCr+Bildung%2C+Jugend+und+Familie",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=Senatsverwaltung+f%C3%BCr+Bildung%2C+Jugend+und+Familie",
+      "press_office_url": "https://www.berlin.de/sen/bjf/service/presse/",
+      "poll": {
+        "endpoint_id": "senatsverwaltung-fur-bildung-jugend-und-familie-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "senatsverwaltung-fur-finanzen",
+      "publisher": "Senatsverwaltung für Finanzen",
+      "category": "Senate / state government",
+      "coverage": "State budget, financial decisions and tax administration",
+      "channel": "Press search + RSS",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Senatsverwaltung+f%C3%BCr+Finanzen",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=Senatsverwaltung+f%C3%BCr+Finanzen",
+      "press_office_url": "https://www.berlin.de/sen/finanzen/presse/",
+      "poll": {
+        "endpoint_id": "senatsverwaltung-fur-finanzen-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "senatsverwaltung-fur-inneres-und-sport",
+      "publisher": "Senatsverwaltung für Inneres und Sport",
+      "category": "Senate / state government",
+      "coverage": "Public safety, civil protection, sport and policing policy",
+      "channel": "Press search + RSS",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Senatsverwaltung+f%C3%BCr+Inneres+und+Sport",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=Senatsverwaltung+f%C3%BCr+Inneres+und+Sport",
+      "press_office_url": "https://www.berlin.de/sen/inneres/presse/",
+      "poll": {
+        "endpoint_id": "senatsverwaltung-fur-inneres-und-sport-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "senatsverwaltung-fur-arbeit-soziales-gleichstellung-integration-vielfalt-und-antidiskriminierung",
+      "publisher": "Senatsverwaltung für Arbeit, Soziales, Gleichstellung, Integration, Vielfalt und Antidiskriminierung",
+      "category": "Senate / state government",
+      "coverage": "Labour, social support, integration and equality",
+      "channel": "Press search + RSS",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Senatsverwaltung+f%C3%BCr+Arbeit%2C+Soziales%2C+Gleichstellung%2C+Integration%2C+Vielfalt+und+Antidiskriminierung",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=Senatsverwaltung+f%C3%BCr+Arbeit%2C+Soziales%2C+Gleichstellung%2C+Integration%2C+Vielfalt+und+Antidiskriminierung",
+      "press_office_url": "https://www.berlin.de/sen/asgiva/presse/",
+      "poll": {
+        "endpoint_id": "senatsverwaltung-fur-arbeit-soziales-gleichstellung-integration-vielfalt-und-antidiskriminierung-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "senatsverwaltung-fur-justiz-und-verbraucherschutz",
+      "publisher": "Senatsverwaltung für Justiz und Verbraucherschutz",
+      "category": "Senate / state government",
+      "coverage": "Justice, consumer protection and legislation",
+      "channel": "Press search + RSS",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Senatsverwaltung+f%C3%BCr+Justiz+und+Verbraucherschutz",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=Senatsverwaltung+f%C3%BCr+Justiz+und+Verbraucherschutz",
+      "press_office_url": "https://www.berlin.de/sen/justva/presse/pressestellen/",
+      "poll": {
+        "endpoint_id": "senatsverwaltung-fur-justiz-und-verbraucherschutz-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "senatsverwaltung-fur-kultur-und-gesellschaftlichen-zusammenhalt",
+      "publisher": "Senatsverwaltung für Kultur und Gesellschaftlichen Zusammenhalt",
+      "category": "Senate / state government",
+      "coverage": "Cultural funding, grants, heritage and public programmes",
+      "channel": "Press search + RSS",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Senatsverwaltung+f%C3%BCr+Kultur+und+Gesellschaftlichen+Zusammenhalt",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=Senatsverwaltung+f%C3%BCr+Kultur+und+Gesellschaftlichen+Zusammenhalt",
+      "press_office_url": "https://www.berlin.de/sen/kulteu/aktuelles/pressemitteilungen/",
+      "poll": {
+        "endpoint_id": "senatsverwaltung-fur-kultur-und-gesellschaftlichen-zusammenhalt-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "senatsverwaltung-fur-stadtentwicklung-bauen-und-wohnen",
+      "publisher": "Senatsverwaltung für Stadtentwicklung, Bauen und Wohnen",
+      "category": "Senate / state government",
+      "coverage": "Housing, development plans, construction and building law",
+      "channel": "Press search + RSS",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Senatsverwaltung+f%C3%BCr+Stadtentwicklung%2C+Bauen+und+Wohnen",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=Senatsverwaltung+f%C3%BCr+Stadtentwicklung%2C+Bauen+und+Wohnen",
+      "press_office_url": "https://www.berlin.de/sen/sbw/presse/pressestelle/",
+      "poll": {
+        "endpoint_id": "senatsverwaltung-fur-stadtentwicklung-bauen-und-wohnen-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "senatsverwaltung-fur-mobilitat-verkehr-klimaschutz-und-umwelt",
+      "publisher": "Senatsverwaltung für Mobilität, Verkehr, Klimaschutz und Umwelt",
+      "category": "Senate / state government",
+      "coverage": "Road projects, transport policy, environment and climate measures",
+      "channel": "Press search + RSS",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Senatsverwaltung+f%C3%BCr+Mobilit%C3%A4t%2C+Verkehr%2C+Klimaschutz+und+Umwelt",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=Senatsverwaltung+f%C3%BCr+Mobilit%C3%A4t%2C+Verkehr%2C+Klimaschutz+und+Umwelt",
+      "press_office_url": "https://www.berlin.de/sen/uvk/presse/",
+      "poll": {
+        "endpoint_id": "senatsverwaltung-fur-mobilitat-verkehr-klimaschutz-und-umwelt-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "senatsverwaltung-fur-wirtschaft-energie-und-betriebe",
+      "publisher": "Senatsverwaltung für Wirtschaft, Energie und Betriebe",
+      "category": "Senate / state government",
+      "coverage": "Business support, energy policy and municipal enterprises",
+      "channel": "Press search + RSS",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Senatsverwaltung+f%C3%BCr+Wirtschaft%2C+Energie+und+Betriebe",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=Senatsverwaltung+f%C3%BCr+Wirtschaft%2C+Energie+und+Betriebe",
+      "press_office_url": "https://www.berlin.de/sen/web/presse/",
+      "poll": {
+        "endpoint_id": "senatsverwaltung-fur-wirtschaft-energie-und-betriebe-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "senatsverwaltung-fur-wissenschaft-gesundheit-und-pflege",
+      "publisher": "Senatsverwaltung für Wissenschaft, Gesundheit und Pflege",
+      "category": "Senate / state government",
+      "coverage": "Higher education, hospitals, science, health and care",
+      "channel": "Press search + RSS",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Senatsverwaltung+f%C3%BCr+Wissenschaft%2C+Gesundheit+und+Pflege",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=Senatsverwaltung+f%C3%BCr+Wissenschaft%2C+Gesundheit+und+Pflege",
+      "press_office_url": "https://www.berlin.de/sen/wgp/presse/",
+      "poll": {
+        "endpoint_id": "senatsverwaltung-fur-wissenschaft-gesundheit-und-pflege-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "bezirksamt-charlottenburg-wilmersdorf",
+      "publisher": "Bezirksamt Charlottenburg-Wilmersdorf",
+      "category": "District office",
+      "coverage": "District roadworks, schools, parks, opening hours, planning and local events",
+      "channel": "Press search + RSS",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Bezirksamt+Charlottenburg-Wilmersdorf",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=Bezirksamt+Charlottenburg-Wilmersdorf",
+      "press_office_url": "https://www.berlin.de/ba-charlottenburg-wilmersdorf/verwaltung/interne-dienste/pressestelle/",
+      "poll": {
+        "endpoint_id": "bezirksamt-charlottenburg-wilmersdorf-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "bezirksamt-friedrichshain-kreuzberg",
+      "publisher": "Bezirksamt Friedrichshain-Kreuzberg",
+      "category": "District office",
+      "coverage": "District roadworks, schools, parks, opening hours, planning and local events",
+      "channel": "Press search + RSS",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Bezirksamt+Friedrichshain-Kreuzberg",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=Bezirksamt+Friedrichshain-Kreuzberg",
+      "press_office_url": "https://www.berlin.de/ba-friedrichshain-kreuzberg/aktuelles/pressemitteilungen/",
+      "poll": {
+        "endpoint_id": "bezirksamt-friedrichshain-kreuzberg-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "bezirksamt-lichtenberg",
+      "publisher": "Bezirksamt Lichtenberg",
+      "category": "District office",
+      "coverage": "District roadworks, schools, parks, opening hours, planning and local events",
+      "channel": "Press search + RSS",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Bezirksamt+Lichtenberg",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=Bezirksamt+Lichtenberg",
+      "press_office_url": "https://www.berlin.de/ba-lichtenberg/politik-und-verwaltung/behoerdenwegweiser/artikel.250462.php",
+      "poll": {
+        "endpoint_id": "bezirksamt-lichtenberg-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "bezirksamt-marzahn-hellersdorf",
+      "publisher": "Bezirksamt Marzahn-Hellersdorf",
+      "category": "District office",
+      "coverage": "District roadworks, schools, parks, opening hours, planning and local events",
+      "channel": "Press search + RSS",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Bezirksamt+Marzahn-Hellersdorf",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=Bezirksamt+Marzahn-Hellersdorf",
+      "press_office_url": "https://www.berlin.de/ba-marzahn-hellersdorf/politik-und-verwaltung/service-und-organisationseinheiten/pressestelle/",
+      "poll": {
+        "endpoint_id": "bezirksamt-marzahn-hellersdorf-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "bezirksamt-mitte",
+      "publisher": "Bezirksamt Mitte",
+      "category": "District office",
+      "coverage": "District roadworks, schools, parks, opening hours, planning and local events",
+      "channel": "Press search + RSS",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Bezirksamt+Mitte",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=Bezirksamt+Mitte",
+      "press_office_url": "https://www.berlin.de/ba-mitte/politik-und-verwaltung/service-und-organisationseinheiten/pressestelle/",
+      "poll": {
+        "endpoint_id": "bezirksamt-mitte-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "bezirksamt-neukolln",
+      "publisher": "Bezirksamt Neukölln",
+      "category": "District office",
+      "coverage": "District roadworks, schools, parks, opening hours, planning and local events",
+      "channel": "Press search + RSS",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Bezirksamt+Neuk%C3%B6lln",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=Bezirksamt+Neuk%C3%B6lln",
+      "press_office_url": "https://www.berlin.de/ba-neukoelln/aktuelles/pressemitteilungen/",
+      "poll": {
+        "endpoint_id": "bezirksamt-neukolln-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "bezirksamt-pankow",
+      "publisher": "Bezirksamt Pankow",
+      "category": "District office",
+      "coverage": "District roadworks, schools, parks, opening hours, planning and local events",
+      "channel": "Press search + RSS",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Bezirksamt+Pankow",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=Bezirksamt+Pankow",
+      "press_office_url": "https://www.berlin.de/ba-pankow/politik-und-verwaltung/service-und-organisationseinheiten/pressestelle/",
+      "poll": {
+        "endpoint_id": "bezirksamt-pankow-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "bezirksamt-reinickendorf",
+      "publisher": "Bezirksamt Reinickendorf",
+      "category": "District office",
+      "coverage": "District roadworks, schools, parks, opening hours, planning and local events",
+      "channel": "Press search + RSS",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Bezirksamt+Reinickendorf",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=Bezirksamt+Reinickendorf",
+      "press_office_url": "https://www.berlin.de/ba-reinickendorf/aktuelles/pressemitteilungen/",
+      "poll": {
+        "endpoint_id": "bezirksamt-reinickendorf-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "bezirksamt-spandau",
+      "publisher": "Bezirksamt Spandau",
+      "category": "District office",
+      "coverage": "District roadworks, schools, parks, opening hours, planning and local events",
+      "channel": "Press search + RSS",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Bezirksamt+Spandau",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=Bezirksamt+Spandau",
+      "press_office_url": "https://www.berlin.de/ba-spandau/politik-und-verwaltung/service-und-organisationseinheiten/pressestelle/",
+      "poll": {
+        "endpoint_id": "bezirksamt-spandau-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "bezirksamt-steglitz-zehlendorf",
+      "publisher": "Bezirksamt Steglitz-Zehlendorf",
+      "category": "District office",
+      "coverage": "District roadworks, schools, parks, opening hours, planning and local events",
+      "channel": "Press search + RSS",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Bezirksamt+Steglitz-Zehlendorf",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=Bezirksamt+Steglitz-Zehlendorf",
+      "press_office_url": "https://www.berlin.de/ba-steglitz-zehlendorf/politik-und-verwaltung/service-und-organisationseinheiten/presse-oeffentlichkeitsarbeit-digitale-kommunikation/",
+      "poll": {
+        "endpoint_id": "bezirksamt-steglitz-zehlendorf-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "bezirksamt-tempelhof-schoneberg",
+      "publisher": "Bezirksamt Tempelhof-Schöneberg",
+      "category": "District office",
+      "coverage": "District roadworks, schools, parks, opening hours, planning and local events",
+      "channel": "Press search + RSS",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Bezirksamt+Tempelhof-Sch%C3%B6neberg",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=Bezirksamt+Tempelhof-Sch%C3%B6neberg",
+      "press_office_url": "https://www.berlin.de/ba-tempelhof-schoeneberg/politik-und-verwaltung/service-und-organisationseinheiten/pressestelle/",
+      "poll": {
+        "endpoint_id": "bezirksamt-tempelhof-schoneberg-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "bezirksamt-treptow-kopenick",
+      "publisher": "Bezirksamt Treptow-Köpenick",
+      "category": "District office",
+      "coverage": "District roadworks, schools, parks, opening hours, planning and local events",
+      "channel": "Press search + RSS",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Bezirksamt+Treptow-K%C3%B6penick",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=Bezirksamt+Treptow-K%C3%B6penick",
+      "press_office_url": "https://www.berlin.de/ba-treptow-koepenick/politik-und-verwaltung/service-und-organisationseinheiten/pressestelle/",
+      "poll": {
+        "endpoint_id": "bezirksamt-treptow-kopenick-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "polizei-berlin-presseportal",
+      "publisher": "Polizei Berlin",
+      "category": "Berlin public body / joint service",
+      "coverage": "Police incident updates, appeals and public notices",
+      "channel": "Press search + RSS",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Polizei+Berlin",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=Polizei+Berlin",
+      "poll": {
+        "endpoint_id": "polizei-berlin-presseportal-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "kammergericht-berlin",
+      "publisher": "Kammergericht Berlin",
+      "category": "Berlin public body / joint service",
+      "coverage": "Civil and criminal appeals, notable judgments",
+      "channel": "Press search + RSS",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Kammergericht+Berlin",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=Kammergericht+Berlin",
+      "poll": {
+        "endpoint_id": "kammergericht-berlin-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "landesarbeitsgericht-arbeitsgericht",
+      "publisher": "Landesarbeitsgericht / Arbeitsgericht",
+      "category": "Berlin public body / joint service",
+      "coverage": "Employment hearings and labour judgments",
+      "channel": "Press search + RSS",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Landesarbeitsgericht+%2F+Arbeitsgericht",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=Landesarbeitsgericht+%2F+Arbeitsgericht",
+      "poll": {
+        "endpoint_id": "landesarbeitsgericht-arbeitsgericht-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin and Brandenburg",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "oberverwaltungsgericht-berlin-brandenburg",
+      "publisher": "Oberverwaltungsgericht Berlin-Brandenburg",
+      "category": "Berlin public body / joint service",
+      "coverage": "Administrative appeals and rulings",
+      "channel": "Press search + RSS",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Oberverwaltungsgericht+Berlin-Brandenburg",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=Oberverwaltungsgericht+Berlin-Brandenburg",
+      "poll": {
+        "endpoint_id": "oberverwaltungsgericht-berlin-brandenburg-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin and Brandenburg",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "sozialgericht-berlin",
+      "publisher": "Sozialgericht Berlin",
+      "category": "Berlin public body / joint service",
+      "coverage": "Social insurance and benefits judgments",
+      "channel": "Press search + RSS",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Sozialgericht+Berlin",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=Sozialgericht+Berlin",
+      "poll": {
+        "endpoint_id": "sozialgericht-berlin-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "strafverfolgungsbehorden-general-staats-und-amtsanwaltschaften",
+      "publisher": "Strafverfolgungsbehörden / General-, Staats- und Amtsanwaltschaften",
+      "category": "Berlin public body / joint service",
+      "coverage": "Prosecution announcements, criminal charges and case updates",
+      "channel": "Press search",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Strafverfolgungsbeh%C3%B6rden+%2F+General-%2C+Staats-+und+Amtsanwaltschaften",
+      "poll": {
+        "endpoint_id": "strafverfolgungsbehorden-general-staats-und-amtsanwaltschaften-updates",
+        "adapter": "listing",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "verfassungsgerichtshof-des-landes-berlin",
+      "publisher": "Verfassungsgerichtshof des Landes Berlin",
+      "category": "Berlin public body / joint service",
+      "coverage": "State constitutional decisions and proceedings",
+      "channel": "Press search",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Verfassungsgerichtshof+des+Landes+Berlin",
+      "poll": {
+        "endpoint_id": "verfassungsgerichtshof-des-landes-berlin-updates",
+        "adapter": "listing",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "verwaltungsgericht-berlin",
+      "publisher": "Verwaltungsgericht Berlin",
+      "category": "Berlin public body / joint service",
+      "coverage": "Administrative court judgments and hearings",
+      "channel": "Press search + RSS",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Verwaltungsgericht+Berlin",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=Verwaltungsgericht+Berlin",
+      "poll": {
+        "endpoint_id": "verwaltungsgericht-berlin-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "beauftragte-des-senats-fur-integration-und-migration",
+      "publisher": "Beauftragte des Senats für Integration und Migration",
+      "category": "Berlin public body / joint service",
+      "coverage": "Migration policy, advice and participation",
+      "channel": "Press search + RSS",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Beauftragte+des+Senats+f%C3%BCr+Integration+und+Migration",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=Beauftragte+des+Senats+f%C3%BCr+Integration+und+Migration",
+      "poll": {
+        "endpoint_id": "beauftragte-des-senats-fur-integration-und-migration-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "beauftragter-zur-aufarbeitung-der-sed-diktatur",
+      "publisher": "Beauftragter zur Aufarbeitung der SED-Diktatur",
+      "category": "Berlin public body / joint service",
+      "coverage": "Historical records, remembrance and education",
+      "channel": "Press search + RSS (empty at check)",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Beauftragter+zur+Aufarbeitung+der+SED-Diktatur",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=Beauftragter+zur+Aufarbeitung+der+SED-Diktatur",
+      "poll": {
+        "endpoint_id": "beauftragter-zur-aufarbeitung-der-sed-diktatur-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "burger-und-polizeibeauftragter-des-landes-berlin",
+      "publisher": "Bürger- und Polizeibeauftragter des Landes Berlin",
+      "category": "Berlin public body / joint service",
+      "coverage": "Complaints, oversight findings and activity reports",
+      "channel": "Press search + RSS",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=B%C3%BCrger-+und+Polizeibeauftragter+des+Landes+Berlin",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=B%C3%BCrger-+und+Polizeibeauftragter+des+Landes+Berlin",
+      "poll": {
+        "endpoint_id": "burger-und-polizeibeauftragter-des-landes-berlin-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "pflegebeauftragte-des-landes-berlin",
+      "publisher": "Pflegebeauftragte des Landes Berlin",
+      "category": "Berlin public body / joint service",
+      "coverage": "Care policy, entitlements and advice",
+      "channel": "Press search + RSS",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Pflegebeauftragte+des+Landes+Berlin",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=Pflegebeauftragte+des+Landes+Berlin",
+      "poll": {
+        "endpoint_id": "pflegebeauftragte-des-landes-berlin-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "landestierschutzbeauftragte",
+      "publisher": "Landestierschutzbeauftragte",
+      "category": "Berlin public body / joint service",
+      "coverage": "Animal welfare reports, initiatives and advice",
+      "channel": "Press search + RSS",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Landestierschutzbeauftragte",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=Landestierschutzbeauftragte",
+      "poll": {
+        "endpoint_id": "landestierschutzbeauftragte-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "landeswahlleitung",
+      "publisher": "Landeswahlleitung",
+      "category": "Berlin public body / joint service",
+      "coverage": "Election dates, procedures, provisional and final results",
+      "channel": "Press search + RSS",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Landeswahlleitung",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=Landeswahlleitung",
+      "poll": {
+        "endpoint_id": "landeswahlleitung-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "berliner-jobcenter",
+      "publisher": "Berliner Jobcenter",
+      "category": "Berlin public body / joint service",
+      "coverage": "Benefit services, labour-market support and opening times",
+      "channel": "Press search + RSS",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Berliner+Jobcenter",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=Berliner+Jobcenter",
+      "poll": {
+        "endpoint_id": "berliner-jobcenter-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "haupt-jugend-und-auszubildendenvertretung",
+      "publisher": "Haupt-Jugend- und Auszubildendenvertretung",
+      "category": "Berlin public body / joint service",
+      "coverage": "Public-sector trainee representation and announcements",
+      "channel": "Press search + RSS",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Haupt-Jugend-+und+Auszubildendenvertretung",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=Haupt-Jugend-+und+Auszubildendenvertretung",
+      "poll": {
+        "endpoint_id": "haupt-jugend-und-auszubildendenvertretung-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "landesamt-fur-einwanderung",
+      "publisher": "Landesamt für Einwanderung",
+      "category": "Berlin public body / joint service",
+      "coverage": "Immigration rules, appointments and changes to services",
+      "channel": "Press search + RSS (empty at check)",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Landesamt+f%C3%BCr+Einwanderung",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=Landesamt+f%C3%BCr+Einwanderung",
+      "poll": {
+        "endpoint_id": "landesamt-fur-einwanderung-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "landesamt-fur-fluchtlingsangelegenheiten-und-unterbringung",
+      "publisher": "Landesamt für Flüchtlingsangelegenheiten und Unterbringung",
+      "category": "Berlin public body / joint service",
+      "coverage": "Refugee reception, accommodation and services",
+      "channel": "Press search + RSS",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Landesamt+f%C3%BCr+Fl%C3%BCchtlingsangelegenheiten+und+Unterbringung",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=Landesamt+f%C3%BCr+Fl%C3%BCchtlingsangelegenheiten+und+Unterbringung",
+      "poll": {
+        "endpoint_id": "landesamt-fur-fluchtlingsangelegenheiten-und-unterbringung-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "landesamt-fur-gesundheit-und-soziales",
+      "publisher": "Landesamt für Gesundheit und Soziales",
+      "category": "Berlin public body / joint service",
+      "coverage": "Public health, social services and surveillance",
+      "channel": "Press search",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Landesamt+f%C3%BCr+Gesundheit+und+Soziales",
+      "poll": {
+        "endpoint_id": "landesamt-fur-gesundheit-und-soziales-updates",
+        "adapter": "listing",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "landesdenkmalamt",
+      "publisher": "Landesdenkmalamt",
+      "category": "Berlin public body / joint service",
+      "coverage": "Heritage designations, conservation and archaeology",
+      "channel": "Press search",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Landesdenkmalamt",
+      "poll": {
+        "endpoint_id": "landesdenkmalamt-updates",
+        "adapter": "listing",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "rechnungshof-von-berlin-presseportal",
+      "publisher": "Rechnungshof von Berlin",
+      "category": "Berlin public body / joint service",
+      "coverage": "Audit findings, annual reports and public expenditure",
+      "channel": "Press search + RSS",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/index/search?institutions%5B%5D=Rechnungshof+von+Berlin",
+      "rss_url": "https://www.berlin.de/presse/pressemitteilungen/index/feed?institutions%5B%5D=Rechnungshof+von+Berlin",
+      "press_office_url": "https://www.berlin.de/rechnungshof/presse/pressemitteilungen/",
+      "poll": {
+        "endpoint_id": "rechnungshof-von-berlin-presseportal-updates",
+        "adapter": "feed",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "bvg",
+      "publisher": "BVG",
+      "category": "Public operator / enterprise",
+      "coverage": "U-Bahn, tram and bus changes, accessibility and new services",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://www.bvg.de/de/unternehmen/medienportal",
+      "poll": {
+        "endpoint_id": "bvg-updates",
+        "adapter": "listing",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "s-bahn-berlin",
+      "publisher": "S-Bahn Berlin",
+      "category": "Public operator / enterprise",
+      "coverage": "S-Bahn disruptions, engineering works and substitute services",
+      "channel": "Operational notices",
+      "monitor_url": "https://sbahn.berlin/fahren/bauen-stoerung/",
+      "poll": {
+        "endpoint_id": "s-bahn-berlin-updates",
+        "adapter": "notice",
+        "interval_minutes": 15,
+        "selector": "main"
+      },
+      "scope": "Berlin and Brandenburg",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "deutsche-bahn-region-ost",
+      "publisher": "Deutsche Bahn, Region Ost",
+      "category": "Public operator / enterprise",
+      "coverage": "Rail construction, stations and regional train service",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://www.deutschebahn.com/de/presse/presse-regional/pr-berlin-de/aktuell",
+      "poll": {
+        "endpoint_id": "deutsche-bahn-region-ost-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin and other regions; verify jurisdiction for each report",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "flughafen-berlin-brandenburg",
+      "publisher": "Flughafen Berlin Brandenburg",
+      "category": "Public operator / enterprise",
+      "coverage": "Airport operations, passenger figures and terminal changes",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://corporate.berlin-airport.de/de/unternehmen-presse/newsroom/pressemitteilungen.html",
+      "poll": {
+        "endpoint_id": "flughafen-berlin-brandenburg-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin and Brandenburg",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "berliner-stadtreinigung-bsr",
+      "publisher": "Berliner Stadtreinigung (BSR)",
+      "category": "Public operator / enterprise",
+      "coverage": "Collection schedules, street cleaning, recycling and collection points",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://www.bsr.de/pressemeldungen",
+      "poll": {
+        "endpoint_id": "berliner-stadtreinigung-bsr-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "stromnetz-berlin",
+      "publisher": "Stromnetz Berlin",
+      "category": "Public operator / enterprise",
+      "coverage": "Power network works, outages, restoration and grid investment",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://www.stromnetz.berlin/uber-uns/presse/",
+      "poll": {
+        "endpoint_id": "stromnetz-berlin-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "berliner-energie-und-warme-bew",
+      "publisher": "Berliner Energie und Wärme (BEW)",
+      "category": "Public operator / enterprise",
+      "coverage": "District heating projects, works and changes to supply",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://www.bew.berlin/aktuelles-und-presse/",
+      "poll": {
+        "endpoint_id": "berliner-energie-und-warme-bew-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "berliner-stadtwerke",
+      "publisher": "Berliner Stadtwerke",
+      "category": "Public operator / enterprise",
+      "coverage": "City solar projects, renewable power and electric charging",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://berlinerstadtwerke.de/presse/",
+      "poll": {
+        "endpoint_id": "berliner-stadtwerke-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "grun-berlin",
+      "publisher": "Grün Berlin",
+      "category": "Public operator / enterprise",
+      "coverage": "Public parks, openings, renovation and access",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://gruen-berlin.de/presse",
+      "poll": {
+        "endpoint_id": "grun-berlin-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "berlin-txl-management-gmbh-vormals-tegel-projekt",
+      "publisher": "Berlin TXL Management GmbH (vormals Tegel Projekt)",
+      "category": "Public operator / enterprise",
+      "coverage": "Urban redevelopment at the former airport and housing projects",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://tegelprojekt.de/presseinformationen/",
+      "poll": {
+        "endpoint_id": "berlin-txl-management-gmbh-vormals-tegel-projekt-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "tempelhof-projekt",
+      "publisher": "Tempelhof Projekt",
+      "category": "Public operator / enterprise",
+      "coverage": "Former airport building projects, public uses and events",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://www.thf-berlin.de/aktuelles/presse",
+      "poll": {
+        "endpoint_id": "tempelhof-projekt-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "bim-berliner-immobilienmanagement",
+      "publisher": "BIM Berliner Immobilienmanagement",
+      "category": "Public operator / enterprise",
+      "coverage": "Municipal buildings, redevelopment and public-property projects",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://www.bim-berlin.de/presse/presse",
+      "poll": {
+        "endpoint_id": "bim-berliner-immobilienmanagement-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "degewo",
+      "publisher": "degewo",
+      "category": "Public operator / enterprise",
+      "coverage": "City-owned housing, completions, construction and tenant services",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://www.degewo.de/presse",
+      "poll": {
+        "endpoint_id": "degewo-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "gesobau",
+      "publisher": "GESOBAU",
+      "category": "Public operator / enterprise",
+      "coverage": "City-owned housing, allocation, renovations and completions",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://www.gesobau.de/presse/",
+      "poll": {
+        "endpoint_id": "gesobau-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "gewobag",
+      "publisher": "Gewobag",
+      "category": "Public operator / enterprise",
+      "coverage": "City-owned housing projects, modernisation and tenant services",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://www.gewobag.de/ueber-uns/presse-und-medien/",
+      "poll": {
+        "endpoint_id": "gewobag-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "howoge",
+      "publisher": "HOWOGE",
+      "category": "Public operator / enterprise",
+      "coverage": "City-owned housing and school construction",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://unternehmen.howoge.de/presse.html",
+      "poll": {
+        "endpoint_id": "howoge-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "stadt-und-land",
+      "publisher": "STADT UND LAND",
+      "category": "Public operator / enterprise",
+      "coverage": "City-owned housing, construction and neighbourhood projects",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://stadtundland.de/unternehmen/presse",
+      "poll": {
+        "endpoint_id": "stadt-und-land-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "wbm-wohnungsbaugesellschaft-berlin-mitte",
+      "publisher": "WBM Wohnungsbaugesellschaft Berlin-Mitte",
+      "category": "Public operator / enterprise",
+      "coverage": "City-owned housing and commercial property in central Berlin",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://www.wbm.de/presse/",
+      "poll": {
+        "endpoint_id": "wbm-wohnungsbaugesellschaft-berlin-mitte-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "investitionsbank-berlin-ibb",
+      "publisher": "Investitionsbank Berlin (IBB)",
+      "category": "Public operator / enterprise",
+      "coverage": "Funding programmes, housing-market data and grants",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://www.ibb.de/de/ueber-uns/presse/presse.html",
+      "poll": {
+        "endpoint_id": "investitionsbank-berlin-ibb-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "vivantes",
+      "publisher": "Vivantes",
+      "category": "Public operator / enterprise",
+      "coverage": "Public hospital services, new clinics and annual figures",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://www.vivantes.de/unternehmen/media-events/pressemitteilungen/",
+      "poll": {
+        "endpoint_id": "vivantes-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "berliner-feuerwehr",
+      "publisher": "Berliner Feuerwehr",
+      "category": "Public authority",
+      "coverage": "Emergency service announcements, official incident reports and annual statistics",
+      "channel": "Operational notices",
+      "monitor_url": "https://www.berliner-feuerwehr.de/aktuelles/einsaetze/",
+      "poll": {
+        "endpoint_id": "berliner-feuerwehr-updates",
+        "adapter": "listing",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "bundespolizeidirektion-berlin",
+      "publisher": "Bundespolizeidirektion Berlin",
+      "category": "Public authority",
+      "coverage": "Federal police notices for railway stations, federal railways and airports",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://www.presseportal.de/blaulicht/nr/70238",
+      "poll": {
+        "endpoint_id": "bundespolizeidirektion-berlin-updates",
+        "adapter": "listing",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin and Brandenburg",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "deutscher-wetterdienst-dwd",
+      "publisher": "Deutscher Wetterdienst (DWD)",
+      "category": "Public authority",
+      "coverage": "Weather warnings and public forecasts",
+      "channel": "Operational notices",
+      "monitor_url": "https://www.dwd.de/DE/wetter/warnungen_gemeinden/warnWetter_node.html",
+      "poll": {
+        "endpoint_id": "deutscher-wetterdienst-dwd-updates",
+        "adapter": "lookup",
+        "interval_minutes": 1440,
+        "note": "Dynamic map of national warnings; needs a Berlin-filtered warning data endpoint.",
+        "purpose": "reference"
+      },
+      "scope": "Germany",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "amt-fur-statistik-berlin-brandenburg",
+      "publisher": "Amt für Statistik Berlin-Brandenburg",
+      "category": "Public authority",
+      "coverage": "Population, prices, construction and election statistics",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://www.statistik-berlin-brandenburg.de/pressemitteilungen",
+      "poll": {
+        "endpoint_id": "amt-fur-statistik-berlin-brandenburg-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin and Brandenburg",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "regionaldirektion-berlin-brandenburg-der-bundesagentur-fur-arbeit",
+      "publisher": "Regionaldirektion Berlin-Brandenburg der Bundesagentur für Arbeit",
+      "category": "Public authority",
+      "coverage": "Monthly labour market, training places and employment statistics",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://www.arbeitsagentur.de/vor-ort/rd-bb/presse",
+      "poll": {
+        "endpoint_id": "regionaldirektion-berlin-brandenburg-der-bundesagentur-fur-arbeit-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin and Brandenburg",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "der-landeswahlleiter-fur-berlin",
+      "publisher": "Der Landeswahlleiter für Berlin",
+      "category": "Public authority",
+      "coverage": "Election dates, results, postal voting and polling arrangements",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://www.berlin.de/wahlen/pressemitteilungen/",
+      "poll": {
+        "endpoint_id": "der-landeswahlleiter-fur-berlin-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "beauftragte-fur-partizipation-und-integration",
+      "publisher": "Beauftragte für Partizipation und Integration",
+      "category": "Public authority",
+      "coverage": "Integration programmes, participation and advice",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://www.berlin.de/lb/intmig/service/presse/pressemitteilungen/",
+      "poll": {
+        "endpoint_id": "beauftragte-fur-partizipation-und-integration-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "humboldt-universitat-zu-berlin",
+      "publisher": "Humboldt-Universität zu Berlin",
+      "category": "Public research / culture",
+      "coverage": "Academic research, admissions and university decisions",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://nachrichten.idw-online.de/institutions/46",
+      "poll": {
+        "endpoint_id": "humboldt-universitat-zu-berlin-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "freie-universitat-berlin",
+      "publisher": "Freie Universität Berlin",
+      "category": "Public research / culture",
+      "coverage": "Academic research, campus services and university policy",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://www.fu-berlin.de/presse/informationen/",
+      "poll": {
+        "endpoint_id": "freie-universitat-berlin-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "technische-universitat-berlin",
+      "publisher": "Technische Universität Berlin",
+      "category": "Public research / culture",
+      "coverage": "Engineering research, campus projects and university decisions",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://www.tu.berlin/news/pressemitteilungen-1",
+      "poll": {
+        "endpoint_id": "technische-universitat-berlin-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "zentral-und-landesbibliothek-berlin-zlb",
+      "publisher": "Zentral- und Landesbibliothek Berlin (ZLB)",
+      "category": "Public research / culture",
+      "coverage": "Public library services, programmes and locations",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://www.zlb.de/presse/",
+      "poll": {
+        "endpoint_id": "zentral-und-landesbibliothek-berlin-zlb-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "stiftung-preussischer-kulturbesitz",
+      "publisher": "Stiftung Preußischer Kulturbesitz",
+      "category": "Public research / culture",
+      "coverage": "Museum services, openings and cultural heritage",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://www.preussischer-kulturbesitz.de/newsroom/presse.html",
+      "poll": {
+        "endpoint_id": "stiftung-preussischer-kulturbesitz-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin and other regions; verify jurisdiction for each report",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "kulturveranstaltungen-des-bundes-in-berlin",
+      "publisher": "Kulturveranstaltungen des Bundes in Berlin",
+      "category": "Public research / culture",
+      "coverage": "Publicly funded festivals, exhibitions and programming",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://www.kbb.eu/presse",
+      "poll": {
+        "endpoint_id": "kulturveranstaltungen-des-bundes-in-berlin-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "berliner-verkehrsinformationszentrale-viz",
+      "publisher": "Berliner Verkehrsinformationszentrale (VIZ)",
+      "category": "Official records service",
+      "coverage": "Road closures, roadworks, demonstrations and traffic notices",
+      "channel": "Operational notices",
+      "monitor_url": "https://viz.berlin.de/",
+      "poll": {
+        "endpoint_id": "berliner-verkehrsinformationszentrale-viz-updates",
+        "adapter": "lookup",
+        "interval_minutes": 15,
+        "note": "Dynamic map; use a Berlin incident data endpoint before enabling.",
+        "purpose": "reference"
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "meinberlin",
+      "publisher": "meinBerlin",
+      "category": "Official records service",
+      "coverage": "Consultations, planning proposals, deadlines and opportunities to respond",
+      "channel": "Records / data",
+      "monitor_url": "https://mein.berlin.de/projekte/",
+      "poll": {
+        "endpoint_id": "meinberlin-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "amtsblatt-fur-berlin",
+      "publisher": "Amtsblatt für Berlin",
+      "category": "Official records service",
+      "coverage": "Formal public notices, planning notices and tenders",
+      "channel": "Records / data",
+      "monitor_url": "https://www.berlin.de/landesverwaltungsamt/logistikservice/amtsblatt-fuer-berlin/",
+      "poll": {
+        "endpoint_id": "amtsblatt-fur-berlin-updates",
+        "adapter": "documents",
+        "interval_minutes": 1440,
+        "link_pattern": "\\.pdf(?:$|\\?)"
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "berliner-vorschriften-und-rechtsprechungsdatenbank",
+      "publisher": "Berliner Vorschriften- und Rechtsprechungsdatenbank",
+      "category": "Official records service",
+      "coverage": "Legal text, ordinances and judgments",
+      "channel": "Records / data",
+      "monitor_url": "https://gesetze.berlin.de/",
+      "poll": {
+        "endpoint_id": "berliner-vorschriften-und-rechtsprechungsdatenbank-updates",
+        "adapter": "lookup",
+        "interval_minutes": 1440,
+        "note": "Search database requires query-specific discovery.",
+        "purpose": "reference"
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "vergabeplattform-berlin",
+      "publisher": "Vergabeplattform Berlin",
+      "category": "Official records service",
+      "coverage": "Tender notices and public procurement",
+      "channel": "Records / data",
+      "monitor_url": "https://www.berlin.de/vergabeplattform/",
+      "poll": {
+        "endpoint_id": "vergabeplattform-berlin-updates",
+        "adapter": "lookup",
+        "interval_minutes": 1440,
+        "note": "Procurement portal requires a tender search adapter.",
+        "purpose": "reference"
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "berlin-open-data",
+      "publisher": "Berlin Open Data",
+      "category": "Official records service",
+      "coverage": "Agency datasets, including new releases and historical series",
+      "channel": "Records / data",
+      "monitor_url": "https://daten.berlin.de/",
+      "poll": {
+        "endpoint_id": "berlin-open-data-updates",
+        "adapter": "lookup",
+        "interval_minutes": 1440,
+        "note": "Dataset catalogue requires changed-record discovery through its API.",
+        "purpose": "reference"
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "berliner-beauftragte-fur-datenschutz-und-informationsfreiheit",
+      "publisher": "Berliner Beauftragte für Datenschutz und Informationsfreiheit",
+      "category": "Public authority",
+      "coverage": "Data protection decisions, annual reports and oversight",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://www.datenschutz-berlin.de/infothek-und-service/pressemitteilungen",
+      "poll": {
+        "endpoint_id": "berliner-beauftragte-fur-datenschutz-und-informationsfreiheit-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "rechnungshof-von-berlin",
+      "publisher": "Rechnungshof von Berlin",
+      "category": "Public authority",
+      "coverage": "Public spending audits, annual reports and recommendations",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://www.berlin.de/rechnungshof/presse/pressemitteilungen/",
+      "poll": {
+        "endpoint_id": "rechnungshof-von-berlin-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "landesamt-fur-gesundheit-und-soziales-berlin",
+      "publisher": "Landesamt für Gesundheit und Soziales Berlin",
+      "category": "Public authority",
+      "coverage": "Weekly disease surveillance and public health reports",
+      "channel": "Records / data",
+      "monitor_url": "https://www.berlin.de/lageso/gesundheit/infektionskrankheiten/berichte-veroeffentlichungen/wochenberichte/",
+      "poll": {
+        "endpoint_id": "landesamt-fur-gesundheit-und-soziales-berlin-updates",
+        "adapter": "documents",
+        "interval_minutes": 1440,
+        "link_pattern": "\\.pdf(?:$|\\?)"
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "verkehrsverbund-berlin-brandenburg",
+      "publisher": "Verkehrsverbund Berlin-Brandenburg",
+      "category": "Public operator / enterprise",
+      "coverage": "Fare changes, timetables, regional bus and rail service",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://unternehmen.vbb.de/der-vbb/presse/pressemitteilungen/",
+      "poll": {
+        "endpoint_id": "verkehrsverbund-berlin-brandenburg-updates",
+        "adapter": "listing",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin and Brandenburg",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "berliner-wasserbetriebe",
+      "publisher": "Berliner Wasserbetriebe",
+      "category": "Public operator / enterprise",
+      "coverage": "Water and sewage tariffs, works, drinking-water supply",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://www.bwb.de/de/pressemitteilungen.php",
+      "poll": {
+        "endpoint_id": "berliner-wasserbetriebe-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "berliner-bader-betriebe",
+      "publisher": "Berliner Bäder-Betriebe",
+      "category": "Public operator / enterprise",
+      "coverage": "Swimming pool opening times, renovations, prices and notices",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://www.berlinerbaeder.de/presse/",
+      "poll": {
+        "endpoint_id": "berliner-bader-betriebe-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "charite-universitatsmedizin-berlin",
+      "publisher": "Charité – Universitätsmedizin Berlin",
+      "category": "Public research / culture",
+      "coverage": "Clinical studies, public hospital services and medical research",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://www.charite.de/die_charite/presse/pressemitteilungen/",
+      "poll": {
+        "endpoint_id": "charite-universitatsmedizin-berlin-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin and other regions; verify jurisdiction for each report",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "abgeordnetenhaus-von-berlin",
+      "publisher": "Abgeordnetenhaus von Berlin",
+      "category": "Public authority",
+      "coverage": "Written Senate answers to questions posed by members",
+      "channel": "Records / data",
+      "monitor_url": "https://parlament-berlin.de/aktuelles-presse/parlamentarische-anfragen/schriftliche-anfragen-aktuell",
+      "poll": {
+        "endpoint_id": "abgeordnetenhaus-von-berlin-updates",
+        "adapter": "documents",
+        "interval_minutes": 1440,
+        "link_pattern": "\\.pdf(?:$|\\?)"
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "landespressedienst-brandenburg",
+      "publisher": "Landespressedienst Brandenburg",
+      "category": "Public authority",
+      "coverage": "Cross-border state policy, planning and regional administration",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://landesregierung-brandenburg.de/",
+      "poll": {
+        "endpoint_id": "landespressedienst-brandenburg-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Brandenburg",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "deutsche-rentenversicherung-berlin-brandenburg",
+      "publisher": "Deutsche Rentenversicherung Berlin-Brandenburg",
+      "category": "Public authority",
+      "coverage": "Pensions, rehabilitation and advice for Berlin residents",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://www.deutsche-rentenversicherung.de/BerlinBrandenburg/DE/Presse/Pressemitteilungen/pressemitteilungen_node.html",
+      "poll": {
+        "endpoint_id": "deutsche-rentenversicherung-berlin-brandenburg-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin and Brandenburg",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "polizei-berlin",
+      "publisher": "Polizei Berlin",
+      "category": "Public authority",
+      "coverage": "Official initial accounts, appeals and corrections",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://www.berlin.de/polizei/polizeimeldungen/",
+      "poll": {
+        "endpoint_id": "polizei-berlin-updates",
+        "adapter": "listing",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "berliner-gerichte-und-strafverfolgungsbehorden",
+      "publisher": "Berliner Gerichte und Strafverfolgungsbehörden",
+      "category": "Public authority",
+      "coverage": "Court decisions and prosecutor announcements",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://www.berlin.de/gerichte/presse/",
+      "poll": {
+        "endpoint_id": "berliner-gerichte-und-strafverfolgungsbehorden-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "berliner-bezirksverordnetenversammlungen",
+      "publisher": "Berliner Bezirksverordnetenversammlungen",
+      "category": "Official records service",
+      "coverage": "District assembly agendas, motions, votes and minutes",
+      "channel": "Records / data",
+      "monitor_url": "https://service.berlin.de/buegerinformationssystem-bvv/",
+      "poll": {
+        "endpoint_id": "berliner-bezirksverordnetenversammlungen-updates",
+        "adapter": "lookup",
+        "interval_minutes": 1440,
+        "note": "Directory of district assembly systems; configure per-assembly records.",
+        "purpose": "reference"
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "land-berlin-gesetz-und-verordnungsblatt",
+      "publisher": "Land Berlin – Gesetz- und Verordnungsblatt",
+      "category": "Official records service",
+      "coverage": "Enacted state laws, regulations and effective dates",
+      "channel": "Records / data",
+      "monitor_url": "https://www.berlin.de/sen/justiz/service/gesetze-und-verordnungen/",
+      "poll": {
+        "endpoint_id": "land-berlin-gesetz-und-verordnungsblatt-updates",
+        "adapter": "lookup",
+        "interval_minutes": 1440,
+        "note": "Directory of law and ordinance resources.",
+        "purpose": "reference"
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "it-dienstleistungszentrum-berlin-itdz",
+      "publisher": "IT-Dienstleistungszentrum Berlin (ITDZ)",
+      "category": "Public authority",
+      "coverage": "Public administration IT, digital services and official project updates",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://www.itdz-berlin.de/aktuelles/",
+      "poll": {
+        "endpoint_id": "it-dienstleistungszentrum-berlin-itdz-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "berlinovo-immobilien-gesellschaft",
+      "publisher": "Berlinovo Immobilien Gesellschaft",
+      "category": "Public operator / enterprise",
+      "coverage": "Public property projects, student and staff accommodation",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://www.berlinovo.de/de/presse",
+      "poll": {
+        "endpoint_id": "berlinovo-immobilien-gesellschaft-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "messe-berlin",
+      "publisher": "Messe Berlin",
+      "category": "Public operator / enterprise",
+      "coverage": "City-owned exhibition company, trade fairs and operating announcements",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://www.messe-berlin.de/de/presse/pressemitteilungen",
+      "poll": {
+        "endpoint_id": "messe-berlin-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin and other regions; verify jurisdiction for each report",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "stiftung-berliner-mauer",
+      "publisher": "Stiftung Berliner Mauer",
+      "category": "Public research / culture",
+      "coverage": "Memorial sites, exhibitions and commemorations",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://www.stiftung-berliner-mauer.de/de/ueber-uns/presse",
+      "poll": {
+        "endpoint_id": "stiftung-berliner-mauer-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "stiftung-berliner-philharmoniker",
+      "publisher": "Stiftung Berliner Philharmoniker",
+      "category": "Public research / culture",
+      "coverage": "Concert seasons, education and publicly funded orchestra news",
+      "channel": "Newsroom / announcements",
+      "monitor_url": "https://www.berliner-philharmoniker.de/presse/",
+      "poll": {
+        "endpoint_id": "stiftung-berliner-philharmoniker-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "land-berlin-beteiligungsbericht",
+      "publisher": "Land Berlin – Beteiligungsbericht",
+      "category": "Official records service",
+      "coverage": "Ownership and control of public enterprises",
+      "channel": "Records / data",
+      "monitor_url": "https://www.berlin.de/sen/finanzen/vermoegen/beteiligungen/beteiligungsdatenbank/",
+      "poll": {
+        "endpoint_id": "land-berlin-beteiligungsbericht-updates",
+        "adapter": "lookup",
+        "interval_minutes": 1440,
+        "note": "Ownership lookup for public enterprises.",
+        "purpose": "reference"
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "presseportal-des-landes-berlin",
+      "publisher": "Presseportal des Landes Berlin",
+      "category": "Berlin public service",
+      "coverage": "News from participating Senate departments, district offices and other authorities.",
+      "channel": "Web / records",
+      "monitor_url": "https://www.berlin.de/presse/",
+      "poll": {
+        "endpoint_id": "presseportal-des-landes-berlin-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "landespresseportal-abonnement",
+      "publisher": "Landespresseportal – Abonnement",
+      "category": "Berlin public service",
+      "coverage": "Select press announcements to receive through the city subscription service.",
+      "channel": "Subscription",
+      "monitor_url": "https://www.berlin.de/presse/pressemitteilungen/user",
+      "poll": {
+        "endpoint_id": "landespresseportal-abonnement-updates",
+        "adapter": "lookup",
+        "interval_minutes": 1440,
+        "note": "Subscription registration only.",
+        "purpose": "subscription"
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "abgeordnetenhaus-pardok",
+      "publisher": "Abgeordnetenhaus – PARDOK",
+      "category": "Official records service",
+      "coverage": "Written Senate replies, printed papers, committee proceedings and transcripts.",
+      "channel": "Web / records",
+      "monitor_url": "https://pardok.parlament-berlin.de/portala/browse.tt.html",
+      "poll": {
+        "endpoint_id": "abgeordnetenhaus-pardok-updates",
+        "adapter": "lookup",
+        "interval_minutes": 1440,
+        "note": "Interactive parliamentary search portal.",
+        "purpose": "reference"
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "abgeordnetenhaus-open-data",
+      "publisher": "Abgeordnetenhaus – Open Data",
+      "category": "Official records service",
+      "coverage": "Download parliamentary documents and structured parliamentary records.",
+      "channel": "Web / records",
+      "monitor_url": "https://www.parlament-berlin.de/dokumente/open-data",
+      "poll": {
+        "endpoint_id": "abgeordnetenhaus-open-data-updates",
+        "adapter": "lookup",
+        "interval_minutes": 1440,
+        "note": "Historical bulk XML exports require a parliamentary record adapter.",
+        "purpose": "reference"
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "alterssicherungskommission-bmas",
+      "publisher": "Alterssicherungskommission (BMAS)",
+      "category": "Public institution / official records",
+      "coverage": "Pension reform evidence, commission reports and recommendations",
+      "channel": "Public source / records",
+      "monitor_url": "https://www.bmas.de/DE/Soziales/Rente-und-Altersvorsorge/Rentenreform-2025/Rentenkommission-2026/rentenkommission-2026.html",
+      "poll": {
+        "endpoint_id": "alterssicherungskommission-bmas-updates",
+        "adapter": "lookup",
+        "interval_minutes": 1440,
+        "note": "Commission reference page.",
+        "purpose": "reference"
+      },
+      "scope": "Germany",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "industrie-und-handelskammer-zu-berlin",
+      "publisher": "Industrie- und Handelskammer zu Berlin",
+      "category": "Public-law chamber",
+      "coverage": "Business surveys, regional economic indicators, vocational training and policy positions",
+      "channel": "Public source / records",
+      "monitor_url": "https://www.ihk.de/berlin/presse/presseinfo/",
+      "poll": {
+        "endpoint_id": "industrie-und-handelskammer-zu-berlin-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "bundesministerium-fur-wohnen-stadtentwicklung-und-bauwesen",
+      "publisher": "Bundesministerium für Wohnen, Stadtentwicklung und Bauwesen",
+      "category": "Public institution / official records",
+      "coverage": "Housing legislation, benefit reform, consultations and cabinet proposals",
+      "channel": "Public source / records",
+      "monitor_url": "https://www.bmwsb.bund.de/",
+      "poll": {
+        "endpoint_id": "bundesministerium-fur-wohnen-stadtentwicklung-und-bauwesen-updates",
+        "adapter": "lookup",
+        "interval_minutes": 1440,
+        "note": "Ministry homepage; replace with the relevant newsroom listing.",
+        "purpose": "reference"
+      },
+      "scope": "Germany",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "sante-publique-france",
+      "publisher": "Santé publique France",
+      "category": "Public institution / official records",
+      "coverage": "Public health surveillance, heat-related illness and mortality reports",
+      "channel": "Public source / records",
+      "monitor_url": "https://www.santepubliquefrance.fr/presse",
+      "poll": {
+        "endpoint_id": "sante-publique-france-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "France",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "bundesagentur-fur-arbeit",
+      "publisher": "Bundesagentur für Arbeit",
+      "category": "Public institution / official records",
+      "coverage": "Official implementation guidance on benefits, employment and training",
+      "channel": "Public source / records",
+      "monitor_url": "https://www.arbeitsagentur.de/ueber-uns/veroeffentlichungen/weisungen",
+      "poll": {
+        "endpoint_id": "bundesagentur-fur-arbeit-updates",
+        "adapter": "documents",
+        "interval_minutes": 1440
+      },
+      "scope": "Germany",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "council-of-the-european-union",
+      "publisher": "Council of the European Union",
+      "category": "Public institution / official records",
+      "coverage": "Council decisions, legislation, trade and customs announcements",
+      "channel": "Public source / records",
+      "monitor_url": "https://www.consilium.europa.eu/en/press/press-releases/",
+      "poll": {
+        "endpoint_id": "council-of-the-european-union-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "European Union",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "staatsanwaltschaft-stade-polizeidirektion-luneburg",
+      "publisher": "Staatsanwaltschaft Stade / Polizeidirektion Lüneburg",
+      "category": "Public institution / official records",
+      "coverage": "Joint case updates, investigations and official incident reports in the Stade region",
+      "channel": "Public source / records",
+      "monitor_url": "https://www.presseportal.de/blaulicht/nr/56836",
+      "poll": {
+        "endpoint_id": "staatsanwaltschaft-stade-polizeidirektion-luneburg-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Lower Saxony",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "ministerium-der-finanzen-des-landes-brandenburg",
+      "publisher": "Ministerium der Finanzen des Landes Brandenburg",
+      "category": "Public institution / official records",
+      "coverage": "State budget, public-sector remuneration and local-government finance",
+      "channel": "Public source / records",
+      "monitor_url": "https://mdf.brandenburg.de/mdf/de/ministerium/presse/pressemitteilungen/",
+      "poll": {
+        "endpoint_id": "ministerium-der-finanzen-des-landes-brandenburg-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Brandenburg",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "generalstaatsanwaltschaft-berlin",
+      "publisher": "Generalstaatsanwaltschaft Berlin",
+      "category": "Public institution / official records",
+      "coverage": "Prosecution reports and published data on antisemitic offences",
+      "channel": "Public source / records",
+      "monitor_url": "https://www.berlin.de/generalstaatsanwaltschaft/antisemitismusbekaempfung/berichte/",
+      "poll": {
+        "endpoint_id": "generalstaatsanwaltschaft-berlin-updates",
+        "adapter": "documents",
+        "interval_minutes": 1440,
+        "link_pattern": "\\.pdf(?:$|\\?)"
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "senatskommission-wohnungsbau",
+      "publisher": "Senatskommission Wohnungsbau",
+      "category": "Public institution / official records",
+      "coverage": "Government decisions on housing projects and obstacles to construction",
+      "channel": "Public source / records",
+      "monitor_url": "https://www.berlin.de/rbmskzl/aktuelles/pressemitteilungen/",
+      "poll": {
+        "endpoint_id": "senatskommission-wohnungsbau-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "bundeskanzleramt-berliner-senatskanzlei",
+      "publisher": "Bundeskanzleramt / Berliner Senatskanzlei",
+      "category": "Public institution / official records",
+      "coverage": "Official accounts, press conferences and statements from federal and state leaders",
+      "channel": "Public source / records",
+      "monitor_url": "https://www.bundesregierung.de/breg-de/aktuelles/pressekonferenzen-und-reden",
+      "poll": {
+        "endpoint_id": "bundeskanzleramt-berliner-senatskanzlei-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin and other regions; verify jurisdiction for each report",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "staatsanwaltschaft-berlin",
+      "publisher": "Staatsanwaltschaft Berlin",
+      "category": "Public institution / official records",
+      "coverage": "Charges, investigations and results of Berlin prosecution proceedings",
+      "channel": "Public source / records",
+      "monitor_url": "https://www.berlin.de/generalstaatsanwaltschaft/presse/pressemitteilungen/",
+      "poll": {
+        "endpoint_id": "staatsanwaltschaft-berlin-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "baukollegium-berlin",
+      "publisher": "Baukollegium Berlin",
+      "category": "Public institution / official records",
+      "coverage": "Design review meetings, project submissions and recommendations",
+      "channel": "Public source / records",
+      "monitor_url": "https://www.berlin.de/sen/bauen/baukultur/baukollegium/",
+      "poll": {
+        "endpoint_id": "baukollegium-berlin-updates",
+        "adapter": "lookup",
+        "interval_minutes": 1440,
+        "note": "Design advisory board reference; select an agenda index.",
+        "purpose": "reference"
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "deutsche-bahn-db-regio-nordost",
+      "publisher": "Deutsche Bahn / DB Regio Nordost",
+      "category": "Public institution / official records",
+      "coverage": "Regional rail service, operational policies and projects",
+      "channel": "Public source / records",
+      "monitor_url": "https://www.deutschebahn.com/de/presse",
+      "poll": {
+        "endpoint_id": "deutsche-bahn-db-regio-nordost-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin and other regions; verify jurisdiction for each report",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "bundesnetzagentur",
+      "publisher": "Bundesnetzagentur",
+      "category": "Public institution / official records",
+      "coverage": "Federal digital-services regulation and short-term rental data rules",
+      "channel": "Public source / records",
+      "monitor_url": "https://www.dsc.bund.de/DE/Fachthemen/Digitales/Kurzzeitvermietung/start.html",
+      "poll": {
+        "endpoint_id": "bundesnetzagentur-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Germany",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "polizei-berlin-versammlungsbehorde",
+      "publisher": "Polizei Berlin (Versammlungsbehörde)",
+      "category": "Public institution / official records",
+      "coverage": "Assembly notices, restrictions and official police statements",
+      "channel": "Public source / records",
+      "monitor_url": "https://www.berlin.de/polizei/polizeimeldungen/",
+      "poll": {
+        "endpoint_id": "polizei-berlin-updates",
+        "adapter": "listing",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "rundfunk-berlin-brandenburg-rbb24-recherche",
+      "publisher": "Rundfunk Berlin-Brandenburg (rbb24 Recherche)",
+      "category": "Public-service newsroom",
+      "coverage": "Investigations and findings released by the public-service newsroom",
+      "channel": "Public source / records",
+      "monitor_url": "https://www.presseportal.de/nr/51580",
+      "poll": {
+        "endpoint_id": "rundfunk-berlin-brandenburg-rbb24-recherche-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin and Brandenburg",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "bezirksverordnetenversammlung-steglitz-zehlendorf",
+      "publisher": "Bezirksverordnetenversammlung Steglitz-Zehlendorf",
+      "category": "Public institution / official records",
+      "coverage": "District assembly motions, voting records, agendas and decisions",
+      "channel": "Public source / records",
+      "monitor_url": "https://www.berlin.de/ba-steglitz-zehlendorf/politik-und-verwaltung/bezirksverordnetenversammlung/",
+      "poll": {
+        "endpoint_id": "bezirksverordnetenversammlung-steglitz-zehlendorf-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "stiftung-planetarium-berlin",
+      "publisher": "Stiftung Planetarium Berlin",
+      "category": "Public institution / official records",
+      "coverage": "Astronomy events, public observing sessions and educational programmes",
+      "channel": "Public source / records",
+      "monitor_url": "https://www.planetarium.berlin/presse",
+      "poll": {
+        "endpoint_id": "stiftung-planetarium-berlin-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "landeskriminalamt-berlin-polizei-berlin",
+      "publisher": "Landeskriminalamt Berlin (Polizei Berlin)",
+      "category": "Public institution / official records",
+      "coverage": "Investigations, crime data and public police statements",
+      "channel": "Public source / records",
+      "monitor_url": "https://www.berlin.de/polizei/polizeimeldungen/",
+      "poll": {
+        "endpoint_id": "polizei-berlin-updates",
+        "adapter": "listing",
+        "interval_minutes": 15
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "volksbuhne-am-rosa-luxemburg-platz",
+      "publisher": "Volksbühne am Rosa-Luxemburg-Platz",
+      "category": "Public institution / official records",
+      "coverage": "Venue updates, performances, closures and programmes",
+      "channel": "Public source / records",
+      "monitor_url": "https://www.volksbuehne.berlin/",
+      "poll": {
+        "endpoint_id": "volksbuhne-am-rosa-luxemburg-platz-updates",
+        "adapter": "lookup",
+        "interval_minutes": 1440,
+        "note": "Theatre homepage; select an announcements listing.",
+        "purpose": "reference"
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "eisenbahn-bundesamt",
+      "publisher": "Eisenbahn-Bundesamt",
+      "category": "Public institution / official records",
+      "coverage": "Railway approvals, decommissioning and official notices",
+      "channel": "Public source / records",
+      "monitor_url": "https://www.eba.bund.de/",
+      "poll": {
+        "endpoint_id": "eisenbahn-bundesamt-updates",
+        "adapter": "lookup",
+        "interval_minutes": 1440,
+        "note": "Rail authority homepage; configure its notices index.",
+        "purpose": "reference"
+      },
+      "scope": "Germany",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "universitat-zu-koln",
+      "publisher": "Universität zu Köln",
+      "category": "Public institution / official records",
+      "coverage": "University statements, research and institutional decisions",
+      "channel": "Public source / records",
+      "monitor_url": "https://uni-koeln.de/universitaet/aktuell/meldungen/presseinformationen",
+      "poll": {
+        "endpoint_id": "universitat-zu-koln-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "North Rhine-Westphalia and research beyond the region",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "landeswahlleitung-mecklenburg-vorpommern",
+      "publisher": "Landeswahlleitung Mecklenburg-Vorpommern",
+      "category": "Public institution / official records",
+      "coverage": "Election results, procedures and voter information",
+      "channel": "Public source / records",
+      "monitor_url": "https://www.laiv-mv.de/Wahlen/Pressemitteilungen/",
+      "poll": {
+        "endpoint_id": "landeswahlleitung-mecklenburg-vorpommern-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Mecklenburg-Western Pomerania",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "staatsanwaltschaft-berlin-und-polizei-berlin",
+      "publisher": "Staatsanwaltschaft Berlin und Polizei Berlin",
+      "category": "Public institution / official records",
+      "coverage": "Joint releases about investigations and criminal proceedings",
+      "channel": "Public source / records",
+      "monitor_url": "https://www.berlin.de/generalstaatsanwaltschaft/presse/",
+      "poll": {
+        "endpoint_id": "staatsanwaltschaft-berlin-und-polizei-berlin-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "polizei-brandenburg",
+      "publisher": "Polizei Brandenburg",
+      "category": "Public institution / official records",
+      "coverage": "Regional police incident reports, appeals and updates",
+      "channel": "Public source / records",
+      "monitor_url": "https://polizei.brandenburg.de/pressemeldungen",
+      "poll": {
+        "endpoint_id": "polizei-brandenburg-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Brandenburg",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "deutscher-bundestag",
+      "publisher": "Deutscher Bundestag",
+      "category": "Public institution / official records",
+      "coverage": "Parliamentary questions, answers, draft laws and official records",
+      "channel": "Public source / records",
+      "monitor_url": "https://www.bundestag.de/dokumente/textarchiv",
+      "poll": {
+        "endpoint_id": "deutscher-bundestag-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Germany",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "landgericht-berlin-i",
+      "publisher": "Landgericht Berlin I",
+      "category": "Public institution / official records",
+      "coverage": "Criminal hearings, trial dates and published court information",
+      "channel": "Public source / records",
+      "monitor_url": "https://www.berlin.de/gerichte/landgericht-straf/das-gericht/besucherinformationen/artikel.1634572.php",
+      "poll": {
+        "endpoint_id": "landgericht-berlin-i-updates",
+        "adapter": "documents",
+        "interval_minutes": 1440
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "staatsanwaltschaft-hannover",
+      "publisher": "Staatsanwaltschaft Hannover",
+      "category": "Public institution / official records",
+      "coverage": "Prosecutor statements, investigations and proceedings",
+      "channel": "Public source / records",
+      "monitor_url": "https://staatsanwaltschaft-hannover.niedersachsen.de/startseite/aktuelles/presseinformationen/",
+      "poll": {
+        "endpoint_id": "staatsanwaltschaft-hannover-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Lower Saxony",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "bundesministerium-fur-gesundheit",
+      "publisher": "Bundesministerium für Gesundheit",
+      "category": "Public institution / official records",
+      "coverage": "Healthcare legislation, licensing and ministry announcements",
+      "channel": "Public source / records",
+      "monitor_url": "https://www.bundesgesundheitsministerium.de/presse/pressemitteilungen/",
+      "poll": {
+        "endpoint_id": "bundesministerium-fur-gesundheit-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Germany",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "staatsanwaltschaft-neuruppin",
+      "publisher": "Staatsanwaltschaft Neuruppin",
+      "category": "Public institution / official records",
+      "coverage": "Prosecution notices and updates from investigations",
+      "channel": "Public source / records",
+      "monitor_url": "https://staatsanwaltschaften.brandenburg.de/sta/de/sta-neuruppin/pressemitteilungen/",
+      "poll": {
+        "endpoint_id": "staatsanwaltschaft-neuruppin-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Brandenburg",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "landkreis-teltow-flaming",
+      "publisher": "Landkreis Teltow-Fläming",
+      "category": "Public institution / official records",
+      "coverage": "District services, permits, planning and administrative notices",
+      "channel": "Public source / records",
+      "monitor_url": "https://www.teltow-flaeming.de/was-erledige-ich-wo/presse",
+      "poll": {
+        "endpoint_id": "landkreis-teltow-flaming-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Brandenburg",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "bundesministerium-fur-arbeit-und-soziales",
+      "publisher": "Bundesministerium für Arbeit und Soziales",
+      "category": "Public institution / official records",
+      "coverage": "Labour and social policy, benefits and legislative proposals",
+      "channel": "Public source / records",
+      "monitor_url": "https://www.bmas.de/DE/Service/Presse/Pressemitteilungen/pressemitteilungen.html",
+      "poll": {
+        "endpoint_id": "bundesministerium-fur-arbeit-und-soziales-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Germany",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "statistisches-bundesamt-destatis",
+      "publisher": "Statistisches Bundesamt (Destatis)",
+      "category": "Public institution / official records",
+      "coverage": "Real and nominal wages",
+      "channel": "Public source / records",
+      "monitor_url": "https://www.destatis.de/DE/Themen/Arbeit/Verdienste/Realloehne-Nominalloehne/_inhalt.html",
+      "poll": {
+        "endpoint_id": "statistisches-bundesamt-destatis-updates",
+        "adapter": "lookup",
+        "interval_minutes": 1440,
+        "note": "Historical wage data series; configure statistical release calendar.",
+        "purpose": "reference"
+      },
+      "scope": "Germany",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "bundesverfassungsgericht",
+      "publisher": "Bundesverfassungsgericht",
+      "category": "Public institution / official records",
+      "coverage": "Constitutional rulings and press releases",
+      "channel": "Public source / records",
+      "monitor_url": "https://www.bundesverfassungsgericht.de/DE/Presse/Pressemitteilungen/pressemitteilungen_node.html",
+      "poll": {
+        "endpoint_id": "bundesverfassungsgericht-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Germany",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "ministerium-des-innern-und-fur-kommunales-des-landes-brandenburg",
+      "publisher": "Ministerium des Innern und für Kommunales des Landes Brandenburg",
+      "category": "Public institution / official records",
+      "coverage": "Civil service, local government and public safety",
+      "channel": "Public source / records",
+      "monitor_url": "https://mik.brandenburg.de/mik/de/service/presse/pressemitteilungen/",
+      "poll": {
+        "endpoint_id": "ministerium-des-innern-und-fur-kommunales-des-landes-brandenburg-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Brandenburg",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "behala-berliner-hafen-und-lagerhausgesellschaft-mbh",
+      "publisher": "BEHALA – Berliner Hafen- und Lagerhausgesellschaft mbH",
+      "category": "Public institution / official records",
+      "coverage": "Public port company; land-use and logistics projects",
+      "channel": "Public contact",
+      "monitor_url": "https://www.behala.de/kontakt/",
+      "poll": {
+        "endpoint_id": "behala-berliner-hafen-und-lagerhausgesellschaft-mbh-updates",
+        "adapter": "lookup",
+        "interval_minutes": 1440,
+        "note": "Public contact page.",
+        "purpose": "contact"
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "world-heritage-committee-unesco",
+      "publisher": "World Heritage Committee (UNESCO)",
+      "category": "Public institution / official records",
+      "coverage": "UNESCO World Heritage inscription decisions",
+      "channel": "Public source / records",
+      "monitor_url": "https://whc.unesco.org/en/sessions/",
+      "poll": {
+        "endpoint_id": "world-heritage-committee-unesco-updates",
+        "adapter": "lookup",
+        "interval_minutes": 1440,
+        "note": "Historical UNESCO session directory.",
+        "purpose": "reference"
+      },
+      "scope": "International",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "european-commission-directorate-general-for-taxation-and-customs-union",
+      "publisher": "European Commission, Directorate-General for Taxation and Customs Union",
+      "category": "Public institution / official records",
+      "coverage": "EU imports and low-value parcel figures",
+      "channel": "Public source / records",
+      "monitor_url": "https://taxation-customs.ec.europa.eu/customs/eu-customs-union-facts-and-figures/goods-bought-online_en",
+      "poll": {
+        "endpoint_id": "european-commission-directorate-general-for-taxation-and-customs-union-updates",
+        "adapter": "lookup",
+        "interval_minutes": 1440,
+        "note": "EU explanatory reference.",
+        "purpose": "reference"
+      },
+      "scope": "European Union",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "norwegian-office-of-the-prime-minister",
+      "publisher": "Norwegian Office of the Prime Minister",
+      "category": "Public institution / official records",
+      "coverage": "Government statements, speeches and official commemorations",
+      "channel": "Public source / records",
+      "monitor_url": "https://www.regjeringen.no/en/whats-new/id1150/",
+      "poll": {
+        "endpoint_id": "norwegian-office-of-the-prime-minister-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "scope": "Norway",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "european-commission-eur-lex",
+      "publisher": "European Commission – EUR-Lex",
+      "category": "Public institution / official records",
+      "coverage": "Official Journal, EU decisions and implementing regulations",
+      "channel": "Public source / records",
+      "monitor_url": "https://eur-lex.europa.eu/oj/direct-access.html",
+      "poll": {
+        "endpoint_id": "european-commission-eur-lex-updates",
+        "adapter": "lookup",
+        "interval_minutes": 1440,
+        "note": "Issue selection portal needs an Official Journal record adapter.",
+        "purpose": "reference"
+      },
+      "scope": "European Union",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "nasa",
+      "publisher": "NASA",
+      "category": "Public institution / official records",
+      "coverage": "Eclipse dates, science and safety",
+      "channel": "Public source / records",
+      "monitor_url": "https://science.nasa.gov/eclipses/",
+      "poll": {
+        "endpoint_id": "nasa-updates",
+        "adapter": "lookup",
+        "interval_minutes": 1440,
+        "note": "Science reference page.",
+        "purpose": "reference"
+      },
+      "scope": "International",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "european-space-agency-esa",
+      "publisher": "European Space Agency (ESA)",
+      "category": "Public institution / official records",
+      "coverage": "Space science, mission updates and eclipse guidance",
+      "channel": "Public source / records",
+      "monitor_url": "https://www.esa.int/Science_Exploration/Space_Science",
+      "poll": {
+        "endpoint_id": "european-space-agency-esa-updates",
+        "adapter": "lookup",
+        "interval_minutes": 1440,
+        "note": "Science reference page.",
+        "purpose": "reference"
+      },
+      "scope": "International",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "berlin-de-veranstaltungen",
+      "publisher": "Berlin.de – Veranstaltungen",
+      "category": "Public institution / official records",
+      "coverage": "Public events listings and local event information",
+      "channel": "Public source / records",
+      "monitor_url": "https://www.berlin.de/en/events/",
+      "poll": {
+        "endpoint_id": "berlin-de-veranstaltungen-updates",
+        "adapter": "lookup",
+        "interval_minutes": 1440,
+        "note": "Events directory needs date-aware event discovery.",
+        "purpose": "reference"
+      },
+      "scope": "Berlin",
+      "active": true,
+      "inventory": "november-audit"
+    },
+    {
+      "id": "infratest-dimap-berlin",
+      "publisher": "Infratest dimap",
+      "category": "Polling",
+      "scope": "Berlin",
+      "monitor_url": "https://www.infratest-dimap.de/umfragen-analysen/bundeslaender/berlin/laendertrend/",
+      "channel": "Newsroom / announcements",
+      "example_url": "https://www.infratest-dimap.de/umfragen-analysen/bundeslaender/berlin/laendertrend/2026/september-ii/",
+      "archive_id": "BB-205",
+      "poll": {
+        "endpoint_id": "infratest-dimap-berlin-updates",
+        "adapter": "listing",
+        "interval_minutes": 60,
+        "link_pattern": "/laendertrend/20\\d{2}/[^/#?]+/?$"
+      },
+      "active": true,
+      "inventory": "approved-addition"
+    },
+    {
+      "id": "bizim-kiez",
+      "publisher": "Bizim Kiez",
+      "category": "Tenant initiative",
+      "scope": "Berlin neighbourhoods",
+      "monitor_url": "https://www.bizim-kiez.de/blog/",
+      "channel": "Newsroom + RSS",
+      "rss_url": "https://www.bizim-kiez.de/feed/",
+      "example_url": "https://www.bizim-kiez.de/blog/2026/06/26/kundgebung-am-1-juli-19-uhr-die-mieterinnen-der-wrangelstrasse-70-wehren-sich/",
+      "archive_id": "BB-061",
+      "poll": {
+        "endpoint_id": "bizim-kiez-updates",
+        "adapter": "feed",
+        "interval_minutes": 60
+      },
+      "active": true,
+      "inventory": "approved-addition"
+    },
+    {
+      "id": "immowelt-research",
+      "publisher": "immowelt",
+      "category": "Commercial housing data",
+      "scope": "Germany; select findings about Berlin",
+      "monitor_url": "https://www.immowelt.de/ueberuns/presse/pressemitteilungenkontakt/",
+      "channel": "Newsroom / announcements",
+      "example_url": "https://www.immowelt.de/ratgeber/news/mieten-steigen-viermal-schneller-als-gehaelter-in-diesen-staedten-ist-wohnen-luxus",
+      "archive_id": "BB-036",
+      "poll": {
+        "endpoint_id": "immowelt-research-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "active": true,
+      "inventory": "approved-addition"
+    },
+    {
+      "id": "rave-the-planet",
+      "publisher": "Rave The Planet",
+      "category": "Event organiser",
+      "scope": "Berlin; select local events",
+      "monitor_url": "https://www.ravetheplanet.com/news/",
+      "channel": "Newsroom / announcements",
+      "example_url": "https://www.ravetheplanet.com/events/rave-the-planet-parade-2026/",
+      "archive_id": "BB-179",
+      "poll": {
+        "endpoint_id": "rave-the-planet-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "active": true,
+      "inventory": "approved-addition"
+    },
+    {
+      "id": "berliner-mieterverein",
+      "publisher": "Berliner Mieterverein",
+      "category": "Tenant association",
+      "scope": "Berlin",
+      "monitor_url": "https://www.berliner-mieterverein.de/neuigkeiten/pressemitteilungen/",
+      "channel": "Newsroom / announcements",
+      "poll": {
+        "endpoint_id": "berliner-mieterverein-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "active": true,
+      "inventory": "approved-addition"
+    },
+    {
+      "id": "gew-berlin",
+      "publisher": "GEW Berlin",
+      "category": "Education union",
+      "scope": "Berlin",
+      "monitor_url": "https://www.gew-berlin.de/presse",
+      "channel": "Newsroom / announcements",
+      "example_url": "https://www.gew-berlin.de/veranstaltungen/detailseite/jugendproteste-am-20-november",
+      "archive_id": "BB-252",
+      "poll": {
+        "endpoint_id": "gew-berlin-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "active": true,
+      "inventory": "approved-addition"
+    },
+    {
+      "id": "dgb-berlin-brandenburg",
+      "publisher": "DGB Berlin-Brandenburg",
+      "category": "Trade union confederation",
+      "scope": "Berlin and Brandenburg; select material Berlin impacts",
+      "monitor_url": "https://berlin-brandenburg.dgb.de/presse/pressemitteilungen/",
+      "channel": "Newsroom / announcements",
+      "poll": {
+        "endpoint_id": "dgb-berlin-brandenburg-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "active": true,
+      "inventory": "approved-addition"
+    },
+    {
+      "id": "csd-berlin",
+      "publisher": "Berliner CSD e.V.",
+      "category": "Event organiser",
+      "scope": "Berlin",
+      "monitor_url": "https://csd-berlin.de/aktuelles",
+      "channel": "Newsroom / announcements",
+      "poll": {
+        "endpoint_id": "csd-berlin-updates",
+        "adapter": "listing",
+        "interval_minutes": 60
+      },
+      "active": true,
+      "inventory": "approved-addition"
+    }
+  ]
+}
