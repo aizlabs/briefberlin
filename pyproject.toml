@@ -34,6 +34,9 @@ dev = [
 ]
 
 [project.scripts]
+briefberlin-manual-rpc = "scripts.editorial.publication_rpc:main"
+briefberlin-telegram-ingress = "scripts.editorial.telegram_ingress:main"
+briefberlin-publisher = "scripts.editorial.publication_cli:main"
 briefberlin-editorial = "scripts.editorial.__main__:main"
 briefberlin-manual = "scripts.manual_pipeline:main"
 briefberlin-audio-post = "scripts.post_audio:main"

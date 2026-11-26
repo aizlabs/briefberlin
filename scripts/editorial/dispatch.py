@@ -116,6 +116,9 @@ def candidates(conn, now, mode, *, include_retries=False):
         AND (:include_retries OR coalesce(d.retry_at,0)<=:now) AND coalesce(d.hold_until,0)<=:now
         AND q.observed_hold<=:now
         AND NOT EXISTS(SELECT 1 FROM manual_previews m WHERE m.story_id=q.id AND m.version=q.evidence_version)
+        AND NOT EXISTS(SELECT 1 FROM manual_match_candidates m JOIN publication_drafts d ON d.id=m.draft_id
+            WHERE d.state='matching' AND m.priority>0 AND d.created_at+300>:now
+            AND m.story_id=q.id AND m.version=q.evidence_version)
         AND NOT EXISTS(SELECT 1 FROM live_publications l WHERE l.story_id=q.id)
         AND NOT EXISTS(SELECT 1 FROM evidence_holds h WHERE h.story_id=q.id))
         SELECT * FROM eligible WHERE freshness IS NOT NULL ORDER BY dispatch_tier,dispatch_score DESC,
@@ -177,12 +180,13 @@ def reservation(work):
     return result
 
 
-def manual_story(conn, preview_id, version):
+def manual_story(conn, preview_id, version, now):
     return conn.execute("""SELECT s.* FROM manual_previews m JOIN stories s ON s.id=m.story_id
         WHERE m.preview_id=? AND m.version=? AND s.evidence_version=m.version
-        AND s.status NOT IN ('live','covered','deploying') AND s.needs_review=0
+        AND s.status NOT IN ('live','covered','deploying','expired') AND s.needs_review=0
+        AND (s.expires_at IS NULL OR s.expires_at>?) AND (s.deadline IS NULL OR s.deadline>?)
         AND NOT EXISTS(SELECT 1 FROM live_publications WHERE story_id=s.id)
-        AND NOT EXISTS(SELECT 1 FROM evidence_holds WHERE story_id=s.id)""", (preview_id, version)).fetchone()
+        AND NOT EXISTS(SELECT 1 FROM evidence_holds WHERE story_id=s.id)""", (preview_id, version, now, now)).fetchone()
 
 
 def choose(conn, now, p):
@@ -192,7 +196,7 @@ def choose(conn, now, p):
     if work and work["state"] in EXTERNAL:
         return {"state": "reconcile", "work_id": work["id"]}
     manual = work is not None and work["kind"] == "manual"
-    if manual and not manual_story(conn, work["manual_preview_id"], work["version"]):
+    if manual and not manual_story(conn, work["manual_preview_id"], work["version"], now):
         transition(conn, work["id"], "superseded", "manual preview is stale", now)
         work = None
         manual = False
@@ -447,26 +451,31 @@ def attach_manual_preview(conn, *, story_id, version, preview_id, now=None):
     if not isinstance(preview_id, str) or not 1 <= len(preview_id.strip()) <= 256:
         raise ValueError("immutable preview identity required")
     with transaction(conn):
-        row = conn.execute("SELECT * FROM stories WHERE id=?", (story_id,)).fetchone()
-        if not row or row["evidence_version"] != version or row["status"] in {"live", "covered", "deploying"}:
-            raise ValueError("story is stale, live or already deploying")
-        previous = conn.execute("SELECT * FROM manual_previews WHERE story_id=?", (story_id,)).fetchone()
-        if previous and previous["version"] == version and previous["preview_id"] != preview_id:
-            raise ValueError("release the superseded preview first")
-        if not previous or (previous["preview_id"], previous["version"]) != (preview_id, version):
-            if conn.execute("SELECT 1 FROM manual_preview_history WHERE preview_id=?", (preview_id,)).fetchone():
-                raise ValueError("preview identity already used")
-            conn.execute("INSERT INTO manual_preview_history VALUES(?,?,?)", (preview_id, story_id, version))
-            conn.execute("""INSERT INTO manual_previews VALUES(?,?,?) ON CONFLICT(story_id)
-                DO UPDATE SET version=excluded.version,preview_id=excluded.preview_id""", (story_id, version, preview_id))
-        work = active(conn)
-        if work and work["story_id"] == story_id and work["manual_preview_id"] != preview_id:
-            if work["state"] in EXTERNAL:
-                raise ValueError("reconcile outstanding push first")
-            transition(conn, work["id"], "superseded", "manual preview attached", clock(now))
-        conn.execute("""UPDATE review_requests SET state='superseded' WHERE story_id=?
-            AND state IN ('pending','approved')""", (story_id,))
-        return {"state": "preview", "preview_id": preview_id, "story_id": story_id, "version": version}
+        return attach_manual_tx(conn, story_id, version, preview_id, clock(now))
+
+
+def attach_manual_tx(conn, story_id, version, preview_id, now):
+    """Attach within the same short transaction as the publisher's matching decision."""
+    row = conn.execute("SELECT * FROM stories WHERE id=?", (story_id,)).fetchone()
+    if not row or row["evidence_version"] != version or row["status"] in {"live", "covered", "deploying"}:
+        raise ValueError("story is stale, live or already deploying")
+    previous = conn.execute("SELECT * FROM manual_previews WHERE story_id=?", (story_id,)).fetchone()
+    if previous and previous["version"] == version and previous["preview_id"] != preview_id:
+        raise ValueError("release the superseded preview first")
+    if not previous or (previous["preview_id"], previous["version"]) != (preview_id, version):
+        if conn.execute("SELECT 1 FROM manual_preview_history WHERE preview_id=?", (preview_id,)).fetchone():
+            raise ValueError("preview identity already used")
+        conn.execute("INSERT INTO manual_preview_history VALUES(?,?,?)", (preview_id, story_id, version))
+        conn.execute("""INSERT INTO manual_previews VALUES(?,?,?) ON CONFLICT(story_id)
+            DO UPDATE SET version=excluded.version,preview_id=excluded.preview_id""", (story_id, version, preview_id))
+    work = active(conn)
+    if work and work["story_id"] == story_id and work["manual_preview_id"] != preview_id:
+        if work["state"] in EXTERNAL:
+            raise ValueError("reconcile outstanding push first")
+        transition(conn, work["id"], "superseded", "manual preview attached", clock(now))
+    conn.execute("""UPDATE review_requests SET state='superseded' WHERE story_id=?
+        AND state IN ('pending','approved')""", (story_id,))
+    return {"state": "preview", "preview_id": preview_id, "story_id": story_id, "version": version}
 
 
 def release_manual_preview(conn, *, preview_id, now=None):
@@ -489,7 +498,7 @@ def reserve_manual(conn, *, preview_id, version, policy=None, now=None):
         same = work is not None and work["manual_preview_id"] == preview_id and work["version"] == version
         if same and work["state"] in EXTERNAL:
             return {"state": "reconcile", "work_id": work["id"]}
-        row = manual_story(conn, preview_id, version)
+        row = manual_story(conn, preview_id, version, now)
         if not row:
             if same:
                 transition(conn, work["id"], "superseded", "manual preview is stale", now)

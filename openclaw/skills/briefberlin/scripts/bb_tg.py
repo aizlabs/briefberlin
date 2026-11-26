@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import html
 import json
+import os
 import re
 import sys
 import urllib.error
@@ -22,10 +23,13 @@ import urllib.request
 import uuid
 
 CONFIG = "/opt/openclaw/.openclaw/openclaw.json"
-TARGET = "/opt/openclaw/work/.bb-telegram-target"
+TARGET = os.environ.get("BB_TELEGRAM_TARGET", "/opt/openclaw/work/.bb-telegram-target")
 
 
 def _token() -> str:
+    token = os.environ.get("BB_TELEGRAM_BOT_TOKEN")
+    if token:
+        return token
     with open(CONFIG, encoding="utf-8") as f:
         token = json.load(f).get("channels", {}).get("telegram", {}).get("botToken")
     if not isinstance(token, str) or ":" not in token:

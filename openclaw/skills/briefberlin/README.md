@@ -10,8 +10,7 @@ The Telegram workflow the OpenClaw bot runs: paste an article â†’ **Generate** â
 | `scripts/bb_tg.py` | Sends messages and buttons straight to the Telegram chat |
 | `scripts/bb_preview.py` | Sends the A2/B1 article text for review |
 | `scripts/bb_report.py` | Turns a failed run's log into a short report |
-| `scripts/bb_watch.sh` | Messages again when GitHub Pages has deployed |
-| `scripts/bb_setkey` | Saves API keys into the bot's `.env` at a hidden prompt |
+| `briefberlin-publisher recover` | Verifies both edition identities and the deployed manifest before the live notification |
 
 ## Behaviour
 
@@ -21,17 +20,9 @@ The Telegram workflow the OpenClaw bot runs: paste an article â†’ **Generate** â
   `briefberlin-audio-prod/articles/`, then commits and pushes. If audio fails, the posts
   still go live and the Telegram message says so. `BB_AUDIO=0` turns audio off.
 
-## Secrets (never in this repo)
+## Host credentials
 
-- The Telegram bot token stays in OpenClaw's config and is only read by `bb_tg.py`.
-- Keys live in `/opt/openclaw/work/briefberlin/.env`: `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`,
-  `ELEVENLABS_API_KEY`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`. The AWS user may only
-  `s3:PutObject`/`s3:AbortMultipartUpload` on `briefberlin-audio-prod/articles/*`.
-- Save or replace a key (the account has no login shell, hence `--exec`):
-
-  ```powershell
-  wsl.exe -d Ubuntu -u openclaw --exec /bin/bash /opt/openclaw/.openclaw/workspace/skills/briefberlin/scripts/bb_setkey ELEVENLABS_API_KEY
-  ```
+The publisher service owns the generation, Telegram, audio, object storage and Git credentials. On the model side, the `bb` executable reads only the private article/media inbox and uses a group-protected Unix socket. Typed Publish and Discard decisions must be Telegram replies to the delivered controls message. For host installation, permissions and the authenticated webhook, follow [editorial publication](../../../docs/editorial-publication.md).
 
 ## Install or update on the bot
 
@@ -44,3 +35,5 @@ openclaw/skills/briefberlin/install.sh
 Run it as the `openclaw` user from the bot's clone (`/opt/openclaw/work/briefberlin`).
 It copies these files into `/opt/openclaw/.openclaw/workspace/skills/briefberlin/` and
 keeps the previous copy as `*.prev`.
+
+The installed workflow also requires the private ledger, authenticated Telegram input adapter and verifier described in [editorial publication](../../../docs/editorial-publication.md). Run the upgrade preflight there before replacing the legacy helper.

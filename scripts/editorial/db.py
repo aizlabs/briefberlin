@@ -249,6 +249,40 @@ MIGRATIONS = [
         )""",
         """INSERT INTO manual_preview_history SELECT preview_id,story_id,version FROM manual_previews""",
     ),
+    (
+        """CREATE TABLE publication_drafts (
+            id TEXT PRIMARY KEY, story_id TEXT REFERENCES stories(id), version INTEGER,
+            state TEXT NOT NULL, source_hash TEXT NOT NULL, created_at INTEGER NOT NULL,
+            tries INTEGER NOT NULL DEFAULT 0, snapshot TEXT,
+            display_id TEXT UNIQUE, message_id TEXT, route TEXT, approved_event TEXT
+        )""",
+        """CREATE UNIQUE INDEX one_manual_inbox ON publication_drafts((1))
+            WHERE state NOT IN ('discarded','live')""",
+        """CREATE TABLE manual_match_candidates (
+            draft_id TEXT NOT NULL REFERENCES publication_drafts(id),
+            story_id TEXT NOT NULL REFERENCES stories(id), version INTEGER NOT NULL,
+            PRIMARY KEY(draft_id,story_id)
+        )""",
+        """CREATE TABLE manual_actions (
+            event_key TEXT PRIMARY KEY, actor TEXT NOT NULL, display_id TEXT NOT NULL,
+            verb TEXT NOT NULL, draft_id TEXT NOT NULL REFERENCES publication_drafts(id)
+        )""",
+        """CREATE TABLE publication_notices (
+            work_id TEXT NOT NULL REFERENCES dispatch_work(id), state TEXT NOT NULL,
+            PRIMARY KEY(work_id,state)
+        )""",
+    ),
+    (
+        """ALTER TABLE manual_actions ADD COLUMN update_hash TEXT""",
+        """ALTER TABLE manual_match_candidates ADD COLUMN priority INTEGER NOT NULL DEFAULT 0""",
+        """UPDATE publication_drafts SET state='waiting',approved_event=NULL,display_id=NULL,message_id=NULL,snapshot=NULL
+            WHERE state='approved' AND NOT EXISTS (SELECT 1 FROM dispatch_work w
+            WHERE w.manual_preview_id=publication_drafts.id AND w.state IN ('push-authorized','external-uncertain','live'))""",
+        """UPDATE dispatch_work SET state='superseded',reason='fresh authenticated preview required after upgrade'
+            WHERE kind='manual' AND state IN ('requested','preparing') AND manual_preview_id IN
+            (SELECT id FROM publication_drafts WHERE state='waiting' AND approved_event IS NULL)""",
+        """UPDATE stories SET status='pending',expires_at=coalesce(expires_at,first_seen+172800) WHERE status='manual'""",
+    ),
 ]
 
 

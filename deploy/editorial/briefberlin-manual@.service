@@ -1,0 +1,16 @@
+[Unit]
+Description=BriefBerlin scoped manual request
+
+[Service]
+User=briefberlin
+Group=briefberlin
+UMask=0077
+EnvironmentFile=/etc/briefberlin/publisher.env
+WorkingDirectory=/srv/briefberlin/repo
+ExecStart=/srv/briefberlin/repo/.venv/bin/briefberlin-manual-rpc
+StandardInput=socket
+StandardOutput=socket
+StandardError=journal
+NoNewPrivileges=yes
+PrivateTmp=yes
+RuntimeMaxSec=3h

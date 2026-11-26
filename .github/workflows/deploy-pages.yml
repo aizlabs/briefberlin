@@ -45,6 +45,9 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
+      - name: Identify the deployed source commit
+        run: echo "$GITHUB_SHA" > output/briefberlin-deployment.txt
+
       - name: Build with Jekyll
         working-directory: ./output
         run: bundle exec jekyll build

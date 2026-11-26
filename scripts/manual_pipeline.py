@@ -223,7 +223,7 @@ def _execute_manual_pipeline(
 
     published: list[tuple[str, str, float]] = []
     failed = 0
-    story_id = make_story_id(
+    story_id = getattr(args, "story_id", None) or make_story_id(
         topic.title, publish_timestamp_override or datetime.now(PUBLICATION_ZONE)
     )
 
@@ -328,6 +328,7 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
             "for example 2026-07-03 or 2026-07-03T09:00:00."
         ),
     )
+    parser.add_argument("--story-id", type=parse_author_slug, help="Reserved editorial story identifier")
     parser.add_argument(
         "--author",
         type=parse_author_slug,

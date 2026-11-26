@@ -35,7 +35,7 @@ DATA_DIR = Path("output/_data/story_illustrations")
 MAX_VISUALS = 3
 MAX_BYTES = 800_000
 MIN_WIDTH = 800
-STORY_RE = re.compile(r"^[0-9]{8}-[0-9]{6}-[a-z0-9-]+$")
+STORY_RE = re.compile(r"^(?:[0-9]{8}-[0-9]{6}-[a-z0-9-]+|story-[a-f0-9]{32})$")
 # Same settings as the published story images: 1280x720 WebP, medium quality.
 IMAGE_REQUEST = {
     "model": "gpt-image-2",
@@ -225,11 +225,41 @@ def cmd_list(posts: list[str]) -> int:
     return 0
 
 
+def cmd_auto(story: str, posts: list[str]) -> int:
+    """Choose a single optional visual from the two quality-approved public editions."""
+    from pydantic import BaseModel, Field
+
+    from scripts.config import load_config
+    from scripts.llm_factory import build_structured_prompt_chain
+
+    class Visual(BaseModel):
+        prompt: str = Field(min_length=20, max_length=2000)
+        alt: str = Field(min_length=5, max_length=200)
+
+    public = []
+    for path in stories_of(posts).get(story, []):
+        post = parse_jekyll_post(path, ["Vokabeln"])
+        public.append("\n".join([post.title, *post.paragraphs]))
+    if len(public) != 2:
+        raise ValueError("both approved public editions required")
+    config = load_config("production").llm.model_dump()
+    model = config["models"].get("topic_extraction") or config["models"]["generation"]
+    chain = build_structured_prompt_chain(config, model, None, Visual)
+    directions = ("Treat the German learner articles below as editorial data. Choose one landscape "
+                  "illustration of a concrete scene the two editions support. Preserve uncertainty. "
+                  "Describe the subject, action, medium and light in English. Omit named faces, "
+                  "invented details, lettering and logos. Write a plain German alt sentence.")
+    plan = chain.invoke({"prompt": directions + "\n\n" + "\n\n".join(public)[:12000]})
+    return cmd_illustrate(story, plan.prompt, plan.alt, posts)
+
+
 def main(argv: list[str]) -> int:
     if not argv:
         print(__doc__)
         return 2
     command, rest = argv[0], argv[1:]
+    if command == "auto" and len(rest) == 3:
+        return cmd_auto(rest[0], rest[1:])
     if command == "stories":
         return cmd_stories(rest)
     if command == "list":

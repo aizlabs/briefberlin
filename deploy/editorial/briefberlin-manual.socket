@@ -1,0 +1,13 @@
+[Unit]
+Description=BriefBerlin scoped manual client socket
+
+[Socket]
+ListenStream=/run/briefberlin-manual.sock
+SocketUser=briefberlin
+SocketGroup=briefberlin-client
+SocketMode=0660
+Accept=yes
+MaxConnections=8
+
+[Install]
+WantedBy=sockets.target
