@@ -4,6 +4,7 @@ from pathlib import Path
 
 import pytest
 
+from scripts.editorial import archive, dispatch
 from scripts.editorial.__main__ import main
 from scripts.editorial.archive import LEGACY, ORIGIN, record_publication, resolve_archive, setting, sync_archive
 from scripts.editorial.db import connect
@@ -162,3 +163,26 @@ def test_collision_at_july_path_with_different_claimants_blocks(tmp_path):
         result = sync_archive(conn, output=root, fixture=fixture, now=NOW, bootstrap_epoch=NOW)
         assert not result["ready"]
         assert {"path": f"/articles/{COLLISION_SLUG}/", "issue": "collision"} in result["issues"]
+
+
+def test_sync_started_before_control_change_cannot_enable_dispatch(tmp_path, monkeypatch):
+    root, fixture, db = tmp_path / "posts", tmp_path / "map.xml", tmp_path / "db"
+    post(root, "pair-a", shared="pair")
+    post(root, "pair-b", shared="pair", level="B1")
+    sitemap(fixture, "pair-a", "pair-b")
+    with closing(connect(db)) as conn, closing(connect(db)) as operator:
+        options = dict(output=root, fixture=fixture, now=NOW)
+        sync_archive(conn, **options, bootstrap_epoch=NOW-100)
+        dispatch.configure(operator, paused=True, now=NOW)
+        read_paths = archive.live_paths
+
+        def resume_while_reading(path):
+            dispatch.configure(operator, paused=False, now=NOW)
+            return read_paths(path)
+
+        with monkeypatch.context() as context:
+            context.setattr(archive, "live_paths", resume_while_reading)
+            assert sync_archive(conn, **options)["ready"]
+        assert dispatch.tick(conn, now=NOW)["reason"] == "reconcile-after-control-change"
+        assert sync_archive(conn, **options)["ready"]
+        assert dispatch.tick(conn, now=NOW)["state"] == "idle"

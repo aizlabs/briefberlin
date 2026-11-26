@@ -20,7 +20,7 @@ from .matching import words
 
 RUBRIC = "berlin-v1"
 DAY = 86400
-MODEL_STATES = {"pending", "review"}
+MODEL_STATES = {"pending", "review", "expired", "skipped"}
 Short = Annotated[str, Field(min_length=1, max_length=300)]
 Text = Annotated[str, Field(min_length=1, max_length=1200)]
 Epoch = Annotated[int, Field(ge=1, le=253402300799)]

@@ -52,6 +52,7 @@ packages = ["scripts"]
 
 [tool.hatch.build.targets.wheel.force-include]
 "config/civic_sources.json" = "scripts/editorial/civic_sources.json"
+"config/editorial_policy.yaml" = "scripts/editorial/editorial_policy.yaml"
 
 [tool.hatch.metadata]
 allow-direct-references = true

@@ -197,6 +197,58 @@ MIGRATIONS = [
         """CREATE TRIGGER edition_delete_context AFTER DELETE ON editions BEGIN
             UPDATE settings SET value=CAST(value AS INTEGER)+1 WHERE key='story_context_version'; END""",
     ),
+    (
+        """INSERT INTO settings VALUES('dispatch_mode','observe'),('publish_paused','0')""",
+        """CREATE TABLE review_requests (
+            id TEXT PRIMARY KEY, story_id TEXT NOT NULL REFERENCES stories(id), version INTEGER NOT NULL,
+            slot INTEGER NOT NULL, mode TEXT NOT NULL, state TEXT NOT NULL, card TEXT NOT NULL,
+            created_at INTEGER NOT NULL, response_at INTEGER, delivery_count INTEGER NOT NULL DEFAULT 0,
+            delivered_at INTEGER
+        )""",
+        """CREATE UNIQUE INDEX one_waiting_review ON review_requests(mode)
+            WHERE state IN ('pending','approved')""",
+        """CREATE INDEX review_history ON review_requests(story_id,mode)""",
+        """CREATE TABLE review_receipts (
+            event_id TEXT PRIMARY KEY, request_id TEXT NOT NULL REFERENCES review_requests(id),
+            actor TEXT NOT NULL, payload TEXT NOT NULL, result TEXT NOT NULL, recorded_at INTEGER NOT NULL
+        )""",
+        """CREATE TABLE review_deliveries (
+            receipt TEXT PRIMARY KEY, request_id TEXT NOT NULL REFERENCES review_requests(id)
+        )""",
+        """CREATE TABLE dispatch_deferrals (
+            story_id TEXT PRIMARY KEY REFERENCES stories(id), retry_at INTEGER NOT NULL DEFAULT 0,
+            failures INTEGER NOT NULL DEFAULT 0, hold_until INTEGER NOT NULL DEFAULT 0
+        )""",
+        """CREATE TABLE manual_previews (
+            story_id TEXT PRIMARY KEY REFERENCES stories(id), version INTEGER NOT NULL, preview_id TEXT NOT NULL UNIQUE
+        )""",
+        """CREATE TABLE dispatch_work (
+            id TEXT PRIMARY KEY, story_id TEXT NOT NULL REFERENCES stories(id), version INTEGER NOT NULL,
+            kind TEXT NOT NULL, slot INTEGER, request_id TEXT REFERENCES review_requests(id),
+            state TEXT NOT NULL, created_at INTEGER NOT NULL, worker TEXT, token TEXT,
+            expires_at INTEGER, commit_sha TEXT, manifest TEXT,
+            prior_status TEXT, reason TEXT, manual_preview_id TEXT
+        )""",
+        """CREATE UNIQUE INDEX one_publication_worker ON dispatch_work((1))
+            WHERE state IN ('requested','preparing','push-authorized','external-uncertain')""",
+        """CREATE UNIQUE INDEX one_expected_commit ON dispatch_work(commit_sha) WHERE commit_sha IS NOT NULL
+            AND state!='absent'""",
+        """CREATE TABLE dispatch_transitions (
+            id INTEGER PRIMARY KEY, work_id TEXT NOT NULL REFERENCES dispatch_work(id),
+            state TEXT NOT NULL, reason TEXT NOT NULL, recorded_at INTEGER NOT NULL
+        )""",
+    ),
+    (
+        """CREATE TABLE observation_decisions (
+            story_id TEXT NOT NULL REFERENCES stories(id), version INTEGER NOT NULL,
+            rating INTEGER CHECK(rating BETWEEN 0 AND 10), hold_until INTEGER,
+            PRIMARY KEY(story_id,version)
+        )""",
+        """CREATE TABLE manual_preview_history (
+            preview_id TEXT PRIMARY KEY, story_id TEXT NOT NULL REFERENCES stories(id), version INTEGER NOT NULL
+        )""",
+        """INSERT INTO manual_preview_history SELECT preview_id,story_id,version FROM manual_previews""",
+    ),
 ]
 
 

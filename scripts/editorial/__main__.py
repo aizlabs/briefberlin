@@ -6,7 +6,7 @@ import sqlite3
 from contextlib import closing
 from pathlib import Path
 
-from . import triage_cli
+from . import dispatch_cli, triage_cli
 from .collection import collect, paused, set_paused
 from .db import connect
 from .inventory import DEFAULT_REGISTRY
@@ -47,6 +47,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--db", type=Path, help="host database (default: BRIEFBERLIN_EDITORIAL_DB or XDG state)")
     commands = parser.add_subparsers(dest="command", required=True)
     triage_cli.add_commands(commands)
+    dispatch_cli.add_commands(commands)
     commands.add_parser("init", help="create or migrate the database")
     sync = commands.add_parser("registry-sync", help="validate and atomically reload the directory")
     sync.add_argument("--registry", type=Path, default=DEFAULT_REGISTRY)
@@ -70,6 +71,8 @@ def main(argv: list[str] | None = None) -> int:
                 print(json.dumps({"collection_paused": paused(conn)}))
             elif args.command == "coverage":
                 print(json.dumps(coverage(conn), ensure_ascii=False))
+            elif args.command.startswith(("dispatch-", "publish-", "review-")):
+                print(json.dumps(dispatch_cli.execute(conn, args), ensure_ascii=False))
             elif args.command.startswith(("triage-", "archive-")):
                 result = triage_cli.execute(conn, args)
                 print(json.dumps(result, ensure_ascii=False))

@@ -252,6 +252,7 @@ def sync_archive(conn: sqlite3.Connection, *, output: Path = ROOT / "output", fi
     now = int(time.time()) if now is None else now
     token = uuid.uuid4().hex
     with transaction(conn):
+        control_generation = setting(conn, "dispatch_control_generation")
         set_setting(conn, "archive_sync_token", token)
         set_setting(conn, "archive_ready", 0)
     live = live_paths(fixture)
@@ -368,5 +369,7 @@ def sync_archive(conn: sqlite3.Connection, *, output: Path = ROOT / "output", fi
             set_setting(conn, "archive_bootstrapped", now)
         set_setting(conn, "archive_ready", int(not blocking))
         set_setting(conn, "archive_checked_at", now)
+        if not blocking and control_generation == setting(conn, "dispatch_control_generation"):
+            set_setting(conn, "dispatch_requires_archive", 0)
     return {"ready": not blocking, "bootstrapped": not first or not blocking, "new_ledger_entries": created,
             "matched_stories": len(groups), "issues": issues}
