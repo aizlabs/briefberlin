@@ -11,6 +11,8 @@ keywords: ["Berlin", "Abgeordnetenhauswahl", "Die Linke", "CDU", "AfD", "Gr\u00f
 sources: []
 audio:
   url: "https://media.briefberlin.de/articles/2026/09/20260922-222603-berlins-wahlkarte-zeigt-neue-bruche-und-alte-grenzen-b1/article.mp3"
+  podcast_guid: "urn:uuid:b5307e10-62be-563a-a55a-1c7e4d5b32e5"
+  size_bytes: 2983436
   format: "mp3"
   mime_type: "audio/mpeg"
   provider: "elevenlabs"

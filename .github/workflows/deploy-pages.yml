@@ -10,6 +10,8 @@ on:
     branches: [main]
     paths:
       - 'output/**'
+      - 'scripts/validate_podcast_feed.py'
+      - '.github/workflows/deploy-pages.yml'
   schedule:
     # Expire old Google News sitemap entries even on days without new posts.
     - cron: '17 * * * *'
@@ -48,6 +50,9 @@ jobs:
         run: bundle exec jekyll build
         env:
           JEKYLL_ENV: production
+
+      - name: Validate podcast feed
+        run: python3 scripts/validate_podcast_feed.py output/_site/podcast/b1.xml
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

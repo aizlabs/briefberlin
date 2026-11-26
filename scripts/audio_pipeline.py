@@ -9,6 +9,7 @@ import logging
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Literal, Optional
+from uuid import NAMESPACE_URL, uuid5
 
 import boto3
 from botocore.exceptions import BotoCoreError, ClientError
@@ -210,8 +211,16 @@ class AudioPipeline:
                 self.audio_config.s3.bucket,
                 storage_key,
             )
+            size_bytes = audio_path.stat().st_size
+            if not size_bytes:
+                raise ValueError("Cannot publish empty audio")
+            asset.size_bytes = size_bytes
             self._upload_audio_file(article.title, audio_path, storage_key, asset.mime_type)
             asset.url = self._build_public_url(storage_key)
+            if article.audio and article.audio.podcast_guid:
+                asset.podcast_guid = article.audio.podcast_guid
+            elif article.level == "B1" and asset.mime_type == "audio/mpeg":
+                asset.podcast_guid = uuid5(NAMESPACE_URL, asset.url).urn
             self.logger.info("Uploaded audio for '%s' to %s", article.title, asset.url)
             if timings_written:
                 try:

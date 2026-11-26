@@ -139,13 +139,17 @@ def render_frontmatter(frontmatter: dict, body: str) -> str:
 
 def update_post_audio(path: Path, audio: AudioAsset, frontmatter: dict, body: str) -> None:
     """Write public audio metadata into a post's front matter."""
-    audio_frontmatter = {
+    audio_frontmatter: dict[str, str | int | None] = {
         "url": audio.url,
         "format": audio.format,
         "mime_type": audio.mime_type,
         "provider": audio.provider,
         "voice": audio.voice,
     }
+    if audio.size_bytes is not None:
+        audio_frontmatter["size_bytes"] = audio.size_bytes
+    if audio.podcast_guid:
+        audio_frontmatter["podcast_guid"] = audio.podcast_guid
     if audio.timings_url:
         audio_frontmatter["timings_url"] = audio.timings_url
         audio_frontmatter["timing_granularity"] = audio.timing_granularity

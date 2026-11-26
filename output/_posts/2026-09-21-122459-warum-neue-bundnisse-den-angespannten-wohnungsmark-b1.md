@@ -11,6 +11,8 @@ keywords: ["Wohnungskrise", "Berlin", "bezahlbarer Wohnraum", "Enteignung", "Woh
 sources: []
 audio:
   url: "https://media.briefberlin.de/articles/2026/09/20260921-122459-warum-neue-bundnisse-den-angespannten-wohnungsmarkt-entlasten-sollen-b1/article.mp3"
+  podcast_guid: "urn:uuid:591a2419-1a03-5fbf-89fe-8dce34515ce6"
+  size_bytes: 3074969
   format: "mp3"
   mime_type: "audio/mpeg"
   provider: "elevenlabs"
