@@ -49,6 +49,10 @@ jobs:
         env:
           JEKYLL_ENV: production
 
+      - name: Check rendered category links
+        working-directory: ./output
+        run: bundle exec ruby ../tests/check_category_archive.rb
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

@@ -1,0 +1,19 @@
+---
+permalink: /categories/
+title: "Artikel nach Kategorie"
+layout: single
+---
+
+{% assign categories = site.categories | sort %}
+{% for category in categories %}
+<section id="{{ category[0] | slugify }}">
+  <h2>{{ category[0] | escape }}</h2>
+  <ul>
+    {% assign editions = category[1] | group_by: "url" %}
+    {% for edition in editions %}
+    {% assign post = edition.items | first %}
+    <li><a href="{{ post.url | relative_url }}">{{ post.title | escape }}{% if post.level %} ({{ site.data.levels[post.level].label | default: post.level }}){% endif %}</a></li>
+    {% endfor %}
+  </ul>
+</section>
+{% endfor %}
