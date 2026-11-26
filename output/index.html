@@ -74,6 +74,8 @@ organization_schema: true
 
 {% include frontpage-grid.html groups=story_groups %}
 
+<p><a href="{{ site.category_archive.path | relative_url }}">Artikel nach Kategorie durchsuchen</a></p>
+
 {% if paginator.total_pages > 1 %}
 <nav class="pagination" aria-label="Seitennavigation">
   {% if paginator.previous_page %}

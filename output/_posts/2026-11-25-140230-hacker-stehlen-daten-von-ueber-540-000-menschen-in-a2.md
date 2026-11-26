@@ -52,6 +52,8 @@ translations:
 
 Hacker haben die Berliner <button type="button" class="article-term article-term--default" data-term-id="term-2">Verwaltung</button> <button type="button" class="article-term" data-term-id="term-3">angegriffen</button>. Sie haben Daten von mehr als 540.000 Menschen <button type="button" class="article-term" data-term-id="term-4">gestohlen</button>. Das zeigt eine neue <button type="button" class="article-term" data-term-id="term-5">Prüfung</button> der Zeitung Tagesspiegel.
 
+<aside>Mehr dazu: <a href="{% post_url 2026-11-19-133548-hackerangriff-private-daten-von-berliner-mietern-i-a2 %}">Welche Daten von fast 17.000 Mietern im Internet stehen</a></aside>
+
 Die Berliner <button type="button" class="article-term" data-term-id="term-6">Regierung</button> heißt Senat. Der Senat weiß <button type="button" class="article-term" data-term-id="term-7">bis heute</button> nicht genau, wie groß das Problem ist. Die Daten sind jetzt im Darknet. Das ist ein <button type="button" class="article-term" data-term-id="term-8">geheimer</button> <button type="button" class="article-term" data-term-id="term-9">Teil</button> vom Internet. Die Zeitung glaubt: <button type="button" class="article-term" data-term-id="term-10">Wahrscheinlich</button> sind es noch mehr Menschen.
 
 Nicht alle Menschen in den Daten kommen aus Berlin. Manche <button type="button" class="article-term" data-term-id="term-11">wohnen</button> in anderen Teilen von Deutschland oder <button type="button" class="article-term" data-term-id="term-12">im Ausland</button>. Ihre Namen stehen in Tabellen, E-Mails und Listen.
