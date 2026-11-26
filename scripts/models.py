@@ -270,6 +270,8 @@ class AudioAsset(BaseModel):
         default=None,
         description="Surrounding context emphasized alongside the active word",
     )
+    size_bytes: Optional[int] = Field(default=None, gt=0, description="Published audio size in bytes")
+    podcast_guid: Optional[str] = Field(default=None, description="Permanent podcast episode ID")
     duration_seconds: Optional[float] = Field(default=None, ge=0, description="Audio duration")
 
 

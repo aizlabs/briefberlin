@@ -1,0 +1,40 @@
+---
+layout: null
+permalink: /podcast/b1.xml
+sitemap: false
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+  <channel>
+    {%- assign show = site.data.podcast %}
+    <title>{{ show.title | xml_escape }}</title>
+    <link>{{ '/' | absolute_url | xml_escape }}</link>
+    <atom:link href="{{ page.url | absolute_url | xml_escape }}" rel="self" type="application/rss+xml"/>
+    <description>{{ show.description | xml_escape }} {{ show.disclosure | xml_escape }}</description>
+    <language>de</language>
+    <itunes:author>{{ site.publisher.name | xml_escape }}</itunes:author>
+    <itunes:owner>
+      <itunes:name>{{ site.publisher.name | xml_escape }}</itunes:name>
+      <itunes:email>{{ site.publisher.email | xml_escape }}</itunes:email>
+    </itunes:owner>
+    <itunes:category text="{{ show.category | xml_escape }}"><itunes:category text="{{ show.subcategory | xml_escape }}"/></itunes:category>
+    <itunes:explicit>false</itunes:explicit>
+    <itunes:image href="{{ show.cover | absolute_url | xml_escape }}"/>
+    {%- for post in site.posts %}
+      {%- assign audio = post.audio %}
+      {%- assign lang = post.lang | default: site.lang %}
+      {%- if post.level == 'B1' and lang == 'de' and audio.podcast_guid and audio.url and audio.mime_type == 'audio/mpeg' and audio.size_bytes > 0 %}
+    <item>
+      <title>{{ post.title | xml_escape }}</title>
+      <link>{{ post.url | absolute_url | xml_escape }}</link>
+      <guid isPermaLink="false">{{ audio.podcast_guid | xml_escape }}</guid>
+      <pubDate>{{ post.date | date_to_rfc822 }}</pubDate>
+      <description>{{ post.description | default: post.summary | xml_escape }}
+Zum Mitlesen: {{ post.url | absolute_url | xml_escape }}
+{{ show.disclosure | xml_escape }}</description>
+      <enclosure url="{{ audio.url | xml_escape }}" length="{{ audio.size_bytes }}" type="audio/mpeg"/>
+    </item>
+      {%- endif %}
+    {%- endfor %}
+  </channel>
+</rss>

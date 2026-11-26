@@ -708,6 +708,10 @@ reading_time: {article.reading_time}
                 lines.append(
                     f'  highlight_context: "{self._escape_yaml_string(audio.highlight_context)}"'
                 )
+        if audio.size_bytes is not None:
+            lines.append(f'  size_bytes: {audio.size_bytes}')
+        if audio.podcast_guid:
+            lines.append(f'  podcast_guid: "{self._escape_yaml_string(audio.podcast_guid)}"')
         if audio.duration_seconds is not None:
             lines.append(f'  duration_seconds: {audio.duration_seconds}')
         return '\n'.join(lines)

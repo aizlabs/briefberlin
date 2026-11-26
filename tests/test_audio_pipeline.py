@@ -421,3 +421,41 @@ def test_build_speech_script_uses_configured_glossary_heading(sample_a2_article)
 
     assert "Vocabolario. Sturmschäden heißt auf Englisch storm damage." in script.narration
     assert "Vokabeln." not in script.narration
+
+
+def test_podcast_metadata_survives_publication_and_audio_replacement(
+    base_config, mock_logger, sample_b1_article, tmp_path
+):
+    from scripts.post_audio import split_frontmatter, update_post_audio
+    from scripts.publisher import Publisher
+
+    base_config.audio.enabled = True
+    base_config.audio.provider = "openai"
+    base_config.audio.upload_enabled = True
+    base_config.audio.output_path = str(tmp_path / "audio")
+    base_config.audio.public_base_url = "https://media.briefberlin.de"
+    base_config.audio.s3.bucket = "test-audio"
+    base_config.output["path"] = str(tmp_path / "posts")
+    tts = MagicMock()
+    tts.audio.speech.create.return_value = DummySpeechResponse()
+    pipeline = AudioPipeline(base_config, mock_logger, tts_client=tts, s3_client=MagicMock())
+    when = datetime(2024, 1, 2, 12, 0, 0)
+    prepared = pipeline.prepare_for_publish(sample_b1_article, timestamp=when)
+    guid = prepared.audio.podcast_guid
+    assert guid and prepared.audio.size_bytes == len(b"audio-bytes")
+    assert pipeline.prepare_for_publish(sample_b1_article, timestamp=when).audio.podcast_guid == guid
+    publisher = Publisher(base_config, mock_logger)
+    assert publisher.save_article(prepared, timestamp=when)
+    post, = publisher.output_dir.glob("*.md")
+    metadata, body = split_frontmatter(post.read_text())
+    assert metadata["audio"]["podcast_guid"] == guid
+    assert metadata["audio"]["size_bytes"] == len(b"audio-bytes")
+
+    prepared.title += " & Update"
+    tts.audio.speech.create.return_value = DummySpeechResponse(b"replacement")
+    replacement = pipeline.prepare_for_publish(prepared, timestamp=when)
+    assert replacement.audio.url != prepared.audio.url
+    update_post_audio(post, replacement.audio, metadata, body)
+    metadata, _ = split_frontmatter(post.read_text())
+    assert metadata["audio"]["podcast_guid"] == guid
+    assert metadata["audio"]["size_bytes"] == len(b"replacement")

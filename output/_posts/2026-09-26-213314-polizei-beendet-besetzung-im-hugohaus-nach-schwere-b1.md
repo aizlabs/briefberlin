@@ -11,6 +11,8 @@ keywords: ["Berlin-Friedrichshain", "Hausbesetzung", "Polizei", "LKA", "Kundgebu
 sources: []
 audio:
   url: "https://media.briefberlin.de/articles/2026/09/20260926-213314-polizei-beendet-besetzung-im-hugohaus-nach-schweren-konflikten-b1/article.mp3"
+  podcast_guid: "urn:uuid:c641beaa-956b-5c4e-941d-477c2bb435cb"
+  size_bytes: 3253438
   format: "mp3"
   mime_type: "audio/mpeg"
   provider: "elevenlabs"
