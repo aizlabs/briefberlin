@@ -193,6 +193,7 @@ def update_poll_state(
     conn: sqlite3.Connection, endpoint: Endpoint, *, next_due: int,
     success_at: int | None = None, cursor: dict[str, Any] | None = None,
     failure: str | None = None, baseline_complete: bool | None = None,
+    child_progress: dict | None = None,
 ) -> None:
     """Update after inserting observations in the same short transaction."""
     if not conn.in_transaction:
@@ -201,6 +202,10 @@ def update_poll_state(
         raise ValueError("provide one of success_at or failure")
     if failure is not None and (cursor is not None or baseline_complete is not None):
         raise ValueError("failed polls must retain cursor and baseline")
+    if child_progress is not None:
+        if failure is None:
+            raise ValueError("child-only progress requires a failed parent")
+        cursor = {**endpoint.cursor, "children": child_progress}
     changed = conn.execute("""
         UPDATE poll_state SET state_version=state_version+1,next_due=?,
             last_success=coalesce(?,last_success),cursor=coalesce(?,cursor),

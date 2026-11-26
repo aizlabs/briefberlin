@@ -6,6 +6,7 @@ import sqlite3
 from contextlib import closing
 from pathlib import Path
 
+from .collection import collect, paused, set_paused
 from .db import connect
 from .inventory import DEFAULT_REGISTRY
 from .registry import sync_registry
@@ -31,7 +32,12 @@ def coverage(conn: sqlite3.Connection) -> dict:
         JOIN poll_state p ON p.endpoint_id=e.id AND p.generation=e.generation
         WHERE s.present=1 ORDER BY s.id
     """)]
-    return {"sources": sources, "active_poll_endpoints": adapters, "endpoints": endpoints,
+    gaps = [dict(row) for row in conn.execute("""
+        SELECT g.* FROM collection_gaps g JOIN endpoints e
+        ON e.id=g.endpoint_id AND e.generation=g.generation WHERE e.active=1
+        ORDER BY g.endpoint_id,g.category
+    """)]
+    return {"collection_paused": paused(conn), "collection_gaps": gaps, "sources": sources, "active_poll_endpoints": adapters, "endpoints": endpoints,
             "lookup_resources": lookups}
 
 
@@ -43,12 +49,24 @@ def main(argv: list[str] | None = None) -> int:
     sync = commands.add_parser("registry-sync", help="validate and atomically reload the directory")
     sync.add_argument("--registry", type=Path, default=DEFAULT_REGISTRY)
     commands.add_parser("coverage", help="show configured discovery and lookup endpoints")
+    run = commands.add_parser("collect", help="poll due endpoints and report per-source results")
+    run.add_argument("--limit", type=int, default=20)
+    run.add_argument("--lookback-hours", type=int, default=0)
+    run.add_argument("--children", type=int, default=4)
+    commands.add_parser("collection-pause", help="pause collection and discard in-flight batches")
+    commands.add_parser("collection-resume", help="resume collection on the regular due schedule")
     args = parser.parse_args(argv)
     try:
         with closing(connect(args.db)) as conn:
             if args.command == "registry-sync":
                 sync_registry(conn, args.registry)
-            if args.command == "coverage":
+            if args.command == "collect":
+                print(json.dumps(collect(conn, limit=args.limit, children=args.children,
+                                         lookback_hours=args.lookback_hours)))
+            elif args.command in {"collection-pause", "collection-resume"}:
+                set_paused(conn, args.command == "collection-pause")
+                print(json.dumps({"collection_paused": paused(conn)}))
+            elif args.command == "coverage":
                 print(json.dumps(coverage(conn), ensure_ascii=False))
             else:
                 print(json.dumps({"command": args.command, "schema_version":

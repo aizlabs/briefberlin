@@ -54,6 +54,47 @@ MIGRATIONS = [
         """ALTER TABLE endpoints ADD COLUMN rebaseline_on_activation INTEGER NOT NULL
             DEFAULT 0 CHECK(rebaseline_on_activation IN (0,1))""",
     ),
+    (
+        """CREATE TABLE reports (
+            id INTEGER PRIMARY KEY, url TEXT NOT NULL UNIQUE,
+            first_seen INTEGER NOT NULL, last_seen INTEGER NOT NULL
+        )""",
+        """CREATE TABLE report_urls (
+            url TEXT PRIMARY KEY, report_id INTEGER NOT NULL REFERENCES reports(id)
+        )""",
+        """CREATE TABLE report_guids (
+            endpoint_id TEXT NOT NULL, generation INTEGER NOT NULL, guid TEXT NOT NULL,
+            report_id INTEGER NOT NULL REFERENCES reports(id),
+            PRIMARY KEY(endpoint_id,generation,guid),
+            FOREIGN KEY(endpoint_id,generation) REFERENCES poll_state(endpoint_id,generation)
+        )""",
+        """CREATE TABLE report_revisions (
+            id INTEGER PRIMARY KEY, report_id INTEGER NOT NULL REFERENCES reports(id),
+            content_hash TEXT NOT NULL, title TEXT NOT NULL, evidence TEXT NOT NULL,
+            publisher TEXT NOT NULL, published_at INTEGER, source_date TEXT,
+            observed_at INTEGER NOT NULL, eligible INTEGER NOT NULL CHECK(eligible IN (0,1)),
+            UNIQUE(report_id,content_hash)
+        )""",
+        """CREATE TABLE source_sightings (
+            revision_id INTEGER NOT NULL REFERENCES report_revisions(id),
+            source_id TEXT NOT NULL REFERENCES sources(id), endpoint_id TEXT NOT NULL,
+            generation INTEGER NOT NULL, first_seen INTEGER NOT NULL, last_seen INTEGER NOT NULL,
+            seen_count INTEGER NOT NULL, PRIMARY KEY(revision_id,source_id,endpoint_id,generation),
+            FOREIGN KEY(source_id,endpoint_id,generation)
+                REFERENCES source_endpoints(source_id,endpoint_id,generation)
+        )""",
+        """CREATE TABLE collection_gaps (
+            endpoint_id TEXT NOT NULL, generation INTEGER NOT NULL,
+            observed_at INTEGER NOT NULL, category TEXT NOT NULL,
+            PRIMARY KEY(endpoint_id,generation,category),
+            FOREIGN KEY(endpoint_id,generation) REFERENCES poll_state(endpoint_id,generation)
+        )""",
+        """CREATE TABLE host_cooldowns (host TEXT PRIMARY KEY, until_epoch INTEGER NOT NULL)""",
+        """CREATE VIEW editorial_inputs AS
+            SELECT v.id AS revision_id,r.id AS report_id,v.title,r.url,v.publisher,
+                   v.published_at,v.observed_at,v.evidence,v.eligible
+            FROM report_revisions v JOIN reports r ON r.id=v.report_id""",
+    ),
 ]
 
 
