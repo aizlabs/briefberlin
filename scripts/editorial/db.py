@@ -95,6 +95,108 @@ MIGRATIONS = [
                    v.published_at,v.observed_at,v.evidence,v.eligible
             FROM report_revisions v JOIN reports r ON r.id=v.report_id""",
     ),
+    (
+        """CREATE TABLE stories (
+            id TEXT PRIMARY KEY, title TEXT NOT NULL, summary TEXT NOT NULL DEFAULT '',
+            place TEXT NOT NULL DEFAULT '', entities TEXT NOT NULL DEFAULT '[]',
+            event_date TEXT, first_seen INTEGER NOT NULL, updated_at INTEGER NOT NULL,
+            parent_id TEXT REFERENCES stories(id), relationship TEXT NOT NULL DEFAULT 'new',
+            status TEXT NOT NULL DEFAULT 'pending', evidence_version INTEGER NOT NULL DEFAULT 1,
+            model_score INTEGER CHECK(model_score BETWEEN 0 AND 10),
+            editor_score INTEGER CHECK(editor_score BETWEEN 0 AND 10),
+            deadline INTEGER, expires_at INTEGER, sufficient INTEGER NOT NULL DEFAULT 0,
+            needs_review INTEGER NOT NULL DEFAULT 0
+        )""",
+        """CREATE INDEX story_state ON stories(status,expires_at)""",
+        """CREATE VIEW editorial_queue AS SELECT rated.*, CASE
+            WHEN score >= 9 THEN 0 WHEN score >= 7 THEN 1 WHEN score >= 4 THEN 2 ELSE 3 END AS tier
+            FROM (SELECT s.*,coalesce(editor_score,model_score) AS score FROM stories s) rated""",
+        """CREATE TABLE editions (
+            path TEXT PRIMARY KEY, story_id TEXT NOT NULL REFERENCES stories(id),
+            lang TEXT NOT NULL, level TEXT NOT NULL, title TEXT NOT NULL
+        )""",
+        """CREATE INDEX editions_story ON editions(story_id)""",
+        """CREATE TABLE live_publications (
+            story_id TEXT PRIMARY KEY REFERENCES stories(id), publication_key TEXT NOT NULL UNIQUE,
+            verified_at INTEGER, origin TEXT NOT NULL
+        )""",
+        """CREATE TABLE story_evidence (
+            story_id TEXT NOT NULL REFERENCES stories(id),
+            revision_id INTEGER NOT NULL REFERENCES report_revisions(id),
+            evidence_version INTEGER, relationship TEXT NOT NULL, fact TEXT NOT NULL,
+            quote TEXT NOT NULL, attribution TEXT NOT NULL, url TEXT NOT NULL, recorded_at INTEGER NOT NULL,
+            PRIMARY KEY(story_id,revision_id)
+        )""",
+        """CREATE TABLE model_decisions (
+            id INTEGER PRIMARY KEY, story_id TEXT REFERENCES stories(id),
+            revision_id INTEGER NOT NULL REFERENCES report_revisions(id),
+            evidence_version INTEGER, token TEXT NOT NULL, rubric TEXT NOT NULL,
+            model TEXT NOT NULL, score INTEGER CHECK(score BETWEEN 0 AND 10),
+            outcome TEXT NOT NULL, response TEXT NOT NULL, recorded_at INTEGER NOT NULL
+        )""",
+        """CREATE TABLE editor_feedback (
+            action_id TEXT PRIMARY KEY, story_id TEXT REFERENCES stories(id),
+            revision_id INTEGER REFERENCES report_revisions(id), actor TEXT NOT NULL,
+            action TEXT NOT NULL, rating INTEGER CHECK(rating BETWEEN 0 AND 10),
+            note TEXT NOT NULL, recorded_at INTEGER NOT NULL
+        )""",
+        """CREATE TABLE triage_cases (
+            revision_id INTEGER PRIMARY KEY REFERENCES report_revisions(id),
+            state TEXT NOT NULL, invalid_count INTEGER NOT NULL DEFAULT 0, reason TEXT NOT NULL DEFAULT ''
+        )""",
+        """CREATE TABLE triage_leases (
+            token TEXT PRIMARY KEY, revision_id INTEGER NOT NULL REFERENCES triage_cases(revision_id),
+            owner TEXT NOT NULL, expires_at INTEGER NOT NULL, context_version INTEGER NOT NULL,
+            packet TEXT NOT NULL, state TEXT NOT NULL, receipt TEXT
+        )""",
+        """CREATE UNIQUE INDEX one_triage_worker ON triage_leases(state) WHERE state='active'""",
+        """INSERT INTO settings VALUES('story_context_version','0')""",
+        """CREATE TRIGGER stories_insert_context AFTER INSERT ON stories BEGIN
+            UPDATE settings SET value=CAST(value AS INTEGER)+1 WHERE key='story_context_version'; END""",
+        """CREATE TRIGGER stories_update_context AFTER UPDATE ON stories BEGIN
+            UPDATE settings SET value=CAST(value AS INTEGER)+1 WHERE key='story_context_version'; END""",
+    ),
+    (
+        """CREATE TABLE publication_keys (
+            publication_key TEXT PRIMARY KEY, story_id TEXT NOT NULL REFERENCES live_publications(story_id)
+        )""",
+        """INSERT INTO publication_keys SELECT publication_key,story_id FROM live_publications""",
+        """CREATE TABLE archive_comparisons (
+            live_id TEXT NOT NULL REFERENCES live_publications(story_id),
+            candidate_id TEXT NOT NULL REFERENCES stories(id), outcome TEXT, actor TEXT, resolved_at INTEGER,
+            PRIMARY KEY(live_id,candidate_id)
+        )""",
+        """CREATE UNIQUE INDEX one_live_alias ON archive_comparisons(candidate_id) WHERE outcome='same'""",
+        """CREATE TABLE evidence_holds (
+            story_id TEXT PRIMARY KEY REFERENCES stories(id),
+            revision_id INTEGER NOT NULL REFERENCES report_revisions(id), reason TEXT NOT NULL
+        )""",
+        """INSERT INTO evidence_holds SELECT s.id,e.revision_id,'Editor assessment required'
+            FROM stories s JOIN story_evidence e ON e.story_id=s.id WHERE s.status='held' AND s.sufficient=0
+            AND e.revision_id=(SELECT max(ev.revision_id) FROM story_evidence ev WHERE ev.story_id=s.id)""",
+        """CREATE TABLE invalid_submissions (
+            token TEXT NOT NULL REFERENCES triage_leases(token), digest TEXT NOT NULL, receipt TEXT NOT NULL,
+            PRIMARY KEY(token,digest)
+        )""",
+        """CREATE TABLE notice_changes (
+            revision_id INTEGER PRIMARY KEY REFERENCES report_revisions(id)
+        )""",
+        """INSERT INTO notice_changes SELECT DISTINCT v.id FROM report_revisions v
+            JOIN source_sightings sight ON sight.revision_id=v.id AND sight.first_seen=v.observed_at
+            JOIN endpoints ep ON ep.id=sight.endpoint_id AND ep.generation=sight.generation AND ep.adapter='notice'
+            JOIN report_revisions old ON old.report_id=v.report_id AND old.content_hash!=v.content_hash
+            JOIN source_sightings prior ON prior.revision_id=old.id AND prior.endpoint_id=sight.endpoint_id
+                AND prior.generation=sight.generation AND prior.first_seen<v.observed_at
+            WHERE v.eligible=1""",
+        """ALTER TABLE story_evidence ADD COLUMN wire_origin TEXT""",
+        """CREATE INDEX syndicated_content ON report_revisions(content_hash)""",
+        """CREATE TRIGGER edition_insert_context AFTER INSERT ON editions BEGIN
+            UPDATE settings SET value=CAST(value AS INTEGER)+1 WHERE key='story_context_version'; END""",
+        """CREATE TRIGGER edition_update_context AFTER UPDATE ON editions BEGIN
+            UPDATE settings SET value=CAST(value AS INTEGER)+1 WHERE key='story_context_version'; END""",
+        """CREATE TRIGGER edition_delete_context AFTER DELETE ON editions BEGIN
+            UPDATE settings SET value=CAST(value AS INTEGER)+1 WHERE key='story_context_version'; END""",
+    ),
 ]
 
 

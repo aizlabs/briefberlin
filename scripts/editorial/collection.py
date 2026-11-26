@@ -138,7 +138,11 @@ def save_item(conn: sqlite3.Connection, ep: Endpoint, item: Item, sources: list,
     date = adapters.epoch(item.date)
     ceiling = now if after_baseline else baseline_at
     eligible = bool(date is not None and max(now - 2 * DAY, floor) <= date <= ceiling)
-    if ep.adapter == "notice" and after_baseline and identity:
+    changed_notice = ep.adapter == "notice" and after_baseline and bool(conn.execute("""
+        SELECT 1 FROM report_revisions v JOIN source_sightings s ON s.revision_id=v.id
+        WHERE v.report_id=? AND v.content_hash<>? AND s.endpoint_id=? AND s.generation=?
+        AND s.first_seen<? LIMIT 1""", (report_id, content_hash, ep.endpoint_id, ep.generation, now)).fetchone())
+    if changed_notice:
         eligible = True
     inserted = conn.execute("""
         INSERT INTO report_revisions(report_id,content_hash,title,evidence,publisher,published_at,
@@ -148,6 +152,8 @@ def save_item(conn: sqlite3.Connection, ep: Endpoint, item: Item, sources: list,
           date, item.date or None, now, eligible)).rowcount
     revision_id = conn.execute("SELECT id FROM report_revisions WHERE report_id=? AND content_hash=?",
                                (report_id, content_hash)).fetchone()[0]
+    if inserted and changed_notice:
+        conn.execute("INSERT INTO notice_changes VALUES(?)", (revision_id,))
     conn.executemany("""
         INSERT INTO source_sightings VALUES(?,?,?,?,?,?,1)
         ON CONFLICT(revision_id,source_id,endpoint_id,generation) DO UPDATE SET

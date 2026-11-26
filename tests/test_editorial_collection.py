@@ -143,6 +143,7 @@ def test_notice_normalization_and_pause_race(conn, tmp_path):
     for offset, body in ((0, text), (61, text), (122, "The station reopened after repairs this morning.")):
         collect(conn, now=NOW+offset, fetch=lambda u, h: response(u, page(body, str(offset))))
     assert [r[0] for r in conn.execute("SELECT eligible FROM editorial_inputs ORDER BY revision_id")] == [0, 1]
+    assert [r[0] for r in conn.execute("SELECT revision_id FROM notice_changes")] == [2]
     def interrupted(url, headers):
         set_paused(conn, True)
         set_paused(conn, False)
