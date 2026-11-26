@@ -174,9 +174,10 @@ def current_work(conn, now, p):
 
 
 def reservation(work):
-    result = {"state": work["state"], "work_id": work["id"], "story_id": work["story_id"], "kind": work["kind"]}
+    result = {"state": work["state"], "work_id": work["id"], "story_id": work["story_id"],
+              "kind": work["kind"], "version": work["version"]}
     if work["kind"] == "manual":
-        result.update(preview_id=work["manual_preview_id"], version=work["version"])
+        result["preview_id"] = work["manual_preview_id"]
     return result
 
 
@@ -195,6 +196,10 @@ def choose(conn, now, p):
     work = current_work(conn, now, p)
     if work and work["state"] in EXTERNAL:
         return {"state": "reconcile", "work_id": work["id"]}
+    target = json.loads(setting(conn, "launch_target") or "null")
+    if target and conn.execute("""SELECT 1 FROM dispatch_work WHERE story_id=? AND version=?
+        AND commit_sha IS NOT NULL""", target).fetchone():
+        return {"state": "blocked", "reason": "launch-already-authorized"}
     manual = work is not None and work["kind"] == "manual"
     if manual and not manual_story(conn, work["manual_preview_id"], work["version"], now):
         transition(conn, work["id"], "superseded", "manual preview is stale", now)
@@ -248,8 +253,11 @@ def choose(conn, now, p):
         transition(conn, work["id"], "superseded", "eligibility, priority or slot changed", now)
 
     if selected is not None:
+        if target and target != [selected["id"], selected["evidence_version"]]:
+            return {"state": "blocked", "reason": "launch-target-changed"}
         if mode == "observe":
-            return {"state": "would-publish", "kind": kind, "story_id": selected["id"]}
+            return {"state": "would-publish", "kind": kind, "story_id": selected["id"],
+                    "evidence_version": selected["evidence_version"]}
         return reserve(conn, selected, kind, slot if kind != "immediate" else None,
                        review["id"] if review else None, now)
     if review:
@@ -264,6 +272,8 @@ def choose(conn, now, p):
         suggestion = next((s for s in queue if s["dispatch_tier"] == 2
                            and (s["id"], s["evidence_version"]) not in declined), None)
         if suggestion is not None and (recent is None or now >= recent + p.review_interval_seconds):
+            if target and target != [suggestion["id"], suggestion["evidence_version"]]:
+                return {"state": "blocked", "reason": "launch-target-changed"}
             return make_review(conn, suggestion, slot, mode, now)
     return {"state": "idle", "next_fallback_at": slot + p.slot_seconds}
 
@@ -274,11 +284,22 @@ def tick(conn, *, policy=None, now=None):
         return choose(conn, clock(now), p)
 
 
-def configure(conn, *, mode=None, paused=None, now=None):
+def configure(conn, *, mode=None, paused=None, now=None, launch_target=None):
     if mode is not None and mode not in {"observe", "live"}:
         raise ValueError("unknown dispatch mode")
     with transaction(conn):
         now = clock(now)
+        if launch_target is not None:
+            if mode != "live" or setting(conn, "dispatch_mode") != "observe" or active(conn):
+                raise ValueError("start a controlled launch from idle observation")
+            observed = choose(conn, now, Policy.load())
+            candidate = observed.get("card", observed)
+            if (observed["state"] not in {"would-publish", "review", "awaiting-editor"}
+                    or launch_target != [candidate.get("story_id"), candidate.get("evidence_version")]):
+                raise ValueError("observed story or evidence version changed")
+            set_setting(conn, "launch_target", json.dumps(launch_target))
+        elif mode == "observe":
+            conn.execute("DELETE FROM settings WHERE key='launch_target'")
         if ((mode is not None and mode != setting(conn, "dispatch_mode"))
                 or (paused is not None and paused != (setting(conn, "publish_paused") == "1"))):
             work = active(conn)
@@ -493,6 +514,8 @@ def reserve_manual(conn, *, preview_id, version, policy=None, now=None):
     """Stage 5 calls only after authenticated explicit approval of the exact manual preview."""
     p = policy or Policy.load()
     with transaction(conn):
+        if setting(conn, "launch_target"):
+            return {"state": "blocked", "reason": "controlled-launch"}
         now = clock(now)
         work = current_work(conn, now, p)
         same = work is not None and work["manual_preview_id"] == preview_id and work["version"] == version
@@ -528,7 +551,8 @@ def status(conn, *, policy=None, now=None):
         slot = int(setting(conn, "fallback_epoch") or 0)
         latest = conn.execute("""SELECT story_id,verified_at,origin FROM live_publications
             ORDER BY verified_at DESC,story_id LIMIT 1""").fetchone()
-        return {"mode": mode, "publish_paused": setting(conn, "publish_paused") == "1",
+        return {"mode": mode, "launch_target": json.loads(setting(conn, "launch_target") or "null"),
+                "publish_paused": setting(conn, "publish_paused") == "1",
                 "archive_block": blocked, "archive_checked_at": setting(conn, "archive_checked_at"),
                 "latest_publication": dict(latest) if latest else None, "fallback_epoch": slot or None,
                 "next_fallback_at": slot + p.slot_seconds if slot else None,

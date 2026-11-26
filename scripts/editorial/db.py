@@ -283,6 +283,21 @@ MIGRATIONS = [
             (SELECT id FROM publication_drafts WHERE state='waiting' AND approved_event IS NULL)""",
         """UPDATE stories SET status='pending',expires_at=coalesce(expires_at,first_seen+172800) WHERE status='manual'""",
     ),
+    (
+        """CREATE TABLE telegram_cards (
+            id TEXT PRIMARY KEY, request_id TEXT NOT NULL REFERENCES review_requests(id),
+            account TEXT NOT NULL, chat TEXT NOT NULL, message_id TEXT,
+            created_at INTEGER NOT NULL, UNIQUE(account,chat,message_id)
+        )""",
+        """CREATE INDEX telegram_card_request ON telegram_cards(request_id)""",
+        """CREATE TABLE telegram_controls (
+            token TEXT PRIMARY KEY, card_id TEXT NOT NULL REFERENCES telegram_cards(id),
+            verb TEXT NOT NULL, rating INTEGER
+        )""",
+    ),
+    (
+        "ALTER TABLE telegram_cards ADD COLUMN retry_at INTEGER",
+    ),
 ]
 
 
@@ -309,7 +324,7 @@ def migrate(conn: sqlite3.Connection) -> None:
             conn.execute(f"PRAGMA user_version = {number}")
 
 
-def connect(path: str | Path | None = None) -> sqlite3.Connection:
+def connect(path: str | Path | None = None, *, recovery: bool = False) -> sqlite3.Connection:
     """Open and migrate a host DB; the caller closes the returned connection."""
     if path is None:
         state = Path(os.environ.get("XDG_STATE_HOME") or Path.home() / ".local/state")
@@ -331,6 +346,8 @@ def connect(path: str | Path | None = None) -> sqlite3.Connection:
         conn.execute("PRAGMA foreign_keys = ON")
         conn.execute("PRAGMA busy_timeout = 5000")
         migrate(conn)
+        if not recovery and conn.execute("SELECT 1 FROM settings WHERE key='restore_quarantine'").fetchone():
+            raise ValueError("restored database quarantined; complete the operator reconciliation")
         return conn
     except BaseException:
         conn.close()

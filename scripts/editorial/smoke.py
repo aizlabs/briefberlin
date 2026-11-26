@@ -101,7 +101,7 @@ def main() -> int:
     ok = False
     try:
         logging.disable(logging.CRITICAL)
-        for key in ("TMPDIR", "TMP", "TEMP", "XDG_CACHE_HOME", "XDG_STATE_HOME", "HOME"):
+        for key in ("TMPDIR", "TMP", "TEMP", "XDG_CACHE_HOME", "XDG_STATE_HOME"):
             os.environ[key] = str(path)
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")

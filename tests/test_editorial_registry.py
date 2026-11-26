@@ -13,7 +13,12 @@ import pytest
 from scripts.editorial import db
 from scripts.editorial.__main__ import coverage, main
 from scripts.editorial.inventory import DEFAULT_REGISTRY
-from scripts.editorial.registry import StaleEndpoint, due_endpoints, sync_registry, update_poll_state
+from scripts.editorial.registry import (
+    StaleEndpointError,
+    due_endpoints,
+    sync_registry,
+    update_poll_state,
+)
 
 
 @pytest.fixture
@@ -92,7 +97,7 @@ def test_reload_pause_removal_and_return(conn, tmp_path):
     reload(conn, tmp_path, source)
     resumed, = due(conn, 2000)
     assert resumed.baseline_complete and resumed.cursor == saved.cursor
-    with pytest.raises(StaleEndpoint):
+    with pytest.raises(StaleEndpointError):
         mark(conn, saved)
 
 
@@ -111,7 +116,7 @@ def test_move_and_reconfigure_rebaseline_without_losing_history(conn, tmp_path):
     reload(conn, tmp_path, source)
     reconfigured, = due(conn)
     assert reconfigured.generation == moved.generation + 1
-    with pytest.raises(StaleEndpoint):
+    with pytest.raises(StaleEndpointError):
         mark(conn, moved)
 
 
@@ -167,7 +172,7 @@ def test_rejoining_an_abandoned_address_rebaselines(conn, tmp_path, reattach_pau
     assert json.loads(historical["cursor"]) == {"etag": "tag"} and historical["baseline_complete"]
     still_shared = next(row for row in due(conn, 1001) if row.url == shared.url)
     assert still_shared.generation == shared.generation and still_shared.baseline_complete
-    with pytest.raises(StaleEndpoint):
+    with pytest.raises(StaleEndpointError):
         mark(conn, other)
 
 
@@ -274,7 +279,7 @@ def test_concurrent_poll_and_failed_batch(conn, tmp_path):
     assert not due(conn, 1999)
     retry, = due(conn, 2000)
     assert retry.failures == 1 and not retry.baseline_complete and retry.cursor == {}
-    with pytest.raises(StaleEndpoint), db.transaction(conn):
+    with pytest.raises(StaleEndpointError), db.transaction(conn):
         conn.execute("INSERT INTO settings VALUES('temporary-observation','data')")
         update_poll_state(conn, snapshot, next_due=2100, success_at=2000)
     assert not conn.execute("SELECT * FROM settings").fetchall()

@@ -1,0 +1,15 @@
+[Unit]
+Description=BriefBerlin scoped OpenClaw triage socket
+ConditionPathIsDirectory=/srv/openclaw-projects/briefberlin-discovery/socket
+
+[Socket]
+ListenStream=/srv/openclaw-projects/briefberlin-discovery/socket/discovery.sock
+SocketUser=briefberlin
+SocketGroup=briefberlin-triage
+SocketMode=0660
+RemoveOnStop=yes
+Accept=yes
+MaxConnections=4
+
+[Install]
+WantedBy=sockets.target

@@ -1,0 +1,82 @@
+[
+  {
+    "id": "briefberlin-manual",
+    "workspace": "/srv/openclaw-projects/briefberlin-manual",
+    "tools": {
+      "exec": {
+        "host": "sandbox"
+      },
+      "elevated": {
+        "enabled": false
+      },
+      "allow": [
+        "exec",
+        "process",
+        "read",
+        "write"
+      ]
+    },
+    "sandbox": {
+      "mode": "all",
+      "scope": "agent",
+      "workspaceAccess": "rw",
+      "docker": {
+        "user": "MANUAL_UID:CLIENT_GID",
+        "env": {
+          "BB_MANUAL_SOCKET": "/opt/briefberlin-socket/manual.sock",
+          "BB_INBOX": "/workspace/inbox"
+        },
+        "binds": [
+          "/srv/openclaw-projects/briefberlin-manual/socket:/opt/briefberlin-socket:ro"
+        ],
+        "workdir": "/workspace",
+        "network": "none",
+        "readOnlyRoot": true,
+        "capDrop": [
+          "ALL"
+        ]
+      }
+    }
+  },
+  {
+    "id": "briefberlin-discovery",
+    "workspace": "/srv/openclaw-projects/briefberlin-discovery",
+    "model": {
+      "primary": "PROVIDER/MODEL",
+      "fallbacks": []
+    },
+    "tools": {
+      "allow": [
+        "exec",
+        "read",
+        "write"
+      ],
+      "exec": {
+        "host": "sandbox"
+      },
+      "elevated": {
+        "enabled": false
+      }
+    },
+    "sandbox": {
+      "mode": "all",
+      "scope": "agent",
+      "workspaceAccess": "rw",
+      "docker": {
+        "user": "TRIAGE_UID:TRIAGE_GID",
+        "env": {
+          "BB_DISCOVERY_SOCKET": "/opt/briefberlin-socket/discovery.sock"
+        },
+        "binds": [
+          "/srv/openclaw-projects/briefberlin-discovery/socket:/opt/briefberlin-socket:ro"
+        ],
+        "workdir": "/workspace",
+        "network": "none",
+        "readOnlyRoot": true,
+        "capDrop": [
+          "ALL"
+        ]
+      }
+    }
+  }
+]

@@ -40,7 +40,7 @@ def signed_action(conn, envelope, *, policy=None, now=None):
         raise ValueError("signed review envelope required")
     payload, signature = envelope["payload"], envelope["signature"]
     required = {"metadata", "event_id", "request_id", "story_id", "version", "verb"}
-    if not isinstance(payload, dict) or not required <= set(payload) <= required | {"rating", "note"}:
+    if not isinstance(payload, dict) or not required <= set(payload) <= required | {"rating", "note", "delivery"}:
         raise ValueError("invalid review payload")
     if not isinstance(signature, str) or not re.fullmatch(r"[0-9a-f]{64}", signature):
         raise ValueError("invalid review signature")
@@ -61,7 +61,7 @@ def identity(metadata):
 
 
 def _apply_action(conn, *, metadata, event_id, request_id, story_id, version, verb, rating=None,
-                  note="", policy=None, now=None):
+                  note="", delivery=None, policy=None, now=None):
     p = policy or Policy.load()
     actor = identity(metadata)
     if actor not in p.editor_allowlist:
@@ -78,7 +78,13 @@ def _apply_action(conn, *, metadata, event_id, request_id, story_id, version, ve
             raise ValueError("publish a below-threshold story through an explicit manual preview")
     elif rating is not None:
         raise ValueError("rating supplied for a decision without a rating")
-    payload = json.dumps([request_id, story_id, version, verb, rating, note])
+    content = [request_id, story_id, version, verb, rating, note]
+    if delivery is not None:
+        if (not isinstance(delivery, dict) or set(delivery) != {"attempt", "control", "message"}
+                or not all(isinstance(v, str) for v in delivery.values())):
+            raise ValueError("invalid delivery binding")
+        content.append([delivery["attempt"], delivery["control"], delivery["message"]])
+    payload = json.dumps(content)
     event_key = json.dumps([metadata["transport"], metadata["account"], event_id], separators=(",", ":"))
     with transaction(conn):
         now = clock(now)
@@ -92,6 +98,16 @@ def _apply_action(conn, *, metadata, event_id, request_id, story_id, version, ve
         request = conn.execute("SELECT * FROM review_requests WHERE id=?", (request_id,)).fetchone()
         if not request or (request["story_id"], request["version"]) != (story_id, version):
             raise ValueError("review request and evidence identity do not match")
+        latest = conn.execute("""SELECT * FROM telegram_cards WHERE request_id=?
+            ORDER BY rowid DESC LIMIT 1""", (request_id,)).fetchone()
+        if latest or delivery:
+            if (not latest or not delivery or metadata["transport"] != "telegram"
+                    or (latest["id"], latest["message_id"], latest["account"], latest["chat"]) !=
+                    (delivery["attempt"], delivery["message"], metadata["account"], metadata["conversation"])
+                    or not conn.execute("""SELECT 1 FROM telegram_controls
+                        WHERE card_id=? AND token=? AND verb=? AND rating IS ?""",
+                        (latest["id"], delivery["control"], verb, rating)).fetchone()):
+                raise ValueError("review control has been replaced or is unbound")
         dispatch = choose(conn, now, p)
         state = conn.execute("SELECT state FROM review_requests WHERE id=?", (request_id,)).fetchone()[0]
         result = {"request_id": request_id, "story_id": story_id, "evidence_version": version, "mode": request["mode"]}

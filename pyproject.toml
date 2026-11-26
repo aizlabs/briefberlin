@@ -34,6 +34,11 @@ dev = [
 ]
 
 [project.scripts]
+briefberlin-discovery = "scripts.editorial.discovery_host:main"
+briefberlin-discovery-rpc = "scripts.editorial.discovery_host:rpc"
+briefberlin-review-ingress = "scripts.editorial.review_telegram:ingress"
+briefberlin-review-send = "scripts.editorial.review_telegram:main"
+briefberlin-editorial-backup = "scripts.editorial.backup:main"
 briefberlin-manual-rpc = "scripts.editorial.publication_rpc:main"
 briefberlin-telegram-ingress = "scripts.editorial.telegram_ingress:main"
 briefberlin-publisher = "scripts.editorial.publication_cli:main"

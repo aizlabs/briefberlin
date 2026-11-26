@@ -33,9 +33,16 @@ def decision(conn, update, account):
             pass
     elif control.startswith("bb-review:"):
         handler = os.environ.get("BB_REVIEW_INGRESS")
-        if handler:
-            subprocess.run([handler], input=json.dumps(update).encode(), timeout=30,
-                           stdout=subprocess.DEVNULL, check=True)
+        if not handler:
+            raise OSError("configure BB_REVIEW_INGRESS before enabling review controls")
+        result = subprocess.run([handler], input=json.dumps(update).encode(), timeout=30,
+                                stdout=subprocess.PIPE, check=True)
+        answer = result.stdout.decode().strip()
+        query_id = update["callback_query"].get("id")
+        if not isinstance(query_id, str) or not query_id or not 1 <= len(answer) <= 200:
+            raise ValueError("invalid review acknowledgment")
+        return {"method": "answerCallbackQuery", "callback_query_id": query_id,
+                "text": answer, "show_alert": True}
 
 
 def relay(raw, url, secret):
@@ -71,8 +78,11 @@ class Handler(BaseHTTPRequestHandler):
             if len(raw) != length or not isinstance(update, dict) or type(update.get("update_id")) is not int:
                 raise ValueError("invalid update")
             with closing(connect()) as conn:
-                decision(conn, update, self.server.account)
-            body, content_type = relay(raw, self.server.upstream, self.server.upstream_secret)
+                receipt = decision(conn, update, self.server.account)
+            if receipt is None:
+                body, content_type = relay(raw, self.server.upstream, self.server.upstream_secret)
+            else:
+                body, content_type = json.dumps(receipt).encode(), "application/json"
         except (ValueError, TypeError, AttributeError):
             self.send_error(400)
             return

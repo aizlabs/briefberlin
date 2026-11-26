@@ -15,7 +15,7 @@ from urllib.parse import urlsplit
 import yaml
 
 from .db import ROOT, transaction
-from .http import Client, Gap
+from .http import Client, CollectionGapError
 from .matching import words
 
 ORIGIN = "https://briefberlin.de"
@@ -99,7 +99,7 @@ def live_paths(fixture: Path | None) -> set[str]:
     else:
         try:
             data = Client()(SITEMAP, {}).body
-        except Gap as exc:
+        except CollectionGapError as exc:
             raise ValueError(f"archive sitemap unavailable: {exc}") from None
     try:
         root = ET.fromstring(data)

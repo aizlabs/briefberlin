@@ -60,7 +60,9 @@ def main(argv: list[str] | None = None) -> int:
     commands.add_parser("collection-resume", help="resume collection on the regular due schedule")
     args = parser.parse_args(argv)
     try:
-        with closing(connect(args.db)) as conn:
+        with closing(connect(args.db, recovery=args.command in {
+            "archive-resolve", "triage-status", "dispatch-status", "coverage"
+        })) as conn:
             if args.command == "registry-sync":
                 sync_registry(conn, args.registry)
             if args.command == "collect":

@@ -8,7 +8,7 @@ import pytest
 from scripts.editorial import adapters
 from scripts.editorial.collection import collect, set_paused
 from scripts.editorial.db import connect
-from scripts.editorial.http import Gap, Response, retry_time
+from scripts.editorial.http import CollectionGapError, Response, retry_time
 from scripts.editorial.registry import sync_registry
 from scripts.editorial.smoke import compare_passes
 
@@ -100,7 +100,7 @@ def test_children_survive_rotation_and_304_and_use_real_evidence(conn, tmp_path)
                 return Response(url, b"", 304)
             return response(url, page, etag="123")
         if url.endswith("/one") and seen.count(url) == 1:
-            raise Gap("HTTP 503")
+            raise CollectionGapError("HTTP 503")
         return response(url, "<article><h1>Published release</h1><p>Original published body "
                              "from a separate child request.</p></article>")
     first = collect(conn, now=NOW, fetch=fetch, children=2)["endpoints"][0]
@@ -123,7 +123,7 @@ def test_conditional_index_retries_pending_child(conn, tmp_path):
     def initial(u, h):
         if u.endswith("/news"):
             return response(u, '<main><a href="/a/2023/11/14/item">Story</a></main>', etag="tag")
-        raise Gap("temporary child failure")
+        raise CollectionGapError("temporary child failure")
     collect(conn, now=NOW, fetch=initial)
     def again(u, h):
         if u.endswith("/news"):
@@ -199,12 +199,12 @@ def test_child_can_finish_while_index_is_unusable(conn, tmp_path, parent_outcome
     def initial(url, headers):
         if url.endswith("/news"):
             return response(url, '<main><a href="/2023/11/14/story">Release</a></main>', etag="one")
-        raise Gap("unavailable child")
+        raise CollectionGapError("unavailable child")
     collect(conn, now=NOW, fetch=initial)
     def subsequent(url, headers):
         if url.endswith("/news"):
             if parent_outcome == "unavailable":
-                raise Gap("unavailable index")
+                raise CollectionGapError("unavailable index")
             return response(url, "<main>No recent releases.</main>", etag="two")
         return response(url, "<article><h1>Release</h1><p>Evidence from the recovered child page.</p></article>")
     row, = collect(conn, now=NOW+301, fetch=subsequent)["endpoints"]
@@ -249,7 +249,7 @@ def test_stale_poll_cooldown_applies_to_an_already_running_poll(conn, tmp_path):
         def throttle(url, headers):
             # Invalidate just this in-flight poll, as a competing tick would.
             conn.execute("UPDATE poll_state SET state_version=state_version+1 WHERE endpoint_id='b'")
-            raise Gap("HTTP 429", NOW + 500)
+            raise CollectionGapError("HTTP 429", NOW + 500)
 
         def overlapping(url, headers):
             assert url == ORIGIN + "/a"  # Its subsequent child fetch must honor the new cooldown.

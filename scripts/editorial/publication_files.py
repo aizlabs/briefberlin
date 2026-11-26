@@ -2,10 +2,10 @@
 
 import hashlib
 import html
-import unicodedata
 import os
 import re
 import subprocess
+import unicodedata
 from datetime import datetime
 from pathlib import Path
 

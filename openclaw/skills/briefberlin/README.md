@@ -26,14 +26,6 @@ The publisher service owns the generation, Telegram, audio, object storage and G
 
 ## Install or update on the bot
 
-The running copy lives in OpenClaw's workspace. After changing files here and pushing:
-
-```bash
-openclaw/skills/briefberlin/install.sh
-```
-
-Run it as the `openclaw` user from the bot's clone (`/opt/openclaw/work/briefberlin`).
-It copies these files into `/opt/openclaw/.openclaw/workspace/skills/briefberlin/` and
-keeps the previous copy as `*.prev`.
+Install both scoped workspaces from the owner-merged revision using the [discovery handover](../../../docs/editorial-discovery-handover.md). The compatibility wrapper `openclaw/skills/briefberlin/install.sh` installs the six client skills in the manual workspace at `/srv/openclaw-projects/briefberlin-manual/skills` by default. Pass `--skills /absolute/workspace/skills` for a different workspace. Inside the sandbox, OpenClaw mounts workspace skills read-only at `/workspace/skills`. Managed upgrades atomically swap the suite directory on Linux. Preserve custom or conflicting copies privately and start a fresh agent session after upgrading the suite.
 
 The installed workflow also requires the private ledger, authenticated Telegram input adapter and verifier described in [editorial publication](../../../docs/editorial-publication.md). Run the upgrade preflight there before replacing the legacy helper.

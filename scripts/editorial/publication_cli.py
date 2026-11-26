@@ -10,7 +10,10 @@ import sys
 from contextlib import closing
 from pathlib import Path
 
-from . import dispatch, manual_drafts as drafts, publication_host as host, publication_worker as worker
+from . import dispatch
+from . import manual_drafts as drafts
+from . import publication_host as host
+from . import publication_worker as worker
 from .db import connect
 from .publication_files import artifacts, ensure_private, protect_text
 
@@ -166,7 +169,7 @@ def main(argv=None):
     absent.add_argument("--evidence", required=True)
     args = parser.parse_args(argv)
     try:
-        with closing(connect(args.db)) as conn:
+        with closing(connect(args.db, recovery=args.op == "confirmed-absent")) as conn:
             root = host.state_dir(conn)
             if args.op == "manual":
                 print(manual(conn, root, args.action, args.args))
@@ -182,13 +185,13 @@ def main(argv=None):
                 result = operator_absent(conn, root, args.work_id, args.commit, args.evidence)
             elif args.op == "work":
                 result = worker.send_work(conn, root, args.work_id)
+            elif args.op == "cycle":
+                result = worker.cycle(conn, root)
             else:
                 result = worker.recover(conn, root)
                 worker.housekeep(conn, root)
-                if args.op == "cycle" and result["state"] in {"idle", "live"}:
-                    archive = host.refresh_archive(conn, root)
-                    result = worker.advance(conn, root) if archive["ready"] else {"state": "archive-block", "archive": archive}
-            worker.deliver_notices(conn)
+            if args.op != "cycle":
+                worker.deliver_notices(conn)
             print(json.dumps(result, ensure_ascii=False))
     except (ValueError, KeyError, OSError, sqlite3.Error, subprocess.SubprocessError) as exc:
         print("ERROR:", exc, file=sys.stderr)

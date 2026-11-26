@@ -185,7 +185,7 @@ def due_endpoints(
     ]
 
 
-class StaleEndpoint(RuntimeError):
+class StaleEndpointError(RuntimeError):
     """The caller must discard this batch; another poll or config reload won."""
 
 
@@ -218,4 +218,4 @@ def update_poll_state(
           baseline_complete, failure, failure, endpoint.endpoint_id, endpoint.generation,
           endpoint.state_version)).rowcount
     if changed != 1:
-        raise StaleEndpoint(endpoint.endpoint_id)
+        raise StaleEndpointError(endpoint.endpoint_id)

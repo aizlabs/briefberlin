@@ -6,7 +6,14 @@ import pytest
 
 from scripts.editorial import archive, dispatch
 from scripts.editorial.__main__ import main
-from scripts.editorial.archive import LEGACY, ORIGIN, record_publication, resolve_archive, setting, sync_archive
+from scripts.editorial.archive import (
+    LEGACY,
+    ORIGIN,
+    record_publication,
+    resolve_archive,
+    setting,
+    sync_archive,
+)
 from scripts.editorial.db import connect
 
 NOW = 1_800_000_000

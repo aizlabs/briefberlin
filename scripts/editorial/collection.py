@@ -9,8 +9,8 @@ from dataclasses import asdict, dataclass, field
 from . import adapters
 from .adapters import Item, Link
 from .db import transaction
-from .http import Client, Gap, Response, host
-from .registry import Endpoint, StaleEndpoint, due_endpoints, update_poll_state
+from .http import Client, CollectionGapError, Response, host
+from .registry import Endpoint, StaleEndpointError, due_endpoints, update_poll_state
 
 Fetcher = Callable[[str, dict[str, str]], Response]
 DAY = 86400
@@ -53,7 +53,7 @@ def retrieve(ep: Endpoint, fetch: Fetcher, now: int, lookback: int, children: in
         response = fetch(ep.url, headers)
         if response.status == 304:
             if not ep.baseline_complete:
-                raise Gap("304 without baseline")
+                raise CollectionGapError("304 without baseline")
             batch.unchanged = True
         else:
             items: list[Item] = []
@@ -66,7 +66,7 @@ def retrieve(ep: Endpoint, fetch: Fetcher, now: int, lookback: int, children: in
             elif ep.adapter == "notice":
                 items = [adapters.extract(ep, response)]
             else:
-                raise Gap("unsupported adapter")
+                raise CollectionGapError("unsupported adapter")
             for item in items:
                 batch.observations.append((item, ep.baseline_complete, first_floor, cutoff))
             if len(links) > adapters.MAX_LINKS:
@@ -80,7 +80,7 @@ def retrieve(ep: Endpoint, fetch: Fetcher, now: int, lookback: int, children: in
                 task["link"] = asdict(link)
                 queue[link.url] = task
             cursor.update(etag=response.etag, modified=response.modified, item_gaps=sorted(item_gaps))
-    except Gap as exc:
+    except CollectionGapError as exc:
         batch.parent_failure = str(exc)
         batch.gaps.add(str(exc))
         batch.retry_at = exc.retry_at
@@ -96,9 +96,9 @@ def retrieve(ep: Endpoint, fetch: Fetcher, now: int, lookback: int, children: in
         try:
             child = fetch(link.url, {})
             if child.status != 200:
-                raise Gap("unexpected child status")
+                raise CollectionGapError("unexpected child status")
             item = adapters.extract(ep, child, link)
-        except Gap as exc:
+        except CollectionGapError as exc:
             task.update(pending=True, retry_at=max(now + 300, exc.retry_at), error=str(exc))
             batch.retry_at = max(batch.retry_at, exc.retry_at)
         else:
@@ -174,7 +174,7 @@ def poll(conn: sqlite3.Connection, ep: Endpoint, fetch: Fetcher, now: int,
     batch = retrieve(ep, fetch, now, lookback, children)
     with transaction(conn):
         if paused(conn):
-            raise StaleEndpoint(ep.endpoint_id)
+            raise StaleEndpointError(ep.endpoint_id)
         pending = [t for t in batch.cursor.get("children", {}).values() if t["pending"]]
         next_due = (now + min(DAY, 60 * 2 ** min(ep.failures, 10)) if batch.parent_failure
                     else now + ep.interval_minutes * 60)
@@ -212,7 +212,7 @@ def collect(conn: sqlite3.Connection, *, now: int | None = None, limit: int = 20
         row = conn.execute("SELECT until_epoch FROM host_cooldowns WHERE host=?", (host(address),)).fetchone()
         current = int(time.time()) if now is None else now
         if row and row[0] > current:
-            raise Gap("host Retry-After", row[0])
+            raise CollectionGapError("host Retry-After", row[0])
 
     client = Client(before_request=check_cooldown)
 
@@ -221,7 +221,7 @@ def collect(conn: sqlite3.Connection, *, now: int | None = None, limit: int = 20
             check_cooldown(url)
         try:
             return (fetch or client)(url, headers)
-        except Gap as exc:
+        except CollectionGapError as exc:
             if exc.retry_at:
                 # The server's instruction outlives a stale endpoint snapshot.
                 with transaction(conn):
@@ -238,6 +238,6 @@ def collect(conn: sqlite3.Connection, *, now: int | None = None, limit: int = 20
             continue
         try:
             rows.append(poll(conn, ep, guarded_fetch, tick_now, lookback_hours, children))
-        except StaleEndpoint:
+        except StaleEndpointError:
             rows.append({"endpoint": ep.endpoint_id, "adapter": ep.adapter, "errors": ["stale snapshot"]})
     return {"paused": paused(conn), "endpoints": rows}

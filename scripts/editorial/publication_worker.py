@@ -8,8 +8,18 @@ from datetime import datetime
 
 from scripts.publisher import PUBLICATION_ZONE
 
-from . import dispatch, manual_drafts, publication_host as host
-from .publication_files import artifacts, changes, check_story_in_base, ensure_private, git, read_artifact, restamp, verify_commit
+from . import dispatch, manual_drafts
+from . import publication_host as host
+from .publication_files import (
+    artifacts,
+    changes,
+    check_story_in_base,
+    ensure_private,
+    git,
+    read_artifact,
+    restamp,
+    verify_commit,
+)
 from .publication_verify import SITE, verify
 
 ERRORS = (ValueError, OSError, KeyError, subprocess.SubprocessError)
@@ -112,7 +122,7 @@ def copy_approved(conn, root, work, tree):
     return data.decode()
 
 
-class ReservationLost(ValueError):
+class ReservationLostError(ValueError):
     pass
 
 
@@ -126,7 +136,7 @@ def optional_media(tree, story, evidence, command, log, heartbeat, limit):
         current, _ = artifacts(tree, story)
         ensure_private(tree, current, evidence)
         return True
-    except ReservationLost:
+    except ReservationLostError:
         raise
     except ERRORS:
         # Revert partial optional writes in this dedicated worktree only.
@@ -152,7 +162,7 @@ def prepare(conn, root, work):
     def heartbeat():
         result = dispatch.refresh(conn, token=token)
         if result["state"] != "preparing":
-            raise ReservationLost("publication reservation superseded")
+            raise ReservationLostError("publication reservation superseded")
         return result
 
     directory = host.area(root, "worker", work["id"])
@@ -246,6 +256,18 @@ def send_work(conn, root, work_id):
             if claim["kind"] == "manual":
                 host.telegram("Optional media unavailable: " + ", ".join(failures) + ". Verifying article deployment.")
         return result
+
+
+def cycle(conn, root):
+    """Recover first and refuse new work until the live archive is ready."""
+    host.check_legacy(conn)
+    result = recover(conn, root)
+    housekeep(conn, root)
+    if result["state"] in {"idle", "live"}:
+        archive = host.refresh_archive(conn, root)
+        result = advance(conn, root) if archive["ready"] else {"state": "archive-block", "archive": archive}
+    deliver_notices(conn)
+    return result
 
 
 def advance(conn, root, *, manual_only=False):

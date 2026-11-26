@@ -11,7 +11,7 @@ from zoneinfo import ZoneInfo
 import feedparser
 from bs4 import BeautifulSoup, NavigableString, Tag
 
-from .http import Gap, Response, host
+from .http import CollectionGapError, Response, host
 from .inventory import check_url, request_url
 from .registry import Endpoint
 
@@ -96,7 +96,7 @@ def strip_markup(raw: str) -> str:
 def feed(response: Response) -> tuple[list[Item], list[Link], set[str]]:
     parsed = feedparser.parse(response.body)
     if not parsed.version or (parsed.bozo and not parsed.entries):
-        raise Gap("invalid or unsupported feed")
+        raise CollectionGapError("invalid or unsupported feed")
     items, links = [], []
     gaps: set[str] = set()
     if parsed.bozo:
@@ -122,7 +122,7 @@ def feed(response: Response) -> tuple[list[Item], list[Link], set[str]]:
 
 def soup(response: Response) -> BeautifulSoup:
     if response.media and not any(t in response.media for t in ("html", "text/plain", "xml")):
-        raise Gap("unsupported HTML media type")
+        raise CollectionGapError("unsupported HTML media type")
     doc = BeautifulSoup(response.body, "html.parser")
     for node in doc.select("script, style, nav, footer, header nav, form, aside, [hidden], [aria-hidden=true]"):
         node.decompose()
@@ -170,28 +170,28 @@ def listing(endpoint: Endpoint, response: Response) -> list[Link]:
             # It may be an event or deadline rather than its publication date.
             links.setdefault(url, Link(url, title))
             if len(links) > MAX_LINKS:
-                raise Gap("listing link limit; narrow selector or link pattern")
+                raise CollectionGapError("listing link limit; narrow selector or link pattern")
     if not links:
-        raise Gap("no matching publication links; check selector or link pattern")
+        raise CollectionGapError("no matching publication links; check selector or link pattern")
     return list(links.values())
 
 
 def extract(endpoint: Endpoint, response: Response, link: Link | None = None) -> Item:
     if response.body.startswith(b"%PDF-") or "application/pdf" in response.media:
         if not link or endpoint.adapter != "documents":
-            raise Gap("unexpected PDF")
+            raise CollectionGapError("unexpected PDF")
         try:
             result = subprocess.run(
                 ["pdftotext", "-f", "1", "-l", "5", "-enc", "UTF-8", "-", "-"],
                 input=response.body, capture_output=True, timeout=8, check=True,
             )
         except FileNotFoundError:
-            raise Gap("PDF extraction requires pdftotext") from None
+            raise CollectionGapError("PDF extraction requires pdftotext") from None
         except (subprocess.SubprocessError, OSError):
-            raise Gap("unreadable PDF") from None
+            raise CollectionGapError("unreadable PDF") from None
         evidence = clean(result.stdout.decode("utf8", "replace"))
         if len(evidence) < 30:
-            raise Gap("PDF lacks extractable evidence")
+            raise CollectionGapError("PDF lacks extractable evidence")
         return Item(response.url, link.title, evidence, guid=link.guid, alias=link.url)
 
     doc = soup(response)
@@ -199,7 +199,7 @@ def extract(endpoint: Endpoint, response: Response, link: Link | None = None) ->
     selector = endpoint.selector if notice and endpoint.selector else "article, main, [role=main], #content"
     root = doc.select_one(selector) if notice else (doc.select_one("article") or doc.select_one(selector))
     if root is None:
-        raise Gap("missing publication content region")
+        raise CollectionGapError("missing publication content region")
     date_node = (doc.select_one('head meta[property="article:published_time"], head meta[itemprop=datePublished]')
                  or root.select_one('meta[property="article:published_time"], [itemprop=datePublished], time[pubdate]'))
     date = (str(date_node.get("content") or date_node.get("datetime")
@@ -238,6 +238,6 @@ def extract(endpoint: Endpoint, response: Response, link: Link | None = None) ->
     evidence = (clean(root.get_text(" ", strip=True)) if notice else
                 clean(" ".join(p.get_text(" ", strip=True) for p in root.select("p"))))
     if len(evidence) < 30 or not title:
-        raise Gap("publication lacks extractable evidence")
+        raise CollectionGapError("publication lacks extractable evidence")
     return Item(public_url(response.url, url), title, evidence, date,
                 link.guid if link else "", link.url if link else "")

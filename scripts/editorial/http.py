@@ -13,7 +13,7 @@ import requests
 from .inventory import check_url
 
 
-class Gap(Exception):
+class CollectionGapError(Exception):
     """A printable category, without downloaded text, URLs or request headers."""
 
     def __init__(self, category: str, retry_at: int = 0):
@@ -63,16 +63,16 @@ class Client:
                 try:
                     check_url(url)
                 except ValueError:
-                    raise Gap("invalid public URL") from None
+                    raise CollectionGapError("invalid public URL") from None
                 if host(url) != original_host:
-                    raise Gap("redirect outside source host")
+                    raise CollectionGapError("redirect outside source host")
                 if self.before_request:
                     self.before_request(url)
                 if self.counts[original_host] >= self.per_host:
-                    raise Gap("tick host request limit")
+                    raise CollectionGapError("tick host request limit")
                 self.counts[original_host] += 1
                 if time.monotonic() >= deadline:
-                    raise Gap("request deadline")
+                    raise CollectionGapError("request deadline")
                 try:
                     with session.get(url, headers=headers, timeout=(4, 6), stream=True,
                                      allow_redirects=False) as response:
@@ -80,23 +80,23 @@ class Client:
                         if code in (301, 302, 303, 307, 308):
                             location = response.headers.get("Location")
                             if not location:
-                                raise Gap("redirect missing location")
+                                raise CollectionGapError("redirect missing location")
                             url = urljoin(url, location)
                             continue
                         if code not in (200, 304):
                             retry = retry_time(response.headers.get("Retry-After", ""), int(time.time()))
-                            raise Gap(f"HTTP {code}", retry)
+                            raise CollectionGapError(f"HTTP {code}", retry)
                         body = bytearray()
                         for chunk in response.iter_content(16384):
                             if time.monotonic() >= deadline:
-                                raise Gap("request deadline")
+                                raise CollectionGapError("request deadline")
                             if len(body) + len(chunk) > self.max_bytes:
-                                raise Gap("response size limit")
+                                raise CollectionGapError("response size limit")
                             body.extend(chunk)
                         return Response(response.url, bytes(body), code,
                                         response.headers.get("Content-Type", "").lower(),
                                         response.headers.get("ETag", ""),
                                         response.headers.get("Last-Modified", ""))
                 except requests.RequestException as exc:
-                    raise Gap(type(exc).__name__) from None
-        raise Gap("redirect limit")
+                    raise CollectionGapError(type(exc).__name__) from None
+        raise CollectionGapError("redirect limit")

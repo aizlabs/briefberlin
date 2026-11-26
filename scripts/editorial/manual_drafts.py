@@ -8,9 +8,18 @@ import subprocess
 import time
 import uuid
 
-from . import dispatch, publication_host as host
+from . import dispatch
+from . import publication_host as host
 from .db import transaction
-from .publication_files import POST, artifacts, changes, ensure_private, git, protect_text, source_urls
+from .publication_files import (
+    POST,
+    artifacts,
+    changes,
+    ensure_private,
+    git,
+    protect_text,
+    source_urls,
+)
 from .review import identity
 from .triage import shortlist
 

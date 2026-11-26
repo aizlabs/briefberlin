@@ -14,6 +14,7 @@ class Control:
     version: int
     verb: str
     rating: int | None = None
+    attempt_id: str | None = None
 
 
 def signed_event(*, metadata: dict, event_id: str, message_id: str, control_id: str,
@@ -30,5 +31,7 @@ def signed_event(*, metadata: dict, event_id: str, message_id: str, control_id: 
     payload = dict(metadata=dict(metadata), event_id=event_id, request_id=control.request_id,
                    story_id=control.story_id, version=control.version, verb=control.verb,
                    rating=control.rating, note=note)
+    if control.attempt_id is not None:
+        payload["delivery"] = {"attempt": control.attempt_id, "control": control_id, "message": message_id}
     signature = hmac.digest(callback_key(), callback_bytes(payload), "sha256").hex()
     return {"payload": payload, "signature": signature}

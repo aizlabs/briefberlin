@@ -56,7 +56,7 @@ def run(argv):
         request["content"] = base64.b64encode(data).decode("ascii")
     with socket.socket(socket.AF_UNIX) as client:
         client.settimeout(7200)
-        client.connect(os.environ.get("BB_MANUAL_SOCKET", "/run/briefberlin-manual.sock"))
+        client.connect(os.environ.get("BB_MANUAL_SOCKET", "/opt/briefberlin-socket/manual.sock"))
         client.sendall(json.dumps(request).encode() + b"\n")
         client.shutdown(socket.SHUT_WR)
         with client.makefile("rb") as response:
