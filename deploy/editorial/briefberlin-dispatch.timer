@@ -1,0 +1,12 @@
+[Unit]
+Description=Schedule BriefBerlin editorial dispatch
+
+[Timer]
+OnBootSec=30s
+OnCalendar=*:0/5
+AccuracySec=10s
+Persistent=true
+Unit=briefberlin-dispatch.service
+
+[Install]
+WantedBy=timers.target

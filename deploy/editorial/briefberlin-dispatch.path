@@ -1,0 +1,9 @@
+[Unit]
+Description=Wake the publisher after a completed triage or approved review
+
+[Path]
+PathExists=/var/lib/briefberlin/editorial.sqlite3.publisher/dispatch.wake
+Unit=briefberlin-dispatch.service
+
+[Install]
+WantedBy=multi-user.target

@@ -3,9 +3,12 @@
 from __future__ import annotations
 
 import argparse
+import os
+import re
 import subprocess
 import sys
 from datetime import datetime, timezone
+from pathlib import Path
 from typing import Sequence
 
 POSTS_PATH = "output/_posts"
@@ -87,6 +90,27 @@ def print_command_output(result: subprocess.CompletedProcess[str]) -> None:
 
 def main(argv: Sequence[str] | None = None) -> int:
     args = parse_args(argv)
+    configured = bool(os.environ.get("BRIEFBERLIN_EDITORIAL_DB"))
+    if configured and args.branch in {"main", "refs/heads/main"}:
+        from scripts.editorial.publication_cli import main as publisher
+
+        if args.remote != "origin" or args.publish_timestamp or len(args.sources) != 1:
+            print("Editorial host publication uses origin/main, one approved draft and the live clock.", file=sys.stderr)
+            return 2
+        return publisher(["manual", "stage", str(Path(args.sources[0]).resolve())])
+    push_target = args.branch
+    if configured:
+        # Never accept refspecs, pseudo refs, remote helpers or option injection on this host.
+        if (args.remote != "origin" or not re.fullmatch(r"[a-zA-Z0-9][a-zA-Z0-9/_.-]*", args.branch)
+                or args.branch.startswith("refs/") or args.branch == "HEAD"
+                or run_command(["git", "check-ref-format", "refs/heads/" + args.branch]).returncode):
+            print("Use a literal test branch name on origin, or the manual main workflow.", file=sys.stderr)
+            return 2
+        ref = "refs/heads/" + args.branch
+        if run_command(["git", "symbolic-ref", "-q", "HEAD"]).stdout.strip() != ref:
+            print("Check out the independent test branch before generating.", file=sys.stderr)
+            return 2
+        push_target = f"{ref}:{ref}"
     publish_timestamp = parse_publish_timestamp(args.publish_timestamp)
 
     dirty_status = git_status()
@@ -130,7 +154,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     if commit_result.returncode != 0:
         return commit_result.returncode
 
-    push_result = run_command(["git", "push", args.remote, args.branch])
+    push_result = run_command(["git", "push", args.remote, push_target])
     print_command_output(push_result)
     return push_result.returncode
 

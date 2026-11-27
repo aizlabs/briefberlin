@@ -1,0 +1,15 @@
+[Unit]
+Description=BriefBerlin editorial poll
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=briefberlin
+Group=briefberlin
+UMask=0077
+EnvironmentFile=/etc/briefberlin/publisher.env
+WorkingDirectory=/srv/briefberlin/repo
+ExecStart=/srv/briefberlin/repo/.venv/bin/briefberlin-discovery poll
+TimeoutStartSec=1h
+NoNewPrivileges=yes
+PrivateTmp=yes

@@ -1,0 +1,16 @@
+[Unit]
+Description=BriefBerlin scoped triage request
+
+[Service]
+User=briefberlin
+Group=briefberlin
+UMask=0077
+EnvironmentFile=/etc/briefberlin/publisher.env
+WorkingDirectory=/srv/briefberlin/repo
+ExecStart=/srv/briefberlin/repo/.venv/bin/briefberlin-discovery-rpc
+StandardInput=socket
+StandardOutput=socket
+StandardError=journal
+RuntimeMaxSec=45
+NoNewPrivileges=yes
+PrivateTmp=yes

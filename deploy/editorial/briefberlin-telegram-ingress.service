@@ -1,0 +1,17 @@
+[Unit]
+Description=BriefBerlin authenticated Telegram webhook ingress
+After=network.target
+
+[Service]
+User=briefberlin
+Group=briefberlin
+UMask=0077
+EnvironmentFile=/etc/briefberlin/publisher.env
+WorkingDirectory=/srv/briefberlin/repo
+ExecStart=/srv/briefberlin/repo/.venv/bin/briefberlin-telegram-ingress
+Restart=on-failure
+NoNewPrivileges=yes
+PrivateTmp=yes
+
+[Install]
+WantedBy=multi-user.target

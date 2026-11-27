@@ -1,0 +1,15 @@
+[Unit]
+Description=BriefBerlin editorial dispatch
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=briefberlin
+Group=briefberlin
+UMask=0077
+EnvironmentFile=/etc/briefberlin/publisher.env
+WorkingDirectory=/srv/briefberlin/repo
+ExecStart=/srv/briefberlin/repo/.venv/bin/briefberlin-discovery dispatch
+TimeoutStartSec=3h
+NoNewPrivileges=yes
+PrivateTmp=yes

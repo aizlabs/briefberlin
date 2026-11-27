@@ -1,0 +1,10 @@
+tick_seconds: 300
+slot_seconds: 43200
+review_interval_seconds: 43200
+archive_max_age_seconds: 600
+lease_seconds: 900
+hold_seconds: 43200
+retry_seconds: 600
+max_retry_seconds: 21600
+# Exact transport/account/conversation/sender identities, provided by the host bridge.
+editor_allowlist: []

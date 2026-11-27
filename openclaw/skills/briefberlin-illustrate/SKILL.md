@@ -5,7 +5,7 @@ description: Add one illustration to the waiting BriefBerlin story before its pr
 
 # BriefBerlin illustration (bot)
 
-Use only `/opt/openclaw/.openclaw/workspace/skills/briefberlin/scripts/bb`. Do not use the `image_generate` tool: its result arrives in a turn that cannot run `bb`. Do not run git, edit the repo, or read the inbox source: the picture must come from the public article text alone.
+Use only `/workspace/skills/briefberlin-suite/briefberlin/scripts/bb`. Do not use the `image_generate` tool: its result arrives in a turn that cannot run `bb`. Do not run git, edit the repo, or read the inbox source: the picture must come from the public article text alone.
 
 1. Run `bb stories`. It prints the story id and the final A2 and B1 text. Read the headline, summary and body.
 2. Choose **one illustration** for the story. Pick a subject and action an A2 reader would recognise. Keep the story's distinctions: a proposal is not a decision, a suspicion is not a conviction.

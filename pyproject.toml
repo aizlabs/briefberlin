@@ -34,6 +34,15 @@ dev = [
 ]
 
 [project.scripts]
+briefberlin-discovery = "scripts.editorial.discovery_host:main"
+briefberlin-discovery-rpc = "scripts.editorial.discovery_host:rpc"
+briefberlin-review-ingress = "scripts.editorial.review_telegram:ingress"
+briefberlin-review-send = "scripts.editorial.review_telegram:main"
+briefberlin-editorial-backup = "scripts.editorial.backup:main"
+briefberlin-manual-rpc = "scripts.editorial.publication_rpc:main"
+briefberlin-telegram-ingress = "scripts.editorial.telegram_ingress:main"
+briefberlin-publisher = "scripts.editorial.publication_cli:main"
+briefberlin-editorial = "scripts.editorial.__main__:main"
 briefberlin-manual = "scripts.manual_pipeline:main"
 briefberlin-audio-post = "scripts.post_audio:main"
 briefberlin-publish-source = "scripts.publish_source:main"
@@ -48,6 +57,10 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["scripts"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"config/civic_sources.json" = "scripts/editorial/civic_sources.json"
+"config/editorial_policy.yaml" = "scripts/editorial/editorial_policy.yaml"
 
 [tool.hatch.metadata]
 allow-direct-references = true
